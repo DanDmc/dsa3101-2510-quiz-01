@@ -1,0 +1,30 @@
+{
+  "assessmentId": 11011231231212321312,
+  "course": "DSA1101",
+  "semester": 2510,
+  "assessmentType": "midterm",
+  "questionNumber": 1,
+  "singleQuestion": true,
+  "questionStem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
+  "questionStemHtml": "Using the <code>student-mat.csv</code> dataset from our lectures, conduct a <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\chi^2</annotation></semantics></math>-test of independence on the variables <code>address</code> and <code>guardian</code> at the 5% significance level.",
+  "media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
+      "part_stem_html": "Using the <code>student-mat.csv</code> dataset from our lectures, conduct a <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\chi^2</annotation></semantics></math>-test of independence on the variables <code>address</code> and <code>guardian</code> at the 5% significance level.",
+      "choices": [],
+      "media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffleChoices": false,
+      "solution": "text_str",
+      "difficulty_level": 1.0,
+      "concept_tags": ["statistics", "chi-squared test", "independence test"]
+    }
+  ]
+}
