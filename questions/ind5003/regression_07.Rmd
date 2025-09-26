@@ -1,0 +1,57 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Consider the broken line regression model that we fitted to the Taiwan real 
+estate price data, with housing age as the explanatory variable. In the notes,
+we used the value 25 years. In the following function we can input the age we 
+wish to set the breakpoint at. The function should return the adjusted 
+$R^2$ for the corresponding regression model.
+
+```
+def housing_break(age, data):
+    tmp_data = data.copy()
+    tmp_data['x3'] = [ _______(1)_________  for x in data.house_age]
+    lm_age_mrt_2 = ols('price ~ house_age + x3', data=tmp_data).fit()
+    return lm_age_mrt_2.___(2)_____
+```
+
+Fill in the two blanks with the appropriate Python expressions to get the 
+function working.
+
+Answerlist
+----------
+* Blank 1
+* Blank 2
+
+Solution
+========
+
+```
+def housing_break(age, data):
+    tmp_data = data.copy()
+    tmp_data['x3'] = [(x - age) if x > age else 0 for x in data.house_age]
+    lm_age_mrt_2 = ols('price ~ house_age + x3', data=tmp_data).fit()
+    return lm_age_mrt_2.rsquared_adj
+```
+
+Answerlist
+----------
+* `(x - age) if x > age else 0`
+* `rsquared_adj`
+
+Meta-information
+================
+exname: regression, CI, taiwan
+extype: cloze
+exsolution: `(x - age) if x > age else 0`|`rsquared_adj`
+exclozetype: string|string

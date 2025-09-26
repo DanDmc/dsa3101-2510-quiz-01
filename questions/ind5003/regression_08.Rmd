@@ -1,0 +1,87 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following two simple linear regression models are fitted to the
+Taiwan real estate data from topic 05:
+
+\begin{eqnarray}
+Y &=& \beta_0 + \beta_1 \ln (X_1) + e \; \text{( model 1 )}\\
+\ln Y &=& \beta_0 + \beta_1 \ln (X_1) + e \: \text{( model 2 )}
+\end{eqnarray}
+
+where $X_1$ corresponds to distance to the nearest MRT. The following output 
+was obtained from Python:
+
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+re2 = pd.read_csv("taiwan_dataset.csv")
+```
+
+```{python}
+re2['lprice'] = np.log(re2.price)
+re2['ldist'] = np.log(re2.dist_MRT)
+
+lm_1 = ols('price ~ ldist', data=re2).fit()
+print(lm_1.summary())
+```
+
+```{python}
+lm_2 = ols('lprice ~ ldist', data=re2).fit()
+print(lm_2.summary())
+```
+
+An analyst concludes that model (2) has a better fit since the $R^2$ is larger
+(0.579 in the latter compared with 0.539 in the former). Which of the following 
+statements is correct?
+
+Answerlist
+----------
+
+* The analyst is correct. The two $R^2$ values are comparable because they are 
+  both based on the same dataset.
+* The analyst is correct. The two $R^2$ values are comparable because they both
+  use the same independent variable.
+* The analyst is mistaken. The two $R^2$ values cannot be compared because the
+  dependent variables are different.
+* The analyst is correct that model (2) fits better, but the reason is 
+  incorrect - the adjusted $R^2$ should be used instead.
+
+Solution
+========
+
+The formula for $R^2$ is 
+$$
+R^2 = 1 - \frac{SS_{Res}}{SS_T} = \frac{SS_{Reg}}{SS_T} = \frac{\sum_{i=1}^n (\hat{Y_i}  - \bar{Y})^2}{\sum_{i=1}^n (Y_i  - \bar{Y})^2}
+$$
+However, the two models use *different* $Y$ values. The $SS_T$ is different! Hence 
+it does not make sense to compare the two $R^2$ values directly.
+
+Answerlist
+----------
+
+* This is incorrect.
+* $R^2$ calculation does not depend on the independent variable.
+* This is correct.
+* With simple linear regression, it is conventional to use the unadjusted $R^2$. 
+  However, the issue is not with this. Adjusted $R^2$ adjusts for the 
+  *number of independent variables*, but assumes the dependent variable is the same.
+
+Meta-information
+================
+exname: regression, CI, taiwan
+extype: schoice
+exsolution: 0010

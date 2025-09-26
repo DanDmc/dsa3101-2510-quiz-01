@@ -1,0 +1,42 @@
+Question
+========
+
+Which of the following statements are true regarding simulation modeling?
+
+Answerlist
+----------
+
+* Simulation does not require data.
+* Simulation can be used to make predictions.
+* Random variables that are used in simulation must follow a Normal distribution.
+* Simulation can be used for scenario-planning purposes.
+* Simulation relies on the Central Limit Theorem.
+* Simulation is used to estimate means.
+* Simulation cannot be used to estimate proportions.
+* Simulation results are always deterministic and predictable.
+* Simulation can be used to analyze systems with complex interactions.
+* Simulation often involves the use of random variables to mimic real-world uncertainty.
+
+Solution
+========
+
+Answerlist
+----------
+* This is not true. Real-world data should be used to calibrate the model. False
+* Simulation models do not make predictions of random variables. They estimate means. False.
+* The random variables do not need to follow a Normal. Think of rolling a die, for instance.
+* Yes, this is precisely what they are for.
+* True
+* True
+* Proportions are also means, so simulation models can be used to estimate means.
+* Since they rely on random variables, simulation models are neither deterministic nor 
+  predictable. False.
+* True
+* True
+
+Meta-information
+================
+exname: simulation, statements
+extype: mchoice
+exsolution: 0001110011
+exshuffle: 5

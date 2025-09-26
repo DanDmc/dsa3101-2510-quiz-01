@@ -1,0 +1,43 @@
+Question
+========
+
+What is the shape of the *training dataset* (without the labels) when the following 
+code is executed?
+
+```{python eval=FALSE}
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# Generate sample data
+X = np.random.rand(100, 5)  
+y = np.random.randint(0, 2, 100)  
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+print(X_train.shape)
+```
+
+
+Answerlist
+----------
+
+* (80, 5)
+* (100, 5)
+* (20, 5)
+* (80, 2)
+
+Solution
+========
+
+Answerlist
+----------
+* True
+* False
+* False
+* False
+
+Meta-information
+================
+exname: supervised
+extype: schoice
+exsolution: 1000
+exshuffle: 4

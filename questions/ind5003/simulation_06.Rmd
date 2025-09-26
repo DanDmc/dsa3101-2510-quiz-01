@@ -1,0 +1,29 @@
+Question
+========
+
+A healthcare analyst wants to estimate the average time patients spend in the
+emergency room before being seen by a doctor. The analyst plans to simulate
+patient flow to understand how the number of doctors on duty, patient arrival
+rates, and the complexity of each case impact wait times.
+
+What data should the analyst collect before implementing the solution?
+
+Solution
+========
+
+Here are some possible suggestions:
+
+1. Patient arrival rates at the emergency room during different times of day and week.
+2. Number of doctors available during various shifts.
+3. Average time doctors spend with each patient, based on case complexity.
+4. Patient triage data to understand the severity of cases and how it affects processing time.
+5. Time patients spend in other stages of the ER (e.g., registration, initial evaluation).
+6. Any seasonal factors (e.g., flu season) or special events that impact patient arrival rates.
+
+
+Meta-information
+================
+exname: simulation, data to collect
+extype: string
+exstringtype: essay
+exsolution: nil

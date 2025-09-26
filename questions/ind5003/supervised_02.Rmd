@@ -1,0 +1,38 @@
+Question
+========
+
+Which preprocessing technique is suitable when your dataset contains categorical variables?
+
+
+
+Answerlist
+----------
+
+* Scaling
+* Principal Component Analysis (PCA)
+* One-Hot Encoding
+* Feature Extraction
+
+Solution
+========
+
+Answerlist
+----------
+
+* This is for converting transforming numerical variables to have the same scale.
+* This is used for:
+
+  * dimension reduction - reducing the number of continuous variables to a smaller subset, that 
+    consists of linear combinations of the original ones.
+  * removing correlation between numeric variables - this can improve prediction.
+
+* This converts a single column containing the character version of the categorical
+  variable into a set of 0/1 columns representing it. ML methods require numeric inputs..
+* This is a process whereby only important columns for prediction are retained.
+
+Meta-information
+================
+exname: supervised
+extype: schoice
+exsolution: 0010
+exshuffle: 4

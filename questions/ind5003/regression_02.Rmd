@@ -1,0 +1,70 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following simple linear regression model has been fitted to the 
+Taiwan real estate data from topic 05:
+
+$$
+Y = \beta_0 + \beta_1 \ln (X_1) + e
+$$
+
+where $X_1$ corresponds to distance to the nearest MRT. The following output 
+was obtained from Python:
+
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+re2 = pd.read_csv("taiwan_dataset.csv")
+
+re2['ldist'] = np.log(re2.dist_MRT)
+lm_2 = ols('price ~ ldist', data=re2).fit()
+print(lm_2.summary())
+```
+
+What is the test statistic corresponding to the following hypothesis test?
+
+\begin{eqnarray}
+H_0:\; \beta_0 &=& 0 \\
+H_1:\; \beta_0 & \ne & 0 
+\end{eqnarray}
+
+Answerlist
+----------
+* 95.0169
+* 36.034
+* -21.959
+* 482.2
+* 2.52e-71
+* 0.000
+
+Solution
+========
+
+Answerlist
+----------
+* This is the estimate of $\hat{\beta}_0$.
+* This is indeed the value of the test statistic.
+* This is $t$-statistic for testing of the coefficient $\beta_1$ is 0.
+* This is $F$-statistic for testing of the coefficient $\beta_1$ is 0.
+* This is the $p$-value for the $F$-statistic.
+* This is the $p$-value for the requested hypothesis test, not the test statistic.
+
+Meta-information
+================
+exname: regression, inference, taiwan
+extype: schoice
+exsolution: 010000
+exshuffle: 4

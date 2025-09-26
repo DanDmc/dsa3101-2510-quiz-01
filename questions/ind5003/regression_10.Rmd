@@ -1,0 +1,82 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following simple linear regression model has been fitted to the 
+Taiwan real estate data from topic 05:
+
+$$
+Y = \beta_0 + \beta_1 \ln (X_1) + e
+$$
+
+where $X_1$ corresponds to distance to the nearest MRT. Which of the following
+statement(s) regarding the *raw* residuals is (are) true? Remember that raw 
+residuals are given by
+
+$$
+r_i = Y_i - \hat{Y}_i
+$$
+
+Answerlist
+----------
+* There is exactly one residual greater than 50.
+* There are at least two residuals less than -30.
+* The mean of the raw residuals for properties transacted in 2012 is
+  approximately -2.6 (1 d.p.)
+* The mean of the raw residuals for properties transacted in 2013 is 
+  approximately 2.6 (1 d.p.)
+* The mean of the raw residuals is approximately 0.0 (1 d.p.)
+
+Solution
+========
+
+```{python}
+import pandas as pd
+import numpy as np
+
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+from scipy import stats
+
+re2 = pd.read_csv("taiwan_dataset.csv")
+re2['ldist'] = np.log(re2.dist_MRT)
+
+re2['year_int'] = re2.trans_date.astype(int)
+re2['year_s'] = re2.year_int.astype(str)
+
+lm_3 = ols('price ~ ldist', data=re2).fit()
+re2['r_3'] = re2.price - lm_3.fittedvalues
+
+re2.r_3.groupby(re2.year_s).describe()
+
+re2['abs_r_3'] = np.abs(re2.r_3)
+
+re2.sort_values(by='abs_r_3', ascending=False).head(n=5)
+
+```
+
+
+Answerlist
+----------
+* True
+* False
+* True
+* False
+* True
+
+Meta-information
+================
+exname: regression, inference, taiwan
+extype: mchoice
+exsolution: 10101
+

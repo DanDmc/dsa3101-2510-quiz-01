@@ -1,0 +1,53 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following simple linear regression model has been fitted to the 
+Taiwan real estate data from topic 05:
+
+$$
+Y = \beta_0 + \beta_1 \ln (X_1) + e
+$$
+
+where $X_1$ corresponds to distance to the nearest MRT. The following output 
+was obtained from Python:
+
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+re2 = pd.read_csv("taiwan_dataset.csv")
+
+re2['ldist'] = np.log(re2.dist_MRT)
+lm_2 = ols('price ~ ldist', data=re2).fit()
+print(lm_2.summary())
+```
+
+Suppose that I am hunting for a new property, but I am not willing to spend more than
+50,000 NT dollars per ping. What is the closest distance to an MRT that I can afford,
+according to the above model?
+
+Solution
+========
+
+\begin{eqnarray}
+95.0169 - 8.9235 \ln(X) &\le& 50 \\
+X &\ge& 155.21
+\end{eqnarray}
+
+Meta-information
+================
+exname: regression, CI, taiwan
+extype: string
+exsolution: `r fmt(155.20676918341255)`

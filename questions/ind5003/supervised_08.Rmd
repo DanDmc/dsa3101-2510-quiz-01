@@ -1,0 +1,91 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("winequality-red.csv", dir="../data/wine+quality/")
+tmp_out <- include_supplement("winequality-white.csv", dir="../data/wine+quality/")
+tmp_out <- include_supplement("wine_tree.png", dir="figs/")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+
+from sklearn import tree
+from sklearn.model_selection import train_test_split
+
+wine_red = pd.read_csv("winequality-red.csv", delimiter=";" )
+wine_red['type'] = "red"
+wine_white = pd.read_csv("winequality-white.csv", delimiter=";")
+wine_white['type'] = "white"
+
+# remove spaces in column names:
+col_names = ['fixed_acidity', 'volatile_acidity', 'citric_acid', 'residual_sugar',
+             'chlorides', 'free_sulfur_dioxide', 'total_sulfur_dioxide',
+             'density', 'pH', 'sulphates', 'alcohol', 'quality', 'type']
+wine2 = pd.concat([wine_red, wine_white], ignore_index=True)
+wine2.columns = col_names
+```
+
+Question
+========
+The (red and white) wine quality datasets from the unsupervised learning topic 
+have been merged into a single dataframe with 6497 rows. A decision tree 
+classifier has been fit to the dataset as follows:
+
+```{python}
+wine2.shape
+
+wine2.type.value_counts()
+
+y = [1 if x=="red" else 0 for x in wine2.type]
+X = wine2.iloc[:, 0:11]
+X_train,X_test,y_train,y_test = train_test_split(X, y, test_size=0.2,  random_state=14, stratify=y)
+```
+
+The resulting decision tree consists of the following [rules](wine_tree.png):
+```{r echo=FALSE, out.width="2000px", fig.align="center", fig.cap="Decision tree"}
+knitr::include_graphics("wine_tree.png")
+
+```
+
+Consider a new wine with the following features, but unknown `type`. 
+```{python, echo=FALSE}
+wine2.sample(n=1, random_state=2002).iloc[:, 0:11].T
+```
+
+Apply the decision tree rules to the above features to estimate the probability 
+that the wine is *white*.
+
+Answerlist
+----------
+
+* 0.995
+* 0.005
+* 0.01
+* 0.99
+
+Solution
+========
+
+The correct leaf is the eighth from the left. Note that darker blue indicates 
+higher probability of red, and darker orange indicates higher probability of 
+white. In the terminal node, there are 5 instances of white and 987 instances 
+of red. Hence the estimated probability is 5/(987 + 5) = 0.005.
+
+Answerlist
+----------
+* This is the estimated probability of red.
+* Correct
+* Incorrect - uses gini, which is not probability.
+* Incorrect - uses gini, which is not probability.
+
+Meta-information
+================
+exname: supervised
+extype: schoice
+exsolution: 0100
+exshuffle: 4
