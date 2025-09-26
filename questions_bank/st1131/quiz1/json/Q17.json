@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz1",
+  "question_no": 17,
+  "is_multi": true,
+  "question_stem": "What measures of center and variability are the most appropriate to describe a skewed distribution?",
+  "question_stem_html": "<div>What measures of center and variability are the most appropriate to describe a <strong>skewed</strong> distribution?</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mrq",
+      "part_stem": "What measures of center and variability are the most appropriate to describe a skewed distribution?",
+      "part_stem_html": "<div>What measures of center and variability are the most appropriate to describe a <strong>skewed</strong> distribution?</div>",
+      "choices": [
+        {
+          "choice_id": "a3616baf-c0b5-4fee-adce-7921b49cc3b5",
+          "text": "mean",
+          "text_html": "<p>mean</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "d84cd165-1def-4a5e-9738-243bcc85e0ce",
+          "text": "median",
+          "text_html": "<p>median</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "866390af-9c61-4a1d-ae4a-5ad1b35620b7",
+          "text": "interquartile range",
+          "text_html": "<p>interquartile range</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "f67643a6-a0ef-470c-85a6-8f1cfebec6b4",
+          "text": "standard deviation",
+          "text_html": "<p>standard deviation</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz7",
+  "question_no": 12,
+  "is_multi": "",
+  "question_stem": "The t distribution is [887e8992-1fcd-4c8c-ad48-6f264969653c] spread out for larger df.\nThe t distribution has [41900d80-1bef-4064-90e2-13f86ef07ec5] tails as the df increase.\nThe [76f03a2c-0a7f-4e2b-995b-0a0449149f2c] the df, the closer a t distribution gets to the standard normal distribution.",
+  "question_stem_html": "<div>\n<p>The<em> t</em> distribution is [887e8992-1fcd-4c8c-ad48-6f264969653c] spread out for larger <em>df</em>.</p>\n<p>The<em> t</em> distribution has [41900d80-1bef-4064-90e2-13f86ef07ec5] tails as the <em>df</em> increase.</p>\n<p>The [76f03a2c-0a7f-4e2b-995b-0a0449149f2c]&nbsp;the <em>df</em>, the closer a <em>t</em> distribution gets to the standard normal distribution.</p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "",
+      "type": "free response",
+      "subtype": "essay",
+      "part_stem": "The t distribution is [887e8992-1fcd-4c8c-ad48-6f264969653c] spread out for larger df.\nThe t distribution has [41900d80-1bef-4064-90e2-13f86ef07ec5] tails as the df increase.\nThe [76f03a2c-0a7f-4e2b-995b-0a0449149f2c] the df, the closer a t distribution gets to the standard normal distribution.",
+      "part_stem_html": "<div>\n<p>The<em> t</em> distribution is [887e8992-1fcd-4c8c-ad48-6f264969653c] spread out for larger <em>df</em>.</p>\n<p>The<em> t</em> distribution has [41900d80-1bef-4064-90e2-13f86ef07ec5] tails as the <em>df</em> increase.</p>\n<p>The [76f03a2c-0a7f-4e2b-995b-0a0449149f2c]&nbsp;the <em>df</em>, the closer a <em>t</em> distribution gets to the standard normal distribution.</p>\n</div>",
+      "choices": [],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

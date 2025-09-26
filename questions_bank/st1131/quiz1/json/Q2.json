@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz1",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Variable \"Postal code in Singapore\" has values that are recorded as numbers so it is a quantitative variable.",
+  "question_stem_html": "<div>Variable \"Postal code in Singapore\" has values that are recorded as numbers so it is a quantitative variable.</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "t/f",
+      "part_stem": "Variable \"Postal code in Singapore\" has values that are recorded as numbers so it is a quantitative variable.",
+      "part_stem_html": "<div>Variable \"Postal code in Singapore\" has values that are recorded as numbers so it is a quantitative variable.</div>",
+      "choices": [
+        {
+          "choice_id": "true_choice",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "false_choice",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

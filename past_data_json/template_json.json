@@ -1,8 +1,8 @@
 {
   "question_id": null,
-  "course": "DSA1101",
-  "semester": 2510,
-  "assessment_type": "midterm",
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "",
   "question_no": 1,
   "is_multi": true,
   "question_stem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
