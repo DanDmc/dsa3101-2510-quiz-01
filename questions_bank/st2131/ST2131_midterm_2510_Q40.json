@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": "2510",
+  "assessment_type": "midterm",
+  "version": 1,
+  "update_timestamp": "2025-09-14T18:40:00+08:00",
+  "question_media": [],
+  "question_no": 40,
+  "is_multi": false,
+  "question_stem": "A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the probability that there will be no complete pair?",
+  "question_stem_html": "<p>A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the probability that there will be no complete pair?</p>",
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mcq",
+      "part_stem": "What is the probability that there will be no complete pair?",
+      "part_stem_html": "<p>What is the probability that there will be no complete pair?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "(10 choose 8) × 2^8 / (20 choose 8)",
+          "text_html": "<p>\\( \\binom{10}{8} 2^8 \\big/ \\binom{20}{8} \\)</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "(10 choose 8) / (20 choose 8)",
+          "text_html": "<p>\\( \\binom{10}{8} \\big/ \\binom{20}{8} \\)</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "(2 choose 1)^8 / (20 choose 8)",
+          "text_html": "<p>\\( (\\binom{2}{1})^8 \\big/ \\binom{20}{8} \\)</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Correct option: A",
+      "solution_html": "<p>Correct option: <strong>A</strong></p>",
+      "difficulty_level": 1.0,
+      "concept_tags": []
+    }
+  ]
+}
