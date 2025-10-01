@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 28,
+  "is_multi": false,
+  "question_stem": "Consider the following SAS program:\nDATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a ;\n7 m 85 89 a\n;\nWhen the code above was run, there was no output. Which one of the following two steps will fix the error?",
+  "question_stem_html": "<p>Consider the following SAS program:</p>\n<p>DATA ex_1;</p>\n<p>INPUT subject gender $ CA1 CA2 HW $;</p>\n<p>DATALINES;</p>\n<p>10 m 80 84 a ;</p>\n<p>7 m 85 89 a</p>\n<p>;</p>\n<p>When the code above was run, there was no output. Which one of the following two steps will fix the error?</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Consider the following SAS program:\nDATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a ;\n7 m 85 89 a\n;\nWhen the code above was run, there was no output. Which one of the following two steps will fix the error?",
+      "part_stem_html": "<p>Consider the following SAS program:</p>\n<p>DATA ex_1;</p>\n<p>INPUT subject gender $ CA1 CA2 HW $;</p>\n<p>DATALINES;</p>\n<p>10 m 80 84 a ;</p>\n<p>7 m 85 89 a</p>\n<p>;</p>\n<p>When the code above was run, there was no output. Which one of the following two steps will fix the error?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Removing the semi-colon on line 4.",
+          "text_html": "<p>Removing the semi-colon on line 4.</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "Moving the semi-colon on line 6 to the end of line 5.",
+          "text_html": "<p>Moving the semi-colon on line 6 to the end of line 5.</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

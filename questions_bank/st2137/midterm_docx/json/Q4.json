@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "The data in phones.csv contains information on phone calls made in Belgium from 1950 until 1973. Let Y be the number of calls, and X be the year variable. Read the data into Python as a pandas dataframe and answer the following questions:\nWrite a function that takes in three arguments: beta0, beta1, and the phones dataframe. It should compute the following L1-norm and return it: ∑i=1n|Yi−β0−β1Xi|\nIterate over a range of beta0 and beta1 values and find the pair that minimizes the L1-norm. Return this pair of beta0 and beta1 values.\nCreate a plot of this line, along with the OLS estimate, along with the datapoints.\nDiscuss the benefits of the L1-fit over the OLS fit.",
+  "question_stem_html": "<p>The data in phones.csv contains information on phone calls made in Belgium from 1950 until 1973. Let Y be the number of calls, and X be the year variable. Read the data into Python as a pandas dataframe and answer the following questions:</p>\n<p>Write a function that takes in three arguments: beta0, beta1, and the phones dataframe. It should compute the following L1-norm and return it: ∑i=1n|Yi−β0−β1Xi|</p>\n<p>Iterate over a range of beta0 and beta1 values and find the pair that minimizes the L1-norm. Return this pair of beta0 and beta1 values.</p>\n<p>Create a plot of this line, along with the OLS estimate, along with the datapoints.</p>\n<p>Discuss the benefits of the L1-fit over the OLS fit.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "The data in phones.csv contains information on phone calls made in Belgium from 1950 until 1973. Let Y be the number of calls, and X be the year variable. Read the data into Python as a pandas dataframe and answer the following questions:\nWrite a function that takes in three arguments: beta0, beta1, and the phones dataframe. It should compute the following L1-norm and return it: ∑i=1n|Yi−β0−β1Xi|\nIterate over a range of beta0 and beta1 values and find the pair that minimizes the L1-norm. Return this pair of beta0 and beta1 values.\nCreate a plot of this line, along with the OLS estimate, along with the datapoints.\nDiscuss the benefits of the L1-fit over the OLS fit.",
+      "part_stem_html": "<p>The data in phones.csv contains information on phone calls made in Belgium from 1950 until 1973. Let Y be the number of calls, and X be the year variable. Read the data into Python as a pandas dataframe and answer the following questions:</p>\n<p>Write a function that takes in three arguments: beta0, beta1, and the phones dataframe. It should compute the following L1-norm and return it: ∑i=1n|Yi−β0−β1Xi|</p>\n<p>Iterate over a range of beta0 and beta1 values and find the pair that minimizes the L1-norm. Return this pair of beta0 and beta1 values.</p>\n<p>Create a plot of this line, along with the OLS estimate, along with the datapoints.</p>\n<p>Discuss the benefits of the L1-fit over the OLS fit.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 8.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

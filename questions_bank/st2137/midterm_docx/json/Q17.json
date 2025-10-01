@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 17,
+  "is_multi": false,
+  "question_stem": "Assuming the appropriate package(s) have been installed on the computer, what command needs to be run in order to resolve the following error?",
+  "question_stem_html": "<p>Assuming the appropriate package(s) have been installed on the computer, what command needs to be run in order to resolve the following error?</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image10.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Assuming the appropriate package(s) have been installed on the computer, what command needs to be run in order to resolve the following error?",
+      "part_stem_html": "<p>Assuming the appropriate package(s) have been installed on the computer, what command needs to be run in order to resolve the following error?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "install.packages(\"psych\")",
+          "text_html": "<p>install.packages(\"psych\")</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "load(psych)",
+          "text_html": "<p>load(psych)</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "library(psych)",
+          "text_html": "<p>library(psych)</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "library(lattice)",
+          "text_html": "<p>library(lattice)</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image10.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

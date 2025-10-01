@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 19,
+  "is_multi": false,
+  "question_stem": "Simulation can be used to estimate expected values of the form \n\nThe reason we can assume Normality when computing Confidence Intervals is that it is up to us to choose the number of observations to generate.",
+  "question_stem_html": "<div><p>Simulation can be used to estimate expected values of the form </p>\n<p><img class=\"equation_image\" title=\"E[g(X)] = \\sum_{x=0}^{\\infty} g(x) p(x).\" src=\"https://canvas.nus.edu.sg/equation_images/E%255Bg(X)%255D%2520%253D%2520%255Csum_%257Bx%253D0%257D%255E%257B%255Cinfty%257D%2520g(x)%2520p(x).?scale=1\" alt=\"LaTeX: E[g(X)] = \\sum_{x=0}^{\\infty} g(x) p(x).\" data-equation-content=\"E[g(X)] = \\sum_{x=0}^{\\infty} g(x) p(x).\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p>\n<p><br>The reason we can assume Normality when computing Confidence Intervals is that it is up to us to choose the number of observations to generate.</p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/E%255Bg(X)%255D%2520%253D%2520%255Csum_%257Bx%253D0%257D%255E%257B%255Cinfty%257D%2520g(x)%2520p(x).?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Simulation can be used to estimate expected values of the form \n\nThe reason we can assume Normality when computing Confidence Intervals is that it is up to us to choose the number of observations to generate.",
+      "part_stem_html": "<div><p>Simulation can be used to estimate expected values of the form </p>\n<p><img class=\"equation_image\" title=\"E[g(X)] = \\sum_{x=0}^{\\infty} g(x) p(x).\" src=\"https://canvas.nus.edu.sg/equation_images/E%255Bg(X)%255D%2520%253D%2520%255Csum_%257Bx%253D0%257D%255E%257B%255Cinfty%257D%2520g(x)%2520p(x).?scale=1\" alt=\"LaTeX: E[g(X)] = \\sum_{x=0}^{\\infty} g(x) p(x).\" data-equation-content=\"E[g(X)] = \\sum_{x=0}^{\\infty} g(x) p(x).\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p>\n<p><br>The reason we can assume Normality when computing Confidence Intervals is that it is up to us to choose the number of observations to generate.</p></div>",
+      "choices": [
+        {
+          "choice_id": "6134",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "4714",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/E%255Bg(X)%255D%2520%253D%2520%255Csum_%257Bx%253D0%257D%255E%257B%255Cinfty%257D%2520g(x)%2520p(x).?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

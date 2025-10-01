@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 23,
+  "is_multi": false,
+  "question_stem": "Which of the following techniques cannot be used to assess the Normality of a given dataset?",
+  "question_stem_html": "<div><p>Which of the following techniques <em>cannot </em>be used to assess the Normality of a given dataset?</p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Which of the following techniques cannot be used to assess the Normality of a given dataset?",
+      "part_stem_html": "<div><p>Which of the following techniques <em>cannot </em>be used to assess the Normality of a given dataset?</p></div>",
+      "choices": [
+        {
+          "choice_id": "5704",
+          "text": "1-sample t-test",
+          "text_html": "1-sample t-test",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "4727",
+          "text": "Kolmogorov-Smirnov test",
+          "text_html": "Kolmogorov-Smirnov test",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "9033",
+          "text": "Shapiro-Wilk test",
+          "text_html": "Shapiro-Wilk test",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "4340",
+          "text": "Skewness",
+          "text_html": "Skewness",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

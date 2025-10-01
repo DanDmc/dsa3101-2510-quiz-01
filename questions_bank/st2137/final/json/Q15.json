@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 15,
+  "is_multi": false,
+  "question_stem": "Refer to the attached pdf SAS output. It contains output from fitting a multiple linear regression model to the bike2 dataset. The dependent variable was registered. The explanatory variables were casual, workingday and season. There was also an interaction term fitted.\n\nWrite down the equations corresponding to\n\nnon-working day in summer, and\nworking day in winter.\n\n\nHow many coefficients are there in the model? Which ones have been set to 0?\nComment on the residual versus casual plot.\nWhich point has the highest leverage? What is the season and workingday status for this point?",
+  "question_stem_html": "<div><p> </p>\n<p>Refer to the <a class=\"instructure_file_link instructure_scribd_file inline_disabled\" title=\"Linear Regression bike_workday_interaction-results-practice-2.pdf\" href=\"$IMS-CC-FILEBASE$/Uploaded%20Media/Linear%20Regression%20bike_workday_interaction-results-practice-2.pdf?canvas_=1&canvas_qs_wrap=1\" target=\"_blank\" data-canvas-previewable=\"false\" data-api-endpoint=\"https://canvas.nus.edu.sg/api/v1/courses/72649/files/5619972\" data-api-returntype=\"File\">attached pdf SAS output</a>. It contains output from fitting a multiple linear regression model to the <code>bike2</code> dataset. The dependent variable was <code>registered</code>. The explanatory variables were <code>casual</code>, <code>workingday</code> and <code>season</code>. There was also an interaction term fitted.</p>\n<ol style=\"list-style-type: decimal;\">\n<li>Write down the equations corresponding to\n<ul>\n<li>non-working day in summer, and</li>\n<li>working day in winter.</li>\n</ul>\n</li>\n<li>How many coefficients are there in the model? Which ones have been set to 0?</li>\n<li>Comment on the residual versus <code>casual</code> plot.</li>\n<li>Which point has the highest leverage? What is the season and workingday status for this point?</li>\n</ol>\n<p><br><br><br></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Refer to the attached pdf SAS output. It contains output from fitting a multiple linear regression model to the bike2 dataset. The dependent variable was registered. The explanatory variables were casual, workingday and season. There was also an interaction term fitted.\n\nWrite down the equations corresponding to\n\nnon-working day in summer, and\nworking day in winter.\n\n\nHow many coefficients are there in the model? Which ones have been set to 0?\nComment on the residual versus casual plot.\nWhich point has the highest leverage? What is the season and workingday status for this point?",
+      "part_stem_html": "<div><p> </p>\n<p>Refer to the <a class=\"instructure_file_link instructure_scribd_file inline_disabled\" title=\"Linear Regression bike_workday_interaction-results-practice-2.pdf\" href=\"$IMS-CC-FILEBASE$/Uploaded%20Media/Linear%20Regression%20bike_workday_interaction-results-practice-2.pdf?canvas_=1&canvas_qs_wrap=1\" target=\"_blank\" data-canvas-previewable=\"false\" data-api-endpoint=\"https://canvas.nus.edu.sg/api/v1/courses/72649/files/5619972\" data-api-returntype=\"File\">attached pdf SAS output</a>. It contains output from fitting a multiple linear regression model to the <code>bike2</code> dataset. The dependent variable was <code>registered</code>. The explanatory variables were <code>casual</code>, <code>workingday</code> and <code>season</code>. There was also an interaction term fitted.</p>\n<ol style=\"list-style-type: decimal;\">\n<li>Write down the equations corresponding to\n<ul>\n<li>non-working day in summer, and</li>\n<li>working day in winter.</li>\n</ul>\n</li>\n<li>How many coefficients are there in the model? Which ones have been set to 0?</li>\n<li>Comment on the residual versus <code>casual</code> plot.</li>\n<li>Which point has the highest leverage? What is the season and workingday status for this point?</li>\n</ol>\n<p><br><br><br></p></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "No solution provided.\n\nNo solution provided.",
+      "solution_html": "No solution provided.\n\nNo solution provided.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

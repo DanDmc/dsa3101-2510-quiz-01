@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 24,
+  "is_multi": false,
+  "question_stem": "In the One-Way ANOVA, we assume the following model:\nYij=μ+αi+eij,i=1,…,k,j=1,…,ni\nThe use of contr.sum( ) in R corresponds to the following constraint when performing estimation:\nSetting α1=0.",
+  "question_stem_html": "<p>In the One-Way ANOVA, we assume the following model:</p>\n<p>Yij=μ+αi+eij,i=1,…,k,j=1,…,ni</p>\n<p>The use of contr.sum( ) in R corresponds to the following constraint when performing estimation:</p>\n<p>Setting α1=0.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the One-Way ANOVA, we assume the following model:\nYij=μ+αi+eij,i=1,…,k,j=1,…,ni\nThe use of contr.sum( ) in R corresponds to the following constraint when performing estimation:\nSetting α1=0.",
+      "part_stem_html": "<p>In the One-Way ANOVA, we assume the following model:</p>\n<p>Yij=μ+αi+eij,i=1,…,k,j=1,…,ni</p>\n<p>The use of contr.sum( ) in R corresponds to the following constraint when performing estimation:</p>\n<p>Setting α1=0.</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

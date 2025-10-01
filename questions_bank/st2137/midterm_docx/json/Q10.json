@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 10,
+  "is_multi": false,
+  "question_stem": "In the topic of categorical data analysis, we encountered the following plot for visualising how a binary variable varies with a continuous one. We had used the data from heart_failure_clinical_records_dataset.csv\nLet us try to create the data for such a plot in Python.\n1. Read in the dataset as heart_failure and create the following table, which contains the binned age column, and the proportion of DEATH_EVENT in the second column:\n## age_interval proportion\n## 0 (40, 45] 0.233333\n## 1 (45, 50] 0.324324\n## 2 (50, 55] 0.157895\n## 3 (55, 60] 0.380000\n## 4 (60, 65] 0.208333\n## 5 (65, 70] 0.297297\n## 6 (70, 75] 0.545455\n## 7 (75, 80] 0.500000\n## 8 (80, 85] 0.600000\n## 9 (85, 90] 0.800000\n## 10 (90, 95] 1.000000\n2. Now create this plot using the pandas dataframe, using kind='scatter'.",
+  "question_stem_html": "<p>In the topic of categorical data analysis, we encountered the following plot for visualising how a binary variable varies with a continuous one. We had used the data from heart_failure_clinical_records_dataset.csv</p>\n<p>Let us try to create the data for such a plot in Python.</p>\n<p>1. Read in the dataset as heart_failure and create the following table, which contains the binned age column, and the proportion of DEATH_EVENT in the second column:</p>\n<p>## age_interval proportion</p>\n<p>## 0 (40, 45] 0.233333</p>\n<p>## 1 (45, 50] 0.324324</p>\n<p>## 2 (50, 55] 0.157895</p>\n<p>## 3 (55, 60] 0.380000</p>\n<p>## 4 (60, 65] 0.208333</p>\n<p>## 5 (65, 70] 0.297297</p>\n<p>## 6 (70, 75] 0.545455</p>\n<p>## 7 (75, 80] 0.500000</p>\n<p>## 8 (80, 85] 0.600000</p>\n<p>## 9 (85, 90] 0.800000</p>\n<p>## 10 (90, 95] 1.000000</p>\n<p>2. Now create this plot using the pandas dataframe, using kind='scatter'.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image7.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image8.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "In the topic of categorical data analysis, we encountered the following plot for visualising how a binary variable varies with a continuous one. We had used the data from heart_failure_clinical_records_dataset.csv\nLet us try to create the data for such a plot in Python.\n1. Read in the dataset as heart_failure and create the following table, which contains the binned age column, and the proportion of DEATH_EVENT in the second column:\n## age_interval proportion\n## 0 (40, 45] 0.233333\n## 1 (45, 50] 0.324324\n## 2 (50, 55] 0.157895\n## 3 (55, 60] 0.380000\n## 4 (60, 65] 0.208333\n## 5 (65, 70] 0.297297\n## 6 (70, 75] 0.545455\n## 7 (75, 80] 0.500000\n## 8 (80, 85] 0.600000\n## 9 (85, 90] 0.800000\n## 10 (90, 95] 1.000000\n2. Now create this plot using the pandas dataframe, using kind='scatter'.",
+      "part_stem_html": "<p>In the topic of categorical data analysis, we encountered the following plot for visualising how a binary variable varies with a continuous one. We had used the data from heart_failure_clinical_records_dataset.csv</p>\n<p>Let us try to create the data for such a plot in Python.</p>\n<p>1. Read in the dataset as heart_failure and create the following table, which contains the binned age column, and the proportion of DEATH_EVENT in the second column:</p>\n<p>## age_interval proportion</p>\n<p>## 0 (40, 45] 0.233333</p>\n<p>## 1 (45, 50] 0.324324</p>\n<p>## 2 (50, 55] 0.157895</p>\n<p>## 3 (55, 60] 0.380000</p>\n<p>## 4 (60, 65] 0.208333</p>\n<p>## 5 (65, 70] 0.297297</p>\n<p>## 6 (70, 75] 0.545455</p>\n<p>## 7 (75, 80] 0.500000</p>\n<p>## 8 (80, 85] 0.600000</p>\n<p>## 9 (85, 90] 0.800000</p>\n<p>## 10 (90, 95] 1.000000</p>\n<p>2. Now create this plot using the pandas dataframe, using kind='scatter'.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image7.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image8.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 4.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

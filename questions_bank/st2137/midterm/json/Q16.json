@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 16,
+  "is_multi": false,
+  "question_stem": "Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). \nWhat is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?",
+  "question_stem_html": "<div><p><span data-contrast=\"none\">Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). </span></p>\n<p><span data-contrast=\"none\">What is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). \nWhat is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?",
+      "part_stem_html": "<div><p><span data-contrast=\"none\">Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). </span></p>\n<p><span data-contrast=\"none\">What is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p></div>",
+      "choices": [
+        {
+          "choice_id": "4206",
+          "text": "np.hstack()",
+          "text_html": "np.hstack()",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "9002",
+          "text": "np.stack()",
+          "text_html": "np.stack()",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "6762",
+          "text": "np.cbind()",
+          "text_html": "np.cbind()",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "5502",
+          "text": "np.concatenate()",
+          "text_html": "np.concatenate()",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

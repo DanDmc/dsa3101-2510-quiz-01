@@ -1,0 +1,72 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 17,
+  "is_multi": false,
+  "question_stem": "In the One-Way ANOVA, we assume the following model:\n\nThe use of `contr.sum( )` in R corresponds to the following constraint when performing estimation:\n\nSetting",
+  "question_stem_html": "<div><p>In the One-Way ANOVA, we assume the following model:</p>\n<p><img class=\"equation_image\" title=\"\\begin{equation}\nY_{ij}  = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i\n\\end{equation}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Cbegin%257Bequation%257D%250AY_%257Bij%257D%2520%2520%253D%2520%255Cmu%2520%252B%2520%255Calpha_i%2520%252B%2520e_%257Bij%257D%252C%255C%253B%2520i%253D1%252C%255Cldots%252Ck%252C%255C%253B%2520j%253D1%252C%255Cldots%252Cn_i%250A%255Cend%257Bequation%257D?scale=1\" alt=\"LaTeX: \\begin{equation}\nY_{ij}  = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i\n\\end{equation}\" data-equation-content=\"\\begin{equation}\nY_{ij}  = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i\n\\end{equation}\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p>\n<p>The use of `contr.sum( )` in R corresponds to the following constraint when performing estimation:</p>\n<ul>\n<li>Setting <img class=\"equation_image\" title=\"\\alpha_1= 0\" src=\"https://canvas.nus.edu.sg/equation_images/%255Calpha_1%253D%25200?scale=1\" alt=\"LaTeX: \\alpha_1= 0\" data-equation-content=\"\\alpha_1= 0\" data-ignore-a11y-check=\"\" loading=\"lazy\"></li>\n</ul></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Cbegin%257Bequation%257D%250AY_%257Bij%257D%2520%2520%253D%2520%255Cmu%2520%252B%2520%255Calpha_i%2520%252B%2520e_%257Bij%257D%252C%255C%253B%2520i%253D1%252C%255Cldots%252Ck%252C%255C%253B%2520j%253D1%252C%255Cldots%252Cn_i%250A%255Cend%257Bequation%257D?scale=1",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Calpha_1%253D%25200?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the One-Way ANOVA, we assume the following model:\n\nThe use of `contr.sum( )` in R corresponds to the following constraint when performing estimation:\n\nSetting",
+      "part_stem_html": "<div><p>In the One-Way ANOVA, we assume the following model:</p>\n<p><img class=\"equation_image\" title=\"\\begin{equation}\nY_{ij}  = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i\n\\end{equation}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Cbegin%257Bequation%257D%250AY_%257Bij%257D%2520%2520%253D%2520%255Cmu%2520%252B%2520%255Calpha_i%2520%252B%2520e_%257Bij%257D%252C%255C%253B%2520i%253D1%252C%255Cldots%252Ck%252C%255C%253B%2520j%253D1%252C%255Cldots%252Cn_i%250A%255Cend%257Bequation%257D?scale=1\" alt=\"LaTeX: \\begin{equation}\nY_{ij}  = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i\n\\end{equation}\" data-equation-content=\"\\begin{equation}\nY_{ij}  = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i\n\\end{equation}\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p>\n<p>The use of `contr.sum( )` in R corresponds to the following constraint when performing estimation:</p>\n<ul>\n<li>Setting <img class=\"equation_image\" title=\"\\alpha_1= 0\" src=\"https://canvas.nus.edu.sg/equation_images/%255Calpha_1%253D%25200?scale=1\" alt=\"LaTeX: \\alpha_1= 0\" data-equation-content=\"\\alpha_1= 0\" data-ignore-a11y-check=\"\" loading=\"lazy\"></li>\n</ul></div>",
+      "choices": [
+        {
+          "choice_id": "8549",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "4212",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Cbegin%257Bequation%257D%250AY_%257Bij%257D%2520%2520%253D%2520%255Cmu%2520%252B%2520%255Calpha_i%2520%252B%2520e_%257Bij%257D%252C%255C%253B%2520i%253D1%252C%255Cldots%252Ck%252C%255C%253B%2520j%253D1%252C%255Cldots%252Cn_i%250A%255Cend%257Bequation%257D?scale=1",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Calpha_1%253D%25200?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "`contr.sum` corresponds to the setting where the sum of the effects is constrained to 0:",
+      "solution_html": "<p>`contr.sum` corresponds to the setting where the sum of the effects is constrained to 0:</p>\n<p><img class=\"equation_image\" title=\"\\sum_{i=1}^k \\alpha_i = 0\" src=\"https://canvas.nus.edu.sg/equation_images/%255Csum_%257Bi%253D1%257D%255Ek%2520%255Calpha_i%2520%253D%25200?scale=1\" alt=\"LaTeX: \\sum_{i=1}^k \\alpha_i = 0\" data-equation-content=\"\\sum_{i=1}^k \\alpha_i = 0\" data-ignore-a11y-check=\"\" loading=\"lazy\"> </p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

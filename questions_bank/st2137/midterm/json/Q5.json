@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 5,
+  "is_multi": true,
+  "question_stem": "What needs to be changed to get the following code to run?\n\nnumpy error",
+  "question_stem_html": "<div><p> </p>\n<p>What needs to be changed to get the following code to run?</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/py_stack2_01.png?canvas_download=1\" alt=\"numpy error\" width=\"988\" loading=\"lazy\">\n<p class=\"caption\">numpy error</p>\n</div>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/py_stack2_01.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "What needs to be changed to get the following code to run?\n\nnumpy error",
+      "part_stem_html": "<div><p> </p>\n<p>What needs to be changed to get the following code to run?</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/py_stack2_01.png?canvas_download=1\" alt=\"numpy error\" width=\"988\" loading=\"lazy\">\n<p class=\"caption\">numpy error</p>\n</div>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "49057",
+          "text": "np.hstack((x,y))",
+          "text_html": "<code>np.hstack((x,y))</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "70468",
+          "text": "y = np.ones((2,))",
+          "text_html": "<code>y = np.ones((2,))</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "77093",
+          "text": "x.hstack(y)",
+          "text_html": "<code>x.hstack(y)</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "27189",
+          "text": "import numpy as np",
+          "text_html": "<code>import numpy as np</code>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/py_stack2_01.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "This will create an array with one dimension for y. It does not rectify the displayed error.\n\nhstack is not a method that belongs to the numpy array x. It is defined in the numpy package.\n\nIf this was causing the error, the error would have been raised at the first line of the code chunk, not the last.",
+      "solution_html": "This will create an array with one dimension for y. It does not rectify the displayed error.\n\nhstack is not a method that belongs to the numpy array x. It is defined in the numpy package.\n\nIf this was causing the error, the error would have been raised at the first line of the code chunk, not the last.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

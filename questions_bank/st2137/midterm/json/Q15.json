@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 15,
+  "is_multi": false,
+  "question_stem": "Suppose that we wish to find the smallest positive root of the following equation: y=sin(x)−x2−0.1 y = \\sin(x) - \\frac{x}{2} - 0.1 \nWrite a function f(x) in R that implements the above equation, and then use uniroot to solve for the smallest positive root. Print the value of the root found.\nNote: A simple implementation of ff will garner more marks than one that does not make use of the vectorised operations in R.",
+  "question_stem_html": "<div><p> </p>\n<p>Suppose that we wish to find the smallest positive root of the following equation: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>y</mi><mo>=</mo><mo>sin</mo><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>x</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mo>−</mo><mfrac><mi>x</mi><mn>2</mn></mfrac><mo>−</mo><mn>0.1</mn></mrow><annotation encoding=\"application/x-tex\"> y = \\sin(x) - \\frac{x}{2} - 0.1 </annotation></semantics></math></p>\n<p>Write a function <code>f(x)</code> in R that implements the above equation, and then use <code>uniroot</code> to solve for the smallest positive root. <em>Print the value of the root found.</em></p>\n<p><em>Note: A simple implementation of <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> will garner more marks than one that does not make use of the vectorised operations in R.</em></p>\n<p><br><br><br></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Suppose that we wish to find the smallest positive root of the following equation: y=sin(x)−x2−0.1 y = \\sin(x) - \\frac{x}{2} - 0.1 \nWrite a function f(x) in R that implements the above equation, and then use uniroot to solve for the smallest positive root. Print the value of the root found.\nNote: A simple implementation of ff will garner more marks than one that does not make use of the vectorised operations in R.",
+      "part_stem_html": "<div><p> </p>\n<p>Suppose that we wish to find the smallest positive root of the following equation: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>y</mi><mo>=</mo><mo>sin</mo><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>x</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mo>−</mo><mfrac><mi>x</mi><mn>2</mn></mfrac><mo>−</mo><mn>0.1</mn></mrow><annotation encoding=\"application/x-tex\"> y = \\sin(x) - \\frac{x}{2} - 0.1 </annotation></semantics></math></p>\n<p>Write a function <code>f(x)</code> in R that implements the above equation, and then use <code>uniroot</code> to solve for the smallest positive root. <em>Print the value of the root found.</em></p>\n<p><em>Note: A simple implementation of <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> will garner more marks than one that does not make use of the vectorised operations in R.</em></p>\n<p><br><br><br></p></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "f \n## [1] 0.2027729\n\nf \n## [1] 0.2027729\n\nf \n## [1] 0.2027729",
+      "solution_html": "<pre><code>f <- function(x) {\n  sin(x) - x/2 - 0.1\n}\noutput <- uniroot(f, c(0, 0.5))\nprint(output$root)</code></pre>\n<pre><code>## [1] 0.2027729</code></pre>\n\n<pre><code>f <- function(x) {\n  sin(x) - x/2 - 0.1\n}\noutput <- uniroot(f, c(0, 0.5))\nprint(output$root)</code></pre>\n<pre><code>## [1] 0.2027729</code></pre>\n\n<pre><code>f <- function(x) {\n  sin(x) - x/2 - 0.1\n}\noutput <- uniroot(f, c(0, 0.5))\nprint(output$root)</code></pre>\n<pre><code>## [1] 0.2027729</code></pre>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 11,
+  "is_multi": false,
+  "question_stem": "Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). What is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?",
+  "question_stem_html": "<p>Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). What is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). What is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?",
+      "part_stem_html": "<p>Suppose that x is a numpy array with shape (2,2) and y is a numpy array with shape (2,1). What is the name of the numpy function for adding column y as a new column to x (making it have shape (2,3))?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "np.cbind()",
+          "text_html": "<p>np.cbind()</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "np.stack()",
+          "text_html": "<p>np.stack()</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "np.hstack()",
+          "text_html": "<p>np.hstack()</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "np.concatenate()",
+          "text_html": "<p>np.concatenate()</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}
