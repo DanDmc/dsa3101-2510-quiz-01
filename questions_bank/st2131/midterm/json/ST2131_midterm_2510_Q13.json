@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 13,
+  "is_multi": false,
+  "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:",
+  "question_stem_html": "<p>Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:20:59+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image20.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:",
+      "part_stem_html": "<p>Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image20.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

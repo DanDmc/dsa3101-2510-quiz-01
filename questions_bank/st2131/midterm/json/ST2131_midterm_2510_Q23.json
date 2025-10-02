@@ -1,0 +1,57 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 23,
+  "is_multi": false,
+  "question_stem": "",
+  "question_stem_html": "",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:20:59+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "",
+      "part_stem_html": "",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "fair coin is tossed independently n times, where n >= 2. Define the following events: Ak: the k-th toss is heads. Sn: the total number of heads observed in the n tosses is even. (Note that 0 is an even number). Is the collection of events A1, A2, A3, ... An, Sn independent? Hint: Consider P(Sn | A1 A2 A3 ... An)",
+          "text_html": "<p>fair coin is tossed independently n times, where n >= 2. Define the following events: Ak: the k-th toss is heads. Sn: the total number of heads observed in the n tosses is even. (Note that 0 is an even number). Is the collection of events A1, A2, A3, ... An, Sn independent? Hint: Consider P(Sn | A1 A2 A3 ... An)</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}
