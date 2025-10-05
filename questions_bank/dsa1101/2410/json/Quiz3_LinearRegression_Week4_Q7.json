@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "Q7. A simple model M4 is fitted where the number of satellites only depends on the weight.\nAfter that, using model M4 to predict the response for the new crab with weight = 2.6 kg. R code is given below. The code is correct. True or False?",
+  "question_stem_html": "<pre>Q7. A simple model M4 is fitted where the number of satellites only depends on the weight.\nAfter that, using model M4 to predict the response for the new crab with weight = 2.6 kg. R code is given below. The code is correct. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": "Ans: FALSE.\nFrom the code in line 28, we told R that model M4 is built with the values for “weight” that must be from a column inside a data frame called “crab”, specified by crab$weight. \nHence, when we use model M4 to predict for a new data point where this new one has “weight” from a data frame with the name “new” (in the line 30), R will not produce the prediction we want.\nR will just produce the prediction for the data that were used to fit the model, “crab”.\nHow to fix the issue above?\nEither we change the way to fit M4 as below, then the code will work:\nM4 = lm(satell ~ weight, data = crab) # note: do not use the form of data$y ~ data$x\nnew = data.frame(weight = 2.6)\npredict(M4, newdata = new)\n\nOR we must name the new data frame as the same as the original data frame as below.\nM4 = lm(crab$satell ~ crab$weight, data = crab) \ncrab = data.frame(weight = 2.6)\npredict(M4, newdata = crab)\nNote: this latter method is not recommended, since if we do this, we will not have the original data frame “crab” in R anymore, since it is now replaced by the new one.\n\n\n\n\n "
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: FALSE.\nFrom the code in line 28, we told R that model M4 is built with the values for “weight” that must be from a column inside a data frame called “crab”, specified by crab$weight. \nHence, when we use model M4 to predict for a new data point where this new one has “weight” from a data frame with the name “new” (in the line 30), R will not produce the prediction we want.\nR will just produce the prediction for the data that were used to fit the model, “crab”.\nHow to fix the issue above?\nEither we change the way to fit M4 as below, then the code will work:\nM4 = lm(satell ~ weight, data = crab) # note: do not use the form of data$y ~ data$x\nnew = data.frame(weight = 2.6)\npredict(M4, newdata = new)\n\nOR we must name the new data frame as the same as the original data frame as below.\nM4 = lm(crab$satell ~ crab$weight, data = crab) \ncrab = data.frame(weight = 2.6)\npredict(M4, newdata = crab)\nNote: this latter method is not recommended, since if we do this, we will not have the original data frame “crab” in R anymore, since it is now replaced by the new one.\n\n\n\n\n ",
+      "solution_html": "<pre>Ans: FALSE.\nFrom the code in line 28, we told R that model M4 is built with the values for “weight” that must be from a column inside a data frame called “crab”, specified by crab$weight. \nHence, when we use model M4 to predict for a new data point where this new one has “weight” from a data frame with the name “new” (in the line 30), R will not produce the prediction we want.\nR will just produce the prediction for the data that were used to fit the model, “crab”.\nHow to fix the issue above?\nEither we change the way to fit M4 as below, then the code will work:\nM4 = lm(satell ~ weight, data = crab) # note: do not use the form of data$y ~ data$x\nnew = data.frame(weight = 2.6)\npredict(M4, newdata = new)\n\nOR we must name the new data frame as the same as the original data frame as below.\nM4 = lm(crab$satell ~ crab$weight, data = crab) \ncrab = data.frame(weight = 2.6)\npredict(M4, newdata = crab)\nNote: this latter method is not recommended, since if we do this, we will not have the original data frame “crab” in R anymore, since it is now replaced by the new one.\n\n\n\n\n </pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

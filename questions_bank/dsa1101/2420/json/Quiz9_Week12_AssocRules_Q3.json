@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Question 3\n\nWhich is the correct formula for the leverage of a rule X -> Y ( i.e. Leverage( X -> Y) ) ?\nA\nSupport( X ^ Y ) / Support(X)\nB\nSupport( X ^ Y )  - Support(X) * Support(Y)\nC\nSupport( X ^ Y ) / ( Support(X) * Support(Y) )\nD\nNone of the above",
+  "question_stem_html": "<pre>Question 3\n\nWhich is the correct formula for the leverage of a rule X -&gt; Y ( i.e. Leverage( X -&gt; Y) ) ?\nA\nSupport( X ^ Y ) / Support(X)\nB\nSupport( X ^ Y )  - Support(X) * Support(Y)\nC\nSupport( X ^ Y ) / ( Support(X) * Support(Y) )\nD\nNone of the above</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Support( X ^ Y ) / Support(X)",
+          "text_html": "<p>Support( X ^ Y ) / Support(X)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "Support( X ^ Y )  - Support(X) * Support(Y)",
+          "text_html": "<p>Support( X ^ Y )  - Support(X) * Support(Y)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "Support( X ^ Y ) / ( Support(X) * Support(Y) )",
+          "text_html": "<p>Support( X ^ Y ) / ( Support(X) * Support(Y) )</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "None of the above",
+          "text_html": "<p>None of the above</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "association rules",
+        "market basket"
+      ]
+    }
+  ]
+}

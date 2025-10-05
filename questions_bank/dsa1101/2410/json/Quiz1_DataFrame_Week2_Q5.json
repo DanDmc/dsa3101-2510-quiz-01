@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Q5. If now you run the code\nspine\n then you will get an error from R. True or False?",
+  "question_stem_html": "<pre>Q5. If now you run the code\nspine\n then you will get an error from R. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:04:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: True. This is because R now knows “data1” but it doesn’t know the name of each column inside “data1” yet. "
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: True. This is because R now knows “data1” but it doesn’t know the name of each column inside “data1” yet. ",
+      "solution_html": "<pre>Ans: True. This is because R now knows “data1” but it doesn’t know the name of each column inside “data1” yet. </pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "R",
+        "data frame",
+        "factors",
+        "True/False"
+      ]
+    }
+  ]
+}

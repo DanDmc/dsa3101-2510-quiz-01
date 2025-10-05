@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Question 5\n\nRefer to the picture below taken from Topic 9 lecture notes page 65 on the graph for the top 5 rules with the highest Lift within the Groceries data set:\n\n\nWhich rule has the highest Support?\nA\n{ ham, processed cheese} -> { white bread }\nB\n{ Instant food products, soda } -> { hamburger meat }\nC\n{ hamburger meat, whipped/sour cream, yogurt ) -> { butter }\nD\n{ white bread, other vegetables, tropical fruit, yogurt } -> { butter }",
+  "question_stem_html": "<pre>Question 5\n\nRefer to the picture below taken from Topic 9 lecture notes page 65 on the graph for the top 5 rules with the highest Lift within the Groceries data set:\n\n\nWhich rule has the highest Support?\nA\n{ ham, processed cheese} -&gt; { white bread }\nB\n{ Instant food products, soda } -&gt; { hamburger meat }\nC\n{ hamburger meat, whipped/sour cream, yogurt ) -&gt; { butter }\nD\n{ white bread, other vegetables, tropical fruit, yogurt } -&gt; { butter }</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "{ ham, processed cheese} -> { white bread }",
+          "text_html": "<p>{ ham, processed cheese} -&gt; { white bread }</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "{ Instant food products, soda } -> { hamburger meat }",
+          "text_html": "<p>{ Instant food products, soda } -&gt; { hamburger meat }</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "{ hamburger meat, whipped/sour cream, yogurt ) -> { butter }",
+          "text_html": "<p>{ hamburger meat, whipped/sour cream, yogurt ) -&gt; { butter }</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "{ white bread, other vegetables, tropical fruit, yogurt } -> { butter }",
+          "text_html": "<p>{ white bread, other vegetables, tropical fruit, yogurt } -&gt; { butter }</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "association rules",
+        "market basket"
+      ]
+    }
+  ]
+}

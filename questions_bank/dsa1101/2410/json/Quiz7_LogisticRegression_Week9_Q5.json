@@ -1,0 +1,71 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Q5. Consider using model M3 to predict for a customer at age 50 and have 5 churned contacts. What is the output of the R code in line 22?\npredict(M3, newdata = data.frame(Age = 50, Churned_contacts = 5), type = 'response')\nThe value of Churned for that customer.\nThe predicted odds that the customer will churn.\nThe predicted probability that the customer will churn.\nThe predicted ratio between probability of churn and probability of not churn for that customer.",
+  "question_stem_html": "<pre>Q5. Consider using model M3 to predict for a customer at age 50 and have 5 churned contacts. What is the output of the R code in line 22?\npredict(M3, newdata = data.frame(Age = 50, Churned_contacts = 5), type = &#x27;response&#x27;)\nThe value of Churned for that customer.\nThe predicted odds that the customer will churn.\nThe predicted probability that the customer will churn.\nThe predicted ratio between probability of churn and probability of not churn for that customer.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:24:49+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "redict(M3, newdata = data.frame(Age = 50, Churned_contacts = 5), type = 'response')",
+          "text_html": "<p>redict(M3, newdata = data.frame(Age = 50, Churned_contacts = 5), type = &#x27;response&#x27;)</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he value of Churned for that customer.",
+          "text_html": "<p>he value of Churned for that customer.</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he predicted odds that the customer will churn.",
+          "text_html": "<p>he predicted odds that the customer will churn.</p>",
+          "is_correct": true,
+          "explanation": "Ans: Option C. \nExplanation: type = ‘response’ is specified which requires R to return the probability of response = 1. That is the probability predicted by model M3."
+        },
+        {
+          "choice_id": null,
+          "text": "he predicted probability that the customer will churn.",
+          "text_html": "<p>he predicted probability that the customer will churn.</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he predicted ratio between probability of churn and probability of not churn for that customer.",
+          "text_html": "<p>he predicted ratio between probability of churn and probability of not churn for that customer.</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: Option C. \nExplanation: type = ‘response’ is specified which requires R to return the probability of response = 1. That is the probability predicted by model M3.",
+      "solution_html": "<pre>Ans: Option C. \nExplanation: type = ‘response’ is specified which requires R to return the probability of response = 1. That is the probability predicted by model M3.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "logistic regression"
+      ]
+    }
+  ]
+}

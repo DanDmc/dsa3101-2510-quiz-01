@@ -1,0 +1,174 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Final",
+  "question_no": 2,
+  "is_multi": true,
+  "question_stem": "\n\n2. (10 points) Multilple Choice Questions.\n\nA dataset collected contains information of patients and their cancer status. Let Column\nY be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased\nand 0 = no-diseased. Let p denote P (Y = diseased).",
+  "question_stem_html": "<pre>\n\n2. (10 points) Multilple Choice Questions.\n\nA dataset collected contains information of patients and their cancer status. Let Column\nY be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased\nand 0 = no-diseased. Let p denote P (Y = diseased).</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T21:40:24+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": null,
+      "part_stem": "(a) In order to get the prediction of p of the test points using a (cid:28)tted 10-NN classi(cid:28)er,\n\nthe R code is of the form\n\npred.prob = knn(train, test, cl, k = 10,___)\n\nwhere in the blank space, we add\n\nA. type = (cid:16)prob(cid:17)\n\nB. type = (cid:16)class(cid:17)\n\nC. prob = TRUE\n\nD. type = (cid:16)response(cid:17)\n\nE. type = (cid:16)raw(cid:17)\n\n2\n\n\f(b) Using a (cid:28)tted decision tree, named fit, the prediction of p of the test points is\n\nobtained by\n\npred.prob = predict(fit, new.data = test, ___)\n\nwhere in the blank space, we add\n\nDSA1101\n\nA. type = (cid:16)prob(cid:17)\n\nB. type = (cid:16)class(cid:17)\n\nC. prob = TRUE\n\nD. type = (cid:16)response(cid:17)\n\nE. type = (cid:16)raw(cid:17)",
+      "part_stem_html": "<pre>(a) In order to get the prediction of p of the test points using a (cid:28)tted 10-NN classi(cid:28)er,\n\nthe R code is of the form\n\npred.prob = knn(train, test, cl, k = 10,___)\n\nwhere in the blank space, we add\n\nA. type = (cid:16)prob(cid:17)\n\nB. type = (cid:16)class(cid:17)\n\nC. prob = TRUE\n\nD. type = (cid:16)response(cid:17)\n\nE. type = (cid:16)raw(cid:17)\n\n2\n\n\f(b) Using a (cid:28)tted decision tree, named fit, the prediction of p of the test points is\n\nobtained by\n\npred.prob = predict(fit, new.data = test, ___)\n\nwhere in the blank space, we add\n\nDSA1101\n\nA. type = (cid:16)prob(cid:17)\n\nB. type = (cid:16)class(cid:17)\n\nC. prob = TRUE\n\nD. type = (cid:16)response(cid:17)\n\nE. type = (cid:16)raw(cid:17)</pre>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "type = (cid:16)prob(cid:17)",
+          "text_html": "<pre>type = (cid:16)prob(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "type = (cid:16)class(cid:17)",
+          "text_html": "<pre>type = (cid:16)class(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "prob = TRUE",
+          "text_html": "<pre>prob = TRUE</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "type = (cid:16)response(cid:17)",
+          "text_html": "<pre>type = (cid:16)response(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "E",
+          "text": "type = (cid:16)raw(cid:17)",
+          "text_html": "<pre>type = (cid:16)raw(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "A",
+          "text": "type = (cid:16)prob(cid:17)",
+          "text_html": "<pre>type = (cid:16)prob(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "type = (cid:16)class(cid:17)",
+          "text_html": "<pre>type = (cid:16)class(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "prob = TRUE",
+          "text_html": "<pre>prob = TRUE</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "type = (cid:16)response(cid:17)",
+          "text_html": "<pre>type = (cid:16)response(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "E",
+          "text": "type = (cid:16)raw(cid:17)",
+          "text_html": "<pre>type = (cid:16)raw(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "A",
+          "text": "type = (cid:16)prob(cid:17)",
+          "text_html": "<pre>type = (cid:16)prob(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "type = (cid:16)class(cid:17)",
+          "text_html": "<pre>type = (cid:16)class(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "prob = TRUE",
+          "text_html": "<pre>prob = TRUE</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "type = (cid:16)response(cid:17)",
+          "text_html": "<pre>type = (cid:16)response(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "E",
+          "text": "type = (cid:16)raw(cid:17)",
+          "text_html": "<pre>type = (cid:16)raw(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "A",
+          "text": "type = (cid:16)prob(cid:17)",
+          "text_html": "<pre>type = (cid:16)prob(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "type = (cid:16)class(cid:17)",
+          "text_html": "<pre>type = (cid:16)class(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "prob = TRUE",
+          "text_html": "<pre>prob = TRUE</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "type = (cid:16)response(cid:17)",
+          "text_html": "<pre>type = (cid:16)response(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": "E",
+          "text": "type = (cid:16)raw(cid:17)",
+          "text_html": "<pre>type = (cid:16)raw(cid:17)</pre>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

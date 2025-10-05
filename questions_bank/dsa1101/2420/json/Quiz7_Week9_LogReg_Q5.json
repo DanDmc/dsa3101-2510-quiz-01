@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Question 5\nAssume the model is named “M1” and we are trying to predict the churn status for a set of customers in the dataset “churn.test”. Which line of code will output the predicted class labels (0 or 1)?\nA\npredict(M1, newdata = churn.test)\nB\npredict(M1, newdata = churn.test, type = “response”)\nC\npredict(M1, newdata = churn.test, type = “class”)\nD\nNone of the above",
+  "question_stem_html": "<pre>Question 5\nAssume the model is named “M1” and we are trying to predict the churn status for a set of customers in the dataset “churn.test”. Which line of code will output the predicted class labels (0 or 1)?\nA\npredict(M1, newdata = churn.test)\nB\npredict(M1, newdata = churn.test, type = “response”)\nC\npredict(M1, newdata = churn.test, type = “class”)\nD\nNone of the above</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redict(M1, newdata = churn.test, type = “response”)",
+          "text_html": "<p>redict(M1, newdata = churn.test, type = “response”)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redict(M1, newdata = churn.test, type = “class”)",
+          "text_html": "<p>redict(M1, newdata = churn.test, type = “class”)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "one of the above",
+          "text_html": "<p>one of the above</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

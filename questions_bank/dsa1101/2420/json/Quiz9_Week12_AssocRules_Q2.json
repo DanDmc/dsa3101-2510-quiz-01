@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Question 2\n\nGiven that the itemset {bread, jam} is frequent, which of the following itemsets is also frequent? Select all that apply. \nA\n{bread}\nB\n{bread, jam, eggs}\nC\n{eggs}\nD\n{jam}",
+  "question_stem_html": "<pre>Question 2\n\nGiven that the itemset {bread, jam} is frequent, which of the following itemsets is also frequent? Select all that apply. \nA\n{bread}\nB\n{bread, jam, eggs}\nC\n{eggs}\nD\n{jam}</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "{bread}",
+          "text_html": "<p>{bread}</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "{bread, jam, eggs}",
+          "text_html": "<p>{bread, jam, eggs}</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "{eggs}",
+          "text_html": "<p>{eggs}</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "{jam}",
+          "text_html": "<p>{jam}</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "association rules",
+        "market basket"
+      ]
+    }
+  ]
+}

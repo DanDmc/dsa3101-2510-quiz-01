@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Q3. Brandon uses function as.factor() to transform the first column of data frame above into a categorical variable by the code below.\ncolor = as.factor(data1$color)\n\n\nThen, now, the first column of “data1” is recognized by R as categorical. True or False?",
+  "question_stem_html": "<pre>Q3. Brandon uses function as.factor() to transform the first column of data frame above into a categorical variable by the code below.\ncolor = as.factor(data1$color)\n\n\nThen, now, the first column of “data1” is recognized by R as categorical. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:04:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": "Ans: FALSE. \nThis line of code by Brandon creates a new variable, named as “color”, which factorizes the column “color” of “data1”. Hence, this new variable with the name “color” is a categorical variable and it is outside of “data1”.\nTo verify, you can run the code \nis.numeric(data1$color)\nThen R will show “TRUE” to confirm that the first column of “data1” is still NUMERIC, not categorical. Instead, you will have FALSE when running\nis.numeric(color)"
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: FALSE. \nThis line of code by Brandon creates a new variable, named as “color”, which factorizes the column “color” of “data1”. Hence, this new variable with the name “color” is a categorical variable and it is outside of “data1”.\nTo verify, you can run the code \nis.numeric(data1$color)\nThen R will show “TRUE” to confirm that the first column of “data1” is still NUMERIC, not categorical. Instead, you will have FALSE when running\nis.numeric(color)",
+      "solution_html": "<pre>Ans: FALSE. \nThis line of code by Brandon creates a new variable, named as “color”, which factorizes the column “color” of “data1”. Hence, this new variable with the name “color” is a categorical variable and it is outside of “data1”.\nTo verify, you can run the code \nis.numeric(data1$color)\nThen R will show “TRUE” to confirm that the first column of “data1” is still NUMERIC, not categorical. Instead, you will have FALSE when running\nis.numeric(color)</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "R",
+        "data frame",
+        "factors",
+        "True/False"
+      ]
+    }
+  ]
+}

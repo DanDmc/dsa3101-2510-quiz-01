@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Question 4\nWhich line of code correctly calculates the accuracy of M1 using the confusion matrix formed on line 11?\nA\nsum(diag(mat)) / sum(mat)\nB\nsum(mat) / sum(diag(mat))\nC\n(mat[2] + mat[3]) / sum(mat)\nD\n(mat[1] + mat[3] / sum(mat))",
+  "question_stem_html": "<pre>Question 4\nWhich line of code correctly calculates the accuracy of M1 using the confusion matrix formed on line 11?\nA\nsum(diag(mat)) / sum(mat)\nB\nsum(mat) / sum(diag(mat))\nC\n(mat[2] + mat[3]) / sum(mat)\nD\n(mat[1] + mat[3] / sum(mat))</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "um(mat) / sum(diag(mat))",
+          "text_html": "<p>um(mat) / sum(diag(mat))</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "(mat[2] + mat[3]) / sum(mat)",
+          "text_html": "<p>(mat[2] + mat[3]) / sum(mat)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "(mat[1] + mat[3] / sum(mat))",
+          "text_html": "<p>(mat[1] + mat[3] / sum(mat))</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

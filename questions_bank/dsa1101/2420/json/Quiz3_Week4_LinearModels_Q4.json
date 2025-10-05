@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Question 4\nSelect all the correct statements that apply when this code is executed.\n\nA\nLine 4 will not create a linear model\nB\nLine 7 will output a single prediction\nC\nLine 8 will produce an error\nD\nLine 8 will output multiple predictions",
+  "question_stem_html": "<pre>Question 4\nSelect all the correct statements that apply when this code is executed.\n\nA\nLine 4 will not create a linear model\nB\nLine 7 will output a single prediction\nC\nLine 8 will produce an error\nD\nLine 8 will output multiple predictions</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "msq",
+      "subtype": "multiple",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ine 7 will output a single prediction",
+          "text_html": "<p>ine 7 will output a single prediction</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ine 8 will produce an error",
+          "text_html": "<p>ine 8 will produce an error</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ine 8 will output multiple predictions",
+          "text_html": "<p>ine 8 will output multiple predictions</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Question 3\nConsider the leaf node at the bottom right of the image (yes: 8/8). Select all the correct options.\nA\nThere are 8 customers with poutcome = success & education = primary or unknown.\nB\nOut of the 58 customers with poutcome = success, 8 of them subscribed to the bank service\nC\nCustomers with poutcome = success & education = primary or unknown are predicted to have a 100% probability of subscribing to the bank service\nD\nThis leaf node provides no information on whether customers will subscribe to the bank service",
+  "question_stem_html": "<pre>Question 3\nConsider the leaf node at the bottom right of the image (yes: 8/8). Select all the correct options.\nA\nThere are 8 customers with poutcome = success &amp; education = primary or unknown.\nB\nOut of the 58 customers with poutcome = success, 8 of them subscribed to the bank service\nC\nCustomers with poutcome = success &amp; education = primary or unknown are predicted to have a 100% probability of subscribing to the bank service\nD\nThis leaf node provides no information on whether customers will subscribe to the bank service</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "msq",
+      "subtype": "multiple",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ut of the 58 customers with poutcome = success, 8 of them subscribed to the bank service",
+          "text_html": "<p>ut of the 58 customers with poutcome = success, 8 of them subscribed to the bank service</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ustomers with poutcome = success & education = primary or unknown are predicted to have a 100% probability of subscribing to the bank service",
+          "text_html": "<p>ustomers with poutcome = success &amp; education = primary or unknown are predicted to have a 100% probability of subscribing to the bank service</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "his leaf node provides no information on whether customers will subscribe to the bank service",
+          "text_html": "<p>his leaf node provides no information on whether customers will subscribe to the bank service</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 6 – Week 8\nContent: Naïve Bayes Classifier\n\nData files <bank-sample.csv> and <bank-sample-test.csv> are provided on Canvas. \nPlease open the R code file attached <Quiz6.R> and run the code to answer the questions below. \nNote: to run the code file smoothly, you might need to:\nSet working directory: setwd()\nInstall packages: install.packages(“e1071”)\n\nQ1. How many explanatory variables are there in the Naïve Bayes classifier “nb_model”?\n6,7,8,9,10",
+  "question_stem_html": "<pre>Quiz 6 – Week 8\nContent: Naïve Bayes Classifier\n\nData files &lt;bank-sample.csv&gt; and &lt;bank-sample-test.csv&gt; are provided on Canvas. \nPlease open the R code file attached &lt;Quiz6.R&gt; and run the code to answer the questions below. \nNote: to run the code file smoothly, you might need to:\nSet working directory: setwd()\nInstall packages: install.packages(“e1071”)\n\nQ1. How many explanatory variables are there in the Naïve Bayes classifier “nb_model”?\n6,7,8,9,10</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:20:18+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "6",
+          "text_html": "<p>6</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "7",
+          "text_html": "<p>7</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "8",
+          "text_html": "<p>8</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "9",
+          "text_html": "<p>9</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "10",
+          "text_html": "<p>10</p>",
+          "is_correct": true,
+          "explanation": "Ans: 10\nExplanation: data set “banktrain” has 11 columns (after dropping 6 unwanted columns).\nModel was formed as \nnb_model <- naiveBayes( subscribed ~ . , data = banktrain)\nwhere the response variable “subscribed” depends on a dot. This dot is to replace for “ALL OTHER COLUMNS” in data = banktrain. Hence, there are 10 columns used as explanatories in the model."
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: 10\nExplanation: data set “banktrain” has 11 columns (after dropping 6 unwanted columns).\nModel was formed as \nnb_model <- naiveBayes( subscribed ~ . , data = banktrain)\nwhere the response variable “subscribed” depends on a dot. This dot is to replace for “ALL OTHER COLUMNS” in data = banktrain. Hence, there are 10 columns used as explanatories in the model.",
+      "solution_html": "<pre>Ans: 10\nExplanation: data set “banktrain” has 11 columns (after dropping 6 unwanted columns).\nModel was formed as \nnb_model &lt;- naiveBayes( subscribed ~ . , data = banktrain)\nwhere the response variable “subscribed” depends on a dot. This dot is to replace for “ALL OTHER COLUMNS” in data = banktrain. Hence, there are 10 columns used as explanatories in the model.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "naive bayes"
+      ]
+    }
+  ]
+}

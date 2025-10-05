@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Question 4 (correct answer in yellow highlight)\nThe leaf node in the red triangle (yes 8/8) means\nIf a customer has education = primary or unknown, then s/he is predicted to subscribe the bank service with probability 100%.\n\nThere are 8 customers that has poutcome = success and education = primary or unknown but there is no information if they subscribed the bank service or not.\n\nThere are 58 customers has poutcome = success in the sample, and there are 8 among those 58 customers has education = primary or unknown that all subscribed the bank service.\n\nIf a customer has poutcome = success and education = primary or unknown, then we can predict that s/he will subscribe the bank service with probability 100%.",
+  "question_stem_html": "<pre>Question 4 (correct answer in yellow highlight)\nThe leaf node in the red triangle (yes 8/8) means\nIf a customer has education = primary or unknown, then s/he is predicted to subscribe the bank service with probability 100%.\n\nThere are 8 customers that has poutcome = success and education = primary or unknown but there is no information if they subscribed the bank service or not.\n\nThere are 58 customers has poutcome = success in the sample, and there are 8 among those 58 customers has education = primary or unknown that all subscribed the bank service.\n\nIf a customer has poutcome = success and education = primary or unknown, then we can predict that s/he will subscribe the bank service with probability 100%.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he leaf node in the red triangle (yes 8/8) means",
+          "text_html": "<p>he leaf node in the red triangle (yes 8/8) means</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "f a customer has education = primary or unknown, then s/he is predicted to subscribe the bank service with probability 100%.",
+          "text_html": "<p>f a customer has education = primary or unknown, then s/he is predicted to subscribe the bank service with probability 100%.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

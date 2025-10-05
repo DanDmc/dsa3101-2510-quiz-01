@@ -1,0 +1,535 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Final",
+  "question_no": 4,
+  "is_multi": true,
+  "question_stem": "",
+  "question_stem_html": "<pre></pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T21:40:51+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "1",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "Part I: Decision Trees (20 points)\n\n\n1. Write code to create a new column for df named status, where status equal to 1 if\n\nquality of car evaluation is high, and status equal to 0 otherwise.",
+      "part_stem_html": "<pre>Part I: Decision Trees (20 points)\n\n\n1. Write code to create a new column for df named status, where status equal to 1 if\n\nquality of car evaluation is high, and status equal to 0 otherwise.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "2",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "2. Let m denote a vector of possible values for argument minsplit which is from 25 up\nto 50. Write code to (cid:28)t a decision tree (using Information Gain) that helps to predict\nstatus of car evaluation using the dataset given for each value of minsplit in m.\n\nFor each tree (cid:28)tted, write code to obtain the values of TPR and FNR.",
+      "part_stem_html": "<pre>2. Let m denote a vector of possible values for argument minsplit which is from 25 up\nto 50. Write code to (cid:28)t a decision tree (using Information Gain) that helps to predict\nstatus of car evaluation using the dataset given for each value of minsplit in m.\n\nFor each tree (cid:28)tted, write code to obtain the values of TPR and FNR.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "3",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "3. Which is the best value of minsplit such that the value of TPR of the tree built\nfrom that minsplit is at least 0.9. Write code to show how to determine the best\nvalue of minsplit.",
+      "part_stem_html": "<pre>3. Which is the best value of minsplit such that the value of TPR of the tree built\nfrom that minsplit is at least 0.9. Write code to show how to determine the best\nvalue of minsplit.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "4",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "4. With the value of minsplit chosen in Question 3, write code to (cid:28)t a decision tree,\nto be named as DT. Report the name of the most important variable in that tree.",
+      "part_stem_html": "<pre>4. With the value of minsplit chosen in Question 3, write code to (cid:28)t a decision tree,\nto be named as DT. Report the name of the most important variable in that tree.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "5",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "5. Write code to plot the ROC curve of the tree DT. Derive and report the value of AUC.\n\n6\n\n\fDSA1101\n\nPart II: Naive Bayes Classi(cid:28)er (10 points)",
+      "part_stem_html": "<pre>5. Write code to plot the ROC curve of the tree DT. Derive and report the value of AUC.\n\n6\n\n\fDSA1101\n\nPart II: Naive Bayes Classi(cid:28)er (10 points)</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "6",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "Part II: Naive Bayes Classi(cid:28)er (10 points)\n\n\n6. We now use the naive Bayes classi(cid:28)er for the dataset given. Let status be the\n\nresponse variable. Write code to form the classi(cid:28)er, to be named as NB.",
+      "part_stem_html": "<pre>Part II: Naive Bayes Classi(cid:28)er (10 points)\n\n\n6. We now use the naive Bayes classi(cid:28)er for the dataset given. Let status be the\n\nresponse variable. Write code to form the classi(cid:28)er, to be named as NB.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "7",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "7. Write code to calculate the precision of NB for the given dataset using a threshold\n\nδ = 0.1.",
+      "part_stem_html": "<pre>7. Write code to calculate the precision of NB for the given dataset using a threshold\n\nδ = 0.1.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "8",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "8. Write code to plot the ROC curve of the classi(cid:28)er NB. Derive and report the value of\n\nAUC.\n\nPart III: Logistic Regression Model (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a logistic regression for status,\nby considering each feature as a quantitative variable.",
+      "part_stem_html": "<pre>8. Write code to plot the ROC curve of the classi(cid:28)er NB. Derive and report the value of\n\nAUC.\n\nPart III: Logistic Regression Model (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a logistic regression for status,\nby considering each feature as a quantitative variable.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "9",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "Part III: Logistic Regression Model (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a logistic regression for status,\nby considering each feature as a quantitative variable.\n\n\n9. Write code to transform buying to numeric with values 1, 2, 3, and 4 for the categories\n\nlow, med, high, and vhigh, respectively.",
+      "part_stem_html": "<pre>Part III: Logistic Regression Model (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a logistic regression for status,\nby considering each feature as a quantitative variable.\n\n\n9. Write code to transform buying to numeric with values 1, 2, 3, and 4 for the categories\n\nlow, med, high, and vhigh, respectively.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "10",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "10. Using status as the response variable, write code to form a logistic regression model\n\nfor it (called LR), using the six input features given.",
+      "part_stem_html": "<pre>10. Using status as the response variable, write code to form a logistic regression model\n\nfor it (called LR), using the six input features given.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "11",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "11. Under model LR, compare the odds of having status being 1 (high quality) between\na car that has big luggage boot and that of a car having small luggage boot, given\nthat they both have the same information for other features.",
+      "part_stem_html": "<pre>11. Under model LR, compare the odds of having status being 1 (high quality) between\na car that has big luggage boot and that of a car having small luggage boot, given\nthat they both have the same information for other features.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "12",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "12. Write code to calculate the precision of model LR for the given dataset using a thresh-\n\nold δ = 0.1.",
+      "part_stem_html": "<pre>12. Write code to calculate the precision of model LR for the given dataset using a thresh-\n\nold δ = 0.1.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "13",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "13. Write code to plot the ROC curve of model LR. Derive and report the value of AUC.\n\nPart IV: KNN classi(cid:28)er (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a KNN classi(cid:28)er for status, by\nconsidering each feature as a quantitative variable.",
+      "part_stem_html": "<pre>13. Write code to plot the ROC curve of model LR. Derive and report the value of AUC.\n\nPart IV: KNN classi(cid:28)er (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a KNN classi(cid:28)er for status, by\nconsidering each feature as a quantitative variable.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "14",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "Part IV: KNN classi(cid:28)er (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a KNN classi(cid:28)er for status, by\nconsidering each feature as a quantitative variable.\n\n\n14. Write code to standardize the six input features, and store them in a data frame\n\nnamed data.x.",
+      "part_stem_html": "<pre>Part IV: KNN classi(cid:28)er (20 points)\n\nSince all the input features are ordered, we can (cid:28)t a KNN classi(cid:28)er for status, by\nconsidering each feature as a quantitative variable.\n\n\n14. Write code to standardize the six input features, and store them in a data frame\n\nnamed data.x.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "15",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "15. Consider KNN classi(cid:28)ers with k being the odd numbers from 3 up to 43. Write code\nto form those classi(cid:28)ers and store the values of TPR and FNR for each value of k.",
+      "part_stem_html": "<pre>15. Consider KNN classi(cid:28)ers with k being the odd numbers from 3 up to 43. Write code\nto form those classi(cid:28)ers and store the values of TPR and FNR for each value of k.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "16",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "16. Report the value of k that its TPR is at least 0.9 and its FNR is non-zero.\n\n7\n\n\fDSA1101",
+      "part_stem_html": "<pre>16. Report the value of k that its TPR is at least 0.9 and its FNR is non-zero.\n\n7\n\n\fDSA1101</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "17",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "17. With the value of k determined in Question 16, write code to form a KNN classi(cid:28)er\n\nand (cid:28)nd its precision using a threshold δ = 0.1.",
+      "part_stem_html": "<pre>17. With the value of k determined in Question 16, write code to form a KNN classi(cid:28)er\n\nand (cid:28)nd its precision using a threshold δ = 0.1.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "18",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "18. Write code to plot the ROC curve of the KNN classi(cid:28)er in Question 17. Derive and\n\nreport the value of AUC.",
+      "part_stem_html": "<pre>18. Write code to plot the ROC curve of the KNN classi(cid:28)er in Question 17. Derive and\n\nreport the value of AUC.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "19",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "19. Write code to create a plot that has all the four ROC curves created in Questions 5,\n8, 13, 18 where each curve should have a di(cid:27)erent color and a legend box is included\nin the plot.",
+      "part_stem_html": "<pre>19. Write code to create a plot that has all the four ROC curves created in Questions 5,\n8, 13, 18 where each curve should have a di(cid:27)erent color and a legend box is included\nin the plot.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "20",
+      "type": "code",
+      "subtype": null,
+      "part_stem": "20. Among all the four ROC curves, which curve has highest AUC value?\n\n(cid:21)END OF PAPER(cid:21)\n\n8\n\n\f",
+      "part_stem_html": "<pre>20. Among all the four ROC curves, which curve has highest AUC value?\n\n(cid:21)END OF PAPER(cid:21)\n\n8\n\n\f</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

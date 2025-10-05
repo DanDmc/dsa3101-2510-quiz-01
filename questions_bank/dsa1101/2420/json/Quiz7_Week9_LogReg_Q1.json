@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 7 - Logistic Regression\nConsider using the dataset “churn.csv” to predict if a person will churn (switch) to a different company. A logistic regression model (M1) was formed using the following variables:\nAge (years)\nMarried (0 = Unmarried, 1 = Married)\nCust_years (duration of a customer's relationship with the company)\nChurned_contacts (number of customer’s contacts that have churned)\nChurned (0 = Didn’t churn, 1 = churned)\nUse the following model summary to answer all subsequent questions.\n\nQuestion 1\nWhich of the following statements about the model’s construction is correct?\nA\nIt is a must to specify the family argument in glm() as “binomial”\nB\nIt is a must to declare Churned as a factor before forming the model\nC\nIt is a must to declare Married as a factor before forming the model\nD\nIt is a must to scale all features before forming the model",
+  "question_stem_html": "<pre>Quiz 7 - Logistic Regression\nConsider using the dataset “churn.csv” to predict if a person will churn (switch) to a different company. A logistic regression model (M1) was formed using the following variables:\nAge (years)\nMarried (0 = Unmarried, 1 = Married)\nCust_years (duration of a customer&#x27;s relationship with the company)\nChurned_contacts (number of customer’s contacts that have churned)\nChurned (0 = Didn’t churn, 1 = churned)\nUse the following model summary to answer all subsequent questions.\n\nQuestion 1\nWhich of the following statements about the model’s construction is correct?\nA\nIt is a must to specify the family argument in glm() as “binomial”\nB\nIt is a must to declare Churned as a factor before forming the model\nC\nIt is a must to declare Married as a factor before forming the model\nD\nIt is a must to scale all features before forming the model</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "t is a must to declare Churned as a factor before forming the model",
+          "text_html": "<p>t is a must to declare Churned as a factor before forming the model</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "t is a must to declare Married as a factor before forming the model",
+          "text_html": "<p>t is a must to declare Married as a factor before forming the model</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "t is a must to scale all features before forming the model",
+          "text_html": "<p>t is a must to scale all features before forming the model</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

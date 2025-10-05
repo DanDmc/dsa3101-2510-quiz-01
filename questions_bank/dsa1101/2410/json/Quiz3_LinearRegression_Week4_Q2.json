@@ -1,0 +1,41 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Q2. In the R code given, how many coefficients does model M2 have?\n4, 5, 6, 7",
+  "question_stem_html": "<pre>Q2. In the R code given, how many coefficients does model M2 have?\n4, 5, 6, 7</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS:  6\nR code for model M2 in line 12 doesn’t specify the data frame where the variables come from. Hence, R will use satell, width and weight from data frame “crab” since the command attach(crab) was run, hence R knows what satell, width and weight are. For color, after attach(crab), R updates that “color” is categorical from the code in line 10. ",
+      "solution_html": "<pre>ANS:  6\nR code for model M2 in line 12 doesn’t specify the data frame where the variables come from. Hence, R will use satell, width and weight from data frame “crab” since the command attach(crab) was run, hence R knows what satell, width and weight are. For color, after attach(crab), R updates that “color” is categorical from the code in line 10. </pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}
