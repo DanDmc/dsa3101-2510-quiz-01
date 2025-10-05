@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05. The model is Y = β₀ + β₁ ln(X₁) + e, where X₁ corresponds to distance to the nearest MRT.",
+  "question_stem_html": "<p>Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math></p><p>where X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T16:30:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_01.png",
+      "alt": "OLS Regression Results table from Python output."
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single-choice",
+      "part_stem": "What is the null hypothesis corresponding to the t-statistic with value -21.959?",
+      "part_stem_html": "<p>What is the null hypothesis corresponding to the <em>t</em>-statistic with value -21.959?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "H₀: β₁ = 0",
+          "text_html": "<p>H<sub>0</sub>: β₁ = 0</p>",
+          "is_correct": true,
+          "explanation": "This is correct."
+        },
+        {
+          "choice_id": "B",
+          "text": "H₀: β₀ = 0",
+          "text_html": "<p>H<sub>0</sub>: β₀ = 0</p>",
+          "is_correct": false,
+          "explanation": "This corresponds to the test for the intercept in the model, not the coefficient for ldist."
+        },
+        {
+          "choice_id": "C",
+          "text": "H₀: β̂₁ = 0",
+          "text_html": "<p>H<sub>0</sub>: β̂₁ = 0</p>",
+          "is_correct": false,
+          "explanation": "Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol."
+        },
+        {
+          "choice_id": "D",
+          "text": "H₀: β̂₀ = 0",
+          "text_html": "<p>H<sub>0</sub>: β̂₀ = 0</p>",
+          "is_correct": false,
+          "explanation": "Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol."
+        }
+      ],
+      "items_media": [],
+      "scoring": { "points": 1.0 },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "H₀: β₁ = 0",
+      "solution_html": "<p>The null hypothesis tested by the t-statistic associated with the slope coefficient (β₁) is H<sub>0</sub>: β₁ = 0.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "inference"]
+    }
+  ]
+}
