@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E_i to be the event that head appears first on the i-th toss. What is P(A wins)?",
+  "question_stem_html": "<p>Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define <em>E_i</em> to be the event that head appears first on the <em>i</em>-th toss. What is \\( P(\\text{A wins}) \\)?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:55:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single-choice",
+      "part_stem": "Choose the correct expression.",
+      "part_stem_html": "<p>Choose the correct expression.</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "P(A wins) = Σ_{k=0}^{∞} P(E_{2k+1})",
+          "text_html": "<p>\\( P(\\text{A wins}) = \\sum_{k=0}^{\\infty} P(E_{2k+1}) \\)</p>",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "P(A wins) = lim_{k→∞} P(E_{2k+1})",
+          "text_html": "<p>\\( P(\\text{A wins}) = \\lim_{k\\to\\infty} P(E_{2k+1}) \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "P(A wins) = lim_{k→∞} P(E_{2k})",
+          "text_html": "<p>\\( P(\\text{A wins}) = \\lim_{k\\to\\infty} P(E_{2k}) \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        }
+      ],
+      "items_media": [],
+      "scoring": { "points": 1.0 },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "P(A wins) = Σ_{k=0}^{∞} P(E_{2k+1})",
+      "solution_html": "<p>\\( P(\\text{A wins}) = \\sum_{k=0}^{\\infty} P(E_{2k+1}) \\)</p>",
+      "difficulty_level": 0.83,
+      "concept_tags": ["probability", "events", "infinite series"]
+    }
+  ]
+}

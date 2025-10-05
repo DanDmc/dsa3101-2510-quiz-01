@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?",
+  "question_stem_html": "<p>If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:45:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single-choice",
+      "part_stem": "Choose the correct value.",
+      "part_stem_html": "<p>Choose the correct value.</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "8! / (2!2!2!2!)",
+          "text_html": "<p>\\( \\frac{8!}{2!2!2!2!} \\)</p>",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "C(8, 4)",
+          "text_html": "<p>\\( \\binom{8}{4} \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "8! / 4!",
+          "text_html": "<p>\\( \\frac{8!}{4!} \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        }
+      ],
+      "items_media": [],
+      "scoring": { "points": 1.0 },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "8! / (2!2!2!2!)",
+      "solution_html": "<p>\\( \\frac{8!}{2!2!2!2!} \\)</p>",
+      "difficulty_level": 0.94,
+      "concept_tags": ["combinatorics", "permutations", "distribution", "grouping distinct objects"]
+    }
+  ]
+}
