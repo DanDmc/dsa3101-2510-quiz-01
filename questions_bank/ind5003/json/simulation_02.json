@@ -1,0 +1,88 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 2,
+  "is_multi": true,
+  "question_stem": "Which of the following statements are true regarding simulation modeling?",
+  "question_stem_html": "<p>Which of the following statements are true regarding simulation modeling?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:45:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "multiple-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Simulation does not require data.",
+          "is_correct": false,
+          "explanation": "This is not true. Real-world data should be used to calibrate the model. False"
+        },
+        {
+          "choice_id": "B",
+          "text": "Simulation can be used to make predictions.",
+          "is_correct": false,
+          "explanation": "Simulation models do not make predictions of random variables. They estimate means. False."
+        },
+        {
+          "choice_id": "C",
+          "text": "Random variables that are used in simulation must follow a Normal distribution.",
+          "is_correct": false,
+          "explanation": "The random variables do not need to follow a Normal. Think of rolling a die, for instance."
+        },
+        {
+          "choice_id": "D",
+          "text": "Simulation can be used for scenario-planning purposes.",
+          "is_correct": true,
+          "explanation": "Yes, this is precisely what they are for"
+        },
+        {
+          "choice_id": "E",
+          "text": "Simulation relies on the Central Limit Theorem.",
+          "is_correct": true,
+          "explanation": "True."
+        },
+        {
+          "choice_id": "F",
+          "text": "Simulation is used to estimate means.",
+          "is_correct": true,
+          "explanation": "True."
+        },
+        {
+          "choice_id": "G",
+          "text": "Simulation cannot be used to estimate proportions.",
+          "is_correct": false,
+          "explanation": "Proportions are also means, so simulation models can be used to estimate means."
+        },
+        {
+          "choice_id": "H",
+          "text": "Simulation results are always deterministic and predictable.",
+          "is_correct": false,
+          "explanation": "Since they rely on random variables, simulation models are neither deterministic nor predictable. False."
+        },
+        {
+          "choice_id": "I",
+          "text": "Simulation can be used to analyze systems with complex interactions.",
+          "is_correct": true,
+          "explanation": "True."
+        },
+        {
+          "choice_id": "J",
+          "text": "Simulation often involves the use of random variables to mimic real-world uncertainty.",
+          "is_correct": true,
+          "explanation": "True."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": ["D", "E", "F", "I", "J"],
+      "solution_html": "<p><strong>Correct statements:</strong> D, E, F, I, J.</p><ul><li>D — scenario planning</li><li>E — CLT supports Monte Carlo estimators</li><li>F — estimate means via simulation</li><li>I — suitable for complex interactions</li><li>J — uses random variables to model uncertainty</li></ul>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "monte-carlo", "estimation", "scenario-planning"]
+    }
+  ]
+}

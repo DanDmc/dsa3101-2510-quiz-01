@@ -1,0 +1,52 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Which preprocessing technique is suitable when your dataset contains categorical variables?",
+  "question_stem_html": "<p>Which preprocessing technique is suitable when your dataset contains categorical variables?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:40:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Scaling",
+          "is_correct": false,
+          "explanation": "This is for converting transforming numerical variables to have the same scale."
+        },
+        {
+          "choice_id": "B",
+          "text": "Principal Component Analysis (PCA)",
+          "is_correct": false,
+          "explanation": "This is used for:\n\n  * dimension reduction - reducing the number of continuous variables to a smaller subset, that \n    consists of linear combinations of the original ones.\n  * removing correlation between numeric variables - this can improve prediction."
+        },
+        {
+          "choice_id": "C",
+          "text": "One-Hot Encoding",
+          "is_correct": true,
+          "explanation": "This converts a single column containing the character version of the categorical\n  variable into a set of 0/1 columns representing it. ML methods require numeric inputs.."
+        },
+        {
+          "choice_id": "D",
+          "text": "Feature Extraction",
+          "is_correct": false,
+          "explanation": "This is a process whereby only important columns for prediction are retained."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "C",
+      "solution_html": "<p>One-Hot Encoding</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "preprocessing", "categorical-variables", "encoding"]
+    }
+  ]
+}

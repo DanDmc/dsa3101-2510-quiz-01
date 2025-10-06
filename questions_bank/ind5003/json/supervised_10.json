@@ -1,0 +1,28 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 10,
+  "is_multi": false,
+  "question_stem": "The (red and white) wine quality datasets from the unsupervised learning topic have been merged into a single dataframe with 6497 rows. A decision tree classifier has been fit to the dataset as follows:\n\ny = [1 if x==\"red\" else 0 for x in wine2.type]\nX = wine2.iloc[:, 0:11]\nX_train,X_test,y_train,y_test = train_test_split(X, y, test_size=0.2, random_state=14, stratify=y)\n\nclf = tree.DecisionTreeClassifier(max_depth=4)\nclf.fit(X_train, y_train)\n\ny_pred_train = clf.predict(X_train)\nConfusionMatrixDisplay.from_predictions(y_train, y_pred_train, labels=clf.classes_, cmap='bone');\n\nCompute the following metrics for the white wine category, to 3 d.p.:\n• precision: ______(1)______\n• recall: ______(2)______\n• accuracy: ______(3)______",
+  "question_stem_html": "<p>The (red and white) wine quality datasets from the unsupervised learning topic have been merged into a single dataframe with 6497 rows. A decision tree classifier has been fit to the dataset as follows:</p><pre><code class=\"language-python\">y = [1 if x==\"red\" else 0 for x in wine2.type]\nX = wine2.iloc[:, 0:11]\nX_train,X_test,y_train,y_test = train_test_split(X, y, test_size=0.2, random_state=14, stratify=y)\n\nclf = tree.DecisionTreeClassifier(max_depth=4)\nclf.fit(X_train, y_train)\n\ny_pred_train = clf.predict(X_train)\nConfusionMatrixDisplay.from_predictions(y_train, y_pred_train, labels=clf.classes_, cmap='bone');\n</code></pre><p><strong>Compute the following metrics for the white wine category, to 3 d.p.:</strong></p><ul><li>precision: ______(1)______</li><li>recall: ______(2)______</li><li>accuracy: ______(3)______</li></ul>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T20:18:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/supervised_10.png",
+      "alt": "Confusion matrix plot for decision tree predictions on training data."
+    }
+  ],
+  "items": [
+    {
+      "type": "open-ended",
+      "subtype": "fill-in-the-blank",
+      "solution_html": "<ul><li>3908/(3908+60) = 0.985</li><li>3908/(3908+10) = 0.997</li><li>(3908+1219)/(5197) = 0.987</li></ul>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "confusion-matrix", "precision", "recall", "accuracy"]
+    }
+  ]
+}

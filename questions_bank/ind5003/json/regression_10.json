@@ -1,0 +1,56 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 10,
+  "is_multi": true,
+  "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05: Y = β₀ + β₁ ln(X₁) + e, where X₁ corresponds to distance to the nearest MRT. Which of the following statement(s) regarding the raw residuals is (are) true? Remember that raw residuals are given by rᵢ = Yᵢ − Ŷᵢ.",
+  "question_stem_html": "<p>Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math></p><p>where X<sub>1</sub> corresponds to distance to the nearest MRT.</p><p>Which of the following statement(s) regarding the raw residuals is (are) true? Remember that raw residuals are given by</p><p style='text-align:center;'><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><msub><mover><mi>Y</mi><mo>^</mo></mover><mi>i</mi></msub></mrow><annotation encoding='application/x-tex'>r_i = Y_i - \\hat{Y}_i</annotation></semantics></math></p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:25:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "multiple-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "There is exactly one residual greater than 50.",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "There are at least two residuals less than -30.",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "The mean of the raw residuals for properties transacted in 2012 is approximately -2.6 (1 d.p.).",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "D",
+          "text": "The mean of the raw residuals for properties transacted in 2013 is approximately 2.6 (1 d.p.).",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "E",
+          "text": "The mean of the raw residuals is approximately 0.0 (1 d.p.).",
+          "is_correct": true,
+          "explanation": "."
+        }
+      ],
+      "solution": ["A", "C", "E"],
+      "solution_html": "<p><strong>Correct:</strong> A, C, E.</p><ul><li>A: One residual &gt; 50 is present (≈ 71.85).</li><li>C: 2012 mean residual ≈ −2.6.</li><li>E: Overall mean residual ≈ 0 by OLS.</li></ul><p><strong>Incorrect:</strong> B (only one residual &lt; −30), D (2013 mean ≈ 1.14, not 2.6).</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "residuals", "diagnostics"]
+    }
+  ]
+}

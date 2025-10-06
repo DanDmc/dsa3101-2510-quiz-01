@@ -1,0 +1,52 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Which of the following is an example of a classification problem?",
+  "question_stem_html": "<p>Which of the following is an example of a classification problem?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:30:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Predicting tomorrow’s stock price based on today’s price.",
+          "is_correct": false,
+          "explanation": "Regression"
+        },
+        {
+          "choice_id": "B",
+          "text": "Predicting the rental price of an apartment.",
+          "is_correct": false,
+          "explanation": "Regression"
+        },
+        {
+          "choice_id": "C",
+          "text": "Identifying whether a tumor is present in an MRI scan.",
+          "is_correct": true,
+          "explanation": "Classification"
+        },
+        {
+          "choice_id": "D",
+          "text": "Estimating how much a customer will spend on their next purchase.",
+          "is_correct": false,
+          "explanation": "Regression"
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "C",
+      "solution_html": "<p>Classification</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "classification", "regression"]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 7,
+  "is_multi": true,
+  "question_stem": "Which of the following scikit-learn models is/are typically used for regression problems (not classification)?",
+  "question_stem_html": "<p>Which of the following scikit-learn models is/are typically used for regression problems (not classification)?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T20:05:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "multiple-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Decision Tree Regression",
+          "is_correct": true,
+          "explanation": "Correct"
+        },
+        {
+          "choice_id": "B",
+          "text": "Logistic Regression",
+          "is_correct": false,
+          "explanation": "This is a model for performing binary classification."
+        },
+        {
+          "choice_id": "C",
+          "text": "Linear Regression",
+          "is_correct": true,
+          "explanation": "Correct."
+        },
+        {
+          "choice_id": "D",
+          "text": "Naive Bayes",
+          "is_correct": false,
+          "explanation": "This is used for classification."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": ["A", "C"],
+      "solution_html": "<p>A, C</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "regression", "scikit-learn"]
+    }
+  ]
+}
