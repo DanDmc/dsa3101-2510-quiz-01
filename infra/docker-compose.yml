@@ -3,6 +3,7 @@ version: "3.9"
 services:
   db:
     image: mysql:8.0
+    # platform: linux/amd64   #Uncomment this line for Mac users
     container_name: quizbank-db
     env_file: .env
     ports:
@@ -24,6 +25,17 @@ services:
       - "8080:8080"          # Web UI to browse the database
     depends_on:
       - db
+
+  # backend:
+  #   build: 
+  #     context: .
+  #     dockerfile: ./Dockerfile_backend
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   env_file: .env
+  #   ports:
+  #     - "5001:5000"
 
 volumes:
   mysql_data:
