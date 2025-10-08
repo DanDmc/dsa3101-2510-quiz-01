@@ -5,9 +5,10 @@ CREATE TABLE questions (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   question_id VARCHAR(64) UNIQUE,
   course VARCHAR(32) NOT NULL,
-  semester INT,
+  semester VARCHAR(64),
   assessment_type VARCHAR(64),
   question_no INT,
+  is_multi BOOLEAN,
   question_stem LONGTEXT,
   question_stem_html LONGTEXT,
   version INT DEFAULT 1,
@@ -23,6 +24,8 @@ CREATE TABLE items (
   part_number VARCHAR(8),
   type VARCHAR(64),
   subtype VARCHAR(64),
+  language VARCHAR(32),
+  code_snippet LONGTEXT,
   part_stem LONGTEXT,
   part_stem_html LONGTEXT,
   solution LONGTEXT,
@@ -32,6 +35,7 @@ CREATE TABLE items (
   scoring JSON,
   feedback JSON,
   items_media JSON,
+  concept_tags JSON,
   FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
