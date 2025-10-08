@@ -1,0 +1,71 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Q4. Consider model M3. From the output of summary(M3), if we let p = prob(Churned = 1), and p-hat be the estimation of p, then we could write the fitted equation of model M3 as\nLog(p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts\nLog [ p-hat/(1-p-hat)] = 3.503 – 0.157*Age + 0.382*Churned_contacts\np-hat = 3.503 – 0.157*Age + 0.382*Churned_contacts\np = 3.503 – 0.157*Age + 0.382*Churned_contacts\np-hat / (1 – p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts",
+  "question_stem_html": "<pre>Q4. Consider model M3. From the output of summary(M3), if we let p = prob(Churned = 1), and p-hat be the estimation of p, then we could write the fitted equation of model M3 as\nLog(p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts\nLog [ p-hat/(1-p-hat)] = 3.503 – 0.157*Age + 0.382*Churned_contacts\np-hat = 3.503 – 0.157*Age + 0.382*Churned_contacts\np = 3.503 – 0.157*Age + 0.382*Churned_contacts\np-hat / (1 – p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:24:49+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "og(p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts",
+          "text_html": "<p>og(p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "og [ p-hat/(1-p-hat)] = 3.503 – 0.157*Age + 0.382*Churned_contacts",
+          "text_html": "<p>og [ p-hat/(1-p-hat)] = 3.503 – 0.157*Age + 0.382*Churned_contacts</p>",
+          "is_correct": true,
+          "explanation": "Ans: Option B."
+        },
+        {
+          "choice_id": null,
+          "text": "hat = 3.503 – 0.157*Age + 0.382*Churned_contacts",
+          "text_html": "<p>hat = 3.503 – 0.157*Age + 0.382*Churned_contacts</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "= 3.503 – 0.157*Age + 0.382*Churned_contacts",
+          "text_html": "<p>= 3.503 – 0.157*Age + 0.382*Churned_contacts</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "hat / (1 – p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts",
+          "text_html": "<p>hat / (1 – p-hat) = 3.503 – 0.157*Age + 0.382*Churned_contacts</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: Option B.",
+      "solution_html": "<pre>Ans: Option B.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "logistic regression"
+      ]
+    }
+  ]
+}

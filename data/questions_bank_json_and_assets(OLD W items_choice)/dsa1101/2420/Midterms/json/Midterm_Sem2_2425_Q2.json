@@ -1,0 +1,535 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Midterm",
+  "question_no": 2,
+  "is_multi": true,
+  "question_stem": "2. Y our submission should ha v e only one \u001cle (.R) whic h includes the R co de and\ny our in terpretation/analysis as commen ts . Mak e sure that there is no error when\nthe graders op en and run y our co de \u001cle.\n3. Be sure to la y out systematically the v arious parts and steps in y our co de \u001cle.\n4. A t the end of the test, please upload the answ er \u001cle to CANV AS/DSA1101/Assignmen ts/Midterm\nSubmission.\n1\n1. ( 50 p oints ) The data \u001cle heart_disease_midterm.csv is a random sample of 300 p eople\nwho came to a hospital in the US for c hec king their heart. The sample is ab out the heart disease\nstatus (y es/no) and the v ariables that migh t help to predict the heart disease status.\nThe giv en \u001cle con tains columns with their names listed b elo w.\nColumn's Name Description\nage age of the p erson\nsex 1 = male; 0 = female\nc hest.pain 1 = the t yp e of c hest pain that is of high risk for health\n0 = the t yp e of c hest pain that is of lo w risk for health\nbp resting blo o d pressure (mm Hg)\nc hol serum c holesterol lev el (mg/dl)\ndisease heart disease status (y es/no)\n please run function setwd() in a separate line (if y ou need it) when imp orting the data set\nin to R.\n the names giv en in b old b elo w MUST b e used in y our R co de .\n please rep ort n umerical answ ers to at least three signi\u001ccan t \u001cgures if it's absolute is smaller\nthan one (e.g. 0.0123) and to three decimal places if it's absolute is larger than one (e.g.\n-2.345).\nPart I : Data Explor ation (20 p oints)\nLoad the \u001cle heart_disease_midterm.csv in to R and name it as data .\n1. (2 p oin ts) W rite co de to create a new column for data , named cp , whic h equals to \u0010high\nrisk\u0011 if the p erson has c hest.pain of t yp e 1, and equals to \u0010lo w risk\u0011 if the p erson has\nc hest.pain of t yp e 0.\n2. (2 p oin ts) W rite co de to c hange the lab els for sex where 1 is replaced b y \u0010 male \u0011 and 0 is\nreplaced b y \u0010 female \u0011.\n3. (2 p oin ts) W rite co de to create a table of prop ortions for the resp onse column, disease .\nRep ort the p ercen tage of p eople that ha v e heart disease.\n4. (2 p oin ts) W rite co de to create a QQ plot for the sample of c holesterol lev el, c hol . Giv e\ny our commen ts.\n5. (2 p oin ts) W rite co de to create b o x plots of p eople's age b y groups of heart disease status.\nGiv e y our commen ts.\n6. (2 p oin ts) Create a con tingency table (named tab1 ) for cp and disease . Rep ort the\nn um b er of p eople that ha v e high risk t yp e of c hest pain and also ha v e heart disease.\n2\n7. (4 p oin ts) Using tab1 , write one command in R to \u001cnd the t w o probabilities b elo w.\n(i) the probabilit y of ha ving heart disease in the group of p eople ha ving high risk t yp e of\nc hest pain.\n(ii) the probabilit y of ha ving heart disease in the group of p eople ha ving lo w risk t yp e of\nc hest pain.\nRep ort the di\u001berence of the t w o probabilities ab o v e and in terpret the meaning of that\ndi\u001berence.\n8. (4 p oin ts) Find the o dds ratio for tab1 and in terpret it.\nPart II: KNN (20 p oints)\nF or the questions in this P art I I, w e w ould w an t to form KNN classi\u001cers using input features\nage , c hest.pain , bp and c hol whic h help to predict if a p erson has heart disease. W e\nhence will consider c hest.pain with 0, 1 as a n umeric v ariable.\n9. (2 p oin ts) W rite co de to create a new data frame, called data.KNN whic h has \u001cv e columns:\nage , c hest.pain , bp and c hol after standardization for all observ ations; and the 5thcolumn\nis the column of the resp onse, disease .\n10. (4 p oin ts) Run the command set.seed(703) .\nThen, write co de to randomly split data.KNN in to t w o groups: one group has 240 ro ws\n(will b e the train set), named as train.set and other group has the rest of ro ws (will b e\nthe test set), named as test.set .\n11. (6 p oin ts) Use the train set with four standardized features to form the KNN classi\u001cers\nwhere k= 3 ,5,7,9,11,13,15 , and TPR v alue for eac h classi\u001cer is k ept in a v ector named\ntpr .\n12. (2 p oin ts) Using T rue P ositiv e Rate (TPR) as the criterion, write co de to \u001cnd the b est k\nfound and rep ort the v alue of TPR of the KNN classi\u001cer with that v alue of k .\n13. (6 p oin ts) Use the KNN with the b est k found in Question 12 to predict the disease status\nof a female at age 60, ha ving high risk t yp e of c hest pain, with information listed b elo w.\nage = 60, sex = female, c hest.pain = 1, bp = 160, c hol = 200.\nHint : y ou can use the same train set as in Question 11 ab o v e to form the classi\u001cer. Y ou\nma y standardize the v alues for the new p erson using the mean and the standard deviation\nof all the observ ations in the full data set.\n3\nPart III: DT (10 p oints)\nF or the questions in this P art I I I, w e w ould w an t to form a decision tree whic h helps to\npredict heart disease status, using the full data set giv en and all 5 input features age , sex ,\nbp , c hol , and either c hest.pain or cp .\n14. (4 p oin ts) W rite co de to form a decision tree, named DT , to predict the heart disease status\nwith maxdepth = 3 , where v ariable selection and split p oin ts are based on Information\nGain.\nHo w man y input features are sho wn in the \u001ctted tree? Among all the features sho wn in\nthat tree, whic h one is the most imp ortan t in predicting the disease status?\n15. (2 p oin ts) Consider the p erson with information listed in Question 13. Using the tree DT\nformed ab o v e, rep ort the predicted probabilit y that the p erson will ha v e heart disease.\n16. (4 p oin ts) Use predict() function in R, write co de to \u001cnd the TPR of the tree DT for its\nprediction for all the p oin ts in data .\nHint : template of function predict() is\npredict(object, newdata, type = \u0010prob\u0011) where\nobject : name of the mo del\nnewdata : name of the data frame that con tains the p oin t(s) for prediction\ntype = \u0010prob\u0011 (default) to get the predicted probabilities; or type = \u0010class\u0011 to get the\npredicted class lab el.\n2. ( 10 p oints ) Josh ua Lee is w orking for a compan y where his mon thly salary in 2025 is $8,000\nand the salary will b e increased 5% from 01 Jan uary ev ery y ear.\nEv ery mon th, Josh ua sa v es a \u001cxed amoun t of 40% mon thly salary .\nSo far, un til end of Marc h 2025, he has a sa ving amoun t of $60,000.\nHe plans to form a start-up compan y whic h will requires an initial amoun t of $150,000.\nDe\u001cne a function in R, named F , whic h helps to calculate the n um b er of mon ths (coun ting from\n01 Apr 2025) that Josh ua Lee could sa v e up enough money to start the compan y .\nNote: F unction F m ust ha v e at least one argumen t, named salary , to sp ecify Josh ua's mon thly\nsalary .\nEND OF QUESTIONS\n4",
+  "question_stem_html": "<pre>2. Y our submission should ha v e only one \u001cle (.R) whic h includes the R co de and\ny our in terpretation/analysis as commen ts . Mak e sure that there is no error when\nthe graders op en and run y our co de \u001cle.\n3. Be sure to la y out systematically the v arious parts and steps in y our co de \u001cle.\n4. A t the end of the test, please upload the answ er \u001cle to CANV AS/DSA1101/Assignmen ts/Midterm\nSubmission.\n1\n1. ( 50 p oints ) The data \u001cle heart_disease_midterm.csv is a random sample of 300 p eople\nwho came to a hospital in the US for c hec king their heart. The sample is ab out the heart disease\nstatus (y es/no) and the v ariables that migh t help to predict the heart disease status.\nThe giv en \u001cle con tains columns with their names listed b elo w.\nColumn&#x27;s Name Description\nage age of the p erson\nsex 1 = male; 0 = female\nc hest.pain 1 = the t yp e of c hest pain that is of high risk for health\n0 = the t yp e of c hest pain that is of lo w risk for health\nbp resting blo o d pressure (mm Hg)\nc hol serum c holesterol lev el (mg/dl)\ndisease heart disease status (y es/no)\n please run function setwd() in a separate line (if y ou need it) when imp orting the data set\nin to R.\n the names giv en in b old b elo w MUST b e used in y our R co de .\n please rep ort n umerical answ ers to at least three signi\u001ccan t \u001cgures if it&#x27;s absolute is smaller\nthan one (e.g. 0.0123) and to three decimal places if it&#x27;s absolute is larger than one (e.g.\n-2.345).\nPart I : Data Explor ation (20 p oints)\nLoad the \u001cle heart_disease_midterm.csv in to R and name it as data .\n1. (2 p oin ts) W rite co de to create a new column for data , named cp , whic h equals to \u0010high\nrisk\u0011 if the p erson has c hest.pain of t yp e 1, and equals to \u0010lo w risk\u0011 if the p erson has\nc hest.pain of t yp e 0.\n2. (2 p oin ts) W rite co de to c hange the lab els for sex where 1 is replaced b y \u0010 male \u0011 and 0 is\nreplaced b y \u0010 female \u0011.\n3. (2 p oin ts) W rite co de to create a table of prop ortions for the resp onse column, disease .\nRep ort the p ercen tage of p eople that ha v e heart disease.\n4. (2 p oin ts) W rite co de to create a QQ plot for the sample of c holesterol lev el, c hol . Giv e\ny our commen ts.\n5. (2 p oin ts) W rite co de to create b o x plots of p eople&#x27;s age b y groups of heart disease status.\nGiv e y our commen ts.\n6. (2 p oin ts) Create a con tingency table (named tab1 ) for cp and disease . Rep ort the\nn um b er of p eople that ha v e high risk t yp e of c hest pain and also ha v e heart disease.\n2\n7. (4 p oin ts) Using tab1 , write one command in R to \u001cnd the t w o probabilities b elo w.\n(i) the probabilit y of ha ving heart disease in the group of p eople ha ving high risk t yp e of\nc hest pain.\n(ii) the probabilit y of ha ving heart disease in the group of p eople ha ving lo w risk t yp e of\nc hest pain.\nRep ort the di\u001berence of the t w o probabilities ab o v e and in terpret the meaning of that\ndi\u001berence.\n8. (4 p oin ts) Find the o dds ratio for tab1 and in terpret it.\nPart II: KNN (20 p oints)\nF or the questions in this P art I I, w e w ould w an t to form KNN classi\u001cers using input features\nage , c hest.pain , bp and c hol whic h help to predict if a p erson has heart disease. W e\nhence will consider c hest.pain with 0, 1 as a n umeric v ariable.\n9. (2 p oin ts) W rite co de to create a new data frame, called data.KNN whic h has \u001cv e columns:\nage , c hest.pain , bp and c hol after standardization for all observ ations; and the 5thcolumn\nis the column of the resp onse, disease .\n10. (4 p oin ts) Run the command set.seed(703) .\nThen, write co de to randomly split data.KNN in to t w o groups: one group has 240 ro ws\n(will b e the train set), named as train.set and other group has the rest of ro ws (will b e\nthe test set), named as test.set .\n11. (6 p oin ts) Use the train set with four standardized features to form the KNN classi\u001cers\nwhere k= 3 ,5,7,9,11,13,15 , and TPR v alue for eac h classi\u001cer is k ept in a v ector named\ntpr .\n12. (2 p oin ts) Using T rue P ositiv e Rate (TPR) as the criterion, write co de to \u001cnd the b est k\nfound and rep ort the v alue of TPR of the KNN classi\u001cer with that v alue of k .\n13. (6 p oin ts) Use the KNN with the b est k found in Question 12 to predict the disease status\nof a female at age 60, ha ving high risk t yp e of c hest pain, with information listed b elo w.\nage = 60, sex = female, c hest.pain = 1, bp = 160, c hol = 200.\nHint : y ou can use the same train set as in Question 11 ab o v e to form the classi\u001cer. Y ou\nma y standardize the v alues for the new p erson using the mean and the standard deviation\nof all the observ ations in the full data set.\n3\nPart III: DT (10 p oints)\nF or the questions in this P art I I I, w e w ould w an t to form a decision tree whic h helps to\npredict heart disease status, using the full data set giv en and all 5 input features age , sex ,\nbp , c hol , and either c hest.pain or cp .\n14. (4 p oin ts) W rite co de to form a decision tree, named DT , to predict the heart disease status\nwith maxdepth = 3 , where v ariable selection and split p oin ts are based on Information\nGain.\nHo w man y input features are sho wn in the \u001ctted tree? Among all the features sho wn in\nthat tree, whic h one is the most imp ortan t in predicting the disease status?\n15. (2 p oin ts) Consider the p erson with information listed in Question 13. Using the tree DT\nformed ab o v e, rep ort the predicted probabilit y that the p erson will ha v e heart disease.\n16. (4 p oin ts) Use predict() function in R, write co de to \u001cnd the TPR of the tree DT for its\nprediction for all the p oin ts in data .\nHint : template of function predict() is\npredict(object, newdata, type = \u0010prob\u0011) where\nobject : name of the mo del\nnewdata : name of the data frame that con tains the p oin t(s) for prediction\ntype = \u0010prob\u0011 (default) to get the predicted probabilities; or type = \u0010class\u0011 to get the\npredicted class lab el.\n2. ( 10 p oints ) Josh ua Lee is w orking for a compan y where his mon thly salary in 2025 is $8,000\nand the salary will b e increased 5% from 01 Jan uary ev ery y ear.\nEv ery mon th, Josh ua sa v es a \u001cxed amoun t of 40% mon thly salary .\nSo far, un til end of Marc h 2025, he has a sa ving amoun t of $60,000.\nHe plans to form a start-up compan y whic h will requires an initial amoun t of $150,000.\nDe\u001cne a function in R, named F , whic h helps to calculate the n um b er of mon ths (coun ting from\n01 Apr 2025) that Josh ua Lee could sa v e up enough money to start the compan y .\nNote: F unction F m ust ha v e at least one argumen t, named salary , to sp ecify Josh ua&#x27;s mon thly\nsalary .\nEND OF QUESTIONS\n4</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:36:06+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "3",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "3. Be sure to la y out systematically the v arious parts and steps in y our co de \u001cle.",
+      "part_stem_html": "<pre>3. Be sure to la y out systematically the v arious parts and steps in y our co de \u001cle.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "4",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "4. A t the end of the test, please upload the answ er \u001cle to CANV AS/DSA1101/Assignmen ts/Midterm\nSubmission.\n1",
+      "part_stem_html": "<pre>4. A t the end of the test, please upload the answ er \u001cle to CANV AS/DSA1101/Assignmen ts/Midterm\nSubmission.\n1</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "1",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "1. ( 50 p oints ) The data \u001cle heart_disease_midterm.csv is a random sample of 300 p eople\nwho came to a hospital in the US for c hec king their heart. The sample is ab out the heart disease\nstatus (y es/no) and the v ariables that migh t help to predict the heart disease status.\nThe giv en \u001cle con tains columns with their names listed b elo w.\nColumn's Name Description\nage age of the p erson\nsex 1 = male; 0 = female\nc hest.pain 1 = the t yp e of c hest pain that is of high risk for health\n0 = the t yp e of c hest pain that is of lo w risk for health\nbp resting blo o d pressure (mm Hg)\nc hol serum c holesterol lev el (mg/dl)\ndisease heart disease status (y es/no)\n please run function setwd() in a separate line (if y ou need it) when imp orting the data set\nin to R.\n the names giv en in b old b elo w MUST b e used in y our R co de .\n please rep ort n umerical answ ers to at least three signi\u001ccan t \u001cgures if it's absolute is smaller\nthan one (e.g. 0.0123) and to three decimal places if it's absolute is larger than one (e.g.\n-2.345).\nPart I : Data Explor ation (20 p oints)\nLoad the \u001cle heart_disease_midterm.csv in to R and name it as data .",
+      "part_stem_html": "<pre>1. ( 50 p oints ) The data \u001cle heart_disease_midterm.csv is a random sample of 300 p eople\nwho came to a hospital in the US for c hec king their heart. The sample is ab out the heart disease\nstatus (y es/no) and the v ariables that migh t help to predict the heart disease status.\nThe giv en \u001cle con tains columns with their names listed b elo w.\nColumn&#x27;s Name Description\nage age of the p erson\nsex 1 = male; 0 = female\nc hest.pain 1 = the t yp e of c hest pain that is of high risk for health\n0 = the t yp e of c hest pain that is of lo w risk for health\nbp resting blo o d pressure (mm Hg)\nc hol serum c holesterol lev el (mg/dl)\ndisease heart disease status (y es/no)\n please run function setwd() in a separate line (if y ou need it) when imp orting the data set\nin to R.\n the names giv en in b old b elo w MUST b e used in y our R co de .\n please rep ort n umerical answ ers to at least three signi\u001ccan t \u001cgures if it&#x27;s absolute is smaller\nthan one (e.g. 0.0123) and to three decimal places if it&#x27;s absolute is larger than one (e.g.\n-2.345).\nPart I : Data Explor ation (20 p oints)\nLoad the \u001cle heart_disease_midterm.csv in to R and name it as data .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "1",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "1. (2 p oin ts) W rite co de to create a new column for data , named cp , whic h equals to \u0010high\nrisk\u0011 if the p erson has c hest.pain of t yp e 1, and equals to \u0010lo w risk\u0011 if the p erson has\nc hest.pain of t yp e 0.",
+      "part_stem_html": "<pre>1. (2 p oin ts) W rite co de to create a new column for data , named cp , whic h equals to \u0010high\nrisk\u0011 if the p erson has c hest.pain of t yp e 1, and equals to \u0010lo w risk\u0011 if the p erson has\nc hest.pain of t yp e 0.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "2",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "2. (2 p oin ts) W rite co de to c hange the lab els for sex where 1 is replaced b y \u0010 male \u0011 and 0 is\nreplaced b y \u0010 female \u0011.",
+      "part_stem_html": "<pre>2. (2 p oin ts) W rite co de to c hange the lab els for sex where 1 is replaced b y \u0010 male \u0011 and 0 is\nreplaced b y \u0010 female \u0011.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "3",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "3. (2 p oin ts) W rite co de to create a table of prop ortions for the resp onse column, disease .\nRep ort the p ercen tage of p eople that ha v e heart disease.",
+      "part_stem_html": "<pre>3. (2 p oin ts) W rite co de to create a table of prop ortions for the resp onse column, disease .\nRep ort the p ercen tage of p eople that ha v e heart disease.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "4",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "4. (2 p oin ts) W rite co de to create a QQ plot for the sample of c holesterol lev el, c hol . Giv e\ny our commen ts.",
+      "part_stem_html": "<pre>4. (2 p oin ts) W rite co de to create a QQ plot for the sample of c holesterol lev el, c hol . Giv e\ny our commen ts.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "5",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "5. (2 p oin ts) W rite co de to create b o x plots of p eople's age b y groups of heart disease status.\nGiv e y our commen ts.",
+      "part_stem_html": "<pre>5. (2 p oin ts) W rite co de to create b o x plots of p eople&#x27;s age b y groups of heart disease status.\nGiv e y our commen ts.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "6",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "6. (2 p oin ts) Create a con tingency table (named tab1 ) for cp and disease . Rep ort the\nn um b er of p eople that ha v e high risk t yp e of c hest pain and also ha v e heart disease.\n2",
+      "part_stem_html": "<pre>6. (2 p oin ts) Create a con tingency table (named tab1 ) for cp and disease . Rep ort the\nn um b er of p eople that ha v e high risk t yp e of c hest pain and also ha v e heart disease.\n2</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "7",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "7. (4 p oin ts) Using tab1 , write one command in R to \u001cnd the t w o probabilities b elo w.\n(i) the probabilit y of ha ving heart disease in the group of p eople ha ving high risk t yp e of\nc hest pain.\n(ii) the probabilit y of ha ving heart disease in the group of p eople ha ving lo w risk t yp e of\nc hest pain.\nRep ort the di\u001berence of the t w o probabilities ab o v e and in terpret the meaning of that\ndi\u001berence.",
+      "part_stem_html": "<pre>7. (4 p oin ts) Using tab1 , write one command in R to \u001cnd the t w o probabilities b elo w.\n(i) the probabilit y of ha ving heart disease in the group of p eople ha ving high risk t yp e of\nc hest pain.\n(ii) the probabilit y of ha ving heart disease in the group of p eople ha ving lo w risk t yp e of\nc hest pain.\nRep ort the di\u001berence of the t w o probabilities ab o v e and in terpret the meaning of that\ndi\u001berence.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "8",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "8. (4 p oin ts) Find the o dds ratio for tab1 and in terpret it.\nPart II: KNN (20 p oints)\nF or the questions in this P art I I, w e w ould w an t to form KNN classi\u001cers using input features\nage , c hest.pain , bp and c hol whic h help to predict if a p erson has heart disease. W e\nhence will consider c hest.pain with 0, 1 as a n umeric v ariable.",
+      "part_stem_html": "<pre>8. (4 p oin ts) Find the o dds ratio for tab1 and in terpret it.\nPart II: KNN (20 p oints)\nF or the questions in this P art I I, w e w ould w an t to form KNN classi\u001cers using input features\nage , c hest.pain , bp and c hol whic h help to predict if a p erson has heart disease. W e\nhence will consider c hest.pain with 0, 1 as a n umeric v ariable.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "9",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "9. (2 p oin ts) W rite co de to create a new data frame, called data.KNN whic h has \u001cv e columns:\nage , c hest.pain , bp and c hol after standardization for all observ ations; and the 5thcolumn\nis the column of the resp onse, disease .",
+      "part_stem_html": "<pre>9. (2 p oin ts) W rite co de to create a new data frame, called data.KNN whic h has \u001cv e columns:\nage , c hest.pain , bp and c hol after standardization for all observ ations; and the 5thcolumn\nis the column of the resp onse, disease .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "10",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "10. (4 p oin ts) Run the command set.seed(703) .\nThen, write co de to randomly split data.KNN in to t w o groups: one group has 240 ro ws\n(will b e the train set), named as train.set and other group has the rest of ro ws (will b e\nthe test set), named as test.set .",
+      "part_stem_html": "<pre>10. (4 p oin ts) Run the command set.seed(703) .\nThen, write co de to randomly split data.KNN in to t w o groups: one group has 240 ro ws\n(will b e the train set), named as train.set and other group has the rest of ro ws (will b e\nthe test set), named as test.set .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "11",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "11. (6 p oin ts) Use the train set with four standardized features to form the KNN classi\u001cers\nwhere k= 3 ,5,7,9,11,13,15 , and TPR v alue for eac h classi\u001cer is k ept in a v ector named\ntpr .",
+      "part_stem_html": "<pre>11. (6 p oin ts) Use the train set with four standardized features to form the KNN classi\u001cers\nwhere k= 3 ,5,7,9,11,13,15 , and TPR v alue for eac h classi\u001cer is k ept in a v ector named\ntpr .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "12",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "12. (2 p oin ts) Using T rue P ositiv e Rate (TPR) as the criterion, write co de to \u001cnd the b est k\nfound and rep ort the v alue of TPR of the KNN classi\u001cer with that v alue of k .",
+      "part_stem_html": "<pre>12. (2 p oin ts) Using T rue P ositiv e Rate (TPR) as the criterion, write co de to \u001cnd the b est k\nfound and rep ort the v alue of TPR of the KNN classi\u001cer with that v alue of k .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "13",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "13. (6 p oin ts) Use the KNN with the b est k found in Question 12 to predict the disease status\nof a female at age 60, ha ving high risk t yp e of c hest pain, with information listed b elo w.\nage = 60, sex = female, c hest.pain = 1, bp = 160, c hol = 200.\nHint : y ou can use the same train set as in Question 11 ab o v e to form the classi\u001cer. Y ou\nma y standardize the v alues for the new p erson using the mean and the standard deviation\nof all the observ ations in the full data set.\n3\nPart III: DT (10 p oints)\nF or the questions in this P art I I I, w e w ould w an t to form a decision tree whic h helps to\npredict heart disease status, using the full data set giv en and all 5 input features age , sex ,\nbp , c hol , and either c hest.pain or cp .",
+      "part_stem_html": "<pre>13. (6 p oin ts) Use the KNN with the b est k found in Question 12 to predict the disease status\nof a female at age 60, ha ving high risk t yp e of c hest pain, with information listed b elo w.\nage = 60, sex = female, c hest.pain = 1, bp = 160, c hol = 200.\nHint : y ou can use the same train set as in Question 11 ab o v e to form the classi\u001cer. Y ou\nma y standardize the v alues for the new p erson using the mean and the standard deviation\nof all the observ ations in the full data set.\n3\nPart III: DT (10 p oints)\nF or the questions in this P art I I I, w e w ould w an t to form a decision tree whic h helps to\npredict heart disease status, using the full data set giv en and all 5 input features age , sex ,\nbp , c hol , and either c hest.pain or cp .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "14",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "14. (4 p oin ts) W rite co de to form a decision tree, named DT , to predict the heart disease status\nwith maxdepth = 3 , where v ariable selection and split p oin ts are based on Information\nGain.\nHo w man y input features are sho wn in the \u001ctted tree? Among all the features sho wn in\nthat tree, whic h one is the most imp ortan t in predicting the disease status?",
+      "part_stem_html": "<pre>14. (4 p oin ts) W rite co de to form a decision tree, named DT , to predict the heart disease status\nwith maxdepth = 3 , where v ariable selection and split p oin ts are based on Information\nGain.\nHo w man y input features are sho wn in the \u001ctted tree? Among all the features sho wn in\nthat tree, whic h one is the most imp ortan t in predicting the disease status?</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "15",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "15. (2 p oin ts) Consider the p erson with information listed in Question 13. Using the tree DT\nformed ab o v e, rep ort the predicted probabilit y that the p erson will ha v e heart disease.",
+      "part_stem_html": "<pre>15. (2 p oin ts) Consider the p erson with information listed in Question 13. Using the tree DT\nformed ab o v e, rep ort the predicted probabilit y that the p erson will ha v e heart disease.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "16",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "16. (4 p oin ts) Use predict() function in R, write co de to \u001cnd the TPR of the tree DT for its\nprediction for all the p oin ts in data .\nHint : template of function predict() is\npredict(object, newdata, type = \u0010prob\u0011) where\nobject : name of the mo del\nnewdata : name of the data frame that con tains the p oin t(s) for prediction\ntype = \u0010prob\u0011 (default) to get the predicted probabilities; or type = \u0010class\u0011 to get the\npredicted class lab el.",
+      "part_stem_html": "<pre>16. (4 p oin ts) Use predict() function in R, write co de to \u001cnd the TPR of the tree DT for its\nprediction for all the p oin ts in data .\nHint : template of function predict() is\npredict(object, newdata, type = \u0010prob\u0011) where\nobject : name of the mo del\nnewdata : name of the data frame that con tains the p oin t(s) for prediction\ntype = \u0010prob\u0011 (default) to get the predicted probabilities; or type = \u0010class\u0011 to get the\npredicted class lab el.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "2",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "2. ( 10 p oints ) Josh ua Lee is w orking for a compan y where his mon thly salary in 2025 is $8,000\nand the salary will b e increased 5% from 01 Jan uary ev ery y ear.\nEv ery mon th, Josh ua sa v es a \u001cxed amoun t of 40% mon thly salary .\nSo far, un til end of Marc h 2025, he has a sa ving amoun t of $60,000.\nHe plans to form a start-up compan y whic h will requires an initial amoun t of $150,000.\nDe\u001cne a function in R, named F , whic h helps to calculate the n um b er of mon ths (coun ting from\n01 Apr 2025) that Josh ua Lee could sa v e up enough money to start the compan y .\nNote: F unction F m ust ha v e at least one argumen t, named salary , to sp ecify Josh ua's mon thly\nsalary .\nEND OF QUESTIONS\n4",
+      "part_stem_html": "<pre>2. ( 10 p oints ) Josh ua Lee is w orking for a compan y where his mon thly salary in 2025 is $8,000\nand the salary will b e increased 5% from 01 Jan uary ev ery y ear.\nEv ery mon th, Josh ua sa v es a \u001cxed amoun t of 40% mon thly salary .\nSo far, un til end of Marc h 2025, he has a sa ving amoun t of $60,000.\nHe plans to form a start-up compan y whic h will requires an initial amoun t of $150,000.\nDe\u001cne a function in R, named F , whic h helps to calculate the n um b er of mon ths (coun ting from\n01 Apr 2025) that Josh ua Lee could sa v e up enough money to start the compan y .\nNote: F unction F m ust ha v e at least one argumen t, named salary , to sp ecify Josh ua&#x27;s mon thly\nsalary .\nEND OF QUESTIONS\n4</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

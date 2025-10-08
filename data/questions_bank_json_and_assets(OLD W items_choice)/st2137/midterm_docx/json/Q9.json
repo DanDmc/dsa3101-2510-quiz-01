@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 9,
+  "is_multi": false,
+  "question_stem": "What is the length of the resulting output in this Python code?\nmy_list =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']\nresult =my_list[2:8:2]\nlen(result)",
+  "question_stem_html": "<p>What is the length of the resulting output in this Python code?</p>\n<p>my_list =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']</p>\n<p>result =my_list[2:8:2]</p>\n<p>len(result)</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "What is the length of the resulting output in this Python code?\nmy_list =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']\nresult =my_list[2:8:2]\nlen(result)",
+      "part_stem_html": "<p>What is the length of the resulting output in this Python code?</p>\n<p>my_list =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']</p>\n<p>result =my_list[2:8:2]</p>\n<p>len(result)</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "6",
+          "text_html": "<p>6</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "4",
+          "text_html": "<p>4</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "3",
+          "text_html": "<p>3</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "2",
+          "text_html": "<p>2</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 18,
+  "is_multi": false,
+  "question_stem": "After working with R, Python and SAS with one semester, you must have realised some of the strengths/limitations of these software. For each of the three software, list one advantage that you feel it has over the other two. There is no “right” or “wrong” answer, but your response should be a sincere one, and should be backed up with examples from our course material.",
+  "question_stem_html": "<p>After working with R, Python and SAS with one semester, you must have realised some of the strengths/limitations of these software. For each of the three software, list one advantage that you feel it has over the other two. There is no “right” or “wrong” answer, but your response should be a sincere one, and should be backed up with examples from our course material.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "After working with R, Python and SAS with one semester, you must have realised some of the strengths/limitations of these software. For each of the three software, list one advantage that you feel it has over the other two. There is no “right” or “wrong” answer, but your response should be a sincere one, and should be backed up with examples from our course material.",
+      "part_stem_html": "<p>After working with R, Python and SAS with one semester, you must have realised some of the strengths/limitations of these software. For each of the three software, list one advantage that you feel it has over the other two. There is no “right” or “wrong” answer, but your response should be a sincere one, and should be backed up with examples from our course material.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 3.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

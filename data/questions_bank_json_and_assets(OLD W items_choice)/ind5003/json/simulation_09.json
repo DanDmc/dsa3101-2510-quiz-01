@@ -1,0 +1,56 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 9,
+  "is_multi": false,
+  "question_stem": "The Palma Ratio has been recently considered as an alternative to the Gini coefficient. The Palma ratio is defined as the ratio of the richest 10% of the population’s share of gross national income divided by the poorest 40%’s share. Which of the following is a correct and working implementation of the Palma ratio, given an input pandas Series containing the individual income of the members in a population?",
+  "question_stem_html": "<p>The Palma Ratio has been recently considered as an alternative to the Gini coefficient. <em>The Palma ratio is defined as the ratio of the richest 10% of the population’s share of gross national income divided by the poorest 40%’s share.</em></p><p><strong>Question:</strong> Which of the following is a correct and working implementation of the Palma ratio, given an input <code>pandas.Series</code> containing the individual income of the members in a population?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:20:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Option a",
+          "text_html": "<pre><code>def compute_palma_ratio(income_series):\n    qs = income_series.quantile(q = [0.4, 0.9])\n    lower_total = income_series[income_series &lt;= qs.iloc[0]].sum()\n    upper_total = income_series[income_series &gt; qs.iloc[1]].sum()\n\n    return upper_total/lower_total\n</code></pre>",
+          "is_correct": true,
+          "explanation": "Correct implementation"
+        },
+        {
+          "choice_id": "B",
+          "text": "Option b",
+          "text_html": "<pre><code>def compute_palma_ratio_v1(income_series):\n    qs = income_series.quantile(q = [0.4, 0.9])\n    lower_total = income_series[income_series &lt; qs.iloc[0]].sum()\n    upper_total = income_series[income_series &lt;= qs.iloc[1]].sum()\n\n    return top_10_total / bottom_40_total\n</code></pre>",
+          "is_correct": false,
+          "explanation": "Syntax error from names of variables"
+        },
+        {
+          "choice_id": "C",
+          "text": "Option c",
+          "text_html": "<pre><code>def compute_palma_ratio_v2(income_series):\n    qs = income_series.quantile(q = [0.4, 0.9])\n    bottom_40_total = income_series[income_series &gt; qs.iloc[0]].sum()\n    top_10_total = income_series[income_series &lt;= qs.iloc[1]].sum()\n\n    return top_10_total / bottom_40_total\n</code></pre>",
+          "is_correct": false,
+          "explanation": "Logical error"
+        },
+        {
+          "choice_id": "D",
+          "text": "Option d",
+          "text_html": "<pre><code>def compute_palma_ratio_v3(income_series):\n    qs = income_series.quantile(q=[0.4, 0.9])\n    bottom_40_total = income_series[income_series &lt;= qs.iloc[0]].sum()\n    top_10_total = income_series[income_series &gt; qs.iloc[1]].sum()\n\n    if bottom_40_total != 0:\n        return top_10_total / bottom_40_total\n    else\n        return float('inf')\n</code></pre>",
+          "is_correct": false,
+          "explanation": "Syntax error from missing semi-colon"
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "A",
+      "solution_html": "<p>Correct implementation.</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "python", "pandas", "palma-ratio"]
+    }
+  ]
+}

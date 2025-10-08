@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "What is the most likely solution to the error below?",
+  "question_stem_html": "<p>What is the most likely solution to the error below?</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image3.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "What is the most likely solution to the error below?",
+      "part_stem_html": "<p>What is the most likely solution to the error below?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "The function to read the file is read.csv, not read_csv.",
+          "text_html": "<p>The function to read the file is read.csv, not read_csv.</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "The pandas package has to be imported.",
+          "text_html": "<p>The pandas package has to be imported.</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "The pandas package has to be installed.",
+          "text_html": "<p>The pandas package has to be installed.</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "The separator has to be specified as sep=';'.",
+          "text_html": "<p>The separator has to be specified as sep=';'.</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image3.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Q3. Object “confusion.matrix.1” created by the code in line 22 helps to check the goodness of fit of the KNN classifier with k = 5 on\nTest data set\nTrain data set\nOriginal data set (whole)",
+  "question_stem_html": "<pre>Q3. Object “confusion.matrix.1” created by the code in line 22 helps to check the goodness of fit of the KNN classifier with k = 5 on\nTest data set\nTrain data set\nOriginal data set (whole)</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "est data set",
+          "text_html": "<p>est data set</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "rain data set",
+          "text_html": "<p>rain data set</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "riginal data set (whole)",
+          "text_html": "<p>riginal data set (whole)</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: Test data set\nExplanation: The code to form “prediction” is: knn(train[,X], test[,X], train[,Y],k=5)\nWhich wants to predict the outcome for test set.\nThe code in line 22: confusion.matrix.1 = table(prediction, test[ , Y])\nIs to form a table for the predicted outcome (prediction) and the real outcome of the test set, test[ , Y].",
+      "solution_html": "<pre>ANS: Test data set\nExplanation: The code to form “prediction” is: knn(train[,X], test[,X], train[,Y],k=5)\nWhich wants to predict the outcome for test set.\nThe code in line 22: confusion.matrix.1 = table(prediction, test[ , Y])\nIs to form a table for the predicted outcome (prediction) and the real outcome of the test set, test[ , Y].</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

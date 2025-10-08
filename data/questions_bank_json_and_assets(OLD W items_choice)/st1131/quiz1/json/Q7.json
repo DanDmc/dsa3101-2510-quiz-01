@@ -1,0 +1,72 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz1",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "Consider the following dataset of observations:\n0.54, 0.42, 0.85, 1.57, 1.09, 0.75, 1.28, 1.86, 2.51, 1.94\nWhich of the following is the correct histogram for this data?",
+  "question_stem_html": "<div>\n<p>Consider the following dataset of observations:</p>\n<p>0.54, 0.42, 0.85, 1.57, 1.09, 0.75, 1.28, 1.86, 2.51, 1.94</p>\n<p><br>Which of the following is the correct histogram for this data?<img src=\"$IMS-CC-FILEBASE$/Uploaded Media/Picture1.png\" alt=\"Picture1.png\" data-old-link=\"/courses/80987/files/6794470/preview\"></p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [
+    {
+      "src": "assets/Picture1.png",
+      "alt": "Picture1.png"
+    }
+  ],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mcq",
+      "part_stem": "Consider the following dataset of observations:\n0.54, 0.42, 0.85, 1.57, 1.09, 0.75, 1.28, 1.86, 2.51, 1.94\nWhich of the following is the correct histogram for this data?",
+      "part_stem_html": "<div>\n<p>Consider the following dataset of observations:</p>\n<p>0.54, 0.42, 0.85, 1.57, 1.09, 0.75, 1.28, 1.86, 2.51, 1.94</p>\n<p><br>Which of the following is the correct histogram for this data?<img src=\"$IMS-CC-FILEBASE$/Uploaded Media/Picture1.png\" alt=\"Picture1.png\" data-old-link=\"/courses/80987/files/6794470/preview\"></p>\n</div>",
+      "choices": [
+        {
+          "choice_id": "ef2cbae6-f06b-40dd-9576-2bb409563a78",
+          "text": "a",
+          "text_html": "<p>a</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "73dba846-29f8-45c0-a148-797fa87ed6d1",
+          "text": "b",
+          "text_html": "<p>b</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "669f9c79-9bab-4cce-b37d-987ffbebef78",
+          "text": "c",
+          "text_html": "<p>c</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "fb62327e-e84a-4c9c-abb8-4418b4943176",
+          "text": "d",
+          "text_html": "<p>d</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "src": "assets/Picture1.png",
+          "alt": "Picture1.png"
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

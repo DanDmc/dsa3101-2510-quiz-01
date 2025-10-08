@@ -1,0 +1,85 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 26,
+  "is_multi": false,
+  "question_stem": "This question is to be answered using *Python*.\nConsider the `stud_perf` dataset once again. There were three measures of performance of the students:\n\n\n\nFeature \nDescription                \nDetails                    \n\n\nG1\nFirst period grade\nfrom  0 to 20\n\n\nG2\nSecond period grade\nfrom  0 to 20\n\n\nG3\nFinal grade\nfrom  0 to 20\n\n\n\nIn this question, we shall investigate the *agreement* between `G1` and `G3` scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.\n\nFirst, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n\n[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]\nYou should now have two new columns `G1_bin` and `G3_bin` in the dataset.\n\n\nNext, create a contingency table with `G1_bin` in the rows and `G3_bin` in the columns.\nConvert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.\nIf we let  be the proportion in row i and column j, then the strictest version of agreement is . What is the range of values for ? Which values correspond to higher agreement?\nA less stringent measure of agreement is given by . Compute $\\eta_1$ separately for the five groups defined by `Medu` and summarise what you observe.",
+  "question_stem_html": "<div><p>This question is to be answered using *Python*.</p>\n<p>Consider the `stud_perf` dataset once again. There were three measures of performance of the students:</p>\n<table style=\"border-collapse: collapse; width: 28.9618%; height: 116px;\" border=\"1\">\n<tbody>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">Feature </td>\n<td style=\"width: 46.2779%; height: 29px;\">Description                </td>\n<td style=\"width: 44.6602%; height: 29px;\">Details                    </td>\n</tr>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">G1</td>\n<td style=\"width: 46.2779%; height: 29px;\">First period grade</td>\n<td style=\"width: 44.6602%; height: 29px;\">from  0 to 20</td>\n</tr>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">G2</td>\n<td style=\"width: 46.2779%; height: 29px;\">Second period grade</td>\n<td style=\"width: 44.6602%; height: 29px;\">from  0 to 20</td>\n</tr>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">G3</td>\n<td style=\"width: 46.2779%; height: 29px;\">Final grade</td>\n<td style=\"width: 44.6602%; height: 29px;\">from  0 to 20</td>\n</tr>\n</tbody>\n</table>\n<p>In this question, we shall investigate the *agreement* between `G1` and `G3` scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.</p>\n<ol style=\"list-style-type: decimal;\">\n<li>First, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n<ol style=\"list-style-type: decimal;\">\n<li>[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]</li>\n<li>You should now have two new columns `G1_bin` and `G3_bin` in the dataset.</li>\n</ol>\n</li>\n<li>Next, create a contingency table with `G1_bin` in the rows and `G3_bin` in the columns.</li>\n<li>Convert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.</li>\n<li>If we let <img class=\"equation_image\" title=\"p_{ij}\" src=\"https://canvas.nus.edu.sg/equation_images/p_%257Bij%257D?scale=1\" alt=\"LaTeX: p_{ij}\" data-equation-content=\"p_{ij}\" data-ignore-a11y-check=\"\" loading=\"lazy\"> be the proportion in row i and column j, then the strictest version of agreement is <img class=\"equation_image\" title=\"\\eta_0 = \\sum_{i=1}^{10} p_{ii}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Ceta_0%2520%253D%2520%255Csum_%257Bi%253D1%257D%255E%257B10%257D%2520p_%257Bii%257D?scale=1\" alt=\"LaTeX: \\eta_0 = \\sum_{i=1}^{10} p_{ii}\" data-equation-content=\"\\eta_0 = \\sum_{i=1}^{10} p_{ii}\" data-ignore-a11y-check=\"\" loading=\"lazy\">. What is the range of values for <img class=\"equation_image\" title=\"\\eta_0\" src=\"https://canvas.nus.edu.sg/equation_images/%255Ceta_0?scale=1\" alt=\"LaTeX: \\eta_0\" data-equation-content=\"\\eta_0\" data-ignore-a11y-check=\"\" loading=\"lazy\">? Which values correspond to higher agreement?</li>\n<li>A less stringent measure of agreement is given by <img class=\"equation_image\" title=\"\\eta_1 = \\sum_{|i-j| \\le 1} p_{ij}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Ceta_1%2520%253D%2520%255Csum_%257B%257Ci-j%257C%2520%255Cle%25201%257D%2520p_%257Bij%257D?scale=1\" alt=\"LaTeX: \\eta_1 = \\sum_{|i-j| \\le 1} p_{ij}\" data-equation-content=\"\\eta_1 = \\sum_{|i-j| \\le 1} p_{ij}\" data-ignore-a11y-check=\"\" loading=\"lazy\">. Compute $\\eta_1$ separately for the five groups defined by `Medu` and summarise what you observe.</li>\n</ol></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/p_%257Bij%257D?scale=1",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Ceta_0%2520%253D%2520%255Csum_%257Bi%253D1%257D%255E%257B10%257D%2520p_%257Bii%257D?scale=1",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Ceta_0?scale=1",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Ceta_1%2520%253D%2520%255Csum_%257B%257Ci-j%257C%2520%255Cle%25201%257D%2520p_%257Bij%257D?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "This question is to be answered using *Python*.\nConsider the `stud_perf` dataset once again. There were three measures of performance of the students:\n\n\n\nFeature \nDescription                \nDetails                    \n\n\nG1\nFirst period grade\nfrom  0 to 20\n\n\nG2\nSecond period grade\nfrom  0 to 20\n\n\nG3\nFinal grade\nfrom  0 to 20\n\n\n\nIn this question, we shall investigate the *agreement* between `G1` and `G3` scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.\n\nFirst, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n\n[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]\nYou should now have two new columns `G1_bin` and `G3_bin` in the dataset.\n\n\nNext, create a contingency table with `G1_bin` in the rows and `G3_bin` in the columns.\nConvert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.\nIf we let  be the proportion in row i and column j, then the strictest version of agreement is . What is the range of values for ? Which values correspond to higher agreement?\nA less stringent measure of agreement is given by . Compute $\\eta_1$ separately for the five groups defined by `Medu` and summarise what you observe.",
+      "part_stem_html": "<div><p>This question is to be answered using *Python*.</p>\n<p>Consider the `stud_perf` dataset once again. There were three measures of performance of the students:</p>\n<table style=\"border-collapse: collapse; width: 28.9618%; height: 116px;\" border=\"1\">\n<tbody>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">Feature </td>\n<td style=\"width: 46.2779%; height: 29px;\">Description                </td>\n<td style=\"width: 44.6602%; height: 29px;\">Details                    </td>\n</tr>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">G1</td>\n<td style=\"width: 46.2779%; height: 29px;\">First period grade</td>\n<td style=\"width: 44.6602%; height: 29px;\">from  0 to 20</td>\n</tr>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">G2</td>\n<td style=\"width: 46.2779%; height: 29px;\">Second period grade</td>\n<td style=\"width: 44.6602%; height: 29px;\">from  0 to 20</td>\n</tr>\n<tr style=\"height: 29px;\">\n<td style=\"width: 8.99129%; height: 29px;\">G3</td>\n<td style=\"width: 46.2779%; height: 29px;\">Final grade</td>\n<td style=\"width: 44.6602%; height: 29px;\">from  0 to 20</td>\n</tr>\n</tbody>\n</table>\n<p>In this question, we shall investigate the *agreement* between `G1` and `G3` scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.</p>\n<ol style=\"list-style-type: decimal;\">\n<li>First, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n<ol style=\"list-style-type: decimal;\">\n<li>[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]</li>\n<li>You should now have two new columns `G1_bin` and `G3_bin` in the dataset.</li>\n</ol>\n</li>\n<li>Next, create a contingency table with `G1_bin` in the rows and `G3_bin` in the columns.</li>\n<li>Convert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.</li>\n<li>If we let <img class=\"equation_image\" title=\"p_{ij}\" src=\"https://canvas.nus.edu.sg/equation_images/p_%257Bij%257D?scale=1\" alt=\"LaTeX: p_{ij}\" data-equation-content=\"p_{ij}\" data-ignore-a11y-check=\"\" loading=\"lazy\"> be the proportion in row i and column j, then the strictest version of agreement is <img class=\"equation_image\" title=\"\\eta_0 = \\sum_{i=1}^{10} p_{ii}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Ceta_0%2520%253D%2520%255Csum_%257Bi%253D1%257D%255E%257B10%257D%2520p_%257Bii%257D?scale=1\" alt=\"LaTeX: \\eta_0 = \\sum_{i=1}^{10} p_{ii}\" data-equation-content=\"\\eta_0 = \\sum_{i=1}^{10} p_{ii}\" data-ignore-a11y-check=\"\" loading=\"lazy\">. What is the range of values for <img class=\"equation_image\" title=\"\\eta_0\" src=\"https://canvas.nus.edu.sg/equation_images/%255Ceta_0?scale=1\" alt=\"LaTeX: \\eta_0\" data-equation-content=\"\\eta_0\" data-ignore-a11y-check=\"\" loading=\"lazy\">? Which values correspond to higher agreement?</li>\n<li>A less stringent measure of agreement is given by <img class=\"equation_image\" title=\"\\eta_1 = \\sum_{|i-j| \\le 1} p_{ij}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Ceta_1%2520%253D%2520%255Csum_%257B%257Ci-j%257C%2520%255Cle%25201%257D%2520p_%257Bij%257D?scale=1\" alt=\"LaTeX: \\eta_1 = \\sum_{|i-j| \\le 1} p_{ij}\" data-equation-content=\"\\eta_1 = \\sum_{|i-j| \\le 1} p_{ij}\" data-ignore-a11y-check=\"\" loading=\"lazy\">. Compute $\\eta_1$ separately for the five groups defined by `Medu` and summarise what you observe.</li>\n</ol></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/p_%257Bij%257D?scale=1",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Ceta_0%2520%253D%2520%255Csum_%257Bi%253D1%257D%255E%257B10%257D%2520p_%257Bii%257D?scale=1",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Ceta_0?scale=1",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Ceta_1%2520%253D%2520%255Csum_%257B%257Ci-j%257C%2520%255Cle%25201%257D%2520p_%257Bij%257D?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "stud_perf = pd.read_csv(\"student-mat.csv\", sep=\";\")stud_perf['G1_bin'] = pd.cut(stud_perf.G1, bins=[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],                              labels=False, include_lowest=True)stud_perf['G3_bin'] = pd.cut(stud_perf.G3, bins=[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],                              labels=False, include_lowest=True)#prop_tbl = pd.crosstab(stud_perf.G1_bin, stud_perf.G3_bin, normalize=True)#prop_tbl.loc[1,0]#23/395#pd.crosstab(stud_perf.G1_bin, stud_perf.G3_bin).values.shape#prop_tbl.style.background_gradient(cmap='coolwarm_r', axis=None, vmin=0, vmax=0.2)#prop_tbl.loc[1, 2]def eta(var1, var2, diff=0):    tbl = pd.crosstab(var1, var2, normalize=True)    row_vals = tbl.index.values    col_vals = tbl.columns.values        eta = 0.0    for i in row_vals:        for j in col_vals:            if np.abs(i - j)                 eta += tbl.loc[i, j]    return eta#eta(stud_perf.G1_bin, stud_perf.G3_bin, diff=1)for id,df in stud_perf.groupby('Medu'):    print(eta(df.G1_bin, df.G3_bin, diff=0))",
+      "solution_html": "<pre>stud_perf = pd.read_csv(\"student-mat.csv\", sep=\";\")<br>stud_perf['G1_bin'] = pd.cut(stud_perf.G1, bins=[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20], <br>                             labels=False, include_lowest=True)<br>stud_perf['G3_bin'] = pd.cut(stud_perf.G3, bins=[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20], <br>                             labels=False, include_lowest=True)<br><br>#prop_tbl = pd.crosstab(stud_perf.G1_bin, stud_perf.G3_bin, normalize=True)<br>#prop_tbl.loc[1,0]<br>#23/395<br>#pd.crosstab(stud_perf.G1_bin, stud_perf.G3_bin).values.shape<br>#prop_tbl.style.background_gradient(cmap='coolwarm_r', axis=None, vmin=0, vmax=0.2)<br>#prop_tbl.loc[1, 2]<br><br>def eta(var1, var2, diff=0):<br>    tbl = pd.crosstab(var1, var2, normalize=True)<br>    row_vals = tbl.index.values<br>    col_vals = tbl.columns.values<br>    <br>    eta = 0.0<br>    for i in row_vals:<br>        for j in col_vals:<br>            if np.abs(i - j) <= diff:<br>                eta += tbl.loc[i, j]<br>    return eta<br><br>#eta(stud_perf.G1_bin, stud_perf.G3_bin, diff=1)<br>for id,df in stud_perf.groupby('Medu'):<br>    print(eta(df.G1_bin, df.G3_bin, diff=0))</pre>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "In the One-Way ANOVA, we assume the following model:\nYij=μ+αi+eij,i=1,…,k,j=1,…,ni\\begin{equation} Y_{ij} = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i \\end{equation}\nThe use of C(type, Treatment) in Python corresponds to the following constraints when performing estimation:\n\nSetting α1=0\\alpha_1= 0.",
+  "question_stem_html": "<div><p> </p>\n<p>In the One-Way ANOVA, we assume the following model:</p>\n<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mi>μ</mi><mo>+</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>,</mo><mspace></mspace><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>k</mi><mo>,</mo><mspace></mspace><mi>j</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">\\begin{equation} Y_{ij} = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i \\end{equation}</annotation></semantics></math></p>\n<p>The use of <code>C(type, Treatment)</code> in Python corresponds to the following constraints when performing estimation:</p>\n<ul>\n<li>Setting <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msub><mi>α</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding=\"application/x-tex\">\\alpha_1= 0</annotation></semantics></math>.</li>\n</ul>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the One-Way ANOVA, we assume the following model:\nYij=μ+αi+eij,i=1,…,k,j=1,…,ni\\begin{equation} Y_{ij} = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i \\end{equation}\nThe use of C(type, Treatment) in Python corresponds to the following constraints when performing estimation:\n\nSetting α1=0\\alpha_1= 0.",
+      "part_stem_html": "<div><p> </p>\n<p>In the One-Way ANOVA, we assume the following model:</p>\n<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mi>μ</mi><mo>+</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>,</mo><mspace></mspace><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>k</mi><mo>,</mo><mspace></mspace><mi>j</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">\\begin{equation} Y_{ij} = \\mu + \\alpha_i + e_{ij},\\; i=1,\\ldots,k,\\; j=1,\\ldots,n_i \\end{equation}</annotation></semantics></math></p>\n<p>The use of <code>C(type, Treatment)</code> in Python corresponds to the following constraints when performing estimation:</p>\n<ul>\n<li>Setting <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msub><mi>α</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding=\"application/x-tex\">\\alpha_1= 0</annotation></semantics></math>.</li>\n</ul>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "98356",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "35568",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "C(type, Sum) is for the Sum contrast.",
+      "solution_html": "C(type, Sum) is for the Sum contrast.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

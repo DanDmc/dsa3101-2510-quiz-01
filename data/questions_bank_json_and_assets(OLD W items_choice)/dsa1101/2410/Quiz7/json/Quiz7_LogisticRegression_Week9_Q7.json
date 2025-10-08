@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "Q7. When we want to fit a logistic model, the response variable could be categorical with \"0\" and \"1\" or could be numeric with 0 and 1. True or False?",
+  "question_stem_html": "<pre>Q7. When we want to fit a logistic model, the response variable could be categorical with &quot;0&quot; and &quot;1&quot; or could be numeric with 0 and 1. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:24:49+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: True.\nFrom the R code file, you can see that \"Churned\" is numeric with 0 and 1.\nglm() can fit a logistic model for this response.\nIf you change response \"Churned\" into categorical before fitting logistic model, it still works (you can try with the code below):\ndata$Churned = as.factor(data$Churned)  # change \"Churned\" into categorical, and fit model M2 \nM2<- glm(Churned ~ . , data = data, family = binomial)   # no error\nsummary(M2)  # it still works as usual.\nAn extra note: if the response variable is categorical with characters \"0\" and \"1\" then glm() can fit a logistic model for us. HOWEVER, if the response has characters like \"yes\" and \"no\", then glm() cannot fit a logistic model."
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: True.\nFrom the R code file, you can see that \"Churned\" is numeric with 0 and 1.\nglm() can fit a logistic model for this response.\nIf you change response \"Churned\" into categorical before fitting logistic model, it still works (you can try with the code below):\ndata$Churned = as.factor(data$Churned)  # change \"Churned\" into categorical, and fit model M2 \nM2<- glm(Churned ~ . , data = data, family = binomial)   # no error\nsummary(M2)  # it still works as usual.\nAn extra note: if the response variable is categorical with characters \"0\" and \"1\" then glm() can fit a logistic model for us. HOWEVER, if the response has characters like \"yes\" and \"no\", then glm() cannot fit a logistic model.",
+      "solution_html": "<pre>Ans: True.\nFrom the R code file, you can see that &quot;Churned&quot; is numeric with 0 and 1.\nglm() can fit a logistic model for this response.\nIf you change response &quot;Churned&quot; into categorical before fitting logistic model, it still works (you can try with the code below):\ndata$Churned = as.factor(data$Churned)  # change &quot;Churned&quot; into categorical, and fit model M2 \nM2&lt;- glm(Churned ~ . , data = data, family = binomial)   # no error\nsummary(M2)  # it still works as usual.\nAn extra note: if the response variable is categorical with characters &quot;0&quot; and &quot;1&quot; then glm() can fit a logistic model for us. HOWEVER, if the response has characters like &quot;yes&quot; and &quot;no&quot;, then glm() cannot fit a logistic model.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "logistic regression"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Q4. What is the output of the code at line 20, <predict(M3)>? Multiple Answer\nThe fitted values of model M3.\nThe predicted values of satell from model M3, for all the crabs in the data set.\nThe real values of response for the crabs in the data set.",
+  "question_stem_html": "<pre>Q4. What is the output of the code at line 20, &lt;predict(M3)&gt;? Multiple Answer\nThe fitted values of model M3.\nThe predicted values of satell from model M3, for all the crabs in the data set.\nThe real values of response for the crabs in the data set.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he fitted values of model M3.",
+          "text_html": "<p>he fitted values of model M3.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he predicted values of satell from model M3, for all the crabs in the data set.",
+          "text_html": "<p>he predicted values of satell from model M3, for all the crabs in the data set.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he real values of response for the crabs in the data set.",
+          "text_html": "<p>he real values of response for the crabs in the data set.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: \nThe fitted values of model M3.\nThe predicted values of satell from model M3, for all the crabs in the data set.",
+      "solution_html": "<pre>ANS: \nThe fitted values of model M3.\nThe predicted values of satell from model M3, for all the crabs in the data set.</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Question 5\nGiven this photo, which of the following lines of code correctly calculates the odds ratio for the odds of developing lung cancer in smokers compared to non-smokers?\n\nA\n(tab[1] * tab[2]) / (tab[3] * tab[4])\nB\n(tab[3] * tab[4]) / (tab[1] * tab[2])\nC\n(tab[2] * tab[3]) / (tab[1] * tab[4])\nD\n(tab[1] * tab[4]) / (tab[2] * tab[3])",
+  "question_stem_html": "<pre>Question 5\nGiven this photo, which of the following lines of code correctly calculates the odds ratio for the odds of developing lung cancer in smokers compared to non-smokers?\n\nA\n(tab[1] * tab[2]) / (tab[3] * tab[4])\nB\n(tab[3] * tab[4]) / (tab[1] * tab[2])\nC\n(tab[2] * tab[3]) / (tab[1] * tab[4])\nD\n(tab[1] * tab[4]) / (tab[2] * tab[3])</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "(tab[3] * tab[4]) / (tab[1] * tab[2])",
+          "text_html": "<p>(tab[3] * tab[4]) / (tab[1] * tab[2])</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "(tab[2] * tab[3]) / (tab[1] * tab[4])",
+          "text_html": "<p>(tab[2] * tab[3]) / (tab[1] * tab[4])</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "(tab[1] * tab[4]) / (tab[2] * tab[3])",
+          "text_html": "<p>(tab[1] * tab[4]) / (tab[2] * tab[3])</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

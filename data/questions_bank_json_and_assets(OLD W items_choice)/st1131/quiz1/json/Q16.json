@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz1",
+  "question_no": 16,
+  "is_multi": true,
+  "question_stem": "What measures of center and variability are the most appropriate to describe a symmetric distribution?",
+  "question_stem_html": "<div>What measures of center and variability are the most appropriate to describe a <strong>symmetric</strong> distribution?</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mrq",
+      "part_stem": "What measures of center and variability are the most appropriate to describe a symmetric distribution?",
+      "part_stem_html": "<div>What measures of center and variability are the most appropriate to describe a <strong>symmetric</strong> distribution?</div>",
+      "choices": [
+        {
+          "choice_id": "ecf55450-976a-4d96-b4f2-3aafffe10c12",
+          "text": "mean",
+          "text_html": "<p>mean</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "98d04662-4de7-486f-bd83-11b04a3234de",
+          "text": "median",
+          "text_html": "<p>median</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "daceb8d8-bbc0-4360-b49d-fc1baf7801f4",
+          "text": "interquartile range",
+          "text_html": "<p>interquartile range</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "1d3141e9-cd4e-4ee7-b065-81d654f598e5",
+          "text": "standard deviation",
+          "text_html": "<p>standard deviation</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

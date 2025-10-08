@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Question 4\n\nRefer to the following picture taken from Topic 9 lecture notes page 47 on the top 10 frequent 1-itemsets sorted by their support within the Groceries data set:\n\n\nThe minimum support threshold used to determine the frequent 1-itemsets is 0.02 as seen in the lecture. How many 1-itemsets would be considered frequent if the minimum support threshold was increased to 0.1?\nA\n2\nB\n6\nC\n7\nD\n8",
+  "question_stem_html": "<pre>Question 4\n\nRefer to the following picture taken from Topic 9 lecture notes page 47 on the top 10 frequent 1-itemsets sorted by their support within the Groceries data set:\n\n\nThe minimum support threshold used to determine the frequent 1-itemsets is 0.02 as seen in the lecture. How many 1-itemsets would be considered frequent if the minimum support threshold was increased to 0.1?\nA\n2\nB\n6\nC\n7\nD\n8</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "2",
+          "text_html": "<p>2</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "6",
+          "text_html": "<p>6</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "7",
+          "text_html": "<p>7</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "8",
+          "text_html": "<p>8</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "association rules",
+        "market basket"
+      ]
+    }
+  ]
+}

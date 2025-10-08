@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 8,
+  "is_multi": false,
+  "question_stem": "This question is to be answered using Python.\nIn Tutorial 6, we considered the notion of a sensitivity curve for assessing the robustness of an estimator. Suppose we have an estimator based on n observations: Tn(x1,x2,…,xn) The sensitivity curve sc(x) when a new observation x is added is given by sc(x)=(n+1)×[Tn+1(x1,…,xn,x)−Tn(x1,…,xn)] Let us consider a newly proposed robust estimator called the broadened median. Given a sample of size n, here is how it is computed:\nFor n odd, the broadened median is\nthe average of the three central order statistics for 5≤n≤12.\nthe average of the five central order statistics for n≥13.\nFor n even, the broadened median is\nthe weighted average of the central four order statistics for 5≤n≤12, with weights 1/6,1/3,1/3 and 1/6.\nthe weighted average of the central six order statistics for n≥13, with weights 1/10,1/5,1/5,1/5,1/5 and 1/10.\nSuppose we have the following sample of 10 points (n=10):\n2,4,6,7,8,10,14,19,21,28\nPlot the sensitivity curve for x∈[5,25] when T represents the broadened median.\nWhich of the robust estimators that we covered in class is most similar to the broadened median? Explain your answer.\nNote that your code does not have to handle the general case of estimator. It only has to work for the above dataset.",
+  "question_stem_html": "<p>This question is to be answered using Python.</p>\n<p>In Tutorial 6, we considered the notion of a sensitivity curve for assessing the robustness of an estimator. Suppose we have an estimator based on n observations: Tn(x1,x2,…,xn) The sensitivity curve sc(x) when a new observation x is added is given by sc(x)=(n+1)×[Tn+1(x1,…,xn,x)−Tn(x1,…,xn)] Let us consider a newly proposed robust estimator called the broadened median. Given a sample of size n, here is how it is computed:</p>\n<p>For n odd, the broadened median is</p>\n<p>the average of the three central order statistics for 5≤n≤12.</p>\n<p>the average of the five central order statistics for n≥13.</p>\n<p>For n even, the broadened median is</p>\n<p>the weighted average of the central four order statistics for 5≤n≤12, with weights 1/6,1/3,1/3 and 1/6.</p>\n<p>the weighted average of the central six order statistics for n≥13, with weights 1/10,1/5,1/5,1/5,1/5 and 1/10.</p>\n<p>Suppose we have the following sample of 10 points (n=10):</p>\n<p>2,4,6,7,8,10,14,19,21,28</p>\n<p>Plot the sensitivity curve for x∈[5,25] when T represents the broadened median.</p>\n<p>Which of the robust estimators that we covered in class is most similar to the broadened median? Explain your answer.</p>\n<p>Note that your code does not have to handle the general case of estimator. It only has to work for the above dataset.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "This question is to be answered using Python.\nIn Tutorial 6, we considered the notion of a sensitivity curve for assessing the robustness of an estimator. Suppose we have an estimator based on n observations: Tn(x1,x2,…,xn) The sensitivity curve sc(x) when a new observation x is added is given by sc(x)=(n+1)×[Tn+1(x1,…,xn,x)−Tn(x1,…,xn)] Let us consider a newly proposed robust estimator called the broadened median. Given a sample of size n, here is how it is computed:\nFor n odd, the broadened median is\nthe average of the three central order statistics for 5≤n≤12.\nthe average of the five central order statistics for n≥13.\nFor n even, the broadened median is\nthe weighted average of the central four order statistics for 5≤n≤12, with weights 1/6,1/3,1/3 and 1/6.\nthe weighted average of the central six order statistics for n≥13, with weights 1/10,1/5,1/5,1/5,1/5 and 1/10.\nSuppose we have the following sample of 10 points (n=10):\n2,4,6,7,8,10,14,19,21,28\nPlot the sensitivity curve for x∈[5,25] when T represents the broadened median.\nWhich of the robust estimators that we covered in class is most similar to the broadened median? Explain your answer.\nNote that your code does not have to handle the general case of estimator. It only has to work for the above dataset.",
+      "part_stem_html": "<p>This question is to be answered using Python.</p>\n<p>In Tutorial 6, we considered the notion of a sensitivity curve for assessing the robustness of an estimator. Suppose we have an estimator based on n observations: Tn(x1,x2,…,xn) The sensitivity curve sc(x) when a new observation x is added is given by sc(x)=(n+1)×[Tn+1(x1,…,xn,x)−Tn(x1,…,xn)] Let us consider a newly proposed robust estimator called the broadened median. Given a sample of size n, here is how it is computed:</p>\n<p>For n odd, the broadened median is</p>\n<p>the average of the three central order statistics for 5≤n≤12.</p>\n<p>the average of the five central order statistics for n≥13.</p>\n<p>For n even, the broadened median is</p>\n<p>the weighted average of the central four order statistics for 5≤n≤12, with weights 1/6,1/3,1/3 and 1/6.</p>\n<p>the weighted average of the central six order statistics for n≥13, with weights 1/10,1/5,1/5,1/5,1/5 and 1/10.</p>\n<p>Suppose we have the following sample of 10 points (n=10):</p>\n<p>2,4,6,7,8,10,14,19,21,28</p>\n<p>Plot the sensitivity curve for x∈[5,25] when T represents the broadened median.</p>\n<p>Which of the robust estimators that we covered in class is most similar to the broadened median? Explain your answer.</p>\n<p>Note that your code does not have to handle the general case of estimator. It only has to work for the above dataset.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 6.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

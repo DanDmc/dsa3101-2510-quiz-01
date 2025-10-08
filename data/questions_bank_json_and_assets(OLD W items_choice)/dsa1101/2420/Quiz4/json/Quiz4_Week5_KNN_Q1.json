@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 4 - K Nearest Neighbours\nConsider using the data set “Smarket.csv” to predict direction using Lag1 through Lag5. The data was split into pre-2005 and post-2005 subsets to build a KNN model. Refer to the photo provided for all subsequent questions.\n\nQuestion 1\nWhich dataframe contains the testing data?\nA\nmarket\nB\nmarket1\nC\nmarket2\nD\nNone of the above",
+  "question_stem_html": "<pre>Quiz 4 - K Nearest Neighbours\nConsider using the data set “Smarket.csv” to predict direction using Lag1 through Lag5. The data was split into pre-2005 and post-2005 subsets to build a KNN model. Refer to the photo provided for all subsequent questions.\n\nQuestion 1\nWhich dataframe contains the testing data?\nA\nmarket\nB\nmarket1\nC\nmarket2\nD\nNone of the above</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "arket1",
+          "text_html": "<p>arket1</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "arket2",
+          "text_html": "<p>arket2</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "one of the above",
+          "text_html": "<p>one of the above</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

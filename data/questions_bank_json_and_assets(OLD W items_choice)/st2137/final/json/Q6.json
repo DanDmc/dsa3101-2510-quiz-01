@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Simulation can be used to estimate expected values of the form E[g(X)]=∫−∞∞g(x)f(x)dx E[g(X)] = \\int_{-\\infty}^{\\infty} g(x) f(x) dx  The reason we can apply the Central Limit Theorem is that we can always choose ff to be the Normal pdf.",
+  "question_stem_html": "<div><p> </p>\n<p>Simulation can be used to estimate expected values of the form <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>E</mi><mrow><mo form=\"prefix\" stretchy=\"true\">[</mo><mi>g</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>X</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mo form=\"postfix\" stretchy=\"true\">]</mo></mrow><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mi>∞</mi></mrow><mi>∞</mi></msubsup><mi>g</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>x</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mi>f</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>x</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mi>d</mi><mi>x</mi></mrow><annotation encoding=\"application/x-tex\"> E[g(X)] = \\int_{-\\infty}^{\\infty} g(x) f(x) dx </annotation></semantics></math> The reason we can apply the Central Limit Theorem is that we can always choose <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> to be the Normal pdf.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Simulation can be used to estimate expected values of the form E[g(X)]=∫−∞∞g(x)f(x)dx E[g(X)] = \\int_{-\\infty}^{\\infty} g(x) f(x) dx  The reason we can apply the Central Limit Theorem is that we can always choose ff to be the Normal pdf.",
+      "part_stem_html": "<div><p> </p>\n<p>Simulation can be used to estimate expected values of the form <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>E</mi><mrow><mo form=\"prefix\" stretchy=\"true\">[</mo><mi>g</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>X</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mo form=\"postfix\" stretchy=\"true\">]</mo></mrow><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mi>∞</mi></mrow><mi>∞</mi></msubsup><mi>g</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>x</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mi>f</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mi>x</mi><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mi>d</mi><mi>x</mi></mrow><annotation encoding=\"application/x-tex\"> E[g(X)] = \\int_{-\\infty}^{\\infty} g(x) f(x) dx </annotation></semantics></math> The reason we can apply the Central Limit Theorem is that we can always choose <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> to be the Normal pdf.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "93234",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "64484",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "This is not true. f(x) can be any pdf.\nThe reason we can apply the CLT is because the distribution of the sample mean converges to Normal.",
+      "solution_html": "<p>This is not true. f(x) can be any pdf.</p>\n<p>The reason we can apply the CLT is because the distribution of the sample mean converges to Normal.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

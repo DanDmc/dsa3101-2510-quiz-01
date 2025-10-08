@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 6 - Naive Bayes\nConsider using the dataset “bank-sample.csv” to predict whether a customer will subscribe to a bank’s services using a Naive Bayes model. Refer to the photo provided for all subsequent questions.\n\nQuestion 1\nWhich statement about the two models formed on lines 7 - 8 is true?\nA\nBoth models are identical\nB\nBoth models contain the same number of explanatory features\nC\nM1 was trained with a smaller data set compared to M2\nD\nM2 contains 4 explanatory features",
+  "question_stem_html": "<pre>Quiz 6 - Naive Bayes\nConsider using the dataset “bank-sample.csv” to predict whether a customer will subscribe to a bank’s services using a Naive Bayes model. Refer to the photo provided for all subsequent questions.\n\nQuestion 1\nWhich statement about the two models formed on lines 7 - 8 is true?\nA\nBoth models are identical\nB\nBoth models contain the same number of explanatory features\nC\nM1 was trained with a smaller data set compared to M2\nD\nM2 contains 4 explanatory features</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "oth models contain the same number of explanatory features",
+          "text_html": "<p>oth models contain the same number of explanatory features</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "1 was trained with a smaller data set compared to M2",
+          "text_html": "<p>1 was trained with a smaller data set compared to M2</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "2 contains 4 explanatory features",
+          "text_html": "<p>2 contains 4 explanatory features</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

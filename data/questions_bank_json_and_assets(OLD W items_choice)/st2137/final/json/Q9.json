@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 9,
+  "is_multi": false,
+  "question_stem": "Suppose that XX follows a continuous pdf ff with finite mean μ\\mu and finite variance σ2\\sigma^2. Then, no matter what ff is, if we have an i.i.d sample of size nn, we can estimate σ\\sigma with σ̂=IQR({X1,…,Xn})1.35 \\hat{\\sigma} = \\frac{IQR(\\{X_1, \\ldots, X_n\\})}{1.35}",
+  "question_stem_html": "<div><p> </p>\n<p>Suppose that <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>X</mi><annotation encoding=\"application/x-tex\">X</annotation></semantics></math> follows a continuous pdf <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> with finite mean <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>μ</mi><annotation encoding=\"application/x-tex\">\\mu</annotation></semantics></math> and finite variance <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\sigma^2</annotation></semantics></math>. Then, no matter what <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> is, if we have an i.i.d sample of size <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>n</mi><annotation encoding=\"application/x-tex\">n</annotation></semantics></math>, we can estimate <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>σ</mi><annotation encoding=\"application/x-tex\">\\sigma</annotation></semantics></math> with <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mover><mi>σ</mi><mo accent=\"true\">̂</mo></mover><mo>=</mo><mfrac><mrow><mi>I</mi><mi>Q</mi><mi>R</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mo form=\"prefix\" stretchy=\"false\">{</mo><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>X</mi><mi>n</mi></msub><mo form=\"postfix\" stretchy=\"false\">}</mo><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow></mrow><mn>1.35</mn></mfrac></mrow><annotation encoding=\"application/x-tex\"> \\hat{\\sigma} = \\frac{IQR(\\{X_1, \\ldots, X_n\\})}{1.35} </annotation></semantics></math></p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Suppose that XX follows a continuous pdf ff with finite mean μ\\mu and finite variance σ2\\sigma^2. Then, no matter what ff is, if we have an i.i.d sample of size nn, we can estimate σ\\sigma with σ̂=IQR({X1,…,Xn})1.35 \\hat{\\sigma} = \\frac{IQR(\\{X_1, \\ldots, X_n\\})}{1.35}",
+      "part_stem_html": "<div><p> </p>\n<p>Suppose that <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>X</mi><annotation encoding=\"application/x-tex\">X</annotation></semantics></math> follows a continuous pdf <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> with finite mean <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>μ</mi><annotation encoding=\"application/x-tex\">\\mu</annotation></semantics></math> and finite variance <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\sigma^2</annotation></semantics></math>. Then, no matter what <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>f</mi><annotation encoding=\"application/x-tex\">f</annotation></semantics></math> is, if we have an i.i.d sample of size <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>n</mi><annotation encoding=\"application/x-tex\">n</annotation></semantics></math>, we can estimate <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>σ</mi><annotation encoding=\"application/x-tex\">\\sigma</annotation></semantics></math> with <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mover><mi>σ</mi><mo accent=\"true\">̂</mo></mover><mo>=</mo><mfrac><mrow><mi>I</mi><mi>Q</mi><mi>R</mi><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mo form=\"prefix\" stretchy=\"false\">{</mo><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>X</mi><mi>n</mi></msub><mo form=\"postfix\" stretchy=\"false\">}</mo><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow></mrow><mn>1.35</mn></mfrac></mrow><annotation encoding=\"application/x-tex\"> \\hat{\\sigma} = \\frac{IQR(\\{X_1, \\ldots, X_n\\})}{1.35} </annotation></semantics></math></p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "27439",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "27429",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "This relationship only holds if f is the Normal distribution.\nIf f is not the Normal, this is still an estimator of scale, but not the standard deviation.",
+      "solution_html": "<p>This relationship only holds if f is the Normal distribution.</p>\n<p>If f is not the Normal, this is still an estimator of scale, but not the standard deviation.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

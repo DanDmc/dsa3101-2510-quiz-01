@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 3,
+  "is_multi": true,
+  "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05. The model is Y = β₀ + β₁ ln(X₁) + e, where X₁ corresponds to distance to the nearest MRT. Which of the following is/are correct interpretations of the fitted equation: Ŷ = β̂₀ + β̂₁ ln(X₁)?",
+  "question_stem_html": "<p>Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math></p><p>where X₁ corresponds to distance to the nearest MRT.</p><p>Which of the following is/are correct interpretations of the fitted equation:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mover><mi>Y</mi><mo>^</mo></mover><mo>=</mo><mover><msub><mi>β</mi><mn>0</mn></msub><mo>^</mo></mover><mo>+</mo><mover><msub><mi>β</mi><mn>1</mn></msub><mo>^</mo></mover><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo></mrow><annotation encoding='application/x-tex'>\\hat{Y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 \\ln(X_1)</annotation></semantics></math></p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T16:55:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "multiple-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Every one unit increase in distance-to-MRT is associated with an average increase of β units in Y.",
+          "is_correct": false,
+          "explanation": "."
+        },
+        {
+          "choice_id": "B",
+          "text": "Every one unit increase in distance-to-MRT is associated with an average increase of β̂ units in Y.",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "Every doubling of distance-to-MRT is associated with an average increase of ln(2) × β̂ units in Y.",
+          "is_correct": true,
+          "explanation": "."
+        },
+        {
+          "choice_id": "D",
+          "text": "Every one unit increase in ln(X) is associated with an average increase of β̂ units in Y.",
+          "is_correct": true,
+          "explanation": ""
+        }
+      ],
+      "items_media": [],
+      "scoring": { "points": 1.0 },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": ["C", "D"],
+      "solution_html": "<p>The correct interpretations are:</p><ul><li><strong>C</strong> — Every doubling of distance-to-MRT is associated with an average increase of ln(2) × β̂₁ units in Y.</li><li><strong>D</strong> — Every one-unit increase in ln(X₁) is associated with an average increase of β̂₁ units in Y.</li></ul>",
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "interpretation", "log-transformation"]
+    }
+  ]
+}

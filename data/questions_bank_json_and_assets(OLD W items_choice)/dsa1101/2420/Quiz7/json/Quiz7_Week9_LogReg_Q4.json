@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Question 4\nSelect the correct interpretation for the coefficient of Age.\nA\nEach 1 year increase in Age increases the log-odds of customer churn by 0.157\nB\nEach 1 year decrease in Age decreases the log-odds of customer churn by 0.157\nC\nEach 1 year increase in Age decreases the probability of customer churn by a factor of 0.855.\nD\nEach 1 year increase in Age decreases the odds of customer churn by a factor of 0.855.",
+  "question_stem_html": "<pre>Question 4\nSelect the correct interpretation for the coefficient of Age.\nA\nEach 1 year increase in Age increases the log-odds of customer churn by 0.157\nB\nEach 1 year decrease in Age decreases the log-odds of customer churn by 0.157\nC\nEach 1 year increase in Age decreases the probability of customer churn by a factor of 0.855.\nD\nEach 1 year increase in Age decreases the odds of customer churn by a factor of 0.855.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ach 1 year decrease in Age decreases the log-odds of customer churn by 0.157",
+          "text_html": "<p>ach 1 year decrease in Age decreases the log-odds of customer churn by 0.157</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ach 1 year increase in Age decreases the probability of customer churn by a factor of 0.855.",
+          "text_html": "<p>ach 1 year increase in Age decreases the probability of customer churn by a factor of 0.855.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ach 1 year increase in Age decreases the odds of customer churn by a factor of 0.855.",
+          "text_html": "<p>ach 1 year increase in Age decreases the odds of customer churn by a factor of 0.855.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Q4. Given the photo. Which of the following statements is correct.\nThe probability of not having cancer (bbd = 0) is 1.4 times the probability of having cancer.\nThe probability of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of not having cancer among PMH users (pmh = 3).\nThe probability of having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of having cancer among PMH users (pmh = 3).\nThe odds of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the odds of not having cancer among PMH users (pmh = 3).",
+  "question_stem_html": "<pre>Q4. Given the photo. Which of the following statements is correct.\nThe probability of not having cancer (bbd = 0) is 1.4 times the probability of having cancer.\nThe probability of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of not having cancer among PMH users (pmh = 3).\nThe probability of having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of having cancer among PMH users (pmh = 3).\nThe odds of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the odds of not having cancer among PMH users (pmh = 3).</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he probability of not having cancer (bbd = 0) is 1.4 times the probability of having cancer.",
+          "text_html": "<p>he probability of not having cancer (bbd = 0) is 1.4 times the probability of having cancer.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he probability of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of not having cancer among PMH users (pmh = 3).",
+          "text_html": "<p>he probability of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of not having cancer among PMH users (pmh = 3).</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he probability of having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of having cancer among PMH users (pmh = 3).",
+          "text_html": "<p>he probability of having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the probability of having cancer among PMH users (pmh = 3).</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he odds of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the odds of not having cancer among PMH users (pmh = 3).",
+          "text_html": "<p>he odds of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the odds of not having cancer among PMH users (pmh = 3).</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: The odds of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the odds of not having cancer among PMH users (pmh = 3).",
+      "solution_html": "<pre>ANS: The odds of not having cancer (bbd = 0) among non-PMH users (pmh = 2) is 1.4 times the odds of not having cancer among PMH users (pmh = 3).</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

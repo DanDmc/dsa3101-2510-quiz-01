@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.\n\nSAS output\n\nThe value of 0.5908 corresponds to ∑i=1k∑j=1ni(Yi¯−Y¯¯)2 \\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( \\overline{Y_i} - \\overline{\\overline{Y}} \\right)^2",
+  "question_stem_html": "<div><p><br>In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/sas_anova_f_test.png?canvas_download=1\" alt=\"SAS output\" width=\"685\" loading=\"lazy\">\n<p class=\"caption\">SAS output</p>\n</div>\n<p>The value of 0.5908 corresponds to <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>n</mi><mi>i</mi></msub></munderover><msup><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mover><msub><mi>Y</mi><mi>i</mi></msub><mo accent=\"true\">¯</mo></mover><mo>−</mo><mover><mover><mi>Y</mi><mo accent=\"true\">¯</mo></mover><mo accent=\"true\">¯</mo></mover><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mn>2</mn></msup></mrow><annotation encoding=\"application/x-tex\"> \\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( \\overline{Y_i} - \\overline{\\overline{Y}} \\right)^2 </annotation></semantics></math></p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/sas_anova_f_test.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.\n\nSAS output\n\nThe value of 0.5908 corresponds to ∑i=1k∑j=1ni(Yi¯−Y¯¯)2 \\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( \\overline{Y_i} - \\overline{\\overline{Y}} \\right)^2",
+      "part_stem_html": "<div><p><br>In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/sas_anova_f_test.png?canvas_download=1\" alt=\"SAS output\" width=\"685\" loading=\"lazy\">\n<p class=\"caption\">SAS output</p>\n</div>\n<p>The value of 0.5908 corresponds to <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>n</mi><mi>i</mi></msub></munderover><msup><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mover><msub><mi>Y</mi><mi>i</mi></msub><mo accent=\"true\">¯</mo></mover><mo>−</mo><mover><mover><mi>Y</mi><mo accent=\"true\">¯</mo></mover><mo accent=\"true\">¯</mo></mover><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><mn>2</mn></msup></mrow><annotation encoding=\"application/x-tex\"> \\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( \\overline{Y_i} - \\overline{\\overline{Y}} \\right)^2 </annotation></semantics></math></p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "70192",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "47460",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/sas_anova_f_test.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "The indicated expression is for the SS_between. In the table it is referred to as the Model SS.",
+      "solution_html": "The indicated expression is for the SS_between. In the table it is referred to as the Model SS.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

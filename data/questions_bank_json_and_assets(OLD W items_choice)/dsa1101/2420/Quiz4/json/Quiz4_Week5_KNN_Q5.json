@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Question 5\nSelect all the best practices when building a KNN model.\nA\nScale quantitative data\nB\nUse the first 80% of data points as your training data\nC\nUse odd values of K\nD\nInclude all available quantitative & categorical features",
+  "question_stem_html": "<pre>Question 5\nSelect all the best practices when building a KNN model.\nA\nScale quantitative data\nB\nUse the first 80% of data points as your training data\nC\nUse odd values of K\nD\nInclude all available quantitative &amp; categorical features</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "msq",
+      "subtype": "multiple",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "se the first 80% of data points as your training data",
+          "text_html": "<p>se the first 80% of data points as your training data</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "se odd values of K",
+          "text_html": "<p>se odd values of K</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "nclude all available quantitative & categorical features",
+          "text_html": "<p>nclude all available quantitative &amp; categorical features</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

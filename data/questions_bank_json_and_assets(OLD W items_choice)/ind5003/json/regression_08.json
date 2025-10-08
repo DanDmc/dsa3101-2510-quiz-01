@@ -1,0 +1,54 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 8,
+  "is_multi": false,
+  "question_stem": "Suppose that the following two simple linear regression models are fitted to the Taiwan real estate data from topic 05:\nY = β₀ + β₁ ln(X₁) + e (model 1)\nln Y = β₀ + β₁ ln(X₁) + e (model 2)\nwhere X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:\n\nAn analyst concludes that model (2) has a better fit since the R² is larger (0.579 in the latter compared with 0.539 in the former). Which of the following statements is correct?",
+  "question_stem_html": "<p>Suppose that the following two simple linear regression models are fitted to the Taiwan real estate data from topic 05:</p><p><math><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math> (model 1)</p><p><math><semantics><mrow><mi>ln</mi><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>\\ln Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math> (model 2)</p><p>where X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:</p><p>An analyst concludes that model (2) has a better fit since the R² is larger (0.579 in the latter compared with 0.539 in the former). Which of the following statements is correct?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:05:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_08.png",
+      "alt": "Python OLS regression outputs comparing price ~ ldist and ln(price) ~ ldist models."
+    }
+  ],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "The analyst is correct. The two R² values are comparable because they are both based on the same dataset.",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "The analyst is correct. The two R² values are comparable because they both use the same independent variable.",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "The analyst is mistaken. The two R² values cannot be compared because the dependent variables are different.",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "D",
+          "text": "The analyst is correct that model (2) fits better, but the reason is incorrect – the adjusted R² should be used instead.",
+          "is_correct": false,
+          "explanation": ""
+        }
+      ],
+      "solution_html": "<p>The R² statistic measures the proportion of variation in the dependent variable explained by the model. Because models (1) and (2) have different dependent variables (Y vs. ln(Y)), their total variation (SST) differs, so their R² values cannot be compared directly.</p><p><strong>Correct answer:</strong> C</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "R-squared", "model-comparison"]
+    }
+  ]
+}

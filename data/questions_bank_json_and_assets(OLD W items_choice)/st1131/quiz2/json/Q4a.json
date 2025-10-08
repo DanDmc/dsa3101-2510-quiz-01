@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz2",
+  "question_no": 4,
+  "is_multi": "",
+  "question_stem": "A study is performed to assess the efficacy of two new drugs for reducing systolic blood pressure in patients. There are three treatment groups - one used a placebo, while the other two groups used drug A and drug B. Study the SPSS output below. The interquartile range for treatment A group is [24626442-385a-4d77-a781-c826b2bcc44e] and for treatment B group is [62deb19c-5ec2-40b5-9a4e-c7b57b39fac7]. Give your answer to 2 decimal places.",
+  "question_stem_html": "<div>\n<p>A study is performed to assess the efficacy of two new drugs for reducing systolic blood pressure in patients. There are three treatment groups - one used a placebo, while the other two groups used drug A and drug B. Study the SPSS output below. The interquartile range for treatment A group is [24626442-385a-4d77-a781-c826b2bcc44e] and for treatment B group is [62deb19c-5ec2-40b5-9a4e-c7b57b39fac7]. <strong>Give your answer to 2 decimal places.</strong></p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded Media/Picture3.png\" alt=\"Picture3.png\" data-old-link=\"/courses/80987/files/6794481/preview\"></p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [
+    {
+      "src": "assets/Picture3.png",
+      "alt": "Picture3.png"
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "free response",
+      "subtype": "fitb",
+      "part_stem": "A study is performed to assess the efficacy of two new drugs for reducing systolic blood pressure in patients. There are three treatment groups - one used a placebo, while the other two groups used drug A and drug B. Study the SPSS output below. The interquartile range for treatment A group is  and for treatment B group is [62deb19c-5ec2-40b5-9a4e-c7b57b39fac7]. Give your answer to 2 decimal places.",
+      "part_stem_html": "",
+      "choices": [],
+      "items_media": [
+        {
+          "src": "assets/Picture3.png",
+          "alt": "Picture3.png"
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

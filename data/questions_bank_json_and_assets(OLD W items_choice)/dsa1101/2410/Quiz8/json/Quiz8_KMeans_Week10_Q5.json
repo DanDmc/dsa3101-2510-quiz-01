@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Q5. In order to decide on the number of clusters for a data set, the plot below could help\nBox plot of each column\nHistogram of each column\nScatter plot of every two quantitative columns\nPie chart of every column",
+  "question_stem_html": "<pre>Q5. In order to decide on the number of clusters for a data set, the plot below could help\nBox plot of each column\nHistogram of each column\nScatter plot of every two quantitative columns\nPie chart of every column</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:30:06+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Box plot of each column",
+          "text_html": "<p>Box plot of each column</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "Histogram of each column",
+          "text_html": "<p>Histogram of each column</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "Scatter plot of every two quantitative columns",
+          "text_html": "<p>Scatter plot of every two quantitative columns</p>",
+          "is_correct": true,
+          "explanation": "Ans: Option C"
+        },
+        {
+          "choice_id": null,
+          "text": "Pie chart of every column",
+          "text_html": "<p>Pie chart of every column</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: Option C",
+      "solution_html": "<pre>Ans: Option C</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "k-means",
+        "clustering"
+      ]
+    }
+  ]
+}

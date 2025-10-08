@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 8,
+  "is_multi": true,
+  "question_stem": "In the topic on regression, we fitted the following simple linear regression model to the concrete data: Y=β0+β1X+e Y = \\beta_0 + \\beta_1 X + e  where\n\nYY: is the Flow, and\nXX: is amount of Water in the mixture.\n\nThe confidence intervals for the coefficients are given as follows:\n##                   2.5 %      97.5 %\n## (Intercept) -85.0841046 -32.3709993\n## Water         0.4164861   0.6824575\nWhich of the following null hypothesis would be rejected at the 5% significance level?",
+  "question_stem_html": "<div><p> </p>\n<p>In the topic on regression, we fitted the following simple linear regression model to the concrete data: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>X</mi><mo>+</mo><mi>e</mi></mrow><annotation encoding=\"application/x-tex\"> Y = \\beta_0 + \\beta_1 X + e </annotation></semantics></math> where</p>\n<ul>\n<li><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>Y</mi><annotation encoding=\"application/x-tex\">Y</annotation></semantics></math>: is the Flow, and</li>\n<li><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>X</mi><annotation encoding=\"application/x-tex\">X</annotation></semantics></math>: is amount of Water in the mixture.</li>\n</ul>\n<p>The confidence intervals for the coefficients are given as follows:</p>\n<pre><code>##                   2.5 %      97.5 %\n## (Intercept) -85.0841046 -32.3709993\n## Water         0.4164861   0.6824575</code></pre>\n<p>Which of the following null hypothesis would be rejected at the 5% significance level?</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "In the topic on regression, we fitted the following simple linear regression model to the concrete data: Y=β0+β1X+e Y = \\beta_0 + \\beta_1 X + e  where\n\nYY: is the Flow, and\nXX: is amount of Water in the mixture.\n\nThe confidence intervals for the coefficients are given as follows:\n##                   2.5 %      97.5 %\n## (Intercept) -85.0841046 -32.3709993\n## Water         0.4164861   0.6824575\nWhich of the following null hypothesis would be rejected at the 5% significance level?",
+      "part_stem_html": "<div><p> </p>\n<p>In the topic on regression, we fitted the following simple linear regression model to the concrete data: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>X</mi><mo>+</mo><mi>e</mi></mrow><annotation encoding=\"application/x-tex\"> Y = \\beta_0 + \\beta_1 X + e </annotation></semantics></math> where</p>\n<ul>\n<li><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>Y</mi><annotation encoding=\"application/x-tex\">Y</annotation></semantics></math>: is the Flow, and</li>\n<li><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>X</mi><annotation encoding=\"application/x-tex\">X</annotation></semantics></math>: is amount of Water in the mixture.</li>\n</ul>\n<p>The confidence intervals for the coefficients are given as follows:</p>\n<pre><code>##                   2.5 %      97.5 %\n## (Intercept) -85.0841046 -32.3709993\n## Water         0.4164861   0.6824575</code></pre>\n<p>Which of the following null hypothesis would be rejected at the 5% significance level?</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "20367",
+          "text": "beta_0 = 0",
+          "text_html": "beta_0 = 0",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "41255",
+          "text": "beta_1 = 0",
+          "text_html": "beta_1 = 0",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "67447",
+          "text": "beta_0 = -50",
+          "text_html": "beta_0 = -50",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "33439",
+          "text": "beta_1 = 0.5",
+          "text_html": "beta_1 = 0.5",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Remember that a confidence interval denotes the set of values that would not be rejected in a hypothesis test.",
+      "solution_html": "Remember that a confidence interval denotes the set of values that would not be rejected in a hypothesis test.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

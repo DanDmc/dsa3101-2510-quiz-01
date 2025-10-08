@@ -1,0 +1,41 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 4\nContent: KNN\nFunctions in R: knn(), sample().\nPART I\nConsider data set <Smarket.csv>. One would want to split this data set into two parts randomly: one part is used to form a model, and other part is used to test the goodness of fit of the model. R code is given in the photo.\n\nQ1. Is the train set and the test set are selected randomly from the original data set?",
+  "question_stem_html": "<pre>Quiz 4\nContent: KNN\nFunctions in R: knn(), sample().\nPART I\nConsider data set &lt;Smarket.csv&gt;. One would want to split this data set into two parts randomly: one part is used to form a model, and other part is used to test the goodness of fit of the model. R code is given in the photo.\n\nQ1. Is the train set and the test set are selected randomly from the original data set?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: NO. \nExplanation: The train set is selected which includes all the data point in Year 2002 to Year 2004; while the test set include the data points in Year 2005.\nNote: In this code, the original dataset was NOT split randomly. For this code, we focus more on how the algorithm of KNN works. The part on how to split the data randomly is detailed in the later part. ",
+      "solution_html": "<pre>Ans: NO. \nExplanation: The train set is selected which includes all the data point in Year 2002 to Year 2004; while the test set include the data points in Year 2005.\nNote: In this code, the original dataset was NOT split randomly. For this code, we focus more on how the algorithm of KNN works. The part on how to split the data randomly is detailed in the later part. </pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

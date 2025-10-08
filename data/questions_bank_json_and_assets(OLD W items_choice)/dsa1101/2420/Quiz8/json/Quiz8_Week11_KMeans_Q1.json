@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 8 - K Means\nConsider using the dataset “hdbresale_cluster.csv” to create distinct groups from the various flats within the data.\nWe will take the following naming convention for the rest of this quiz:\nhdb=read.csv(\"hdbresale_cluster.csv\")\n\nQuestion 1\n\nWhich of the following is/are FALSE. Select all options that apply.\nA\nK-Means works well if we want to cluster the flats from this dataset based on the flat_type.\nB\nThe number of clusters (or groups) for all the flats in the data set given could be chosen differently from user to user.\nC\nK-Means is a supervised learning algorithm.\nD\nWe do NOT need a response variable in the dataset to perform the K-Means algorithm.",
+  "question_stem_html": "<pre>Quiz 8 - K Means\nConsider using the dataset “hdbresale_cluster.csv” to create distinct groups from the various flats within the data.\nWe will take the following naming convention for the rest of this quiz:\nhdb=read.csv(&quot;hdbresale_cluster.csv&quot;)\n\nQuestion 1\n\nWhich of the following is/are FALSE. Select all options that apply.\nA\nK-Means works well if we want to cluster the flats from this dataset based on the flat_type.\nB\nThe number of clusters (or groups) for all the flats in the data set given could be chosen differently from user to user.\nC\nK-Means is a supervised learning algorithm.\nD\nWe do NOT need a response variable in the dataset to perform the K-Means algorithm.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "K-Means works well if we want to cluster the flats from this dataset based on the flat_type.",
+          "text_html": "<p>K-Means works well if we want to cluster the flats from this dataset based on the flat_type.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "The number of clusters (or groups) for all the flats in the data set given could be chosen differently from user to user.",
+          "text_html": "<p>The number of clusters (or groups) for all the flats in the data set given could be chosen differently from user to user.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "K-Means is a supervised learning algorithm.",
+          "text_html": "<p>K-Means is a supervised learning algorithm.</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "We do NOT need a response variable in the dataset to perform the K-Means algorithm.",
+          "text_html": "<p>We do NOT need a response variable in the dataset to perform the K-Means algorithm.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "k-means",
+        "clustering"
+      ]
+    }
+  ]
+}

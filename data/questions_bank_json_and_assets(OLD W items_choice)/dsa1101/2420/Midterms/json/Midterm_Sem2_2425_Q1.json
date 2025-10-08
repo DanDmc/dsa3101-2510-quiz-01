@@ -1,0 +1,41 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Midterm",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "1. Studen ts are required to complete this test individually .",
+  "question_stem_html": "<pre>1. Studen ts are required to complete this test individually .</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:36:06+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "1",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "1. Studen ts are required to complete this test individually .",
+      "part_stem_html": "<pre>1. Studen ts are required to complete this test individually .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

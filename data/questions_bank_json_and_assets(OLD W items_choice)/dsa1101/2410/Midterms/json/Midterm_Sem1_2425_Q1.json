@@ -1,0 +1,405 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY2024/2025 Sem 1",
+  "assessment_type": "Midterm",
+  "question_no": 1,
+  "is_multi": true,
+  "question_stem": "1. ( 50 p oints ) The data \u001cle patient_satisfaction.csv is a random sample collected from a\nhospital ab out the satisfactory of patien ts ab out the hospital's service when they w ere disc harged.\nThe data set includes information ab out patien t's age, the score of illness sev erit y , the anxiet y\nscore, and the status if the patien t w en t through surgery (1) or only had medical treatmen t (0).\nThe giv en \u001cle con tains columns with names listed b elo w.\nColumn's Name Description\nSatisfaction satisfaction score ab out hospital's service\nAge age of abalone (y ear)\nSev erit y sev erit y score\nSurgical.Medical 1 = had surgery; 0 = no surgery\nAnxiet y anxiet y score\n please run function setwd() in a separate line (if y ou need it) when imp orting the data set\nin to R.\n use set.seed(310) . Y ou get p enalt y of (-2) p oin ts if y ou don't ha v e it.\n the names giv en in b old b elo w MUST b e used in y our R co de .\n please rep ort n umerical answ ers to at least three signi\u001ccan t \u001cgures if it's smaller than one\n(e.g. 0.0123) and to three decimal places if it's larger than one (e.g. 2.345).\nPart I : Data Explor ation (18 p oints)\nLoad the \u001cle patient_satisfaction.csv in to R and name it as data .",
+  "question_stem_html": "<pre>1. ( 50 p oints ) The data \u001cle patient_satisfaction.csv is a random sample collected from a\nhospital ab out the satisfactory of patien ts ab out the hospital&#x27;s service when they w ere disc harged.\nThe data set includes information ab out patien t&#x27;s age, the score of illness sev erit y , the anxiet y\nscore, and the status if the patien t w en t through surgery (1) or only had medical treatmen t (0).\nThe giv en \u001cle con tains columns with names listed b elo w.\nColumn&#x27;s Name Description\nSatisfaction satisfaction score ab out hospital&#x27;s service\nAge age of abalone (y ear)\nSev erit y sev erit y score\nSurgical.Medical 1 = had surgery; 0 = no surgery\nAnxiet y anxiet y score\n please run function setwd() in a separate line (if y ou need it) when imp orting the data set\nin to R.\n use set.seed(310) . Y ou get p enalt y of (-2) p oin ts if y ou don&#x27;t ha v e it.\n the names giv en in b old b elo w MUST b e used in y our R co de .\n please rep ort n umerical answ ers to at least three signi\u001ccan t \u001cgures if it&#x27;s smaller than one\n(e.g. 0.0123) and to three decimal places if it&#x27;s larger than one (e.g. 2.345).\nPart I : Data Explor ation (18 p oints)\nLoad the \u001cle patient_satisfaction.csv in to R and name it as data .</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T21:00:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "1",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "1. (2 p oin ts) W rite co de to c hange the name of the 4th column of data to Surgical .",
+      "part_stem_html": "<pre>1. (2 p oin ts) W rite co de to c hange the name of the 4th column of data to Surgical .</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "names(data)[4] = \"Surgical\" \n\nnames(data)",
+      "solution_html": "<pre><code class=\"language-r\">names(data)[4] = &quot;Surgical&quot; \n\nnames(data)</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "2",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "2. (2 p oin ts) W rite co de to create a table of prop ortions for column Surgical . Rep ort the\np ercen tage of patien ts that had surgery .",
+      "part_stem_html": "<pre>2. (2 p oin ts) W rite co de to create a table of prop ortions for column Surgical . Rep ort the\np ercen tage of patien ts that had surgery .</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Report the percentage of patients that had surgery.\n\n# table(data$Surgical) # RAW FREQUENCY: 14 patient got Surgical\nprop.table(table(data$Surgical))*100 # PERCENTAGE TABLE \n# 56% of patients had surgery \n\nattach(data)",
+      "solution_html": "<pre><code class=\"language-r\"># Report the percentage of patients that had surgery.\n\n# table(data$Surgical) # RAW FREQUENCY: 14 patient got Surgical\nprop.table(table(data$Surgical))*100 # PERCENTAGE TABLE \n# 56% of patients had surgery \n\nattach(data)</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "3",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "3. (2 p oin ts) W rite co de to create a histogram with normal densit y curv e o v erla y-ed for the\nsample of satisfaction.",
+      "part_stem_html": "<pre>3. (2 p oin ts) W rite co de to create a histogram with normal densit y curv e o v erla y-ed for the\nsample of satisfaction.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "hist(Satisfaction, freq = FALSE) \nn = length(Satisfaction)\n\nhist(Satisfaction, freq=FALSE, main = paste(\"Histogram of Total Sales\"),\n     xlab = \"total sales\", ylab=\"Probability\", \n     col = \"grey\")#, ylim = c(0, 0.002))\nx <- seq(0, max(Satisfaction), length.out=n)\ny <- dnorm(x, mean(Satisfaction), sd(Satisfaction))\nlines(x, y, col = \"red\") # this is the normal density curve",
+      "solution_html": "<pre><code class=\"language-r\">hist(Satisfaction, freq = FALSE) \nn = length(Satisfaction)\n\nhist(Satisfaction, freq=FALSE, main = paste(&quot;Histogram of Total Sales&quot;),\n     xlab = &quot;total sales&quot;, ylab=&quot;Probability&quot;, \n     col = &quot;grey&quot;)#, ylim = c(0, 0.002))\nx &lt;- seq(0, max(Satisfaction), length.out=n)\ny &lt;- dnorm(x, mean(Satisfaction), sd(Satisfaction))\nlines(x, y, col = &quot;red&quot;) # this is the normal density curve</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "4",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "4. (2 p oin ts) W rite co de to create a QQ plot for the sample of satisfaction. Giv e y our com-\nmen ts.",
+      "part_stem_html": "<pre>4. (2 p oin ts) W rite co de to create a QQ plot for the sample of satisfaction. Giv e y our com-\nmen ts.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Give your comments.\n\nqqnorm(Satisfaction, pch = 20)\nqqline(Satisfaction, col = \"red\") \n\n# COMMENTS: BOTH LEFT TAIL AND RIGHT TAIL ARE NOT CLEARLY CONTRADICT FROM NORMAL \n# SOME MIGHT SAY: RIGHT TAIL POSSIBLY/LIGHTLY SHORTER THAN NORMAL",
+      "solution_html": "<pre><code class=\"language-r\"># Give your comments.\n\nqqnorm(Satisfaction, pch = 20)\nqqline(Satisfaction, col = &quot;red&quot;) \n\n# COMMENTS: BOTH LEFT TAIL AND RIGHT TAIL ARE NOT CLEARLY CONTRADICT FROM NORMAL \n# SOME MIGHT SAY: RIGHT TAIL POSSIBLY/LIGHTLY SHORTER THAN NORMAL</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "5",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "5. (4 p oin ts) W rite co de to create b o x plots of the satisfaction scores b y groups of surgical\nstatus. Giv e y our commen ts.",
+      "part_stem_html": "<pre>5. (4 p oin ts) W rite co de to create b o x plots of the satisfaction scores b y groups of surgical\nstatus. Giv e y our commen ts.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Give your comments.\n\nboxplot(Satisfaction ~ Surgical) \n# the median point of satisfaction for patients got surgical is lower.\n# 2 boxes are overlapping. \n# Hence, NO clear difference in the satisfaction points of patients with or without surgical. \n# no outlier for both groups",
+      "solution_html": "<pre><code class=\"language-r\"># Give your comments.\n\nboxplot(Satisfaction ~ Surgical) \n# the median point of satisfaction for patients got surgical is lower.\n# 2 boxes are overlapping. \n# Hence, NO clear difference in the satisfaction points of patients with or without surgical. \n# no outlier for both groups</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "6",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "6. (6 p oin ts) W rite co de to create a scatter plot of satisfaction score against the age of patien ts\nfor whic h the p oin ts are classi\u001ced b y the surgical status: p oin ts of patien ts had surgical is\nin red color and p oin ts of patien ts with no surgical is in blue color. Giv e y our commen ts.\n2\nPart II: Line ar Mo del (8 p oints)",
+      "part_stem_html": "<pre>6. (6 p oin ts) W rite co de to create a scatter plot of satisfaction score against the age of patien ts\nfor whic h the p oin ts are classi\u001ced b y the surgical status: p oin ts of patien ts had surgical is\nin red color and p oin ts of patien ts with no surgical is in blue color. Giv e y our commen ts.\n2\nPart II: Line ar Mo del (8 p oints)</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# the age of patients for which the points are classified by the surgical status: \n# points of patients had surgical is in red color and points of patients with no surgical is in blue color. \n# Give your comments. \n\n\nplot(Satisfaction ~ Age, type = \"n\")\npoints(Satisfaction[which(Surgical == 1)] ~ Age[which(Surgical==1)], col = \"red\", pch = 20)\npoints(Satisfaction[which(Surgical == 0)] ~ Age[which(Surgical==0)], col = \"blue\", pch = 20)\nlegend(25, 50, legend = c(\"Surgical\", \"No surgical\"), col = c(\"red\",\"blue\"), pch=c(20,20))\n\n\ncor(Satisfaction, Age) # -0.87\n# strong negative association, quite linear  \n# the variablity of satisfaction is quite stable when age changes \n\n\n\n\n##########  Part II: Linear Model (TOTAL = 8 points)\n########## MODEL: Satisfaction ~ Age + Severity + Surgical + Anxiety",
+      "solution_html": "<pre><code class=\"language-r\"># the age of patients for which the points are classified by the surgical status: \n# points of patients had surgical is in red color and points of patients with no surgical is in blue color. \n# Give your comments. \n\n\nplot(Satisfaction ~ Age, type = &quot;n&quot;)\npoints(Satisfaction[which(Surgical == 1)] ~ Age[which(Surgical==1)], col = &quot;red&quot;, pch = 20)\npoints(Satisfaction[which(Surgical == 0)] ~ Age[which(Surgical==0)], col = &quot;blue&quot;, pch = 20)\nlegend(25, 50, legend = c(&quot;Surgical&quot;, &quot;No surgical&quot;), col = c(&quot;red&quot;,&quot;blue&quot;), pch=c(20,20))\n\n\ncor(Satisfaction, Age) # -0.87\n# strong negative association, quite linear  \n# the variablity of satisfaction is quite stable when age changes \n\n\n\n\n##########  Part II: Linear Model (TOTAL = 8 points)\n########## MODEL: Satisfaction ~ Age + Severity + Surgical + Anxiety</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "7",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "7. (4 p oin ts) Fit a linear regression mo del for the resp onse v ariable Satisfaction , named as\nM , using all input features, Age , Sev erit y , Surgical and Anxiet y . Rep ort p-v alues of\nthe regressors that are NOT signi\u001ccan t in the mo del, at signi\u001ccance lev el 0.1.",
+      "part_stem_html": "<pre>7. (4 p oin ts) Fit a linear regression mo del for the resp onse v ariable Satisfaction , named as\nM , using all input features, Age , Sev erit y , Surgical and Anxiet y . Rep ort p-v alues of\nthe regressors that are NOT signi\u001ccan t in the mo del, at signi\u001ccance lev el 0.1.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Report p-values of the regressors that are NOT significant in the model, at significance level 0.1.\n\ndata$Surgical = as.factor(data$Surgical) # \n\nM = lm(Satisfaction ~ Age + Severity + Surgical + Anxiety, data = data) \n\nsummary(M)\n\n# variable that is the most non-significant is Surgical with p-value 0.5968",
+      "solution_html": "<pre><code class=\"language-r\"># Report p-values of the regressors that are NOT significant in the model, at significance level 0.1.\n\ndata$Surgical = as.factor(data$Surgical) # \n\nM = lm(Satisfaction ~ Age + Severity + Surgical + Anxiety, data = data) \n\nsummary(M)\n\n# variable that is the most non-significant is Surgical with p-value 0.5968</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "8",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "8. (4 p oin ts) T w o patien ts, A and B, that ha v e information listed b elo w. W rite co de to predict\nthe satisfaction score for b oth of them. Rep ort the prediction v alues.\nA: Age = 35, Severity = 45, Anxiety = 2.5 , and had no surgical.\nB: Age = 60, Severity = 40, Anxiety = 3 , and had surgical.\nPart III: KNN (24 p oints)",
+      "part_stem_html": "<pre>8. (4 p oin ts) T w o patien ts, A and B, that ha v e information listed b elo w. W rite co de to predict\nthe satisfaction score for b oth of them. Rep ort the prediction v alues.\nA: Age = 35, Severity = 45, Anxiety = 2.5 , and had no surgical.\nB: Age = 60, Severity = 40, Anxiety = 3 , and had surgical.\nPart III: KNN (24 p oints)</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Write code to predict the satisfaction score for both of them. \n# Report the prediction values. \n\nnew = data.frame(Age = c(35, 60), Severity = c(45, 40), Surgical = c(\"0\", \"1\"), Anxiety = c(2.5, 3))  \n\npredict(M, newdata = new) \n\n# REPORT THE OUTCOMES\n# A: 82.19378 \n# B: 58.83136\n\n\n\n#################### Part III: KNN (total = 24 points)\n\n####################### KNN NOT USING SURGICAL VARIABLE; SATISFACTION BE CATEGORIZED AS 2 GROUPS",
+      "solution_html": "<pre><code class=\"language-r\"># Write code to predict the satisfaction score for both of them. \n# Report the prediction values. \n\nnew = data.frame(Age = c(35, 60), Severity = c(45, 40), Surgical = c(&quot;0&quot;, &quot;1&quot;), Anxiety = c(2.5, 3))  \n\npredict(M, newdata = new) \n\n# REPORT THE OUTCOMES\n# A: 82.19378 \n# B: 58.83136\n\n\n\n#################### Part III: KNN (total = 24 points)\n\n####################### KNN NOT USING SURGICAL VARIABLE; SATISFACTION BE CATEGORIZED AS 2 GROUPS</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "9",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "9. (2 p oin ts) W rite R co de to create a new column in data , names as S where S has t w o\ncategories: Go o d and Not Go o d .\nS is Go o d if the satisfaction score in Satisfaction is larger than 70; and S is Not Go o d if\nthe satisfaction score in Satisfaction is≤70 .",
+      "part_stem_html": "<pre>9. (2 p oin ts) W rite R co de to create a new column in data , names as S where S has t w o\ncategories: Go o d and Not Go o d .\nS is Go o d if the satisfaction score in Satisfaction is larger than 70; and S is Not Go o d if\nthe satisfaction score in Satisfaction is≤70 .</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# names as S where S has two categories: Good and Not Good.\n# S = Good if the satisfaction score is larger than 70; and S is Not Good if the satisfaction score <=70.\n\ndata$S = ifelse(data$Satisfaction >70, \"Good\", \"Not Good\")\n\nhead(data) # 6 columns",
+      "solution_html": "<pre><code class=\"language-r\"># names as S where S has two categories: Good and Not Good.\n# S = Good if the satisfaction score is larger than 70; and S is Not Good if the satisfaction score &lt;=70.\n\ndata$S = ifelse(data$Satisfaction &gt;70, &quot;Good&quot;, &quot;Not Good&quot;)\n\nhead(data) # 6 columns</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "10",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "10. (2 p oin ts) W rite co de to create a new data frame, called data.X whic h has the three\ncolumns Age , Sev erit y and Anxiet y after standardization for all patien ts.",
+      "part_stem_html": "<pre>10. (2 p oin ts) W rite co de to create a new data frame, called data.X whic h has the three\ncolumns Age , Sev erit y and Anxiet y after standardization for all patien ts.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# which has the three columns Age, Severity and Anxiety after standardization for all patients.\n\ndata.X = scale(data[, c(2,3,5)]) # scale Age, Severity and Anxiety",
+      "solution_html": "<pre><code class=\"language-r\"># which has the three columns Age, Severity and Anxiety after standardization for all patients.\n\ndata.X = scale(data[, c(2,3,5)]) # scale Age, Severity and Anxiety</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "11",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "11. (4 p oin ts) W rite co de to randomly split the total patien ts in to t w o groups: one group has\n15 patien ts (will b e the train set) and other group has the rest of patien ts (will b e the test\nset).\nF or the questions b elo w , w e consider S as the resp onse v ariable. W e w ould w an t to form\nKNN classi\u001cers using input features Age , Sev erit y and Anxiet y whic h helps to predict\nif a patien t ranks \u0010Go o d\u0011 or \u0010Not Go o d\u0011 when the patien t disc harges from the hospital.",
+      "part_stem_html": "<pre>11. (4 p oin ts) W rite co de to randomly split the total patien ts in to t w o groups: one group has\n15 patien ts (will b e the train set) and other group has the rest of patien ts (will b e the test\nset).\nF or the questions b elo w , w e consider S as the resp onse v ariable. W e w ould w an t to form\nKNN classi\u001cers using input features Age , Sev erit y and Anxiet y whic h helps to predict\nif a patien t ranks \u0010Go o d\u0011 or \u0010Not Go o d\u0011 when the patien t disc harges from the hospital.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# one group has 15 patients (will be the train set) \n# and other group has the rest of patients (will be the test set).\n\nn1 = 15 # number of points in train set\n\nn2 = 10 # number of points in test set\n\nlabel = c(rep(1, n1), rep(2, n2))  # this has length of 25  \n# create n1 number 1 and n2 number 2, to use them as labels\n# label 1 is for train set; label 2 is for test set.\n# we'll assign the labels to each row randomly\n\nlabel = sample(label) \n# we mix well the labels with each other in a random order\n\ntest.row <- which(label == 2) \n# get the index of the points that will be in the test set\ntest.X = data.X[test.row, ]\ntest.Y = data[test.row, 6]\n\ntrain.X = data.X[-test.row, ]\ntrain.Y = data[-test.row, 6]\n\n\n\ncbind(test.X, test.Y) # for reference \ncbind(train.X, train.Y) # for reference \n\n### NOTE: STUDENT MIGHT HAVE DIFFERENT WAYS TO RANDOMLY SPLIT 25 POINTS INTO TRAIN AND TEST. \n# PLEASE CHECK CAREFULLY AND AWARD THE POINTS IF THEY DO IT CORRECTLY.",
+      "solution_html": "<pre><code class=\"language-r\"># one group has 15 patients (will be the train set) \n# and other group has the rest of patients (will be the test set).\n\nn1 = 15 # number of points in train set\n\nn2 = 10 # number of points in test set\n\nlabel = c(rep(1, n1), rep(2, n2))  # this has length of 25  \n# create n1 number 1 and n2 number 2, to use them as labels\n# label 1 is for train set; label 2 is for test set.\n# we&#x27;ll assign the labels to each row randomly\n\nlabel = sample(label) \n# we mix well the labels with each other in a random order\n\ntest.row &lt;- which(label == 2) \n# get the index of the points that will be in the test set\ntest.X = data.X[test.row, ]\ntest.Y = data[test.row, 6]\n\ntrain.X = data.X[-test.row, ]\ntrain.Y = data[-test.row, 6]\n\n\n\ncbind(test.X, test.Y) # for reference \ncbind(train.X, train.Y) # for reference \n\n### NOTE: STUDENT MIGHT HAVE DIFFERENT WAYS TO RANDOMLY SPLIT 25 POINTS INTO TRAIN AND TEST. \n# PLEASE CHECK CAREFULLY AND AWARD THE POINTS IF THEY DO IT CORRECTLY.</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "12",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "12. (6 p oin ts) Use the train set with three standardized features to form the KNN classi\u001cers\nwhere k= 3 ,5,7,9,11 , and accuracy v alue for eac h classi\u001cer is k ept in a v ector named\naccuracy .",
+      "part_stem_html": "<pre>12. (6 p oin ts) Use the train set with three standardized features to form the KNN classi\u001cers\nwhere k= 3 ,5,7,9,11 , and accuracy v alue for eac h classi\u001cer is k ept in a v ector named\naccuracy .</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# and accuracy value for each classifier is kept in a vector named \"accuracy\"\n\nlibrary(class)\n\nK = c(3, 5, 7, 9, 11) \n# length(K) = 5\n\naccuracy= numeric()\n \nfor (i in K){ \n\n\tpred <- knn(train=train.X, test=test.X, cl=train.Y, k=i) \n\t# KNN with k receiving value as in vector K\n\n      confusion.matrix = table(test.Y, pred)  \n      \n      accuracy =append(accuracy, sum(diag(confusion.matrix))/sum(confusion.matrix) )\n      }",
+      "solution_html": "<pre><code class=\"language-r\"># and accuracy value for each classifier is kept in a vector named &quot;accuracy&quot;\n\nlibrary(class)\n\nK = c(3, 5, 7, 9, 11) \n# length(K) = 5\n\naccuracy= numeric()\n \nfor (i in K){ \n\n\tpred &lt;- knn(train=train.X, test=test.X, cl=train.Y, k=i) \n\t# KNN with k receiving value as in vector K\n\n      confusion.matrix = table(test.Y, pred)  \n      \n      accuracy =append(accuracy, sum(diag(confusion.matrix))/sum(confusion.matrix) )\n      }</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "13",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "13. (2 p oin ts) W rite co de to plot accuracy against k in the question ab o v e.",
+      "part_stem_html": "<pre>13. (2 p oin ts) W rite co de to plot accuracy against k in the question ab o v e.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "accuracy\n# [1] 0.8 0.9 0.8 1.0 0.8\n\nplot(K, accuracy, xlab = \"k\", ylab = \"Accuracy\", pch = 20, col = \"red\", type = \"l\")",
+      "solution_html": "<pre><code class=\"language-r\">accuracy\n# [1] 0.8 0.9 0.8 1.0 0.8\n\nplot(K, accuracy, xlab = &quot;k&quot;, ylab = &quot;Accuracy&quot;, pch = 20, col = &quot;red&quot;, type = &quot;l&quot;)</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "14",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "14. (2 p oin ts) Using accuracy as the criterion, rep ort the b est k found and the accuracy of the\nKNN classi\u001cer with that v alue of k .",
+      "part_stem_html": "<pre>14. (2 p oin ts) Using accuracy as the criterion, rep ort the b est k found and the accuracy of the\nKNN classi\u001cer with that v alue of k .</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "cbind(K, accuracy) \n# this helps to check which value of k gives highest accuracy\n\n# Report: k = 9 is the best",
+      "solution_html": "<pre><code class=\"language-r\">cbind(K, accuracy) \n# this helps to check which value of k gives highest accuracy\n\n# Report: k = 9 is the best</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "15",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "15. (6 p oin ts) Use the KNN with the b est k found in Question 14 to predict the rank ( Go o d ,\nNot Go o d ) that patien t A listed in Question 8 will ev aluates the hospital service.\nHint : y ou can use the same train set as in Question 12 ab o v e. Y ou ma y standardize the\nv alues for the new patien t using the mean and the standard deviation of all the patien ts in\nthe data set giv en.\n3",
+      "part_stem_html": "<pre>15. (6 p oin ts) Use the KNN with the b est k found in Question 14 to predict the rank ( Go o d ,\nNot Go o d ) that patien t A listed in Question 8 will ev aluates the hospital service.\nHint : y ou can use the same train set as in Question 12 ab o v e. Y ou ma y standardize the\nv alues for the new patien t using the mean and the standard deviation of all the patien ts in\nthe data set giv en.\n3</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code or numeric result",
+          "text_html": "<p>R code or numeric result</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# the rank (Good, Not Good) that patient A will evaluates the hospital service.\n\n# GET THE MEAN AND SD OF EACH COLUMN IN data[, c(2,3,5)] SO THAT WE CAN STANDARDIZE NEW POINTS - patient A\n\nnew  # this is for two patients A and B THAT WAS FORMED IN LINEAR MODEL\n\nmean = colMeans(data[, c(2,3,5)]) \n# mean from orignal data, before standardization\n# Age Severity  Anxiety \n# 50.840   45.920    3.932 \n\nsd = apply(X = data[, c(2,3,5)], FUN = sd, MARGIN  = 2) \n# Age  Severity   Anxiety \n# 14.809006 13.028558  1.764162 \n\n# Standardize patient A: 1st row, columns 1, 2, 4 only (not taking column 3 = Surgical)\n\nscale.A = (new[1,c(1,2,4)] - mean)/sd \n\n\n\n# ANOTHER WAY IS TO FIND THE MEAN AND SD FOR EACH COLUMN SEPARATELY\n\n# THEN you can scale one value at a time for patient A (row 1 of \"new\")\nAge.A = ( new[1, 1] - mean(data$Age)  ) /(sd(data$Age))\nSeverity.A = ( new[1, 2] - mean(data$Severity)  ) /(sd(data$Severity)) \nAnxiety.A = ( new[1, 4] - mean(data$Anxiety)  ) /(sd(data$Anxiety)) \n\nnew.scale.A = data.frame(Age = Age.A, Severity = Severity.A, Anxiety = Anxiety.A)\n# new.scale.A IS EXACTLY THE SAME AS scale.A\n\n\n# APPLY KNN with k = 9, TO PREDICT THE RESPONSE FOR patient A:\nknn(train=train.X, test=scale.A, cl=train.Y, k=9) \n\n# REPORT: PATIENT A is predicted as will rank Good for for hospital service. \n\n\n\n\n\n########### QUESTION 2 = TOTAL WORTH 10 POINTS\n\n\n# Alena Lee currently is working for a company. \n# Her current salary is 50k yearly and is increased 5% every year.\n\n# So far, until end of 2024, she has a saving amount of 30k.\n\n# However, she wants to form a start-up company which will requires an initial amount of 100k. \n\n\n# Write R codes that help to calculate the smallest proportion (up to 2 decimal places) \n# of yearly salary that she should save so that she could have enough money for \n# her start-up in 5 years, counting from starting 2025 onward.\n\n####### SIMLAR AS TUTORIAL 1, WE DEFINE A FUNCTION THAT HELPS TO CALCULATE THE NUMBER OF YEARS\n####### THAT HELPS TO SAVE ENOUGH MONEY \n####### HOWEVER, THIS FUNCTION SHOULD HAVE 2 VARIABLES: SALARY AND PROPORTION SAVE\n\n# Part 1 \n\n\n\nrate = 0.05 # rate of salary increasing yearly\n\nsaved = 30000 \nyear = 0\nfunction.year = function(salary, portion_save = 0.2){\n\twhile(saved <100000 ) {\n\t\tsalary = salary*(1 + rate) # MUST INCREASE AT THE START \n\t\tyear = year + 1\n\t\tsaved = saved + portion_save *salary\n\n\t\t#print(c(saved, salary) )\n\t}\n\treturn(year)\n}\n\nfunction.year(salary = 50000) \n# this means if Alena Lee saves 20% of her annual salary, then she needs 6 years to get saved >=100k\n\n\n\n# PART 2 \n################# TO GET WHAT PROPOTION TO SAVE MONEY, THERE ARE 2 METHODS:\n\n################# FIRST METHOD: USE WHILE LOOP AND THE FUNCTION DEFINED ABOVE\n\nF = function(salary){\n\t\nportion= seq(0.01, 1, by = 0.01) \nyear = 6\ni= 1\nwhile( (year >5) & (i <=100) ){\n\tsaved = 30000\n\tyear = 0\n\tportion_save = portion[i] # we need this for the return/output of the function\n\tyear = function.year(salary, portion_save = portion[i])\n\tif (year >5) {i = i+ 1}\n}\nreturn(portion_save)\n\n}\n\nF(salary = 50000) # 0.25\n\n# That means, to have enough 100k in 5 years, \n# she needs to save at least 25% of the salary\n\n\n############# SECOND METHOD: USE FOR LOOP FOR ALL THE POSSIBLE PROPORTIONS: 0.01 TO 1.00\n# AND USE FUNCTION DEFINED ABOVE TO CALCULATE NUMBER OF YEARS\n\n# idea: we'll try for each value of proportion, starting from 0.01 -> 0.02 -> 0.03..., till 0.99 and 1\n# to see how many years it takes to get the saved value be >=100k.\n# the smallest proportion that helps to save enough money in 5 years is chosen.\n# the variable i of the for loop will run through the indexes of vector \"portion\", from 1 to 100\n\nnumber.year = numeric() \n\nportion= seq(0.01, 1, by = 0.01) \n\nfor (i in 1:100) {\n\tportion_save = portion[i]\n\tsaved = 30000\n\tyear = 0\n\tyear = function.year(salary = 50000, portion_save = portion[i])\n\tnumber.year = append(number.year, year)\n\ti = i + 1\t\n}\n\ncbind(portion, number.year)\n# this matrix list the number of years to get saved value >=100k (2nd col), for \n# each value of proportion (in 1st col)\n# it shows that when proportion = 0.25 or larger, the number of years to get \n# saved value be >=100 is 5 years or less than 5 years.",
+      "solution_html": "<pre><code class=\"language-r\"># the rank (Good, Not Good) that patient A will evaluates the hospital service.\n\n# GET THE MEAN AND SD OF EACH COLUMN IN data[, c(2,3,5)] SO THAT WE CAN STANDARDIZE NEW POINTS - patient A\n\nnew  # this is for two patients A and B THAT WAS FORMED IN LINEAR MODEL\n\nmean = colMeans(data[, c(2,3,5)]) \n# mean from orignal data, before standardization\n# Age Severity  Anxiety \n# 50.840   45.920    3.932 \n\nsd = apply(X = data[, c(2,3,5)], FUN = sd, MARGIN  = 2) \n# Age  Severity   Anxiety \n# 14.809006 13.028558  1.764162 \n\n# Standardize patient A: 1st row, columns 1, 2, 4 only (not taking column 3 = Surgical)\n\nscale.A = (new[1,c(1,2,4)] - mean)/sd \n\n\n\n# ANOTHER WAY IS TO FIND THE MEAN AND SD FOR EACH COLUMN SEPARATELY\n\n# THEN you can scale one value at a time for patient A (row 1 of &quot;new&quot;)\nAge.A = ( new[1, 1] - mean(data$Age)  ) /(sd(data$Age))\nSeverity.A = ( new[1, 2] - mean(data$Severity)  ) /(sd(data$Severity)) \nAnxiety.A = ( new[1, 4] - mean(data$Anxiety)  ) /(sd(data$Anxiety)) \n\nnew.scale.A = data.frame(Age = Age.A, Severity = Severity.A, Anxiety = Anxiety.A)\n# new.scale.A IS EXACTLY THE SAME AS scale.A\n\n\n# APPLY KNN with k = 9, TO PREDICT THE RESPONSE FOR patient A:\nknn(train=train.X, test=scale.A, cl=train.Y, k=9) \n\n# REPORT: PATIENT A is predicted as will rank Good for for hospital service. \n\n\n\n\n\n########### QUESTION 2 = TOTAL WORTH 10 POINTS\n\n\n# Alena Lee currently is working for a company. \n# Her current salary is 50k yearly and is increased 5% every year.\n\n# So far, until end of 2024, she has a saving amount of 30k.\n\n# However, she wants to form a start-up company which will requires an initial amount of 100k. \n\n\n# Write R codes that help to calculate the smallest proportion (up to 2 decimal places) \n# of yearly salary that she should save so that she could have enough money for \n# her start-up in 5 years, counting from starting 2025 onward.\n\n####### SIMLAR AS TUTORIAL 1, WE DEFINE A FUNCTION THAT HELPS TO CALCULATE THE NUMBER OF YEARS\n####### THAT HELPS TO SAVE ENOUGH MONEY \n####### HOWEVER, THIS FUNCTION SHOULD HAVE 2 VARIABLES: SALARY AND PROPORTION SAVE\n\n# Part 1 \n\n\n\nrate = 0.05 # rate of salary increasing yearly\n\nsaved = 30000 \nyear = 0\nfunction.year = function(salary, portion_save = 0.2){\n\twhile(saved &lt;100000 ) {\n\t\tsalary = salary*(1 + rate) # MUST INCREASE AT THE START \n\t\tyear = year + 1\n\t\tsaved = saved + portion_save *salary\n\n\t\t#print(c(saved, salary) )\n\t}\n\treturn(year)\n}\n\nfunction.year(salary = 50000) \n# this means if Alena Lee saves 20% of her annual salary, then she needs 6 years to get saved &gt;=100k\n\n\n\n# PART 2 \n################# TO GET WHAT PROPOTION TO SAVE MONEY, THERE ARE 2 METHODS:\n\n################# FIRST METHOD: USE WHILE LOOP AND THE FUNCTION DEFINED ABOVE\n\nF = function(salary){\n\t\nportion= seq(0.01, 1, by = 0.01) \nyear = 6\ni= 1\nwhile( (year &gt;5) &amp; (i &lt;=100) ){\n\tsaved = 30000\n\tyear = 0\n\tportion_save = portion[i] # we need this for the return/output of the function\n\tyear = function.year(salary, portion_save = portion[i])\n\tif (year &gt;5) {i = i+ 1}\n}\nreturn(portion_save)\n\n}\n\nF(salary = 50000) # 0.25\n\n# That means, to have enough 100k in 5 years, \n# she needs to save at least 25% of the salary\n\n\n############# SECOND METHOD: USE FOR LOOP FOR ALL THE POSSIBLE PROPORTIONS: 0.01 TO 1.00\n# AND USE FUNCTION DEFINED ABOVE TO CALCULATE NUMBER OF YEARS\n\n# idea: we&#x27;ll try for each value of proportion, starting from 0.01 -&gt; 0.02 -&gt; 0.03..., till 0.99 and 1\n# to see how many years it takes to get the saved value be &gt;=100k.\n# the smallest proportion that helps to save enough money in 5 years is chosen.\n# the variable i of the for loop will run through the indexes of vector &quot;portion&quot;, from 1 to 100\n\nnumber.year = numeric() \n\nportion= seq(0.01, 1, by = 0.01) \n\nfor (i in 1:100) {\n\tportion_save = portion[i]\n\tsaved = 30000\n\tyear = 0\n\tyear = function.year(salary = 50000, portion_save = portion[i])\n\tnumber.year = append(number.year, year)\n\ti = i + 1\t\n}\n\ncbind(portion, number.year)\n# this matrix list the number of years to get saved value &gt;=100k (2nd col), for \n# each value of proportion (in 1st col)\n# it shows that when proportion = 0.25 or larger, the number of years to get \n# saved value be &gt;=100 is 5 years or less than 5 years.</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 21,
+  "is_multi": false,
+  "question_stem": "Using the student-mat.csv dataset from our lectures, create a contingency table from the variables address and guardian. Store it as address_guardian. \nWrite R code that will:\n\nCompute the proportion of students whose home address was rural, and whose guardian was their mother. \nEstimate the probability of students whose home address was rural, and whose guardian was their mother, under the null hypothesis of the chi2-test of independence.",
+  "question_stem_html": "<div><p><span data-contrast=\"none\">Using the student-mat.csv dataset from our lectures, create a contingency table from the variables address and guardian. Store it as address_guardian.</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-contrast=\"none\">Write R code that will:</span></p>\n<ol style=\"list-style-type: decimal;\">\n<li><span data-contrast=\"none\">Compute the proportion of students whose home address was rural, and whose guardian was their mother.</span><span> </span></li>\n<li><span data-contrast=\"none\">Estimate the probability of students whose home address was rural, and whose guardian was their mother, under the null hypothesis of the chi2-test of independence.</span></li>\n</ol></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Using the student-mat.csv dataset from our lectures, create a contingency table from the variables address and guardian. Store it as address_guardian. \nWrite R code that will:\n\nCompute the proportion of students whose home address was rural, and whose guardian was their mother. \nEstimate the probability of students whose home address was rural, and whose guardian was their mother, under the null hypothesis of the chi2-test of independence.",
+      "part_stem_html": "<div><p><span data-contrast=\"none\">Using the student-mat.csv dataset from our lectures, create a contingency table from the variables address and guardian. Store it as address_guardian.</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-contrast=\"none\">Write R code that will:</span></p>\n<ol style=\"list-style-type: decimal;\">\n<li><span data-contrast=\"none\">Compute the proportion of students whose home address was rural, and whose guardian was their mother.</span><span> </span></li>\n<li><span data-contrast=\"none\">Estimate the probability of students whose home address was rural, and whose guardian was their mother, under the null hypothesis of the chi2-test of independence.</span></li>\n</ol></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "address_guardian  N  address_guardian[\"R\", \"mother\"]/N # Ans: 0.170 \n \nFor the second part: \n# Mtd 1: (rowSums(tab1)[1]/N) * (colSums(tab1)[2]/N) # Mtd 2: chisq.test(tab1)$expected[1,2]/N # Ans: 0.154",
+      "solution_html": "<pre><span data-contrast=\"none\">address_guardian <- table(stud_perf$address, stud_perf$guardian)</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">N <- sum(address_guardian)</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">address_guardian[\"R\", \"mother\"]/N</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\"># Ans: 0.170</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></pre>\n<p><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-contrast=\"none\">For the second part:</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<pre><span data-contrast=\"none\"># Mtd 1:</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">(rowSums(tab1)[1]/N) * (colSums(tab1)[2]/N)</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\"># Mtd 2:</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">chisq.test(tab1)$expected[1,2]/N</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\"># Ans: 0.154</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></pre>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

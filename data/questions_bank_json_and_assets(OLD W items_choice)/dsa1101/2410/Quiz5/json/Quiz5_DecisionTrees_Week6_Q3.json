@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Question 3 (correct answer in yellow highlight)\nThe node where the red arrow is pointing (yes 32/58) means\nIf a customer has poutcome = success then without information of any other factors, we can predict that the customer will subscribe the bank service with probability 32/58.\n\nAmong 2000 customers, there are total of 58 customers has poutcome = success. And among these 58 customers, there are 32 of the subscribed the bank service.\n\nAmong the 1789 customers that did not subscribe the bank service, there are 58 of them has poutcome = success. ",
+  "question_stem_html": "<pre>Question 3 (correct answer in yellow highlight)\nThe node where the red arrow is pointing (yes 32/58) means\nIf a customer has poutcome = success then without information of any other factors, we can predict that the customer will subscribe the bank service with probability 32/58.\n\nAmong 2000 customers, there are total of 58 customers has poutcome = success. And among these 58 customers, there are 32 of the subscribed the bank service.\n\nAmong the 1789 customers that did not subscribe the bank service, there are 58 of them has poutcome = success. </pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he node where the red arrow is pointing (yes 32/58) means",
+          "text_html": "<p>he node where the red arrow is pointing (yes 32/58) means</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "f a customer has poutcome = success then without information of any other factors, we can predict that the customer will subscribe the bank service with probability 32/58.",
+          "text_html": "<p>f a customer has poutcome = success then without information of any other factors, we can predict that the customer will subscribe the bank service with probability 32/58.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

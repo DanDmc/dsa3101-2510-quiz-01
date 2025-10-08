@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 16,
+  "is_multi": false,
+  "question_stem": "This question is to be answered using R.\nSuppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints and distributes C=11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is\nh(X)={11000if X≥11000⌊X⌋+(11000−⌊X⌋)(−0.25)if X<11000\nwhere X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.\nEnsure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002.\nYou will be awarded more marks for\nplanning your code well,\nfor using functions such as apply instead of for loops.\nfor a clean and clear plot,\nand for a clear explanation of your results.",
+  "question_stem_html": "<p>This question is to be answered using R.</p>\n<p>Suppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints and distributes C=11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is</p>\n<p>h(X)={11000if X≥11000⌊X⌋+(11000−⌊X⌋)(−0.25)if X<11000</p>\n<p>where X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.</p>\n<p>Ensure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002.</p>\n<p>You will be awarded more marks for</p>\n<p>planning your code well,</p>\n<p>for using functions such as apply instead of for loops.</p>\n<p>for a clean and clear plot,</p>\n<p>and for a clear explanation of your results.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "This question is to be answered using R.\nSuppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints and distributes C=11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is\nh(X)={11000if X≥11000⌊X⌋+(11000−⌊X⌋)(−0.25)if X<11000\nwhere X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.\nEnsure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002.\nYou will be awarded more marks for\nplanning your code well,\nfor using functions such as apply instead of for loops.\nfor a clean and clear plot,\nand for a clear explanation of your results.",
+      "part_stem_html": "<p>This question is to be answered using R.</p>\n<p>Suppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints and distributes C=11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is</p>\n<p>h(X)={11000if X≥11000⌊X⌋+(11000−⌊X⌋)(−0.25)if X<11000</p>\n<p>where X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.</p>\n<p>Ensure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002.</p>\n<p>You will be awarded more marks for</p>\n<p>planning your code well,</p>\n<p>for using functions such as apply instead of for loops.</p>\n<p>for a clean and clear plot,</p>\n<p>and for a clear explanation of your results.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 6.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

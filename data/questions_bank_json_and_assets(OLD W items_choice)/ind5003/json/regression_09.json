@@ -1,0 +1,28 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 9,
+  "is_multi": false,
+  "question_stem": "Consider the broken line regression model that we fitted to the Taiwan real estate price data, with housing age as the explanatory variable. In the notes, we used the value 25 years. In the following function we can input the age we wish to set the breakpoint at. The function returns the adjusted R² for the corresponding regression model.\n\nUse the function above to identify the 'best' value of age to use in the model. Name one downside of using this value.",
+  "question_stem_html": "<p>Consider the broken line regression model that we fitted to the Taiwan real estate price data, with housing age as the explanatory variable. In the notes, we used the value 25 years.</p><p>In the following function, we can input the age to set the breakpoint at. The function returns the adjusted R² for the corresponding regression model.</p><p>Use the function above to identify the <strong>best</strong> value of age to use in the model. Name one downside of using this value.</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:15:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_09.png",
+      "alt": "Python code for housing_break function to find optimal house age breakpoint."
+    }
+  ],
+  "items": [
+    {
+      "type": "code",
+      "language": "python",
+      "solution_html": "<p><strong>Python Solution:</strong></p><pre><code>import numpy as np\nimport pandas as pd\nimport statsmodels.api as sm\nfrom statsmodels.formula.api import ols\n\nre2 = pd.read_csv('data/taiwan_dataset.csv')\n\ndef housing_break(age, data):\n    tmp_data = data.copy()\n    tmp_data['x3'] = [(x - age) if x > age else 0 for x in data.house_age]\n    lm_age_mrt_2 = ols('price ~ house_age + x3', data=tmp_data).fit()\n    return lm_age_mrt_2.rsquared_adj\n\nage_grid = np.arange(0, 45, step=0.1)\nr2_vals = [housing_break(x, re2) for x in age_grid]\nid = np.argmax(r2_vals)\n\nprint(f'The optimal house age is {age_grid[id]:.1f}')\n# Output: The optimal house age is 24.4</code></pre><p><strong>Answer:</strong> The optimal house age is approximately <strong>24.4 years</strong>.</p><p><strong>Downside:</strong> This value could be overfitted to this particular dataset, meaning it may not generalize well to other samples.</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "inference", "python", "model-selection", "overfitting"]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Suppose that the data in liverpool_2223_season.csv has been read into Python as liverpool. The following code tabulates the goal counts for and stores them in a column in goal_counts.\ngoal_counts =pd.DataFrame(np.zeros((10, 2), dtype='int'), columns=['GF', 'GA'])\ntmp2 =liverpool.GF.value_counts()\ngoal_counts.loc[tmp2.index, 'GF'] =tmp2\nContinue the code to fill up the second column, which tabulates the goal counts against into the second column of goal_counts. Then create the following bar chart, which compares the GF and GA:",
+  "question_stem_html": "<p>Suppose that the data in liverpool_2223_season.csv has been read into Python as liverpool. The following code tabulates the goal counts for and stores them in a column in goal_counts.</p>\n<p>goal_counts =pd.DataFrame(np.zeros((10, 2), dtype='int'), columns=['GF', 'GA'])</p>\n<p>tmp2 =liverpool.GF.value_counts()</p>\n<p>goal_counts.loc[tmp2.index, 'GF'] =tmp2</p>\n<p>Continue the code to fill up the second column, which tabulates the goal counts against into the second column of goal_counts. Then create the following bar chart, which compares the GF and GA:</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image2.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Suppose that the data in liverpool_2223_season.csv has been read into Python as liverpool. The following code tabulates the goal counts for and stores them in a column in goal_counts.\ngoal_counts =pd.DataFrame(np.zeros((10, 2), dtype='int'), columns=['GF', 'GA'])\ntmp2 =liverpool.GF.value_counts()\ngoal_counts.loc[tmp2.index, 'GF'] =tmp2\nContinue the code to fill up the second column, which tabulates the goal counts against into the second column of goal_counts. Then create the following bar chart, which compares the GF and GA:",
+      "part_stem_html": "<p>Suppose that the data in liverpool_2223_season.csv has been read into Python as liverpool. The following code tabulates the goal counts for and stores them in a column in goal_counts.</p>\n<p>goal_counts =pd.DataFrame(np.zeros((10, 2), dtype='int'), columns=['GF', 'GA'])</p>\n<p>tmp2 =liverpool.GF.value_counts()</p>\n<p>goal_counts.loc[tmp2.index, 'GF'] =tmp2</p>\n<p>Continue the code to fill up the second column, which tabulates the goal counts against into the second column of goal_counts. Then create the following bar chart, which compares the GF and GA:</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image2.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 4.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

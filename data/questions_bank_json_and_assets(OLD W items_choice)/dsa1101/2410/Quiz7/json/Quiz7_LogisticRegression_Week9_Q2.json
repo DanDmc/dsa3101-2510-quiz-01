@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Q2. How many coefficients does model M2 have (including the intercept)?\n3, 4,5,6",
+  "question_stem_html": "<pre>Q2. How many coefficients does model M2 have (including the intercept)?\n3, 4,5,6</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:24:49+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "3",
+          "text_html": "<p>3</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "4",
+          "text_html": "<p>4</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "5",
+          "text_html": "<p>5</p>",
+          "is_correct": true,
+          "explanation": "Answer: 5\nExplanation: Model M2 was generated with Churned be the response, and it depends on ALL other columns (4 columns) in the data frame “data”. Each column will need one coefficient. Hence, 4 coefficients for 4 variables with 1 intercept  5 in total.\nNote: Married is categorical with 2 categories, hence, it needs one coefficient only, not two."
+        },
+        {
+          "choice_id": null,
+          "text": "6",
+          "text_html": "<p>6</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Answer: 5\nExplanation: Model M2 was generated with Churned be the response, and it depends on ALL other columns (4 columns) in the data frame “data”. Each column will need one coefficient. Hence, 4 coefficients for 4 variables with 1 intercept  5 in total.\nNote: Married is categorical with 2 categories, hence, it needs one coefficient only, not two.",
+      "solution_html": "<pre>Answer: 5\nExplanation: Model M2 was generated with Churned be the response, and it depends on ALL other columns (4 columns) in the data frame “data”. Each column will need one coefficient. Hence, 4 coefficients for 4 variables with 1 intercept  5 in total.\nNote: Married is categorical with 2 categories, hence, it needs one coefficient only, not two.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "logistic regression"
+      ]
+    }
+  ]
+}

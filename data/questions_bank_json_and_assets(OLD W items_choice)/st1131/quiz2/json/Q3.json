@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz2",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Consider the following boxplot. If you were told that the distribution is unimodal, what skew would be present in it?",
+  "question_stem_html": "<div>\n<p>Consider the following boxplot. If you were told that the distribution is unimodal, what skew would be present in it?</p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded Media/boxplot1.png\" alt=\"boxplot1-1.png\" data-old-link=\"/courses/80987/files/6794480/preview\"></p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [
+    {
+      "src": "assets/boxplot1-1.png",
+      "alt": "boxplot1-1.png"
+    }
+  ],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mcq",
+      "part_stem": "Consider the following boxplot. If you were told that the distribution is unimodal, what skew would be present in it?",
+      "part_stem_html": "<div>\n<p>Consider the following boxplot. If you were told that the distribution is unimodal, what skew would be present in it?</p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded Media/boxplot1.png\" alt=\"boxplot1-1.png\" data-old-link=\"/courses/80987/files/6794480/preview\"></p>\n</div>",
+      "choices": [
+        {
+          "choice_id": "949bd88b-7cf1-4bf6-97d5-12a00fe171b3",
+          "text": "Symmetric",
+          "text_html": "<p>Symmetric</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "957e48b6-e979-4f18-ad96-cc97a69dca06",
+          "text": "Left skewed",
+          "text_html": "<p>Left skewed</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "d7c911ea-2c09-4aab-9461-97a2234b3eb8",
+          "text": "Right skewed",
+          "text_html": "<p>Right skewed</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "src": "assets/boxplot1-1.png",
+          "alt": "boxplot1-1.png"
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

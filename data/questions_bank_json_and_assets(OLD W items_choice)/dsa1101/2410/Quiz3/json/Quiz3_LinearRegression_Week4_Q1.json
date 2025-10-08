@@ -1,0 +1,41 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 3\nContent: Linear model, adding categorical X into model\nFunctions in R: lm(), predict().\n\nConsider data set <crab.csv> where we are interested in satell -  the number of male crabs grouped around a female horse shoe crab during the mating season (called satellite). The possible regressors are the weight (kg) and the width (cm) of the female crab; the female crab's color (categorical, 2 = light; 3 = medium, 4 = dark, and 5 = darker).\nData set was imported into R and a model with 3 variables weight, width and color was built. \nExtra question. How many coefficients that the correct model with 3 variables (weight, width and color) should have (including the intercept)?\n4, 5, 6, 7\nANS: 6\nIntercept + 1 for weight + 1 for width + 3 for color (because color is categorical)6\n\nQ1. R code is given in the photo below. How many coefficients does model M1 created from this code have?\n4, 5, 6, 7",
+  "question_stem_html": "<pre>Quiz 3\nContent: Linear model, adding categorical X into model\nFunctions in R: lm(), predict().\n\nConsider data set &lt;crab.csv&gt; where we are interested in satell -  the number of male crabs grouped around a female horse shoe crab during the mating season (called satellite). The possible regressors are the weight (kg) and the width (cm) of the female crab; the female crab&#x27;s color (categorical, 2 = light; 3 = medium, 4 = dark, and 5 = darker).\nData set was imported into R and a model with 3 variables weight, width and color was built. \nExtra question. How many coefficients that the correct model with 3 variables (weight, width and color) should have (including the intercept)?\n4, 5, 6, 7\nANS: 6\nIntercept + 1 for weight + 1 for width + 3 for color (because color is categorical)6\n\nQ1. R code is given in the photo below. How many coefficients does model M1 created from this code have?\n4, 5, 6, 7</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: 4. \nBecause column “color” inside data frame “crab” is still recognized by R as a numeric column by the code at line 8. In line 10, as.factor() is used, but it is to create a vector called “color” – be a categorical, but this vector is NOT inside data frame “crab”. \nModel M1 is fitted in line 12 uses column “color” inside data frame “crab” which is still numeric.",
+      "solution_html": "<pre>ANS: 4. \nBecause column “color” inside data frame “crab” is still recognized by R as a numeric column by the code at line 8. In line 10, as.factor() is used, but it is to create a vector called “color” – be a categorical, but this vector is NOT inside data frame “crab”. \nModel M1 is fitted in line 12 uses column “color” inside data frame “crab” which is still numeric.</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

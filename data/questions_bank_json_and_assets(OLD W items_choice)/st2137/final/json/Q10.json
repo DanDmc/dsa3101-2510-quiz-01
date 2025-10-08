@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 10,
+  "is_multi": false,
+  "question_stem": "Suppose that we perform a one-way ANOVA on a dataset with kk groups. We then apply Tukey’s HSD test to compare all pairs of means at error rate 0.05.\nThe confidence intervals obtained from this procedure would be larger than if we were to estimate (k2)\\binom{k}{2} separate contrasts, each a 95% CI.",
+  "question_stem_html": "<div><p> </p>\n<p>Suppose that we perform a one-way ANOVA on a dataset with <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>k</mi><annotation encoding=\"application/x-tex\">k</annotation></semantics></math> groups. We then apply Tukey’s HSD test to compare all pairs of means at error rate 0.05.</p>\n<p>The confidence intervals obtained from this procedure would be <em>larger</em> than if we were to estimate <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mfrac linethickness=\"0\"><mi>k</mi><mn>2</mn></mfrac><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><annotation encoding=\"application/x-tex\">\\binom{k}{2}</annotation></semantics></math> separate contrasts, each a 95% CI.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Suppose that we perform a one-way ANOVA on a dataset with kk groups. We then apply Tukey’s HSD test to compare all pairs of means at error rate 0.05.\nThe confidence intervals obtained from this procedure would be larger than if we were to estimate (k2)\\binom{k}{2} separate contrasts, each a 95% CI.",
+      "part_stem_html": "<div><p> </p>\n<p>Suppose that we perform a one-way ANOVA on a dataset with <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>k</mi><annotation encoding=\"application/x-tex\">k</annotation></semantics></math> groups. We then apply Tukey’s HSD test to compare all pairs of means at error rate 0.05.</p>\n<p>The confidence intervals obtained from this procedure would be <em>larger</em> than if we were to estimate <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><mo form=\"prefix\" stretchy=\"true\">(</mo><mfrac linethickness=\"0\"><mi>k</mi><mn>2</mn></mfrac><mo form=\"postfix\" stretchy=\"true\">)</mo></mrow><annotation encoding=\"application/x-tex\">\\binom{k}{2}</annotation></semantics></math> separate contrasts, each a 95% CI.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "94297",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "97211",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Multiple correction procedures will make it harder for us to reject each individual null hypothesis. This makes it less likely that we falsely reject.",
+      "solution_html": "Multiple correction procedures will make it harder for us to reject each individual null hypothesis. This makes it less likely that we falsely reject.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

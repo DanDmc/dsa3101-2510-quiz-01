@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 27,
+  "is_multi": false,
+  "question_stem": "This question is to be answered using R.\nSuppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints anddistributes C =11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is\n\nwhere X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.\nEnsure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002. \nYou will be awarded more marks for \n\nplanning your code well,\nfor using functions such as `apply` instead of `for` loops.\nfor a clean and clear plot, and\nfor a clear explanation of your results.",
+  "question_stem_html": "<div><p>This question is to be answered using R.</p>\n<p>Suppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints and<br>distributes C =11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is</p>\n<p><img class=\"equation_image\" title=\"h(X) = \n\\begin{cases}\n11000 & \\text{if } X ≥ 11000 \\\\\n\\lfloor X \\rfloor + (11000 - \\lfloor X \\rfloor)(−0.25) & \\text{if } X < 11000\n\\end{cases}\" src=\"https://canvas.nus.edu.sg/equation_images/h(X)%2520%253D%25C2%25A0%250A%255Cbegin%257Bcases%257D%250A11000%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%25E2%2589%25A5%252011000%2520%255C%255C%250A%255Clfloor%2520X%2520%255Crfloor%2520%252B%2520(11000%2520-%2520%255Clfloor%2520X%2520%255Crfloor)(%25E2%2588%25920.25)%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%253C%252011000%250A%255Cend%257Bcases%257D?scale=1\" alt=\"LaTeX: h(X) = \n\\begin{cases}\n11000 & \\text{if } X ≥ 11000 \\\\\n\\lfloor X \\rfloor + (11000 - \\lfloor X \\rfloor)(−0.25) & \\text{if } X < 11000\n\\end{cases}\" data-equation-content=\"h(X) = \n\\begin{cases}\n11000 & \\text{if } X ≥ 11000 \\\\\n\\lfloor X \\rfloor + (11000 - \\lfloor X \\rfloor)(−0.25) & \\text{if } X < 11000\n\\end{cases}\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p>\n<p>where X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.</p>\n<p>Ensure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002. </p>\n<p>You will be awarded more marks for </p>\n<ul style=\"list-style-type: disc;\">\n<li>planning your code well,</li>\n<li>for using functions such as `apply` instead of `for` loops.</li>\n<li>for a clean and clear plot, and</li>\n<li>for a clear explanation of your results.</li>\n</ul></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/h(X)%2520%253D%25C2%25A0%250A%255Cbegin%257Bcases%257D%250A11000%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%25E2%2589%25A5%252011000%2520%255C%255C%250A%255Clfloor%2520X%2520%255Crfloor%2520%252B%2520(11000%2520-%2520%255Clfloor%2520X%2520%255Crfloor)(%25E2%2588%25920.25)%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%253C%252011000%250A%255Cend%257Bcases%257D?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "This question is to be answered using R.\nSuppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints anddistributes C =11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is\n\nwhere X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.\nEnsure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002. \nYou will be awarded more marks for \n\nplanning your code well,\nfor using functions such as `apply` instead of `for` loops.\nfor a clean and clear plot, and\nfor a clear explanation of your results.",
+      "part_stem_html": "<div><p>This question is to be answered using R.</p>\n<p>Suppose that daily demand for newspaper is approximately gamma distributed, with mean 10,000 and variance 1,000,000. At present, the newspaper company prints and<br>distributes C =11,000 copies each day. The profit on each newspaper sold is $1, and the loss on each unsold newspaper is $0.25. Formally, the daily profit function h is</p>\n<p><img class=\"equation_image\" title=\"h(X) = \n\\begin{cases}\n11000 & \\text{if } X ≥ 11000 \\\\\n\\lfloor X \\rfloor + (11000 - \\lfloor X \\rfloor)(−0.25) & \\text{if } X < 11000\n\\end{cases}\" src=\"https://canvas.nus.edu.sg/equation_images/h(X)%2520%253D%25C2%25A0%250A%255Cbegin%257Bcases%257D%250A11000%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%25E2%2589%25A5%252011000%2520%255C%255C%250A%255Clfloor%2520X%2520%255Crfloor%2520%252B%2520(11000%2520-%2520%255Clfloor%2520X%2520%255Crfloor)(%25E2%2588%25920.25)%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%253C%252011000%250A%255Cend%257Bcases%257D?scale=1\" alt=\"LaTeX: h(X) = \n\\begin{cases}\n11000 & \\text{if } X ≥ 11000 \\\\\n\\lfloor X \\rfloor + (11000 - \\lfloor X \\rfloor)(−0.25) & \\text{if } X < 11000\n\\end{cases}\" data-equation-content=\"h(X) = \n\\begin{cases}\n11000 & \\text{if } X ≥ 11000 \\\\\n\\lfloor X \\rfloor + (11000 - \\lfloor X \\rfloor)(−0.25) & \\text{if } X < 11000\n\\end{cases}\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p>\n<p>where X represents the daily demand. Use simulation to estimate the expected profit per day, for various values of C. Thus recommend the optimal value of C to the company.</p>\n<p>Ensure that when you make your case, you include confidence intervals, and that you include a visualisation of your results to assist the company in understanding your recommendation. For this question, set your seed to be 2002. </p>\n<p>You will be awarded more marks for </p>\n<ul style=\"list-style-type: disc;\">\n<li>planning your code well,</li>\n<li>for using functions such as `apply` instead of `for` loops.</li>\n<li>for a clean and clear plot, and</li>\n<li>for a clear explanation of your results.</li>\n</ul></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/h(X)%2520%253D%25C2%25A0%250A%255Cbegin%257Bcases%257D%250A11000%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%25E2%2589%25A5%252011000%2520%255C%255C%250A%255Clfloor%2520X%2520%255Crfloor%2520%252B%2520(11000%2520-%2520%255Clfloor%2520X%2520%255Crfloor)(%25E2%2588%25920.25)%2520%2526%2520%255Ctext%257Bif%2520%257D%2520X%2520%253C%252011000%250A%255Cend%257Bcases%257D?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Function to run one set of simulations for a fixed number of newspapers,# and return the expected daily profit, and CIsim_inventory   #set.seed(2141)  n   X   hX = npapers, npapers, floor(X) + (npapers - floor(X)) * (-0.25))  s   q1   CI   return(c(mean(hX), CI))}# Run the simulation for various values of Cset.seed(2002)nsim c_vals sim_output plot(x=c_vals, y=sim_output[1,], type='l', xlab='Number of newspapers',      ylab='Expected profit', main='Expected profit vs number of newspapers',     ylim=c(8500, 10000))lines(x=c_vals, y=sim_output[2,], col='red', lty=2)lines(x=c_vals, y=sim_output[3,], col='red', lty=2)\n \n \nThe simulations seem to indicate that the optimal number of newspapers to print is approximately 10800.",
+      "solution_html": "<pre># Function to run one set of simulations for a fixed number of newspapers,<br># and return the expected daily profit, and CI<br>sim_inventory <- function(nsim, npapers, alpha=0.05) {<br>  #set.seed(2141)<br>  n <- nsim<br>  X <- rgamma(n, 100, rate=1/100)<br>  hX <- ifelse(X >= npapers, npapers, floor(X) + (npapers - floor(X)) * (-0.25))<br>  s <- sd(hX)<br>  q1 <- qnorm(1-alpha/2)<br>  CI <- c(mean(hX) - q1*s/sqrt(n), mean(hX) + q1*s/sqrt(n))<br>  return(c(mean(hX), CI))<br>}<br><br># Run the simulation for various values of C<br>set.seed(2002)<br>nsim <- 1000<br>c_vals <- seq(9000, 13000, by=100)<br>sim_output <- sapply(c_vals, sim_inventory, nsim=nsim, alpha=0.05)<br><br>plot(x=c_vals, y=sim_output[1,], type='l', xlab='Number of newspapers', <br>     ylab='Expected profit', main='Expected profit vs number of newspapers',<br>     ylim=c(8500, 10000))<br>lines(x=c_vals, y=sim_output[2,], col='red', lty=2)<br>lines(x=c_vals, y=sim_output[3,], col='red', lty=2)</pre>\n<p> </p>\n<p> </p>\n<p>The simulations seem to indicate that the optimal number of newspapers to print is approximately 10800. </p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

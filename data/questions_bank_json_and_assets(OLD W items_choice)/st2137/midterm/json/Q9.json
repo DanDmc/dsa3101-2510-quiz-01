@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 9,
+  "is_multi": true,
+  "question_stem": "The mosaicplot below visualises a contingency table of two variables:\n\nWhether or not a patient had High Blood Pressure (HBP = 1 means the patient suffered from High Blood Pressure), and\nWhether or not the patient died during follow-up (1 means the patient died).\n\n\nMosaic plot: HBP vs. Death\n\nThe data comes from the UCI dataset of our topic on categorical data analysis.\nWhich of the following can we infer from the chart?",
+  "question_stem_html": "<div><p> </p>\n<p>The mosaicplot below visualises a contingency table of two variables:</p>\n<ol style=\"list-style-type: decimal;\">\n<li>Whether or not a patient had High Blood Pressure (HBP = 1 means the patient suffered from High Blood Pressure), and</li>\n<li>Whether or not the patient died during follow-up (1 means the patient died).</li>\n</ol>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/mosaic-001-1.png?canvas_download=1\" alt=\"plot of chunk mosaic-001\" loading=\"lazy\">\n<p class=\"caption\">Mosaic plot: HBP vs. Death</p>\n</div>\n<p>The data comes from the UCI dataset of our topic on categorical data analysis.</p>\n<p>Which of the following can we infer from the chart?</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/mosaic-001-1.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "The mosaicplot below visualises a contingency table of two variables:\n\nWhether or not a patient had High Blood Pressure (HBP = 1 means the patient suffered from High Blood Pressure), and\nWhether or not the patient died during follow-up (1 means the patient died).\n\n\nMosaic plot: HBP vs. Death\n\nThe data comes from the UCI dataset of our topic on categorical data analysis.\nWhich of the following can we infer from the chart?",
+      "part_stem_html": "<div><p> </p>\n<p>The mosaicplot below visualises a contingency table of two variables:</p>\n<ol style=\"list-style-type: decimal;\">\n<li>Whether or not a patient had High Blood Pressure (HBP = 1 means the patient suffered from High Blood Pressure), and</li>\n<li>Whether or not the patient died during follow-up (1 means the patient died).</li>\n</ol>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/mosaic-001-1.png?canvas_download=1\" alt=\"plot of chunk mosaic-001\" loading=\"lazy\">\n<p class=\"caption\">Mosaic plot: HBP vs. Death</p>\n</div>\n<p>The data comes from the UCI dataset of our topic on categorical data analysis.</p>\n<p>Which of the following can we infer from the chart?</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "20394",
+          "text": "There were more patients with no HBP than with HBP.",
+          "text_html": "There were more patients with no HBP than with HBP.",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "92781",
+          "text": "There is a significant association between HBP and DEATH",
+          "text_html": "There is a significant association between HBP and DEATH",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "22853",
+          "text": "The proportion of HBP patients who died is larger than the proportion of non-HBP patients who died.",
+          "text_html": "The proportion of HBP patients who died is larger than the proportion of non-HBP patients who died.",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "14707",
+          "text": "The expected number of people with HBP who died is less than the observed number who died.",
+          "text_html": "The expected number of people with HBP who died is less than the observed number who died.",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/mosaic-001-1.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "This is correct, because the width of the two rectangles in the left column is much wider than the two rectangles in the right column.\n\nThe mosaic test does not perform any hypothesis test, so this is not something we can infer from this plot.\n\nThis is correct; we can infer this because the \"break\" in the rectangles is higher on the right than the left.\n\nThe outline of the boxes and the hue in the boxes is related the the deviation between expected and observed cell counts.\nExpected counts are derived under the hypothesis of independence.\nThe statement is referring to the bottom right rectangle. It is colourless with a solid outline. This indicates that\n0 \nThus expected",
+      "solution_html": "This is correct, because the width of the two rectangles in the left column is much wider than the two rectangles in the right column.\n\nThe mosaic test does not perform any hypothesis test, so this is not something we can infer from this plot.\n\nThis is correct; we can infer this because the \"break\" in the rectangles is higher on the right than the left.\n\n<p>The outline of the boxes and the hue in the boxes is related the the deviation between expected and observed cell counts.</p>\n<p>Expected counts are derived under the hypothesis of independence.</p>\n<p>The statement is referring to the bottom right rectangle. It is colourless with a solid outline. This indicates that</p>\n<p>0 < observed - expected < 2</p>\n<p>Thus expected < observed (using just the inequality on the left).</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

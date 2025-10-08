@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 1\nContent: matrix, data frame.\n\nIn the R code file for Topic 1, <Topic1_Rcode.R>, there is a part of code as below:\ndata1<-read.csv(\"C:/Data/crab.txt\",sep = \"\", header = TRUE)\n\ndata1[1:8,] #first 8 rows. The output is below.\n  color spine width satell weight\n1     3     3  28.3      8   3.05\n2     4     3  22.5      0   1.55\n3     2     1  26.0      9   2.30\n4     4     3  24.8      0   2.10\n5     4     3  26.0      4   2.60\n6     3     3  23.8      0   2.10\n7     2     1  26.5      0   2.35\n8     4     2  24.7      0   1.90\n\nQ1. Column “color” in the data frame above is recognized by R as a categorical variable. True or False?",
+  "question_stem_html": "<pre>Quiz 1\nContent: matrix, data frame.\n\nIn the R code file for Topic 1, &lt;Topic1_Rcode.R&gt;, there is a part of code as below:\ndata1&lt;-read.csv(&quot;C:/Data/crab.txt&quot;,sep = &quot;&quot;, header = TRUE)\n\ndata1[1:8,] #first 8 rows. The output is below.\n  color spine width satell weight\n1     3     3  28.3      8   3.05\n2     4     3  22.5      0   1.55\n3     2     1  26.0      9   2.30\n4     4     3  24.8      0   2.10\n5     4     3  26.0      4   2.60\n6     3     3  23.8      0   2.10\n7     2     1  26.5      0   2.35\n8     4     2  24.7      0   1.90\n\nQ1. Column “color” in the data frame above is recognized by R as a categorical variable. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:04:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": "Ans: FALSE. The values of column “color” are numeric, hence, by default, R considers this column as a numeric column/variable."
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: FALSE. The values of column “color” are numeric, hence, by default, R considers this column as a numeric column/variable.",
+      "solution_html": "<pre>Ans: FALSE. The values of column “color” are numeric, hence, by default, R considers this column as a numeric column/variable.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "R",
+        "data frame",
+        "factors",
+        "True/False"
+      ]
+    }
+  ]
+}

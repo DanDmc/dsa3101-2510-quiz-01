@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 23,
+  "is_multi": false,
+  "question_stem": "Which of the following techniques cannot be used to assess the Normality of a given dataset?",
+  "question_stem_html": "<p>Which of the following techniques cannot be used to assess the Normality of a given dataset?</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Which of the following techniques cannot be used to assess the Normality of a given dataset?",
+      "part_stem_html": "<p>Which of the following techniques cannot be used to assess the Normality of a given dataset?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "Kolmogorov-Smirnov test",
+          "text_html": "<p>Kolmogorov-Smirnov test</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "Shapiro-Wilk test",
+          "text_html": "<p>Shapiro-Wilk test</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "Skewness",
+          "text_html": "<p>Skewness</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "D",
+          "text": "1-sample t-test",
+          "text_html": "<p>1-sample t-test</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

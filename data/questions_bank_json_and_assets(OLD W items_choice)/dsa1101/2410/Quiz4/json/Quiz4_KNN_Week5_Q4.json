@@ -1,0 +1,41 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Q4. Object “pred” is formed using the code in line 24. What is the length of “pred”?",
+  "question_stem_html": "<pre>Q4. Object “pred” is formed using the code in line 24. What is the length of “pred”?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: 1250\nExplanation: The classifier here uses the train set as the original data set, knn(market[,X], market[,X], market[,Y], k=5)\nAnd the test set is also the original data set, knn(market[,X], market[,X], market[,Y], k=5)\nSo, the prediction of outcome is for the test set with 1250 points.",
+      "solution_html": "<pre>ANS: 1250\nExplanation: The classifier here uses the train set as the original data set, knn(market[,X], market[,X], market[,Y], k=5)\nAnd the test set is also the original data set, knn(market[,X], market[,X], market[,Y], k=5)\nSo, the prediction of outcome is for the test set with 1250 points.</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "A healthcare analyst wants to estimate the average time patients spend in the emergency room before being seen by a doctor. The analyst plans to simulate patient flow to understand how the number of doctors on duty, patient arrival rates, and the complexity of each case impact wait times.\nWhat data should the analyst collect before implementing the solution?",
+  "question_stem_html": "<p>A healthcare analyst wants to estimate the average time patients spend in the emergency room before being seen by a doctor. The analyst plans to simulate patient flow to understand how the number of doctors on duty, patient arrival rates, and the complexity of each case impact wait times.</p><p><strong>What data should the analyst collect before implementing the solution?</strong></p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:05:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "open-ended",
+      "subtype": "essay",
+      "solution_html": "<p>Here are some possible suggestions:</p><ol><li>Patient arrival rates at the emergency room during different times of day and week.</li><li>Number of doctors available during various shifts.</li><li>Average time doctors spend with each patient, based on case complexity.</li><li>Patient triage data to understand the severity of cases and how it affects processing time.</li><li>Time patients spend in other stages of the ER (e.g., registration, initial evaluation).</li><li>Any seasonal factors (e.g., flu season) or special events that impact patient arrival rates.</li></ol>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "data to collect", "healthcare"]
+    }
+  ]
+}

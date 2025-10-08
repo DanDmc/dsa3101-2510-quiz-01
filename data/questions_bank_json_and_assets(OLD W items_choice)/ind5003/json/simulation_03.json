@@ -1,0 +1,52 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 3,
+  "is_multi": true,
+  "question_stem": "In which of the following situations is simulation modeling appropriate?",
+  "question_stem_html": "<p>In which of the following situations is simulation modeling appropriate?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:55:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "multiple-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "A company wants to understand if a customer will churn using historical customer behavior.",
+          "is_correct": false,
+          "explanation": "Incorrect: Supervised learning"
+        },
+        {
+          "choice_id": "B",
+          "text": "A hospital explores the impact of different staffing levels on ER wait times during peak hours.",
+          "is_correct": true,
+          "explanation": "Correct: Simulation modeling (exploring staffing levels and their impact on wait times)."
+        },
+        {
+          "choice_id": "C",
+          "text": "A retail chain wants to identify subsets of customers based on purchasing patterns.",
+          "is_correct": false,
+          "explanation": "Incorrect: Unsupervised learning (grouping customers based on purchasing patterns without labels)."
+        },
+        {
+          "choice_id": "D",
+          "text": "A company assesses how different weather patterns might affect delivery times to adjust routing.",
+          "is_correct": true,
+          "explanation": "Correct: Simulation modeling (assessing how weather affects delivery times)."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": ["B", "D"],
+      "solution_html": "<p><strong>Correct:</strong> B, D. Simulation is suitable for system behavior under scenarios and uncertainty (staffing &rarr; wait, weather &rarr; travel times). A and C are ML tasks.</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "use-cases", "queueing", "scenario-planning"]
+    }
+  ]
+}

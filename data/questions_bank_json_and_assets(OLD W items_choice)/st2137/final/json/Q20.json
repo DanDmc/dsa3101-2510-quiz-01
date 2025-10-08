@@ -1,0 +1,82 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 20,
+  "is_multi": false,
+  "question_stem": "In the topic on regression, we fitted the following simple linear regression model to the concrete data:\nwhere \n* Y: is the Flow, and * X: is amount of Water in the mixture.\nThe summary output for the model (from Python) is as follows:\n\nThe null hypothesis for the F-test above is",
+  "question_stem_html": "<div><p>In the topic on regression, we fitted the following simple linear regression model to the concrete data:</p>\n<p><img class=\"equation_image\" title=\"Y = \\beta_0 + \\beta_1 X + e\" src=\"https://canvas.nus.edu.sg/equation_images/Y%2520%253D%2520%255Cbeta_0%2520%252B%2520%255Cbeta_1%2520X%2520%252B%2520e?scale=1\" alt=\"LaTeX: Y = \\beta_0 + \\beta_1 X + e\" data-equation-content=\"Y = \\beta_0 + \\beta_1 X + e\" data-ignore-a11y-check=\"\" loading=\"lazy\"><br>where </p>\n<p>* Y: is the Flow, and <br>* X: is amount of Water in the mixture.</p>\n<p>The summary output for the model (from Python) is as follows:</p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/image.png\" alt=\"image.png\" loading=\"lazy\"></p>\n<p>The null hypothesis for the F-test above is</p>\n<p><img class=\"equation_image\" title=\"H_0: \\beta_1 = \\beta_0 = 0\" src=\"https://canvas.nus.edu.sg/equation_images/H_0%253A%2520%255Cbeta_1%2520%253D%2520%255Cbeta_0%2520%253D%25200?scale=1\" alt=\"LaTeX: H_0: \\beta_1 = \\beta_0 = 0\" data-equation-content=\"H_0: \\beta_1 = \\beta_0 = 0\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/Y%2520%253D%2520%255Cbeta_0%2520%252B%2520%255Cbeta_1%2520X%2520%252B%2520e?scale=1",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/H_0%253A%2520%255Cbeta_1%2520%253D%2520%255Cbeta_0%2520%253D%25200?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the topic on regression, we fitted the following simple linear regression model to the concrete data:\nwhere \n* Y: is the Flow, and * X: is amount of Water in the mixture.\nThe summary output for the model (from Python) is as follows:\n\nThe null hypothesis for the F-test above is",
+      "part_stem_html": "<div><p>In the topic on regression, we fitted the following simple linear regression model to the concrete data:</p>\n<p><img class=\"equation_image\" title=\"Y = \\beta_0 + \\beta_1 X + e\" src=\"https://canvas.nus.edu.sg/equation_images/Y%2520%253D%2520%255Cbeta_0%2520%252B%2520%255Cbeta_1%2520X%2520%252B%2520e?scale=1\" alt=\"LaTeX: Y = \\beta_0 + \\beta_1 X + e\" data-equation-content=\"Y = \\beta_0 + \\beta_1 X + e\" data-ignore-a11y-check=\"\" loading=\"lazy\"><br>where </p>\n<p>* Y: is the Flow, and <br>* X: is amount of Water in the mixture.</p>\n<p>The summary output for the model (from Python) is as follows:</p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/image.png\" alt=\"image.png\" loading=\"lazy\"></p>\n<p>The null hypothesis for the F-test above is</p>\n<p><img class=\"equation_image\" title=\"H_0: \\beta_1 = \\beta_0 = 0\" src=\"https://canvas.nus.edu.sg/equation_images/H_0%253A%2520%255Cbeta_1%2520%253D%2520%255Cbeta_0%2520%253D%25200?scale=1\" alt=\"LaTeX: H_0: \\beta_1 = \\beta_0 = 0\" data-equation-content=\"H_0: \\beta_1 = \\beta_0 = 0\" data-ignore-a11y-check=\"\" loading=\"lazy\"></p></div>",
+      "choices": [
+        {
+          "choice_id": "8388",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "117",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/Y%2520%253D%2520%255Cbeta_0%2520%252B%2520%255Cbeta_1%2520X%2520%252B%2520e?scale=1",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/H_0%253A%2520%255Cbeta_1%2520%253D%2520%255Cbeta_0%2520%253D%25200?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "In regression, the F-test is for",
+      "solution_html": "<p>In regression, the F-test is for</p>\n<p><img class=\"equation_image\" title=\"H_0: \\beta_1 = 0\" src=\"https://canvas.nus.edu.sg/equation_images/H_0%253A%2520%255Cbeta_1%2520%253D%25200?scale=1\" alt=\"LaTeX: H_0: \\beta_1 = 0\" data-equation-content=\"H_0: \\beta_1 = 0\" data-ignore-a11y-check=\"\" loading=\"lazy\"><br><br></p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

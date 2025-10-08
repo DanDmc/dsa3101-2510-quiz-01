@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 27,
+  "is_multi": false,
+  "question_stem": "When assessing robustness of an estimator, one of the properties we consider is the breakdown point.\nFor a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.",
+  "question_stem_html": "<p>When assessing robustness of an estimator, one of the properties we consider is the breakdown point.</p>\n<p>For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "When assessing robustness of an estimator, one of the properties we consider is the breakdown point.\nFor a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.",
+      "part_stem_html": "<p>When assessing robustness of an estimator, one of the properties we consider is the breakdown point.</p>\n<p>For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

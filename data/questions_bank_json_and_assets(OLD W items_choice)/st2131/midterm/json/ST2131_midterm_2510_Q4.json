@@ -1,0 +1,46 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible? The answer given is 8! / (4!4!). Is this correct?",
+  "question_stem_html": "<p>If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible?</p><p>Answer: \\( \\frac{8!}{4!4!} \\)</p><p>Is this correct?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:40:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single-choice",
+      "part_stem": "Determine whether the given answer is correct.",
+      "part_stem_html": "<p>Determine whether the given answer is correct.</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": ""
+        }
+      ],
+      "items_media": [],
+      "scoring": { "points": 1.0 },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "False",
+      "solution_html": "<p>False</p>",
+      "difficulty_level": null,
+      "concept_tags": ["combinatorics"]
+    }
+  ]
+}

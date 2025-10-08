@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 24,
+  "is_multi": false,
+  "question_stem": "Consider the following SAS program:\nDATA ex_1;INPUT subject gender $ CA1 CA2 HW $;DATALINES;10 m 80 84 a ;7 m 85 89 a;\nWhen the code above was run, there was no output. Which one of the following two steps will fix the error?",
+  "question_stem_html": "<div><p>Consider the following SAS program:</p>\n<pre><br>DATA ex_1;<br>INPUT subject gender $ CA1 CA2 HW $;<br>DATALINES;<br>10 m 80 84 a ;<br>7 m 85 89 a<br>;</pre>\n<p><br>When the code above was run, there was no output. Which one of the following two steps will fix the error?</p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Consider the following SAS program:\nDATA ex_1;INPUT subject gender $ CA1 CA2 HW $;DATALINES;10 m 80 84 a ;7 m 85 89 a;\nWhen the code above was run, there was no output. Which one of the following two steps will fix the error?",
+      "part_stem_html": "<div><p>Consider the following SAS program:</p>\n<pre><br>DATA ex_1;<br>INPUT subject gender $ CA1 CA2 HW $;<br>DATALINES;<br>10 m 80 84 a ;<br>7 m 85 89 a<br>;</pre>\n<p><br>When the code above was run, there was no output. Which one of the following two steps will fix the error?</p></div>",
+      "choices": [
+        {
+          "choice_id": "884",
+          "text": "Removing the semi-colon on line 4.",
+          "text_html": "Removing the semi-colon on line 4.",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "1299",
+          "text": "Moving the semi-colon on line 6 to the end of line 5.",
+          "text_html": "Moving the semi-colon on line 6 to the end of line 5.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

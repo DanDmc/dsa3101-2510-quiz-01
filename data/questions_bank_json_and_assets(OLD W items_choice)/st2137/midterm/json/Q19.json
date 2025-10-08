@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 19,
+  "is_multi": false,
+  "question_stem": "What is the most likely solution to the error below?",
+  "question_stem_html": "<div><p><span class=\"TextRun SCXW231997100 BCX2\" style=\"color: #000000; font-size: 14pt; line-height: 24.8208px; font-family: Verdana, 'Verdana_EmbeddedFont', 'Verdana_MSFontService', sans-serif;\" lang=\"EN-US\" data-contrast=\"none\"><span class=\"NormalTextRun SCXW231997100 BCX2\">What is the </span><span class=\"NormalTextRun SCXW231997100 BCX2\">most likely solution</span><span class=\"NormalTextRun SCXW231997100 BCX2\"> to the error below?</span></span></p>\n<p> </p>\n<p><span class=\"TextRun SCXW231997100 BCX2\" style=\"color: #000000; font-size: 14pt; line-height: 24.8208px; font-family: Verdana, 'Verdana_EmbeddedFont', 'Verdana_MSFontService', sans-serif;\" lang=\"EN-US\" data-contrast=\"none\"><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/py_pkg_error.png\" alt=\"py_pkg_error.png\" loading=\"lazy\"></span></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/py_pkg_error.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "What is the most likely solution to the error below?",
+      "part_stem_html": "<div><p><span class=\"TextRun SCXW231997100 BCX2\" style=\"color: #000000; font-size: 14pt; line-height: 24.8208px; font-family: Verdana, 'Verdana_EmbeddedFont', 'Verdana_MSFontService', sans-serif;\" lang=\"EN-US\" data-contrast=\"none\"><span class=\"NormalTextRun SCXW231997100 BCX2\">What is the </span><span class=\"NormalTextRun SCXW231997100 BCX2\">most likely solution</span><span class=\"NormalTextRun SCXW231997100 BCX2\"> to the error below?</span></span></p>\n<p> </p>\n<p><span class=\"TextRun SCXW231997100 BCX2\" style=\"color: #000000; font-size: 14pt; line-height: 24.8208px; font-family: Verdana, 'Verdana_EmbeddedFont', 'Verdana_MSFontService', sans-serif;\" lang=\"EN-US\" data-contrast=\"none\"><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/py_pkg_error.png\" alt=\"py_pkg_error.png\" loading=\"lazy\"></span></p></div>",
+      "choices": [
+        {
+          "choice_id": "7455",
+          "text": "The function to read the file is read.csv, not read_csv.",
+          "text_html": "The function to read the file is read.csv, not read_csv.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "3548",
+          "text": "The pandas package has to be imported.",
+          "text_html": "The pandas package has to be imported.",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "4113",
+          "text": "The pandas package has to be installed.",
+          "text_html": "The pandas package has to be installed.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "6192",
+          "text": "The separator has to be specified as sep=';'.",
+          "text_html": "The separator has to be specified as sep=';'.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/py_pkg_error.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 22,
+  "is_multi": false,
+  "question_stem": "When assessing robustness of an estimator, one of the properties we consider is the breakdown point.For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.",
+  "question_stem_html": "<div><p>When assessing robustness of an estimator, one of the properties we consider is the breakdown point.<br>For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.</p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "When assessing robustness of an estimator, one of the properties we consider is the breakdown point.For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.",
+      "part_stem_html": "<div><p>When assessing robustness of an estimator, one of the properties we consider is the breakdown point.<br>For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.</p></div>",
+      "choices": [
+        {
+          "choice_id": "3627",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "8220",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

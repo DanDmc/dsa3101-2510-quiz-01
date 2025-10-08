@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 4,
+  "is_multi": true,
+  "question_stem": "Which of the following commands will retrieve the version number of pandas, assuming it has been imported as pd.",
+  "question_stem_html": "<div><p> </p>\n<p>Which of the following commands will retrieve the version number of <code>pandas</code>, assuming it has been imported as <code>pd</code>.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "Which of the following commands will retrieve the version number of pandas, assuming it has been imported as pd.",
+      "part_stem_html": "<div><p> </p>\n<p>Which of the following commands will retrieve the version number of <code>pandas</code>, assuming it has been imported as <code>pd</code>.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "53755",
+          "text": "pd.__version__",
+          "text_html": "<code>pd.__version__</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "49363",
+          "text": "Version(pd)",
+          "text_html": "<code>Version(pd)</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "18971",
+          "text": "version(pd)",
+          "text_html": "<code>version(pd)</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "83147",
+          "text": "pd.Version()",
+          "text_html": "<code>pd.Version()</code>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "No such command in Python\n\nNo such command in Python\n\nIncorrect function name",
+      "solution_html": "No such command in Python\n\nNo such command in Python\n\nIncorrect function name",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}
