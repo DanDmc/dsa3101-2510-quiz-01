@@ -1,53 +1,35 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 12,
-  "is_multi": false,
-  "question_stem": "Two fair six-sided dice are rolled. Let X be the product of the two dice. What is P(X ≥ 33)?",
-  "question_stem_html": "<p>Two fair six-sided dice are rolled. Let <em>X</em> be the product of the two dice. What is \\( P(X \\ge 33) \\)?</p>",
-  "version": 1,
-  "update_timestamp": "2025-10-06T19:17:00+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single-choice",
-      "part_stem": "Choose the correct value.",
-      "part_stem_html": "<p>Choose the correct value.</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "1/36",
-          "text_html": "<p>\\( \\frac{1}{36} \\)</p>",
-          "is_correct": true,
-          "explanation": ""
-        },
-        {
-          "choice_id": "B",
-          "text": "33/36",
-          "text_html": "<p>\\( \\frac{33}{36} \\)</p>",
-          "is_correct": false,
-          "explanation": ""
-        },
-        {
-          "choice_id": "C",
-          "text": "3/36",
-          "text_html": "<p>\\( \\frac{3}{36} \\)</p>",
-          "is_correct": false,
-          "explanation": ""
-        }
-      ],
-      "items_media": [],
-      "scoring": { "points": 1.0 },
-      "feedback": {},
-      "shuffle_choices": false,
-      "solution": "1/36",
-      "solution_html": "<p>\\( \\frac{1}{36} \\)</p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q12.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q12.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q12",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 12,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
-      "concept_tags": ["probability", "dice", "discrete random variable", "event counting"]
+      "question_stem": "Two fair six-sided dice are rolled. Let X be the product of the two dice. What is P(X ≥ 33)?",
+      "question_stem_html": "<p>Two fair six-sided dice are rolled. Let <em>X</em> be the product of the two dice. What is \\( P(X \\ge 33) \\)?</p>",
+      "concept_tags": [
+        "probability",
+        "dice",
+        "discrete random variable",
+        "event counting"
+      ],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

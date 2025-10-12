@@ -1,57 +1,32 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": "2510",
-  "assessment_type": "midterm",
-  "version": 1,
-  "update_timestamp": "2025-09-14T18:40:00+08:00",
-  "question_media": [],
-  "question_no": 38,
-  "is_multi": false,
-  "question_stem": "Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. We define En to be the event that no 5 or 7 appears on the first n−1 trials and a 5 appears on the n-th trial. Is En an increasing or decreasing sequence?",
-  "question_stem_html": "<p>Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. We define <em>E<sub>n</sub></em> to be the event that no 5 or 7 appears on the first n−1 trials and a 5 appears on the n-th trial. Is <em>E<sub>n</sub></em> an increasing or decreasing sequence?</p>",
-  "items": [
+  "files": [
     {
-      "part_number": "",
-      "type": "choices",
-      "subtype": "mcq",
-      "part_stem": "Is En an increasing or decreasing sequence?",
-      "part_stem_html": "<p>Is <em>E<sub>n</sub></em> an increasing or decreasing sequence?</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "An increasing sequence",
-          "text_html": "<p>An increasing sequence</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "A decreasing sequence",
-          "text_html": "<p>A decreasing sequence</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "Neither increasing nor decreasing",
-          "text_html": "<p>Neither increasing nor decreasing</p>",
-          "is_correct": true,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "Correct option: C",
-      "solution_html": "<p>Correct option: <strong>C</strong></p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q38.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q38.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q38",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 38,
+      "question_type": "mcq",
       "difficulty_level": 0.57,
+      "question_stem": "Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. We define En to be the event that no 5 or 7 appears on the first n−1 trials and a 5 appears on the n-th trial. Is En an increasing or decreasing sequence?",
+      "question_stem_html": "<p>Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. We define <em>E<sub>n</sub></em> to be the event that no 5 or 7 appears on the first n−1 trials and a 5 appears on the n-th trial. Is <em>E<sub>n</sub></em> an increasing or decreasing sequence?</p>",
       "concept_tags": [
         "monotone sequences of events"
-      ]
+      ],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

@@ -1,23 +1,36 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 9,
-  "is_multi": false,
-  "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E_i to be the event that head appears first on the i-th toss. Which of the following statements is true about the sequence of events E_i?",
-  "question_stem_html": "<p>Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define <em>E<sub>i</sub></em> to be the event that head appears first on the <em>i</em>-th toss. Which of the following statements is true about the sequence of events <em>E<sub>i</sub></em>?</p>",
-  "version": 1,
-  "update_timestamp": "2025-10-06T19:05:00+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single-choice",
-      "part_stem": "Choose the correct statement.",
-      "part_stem_html": "<p>Choose the correct statement.</p>",
-      "choices": [
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q9.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q9.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q9",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 9,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E_i to be the event that head appears first on the i-th toss. Which of the following statements is true about the sequence of events E_i?",
+      "question_stem_html": "<p>Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define <em>E<sub>i</sub></em> to be the event that head appears first on the <em>i</em>-th toss. Which of the following statements is true about the sequence of events <em>E<sub>i</sub></em>?</p>",
+      "concept_tags": [
+        "probability",
+        "set theory",
+        "events",
+        "independence"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
         {
           "choice_id": "A",
           "text": "E₂ ⊂ E₁",
@@ -40,14 +53,55 @@
           "explanation": ""
         }
       ],
-      "items_media": [],
-      "scoring": { "points": 1.0 },
-      "feedback": {},
-      "shuffle_choices": false,
-      "solution": "Neither of the above statements are true.",
-      "solution_html": "<p>Neither of the above statements are true.</p>",
-      "difficulty_level": 1.0,
-      "concept_tags": ["probability", "set theory", "events", "independence"]
+      "_solution": "Neither of the above statements are true.",
+      "_solution_html": "<p>Neither of the above statements are true.</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Choose the correct statement.",
+          "part_stem_html": "<p>Choose the correct statement.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "E₂ ⊂ E₁",
+              "text_html": "<p>\\( E_2 \\subset E_1 \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "E₁ ⊂ E₂",
+              "text_html": "<p>\\( E_1 \\subset E_2 \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "C",
+              "text": "Neither of the above statements are true.",
+              "text_html": "<p>Neither of the above statements are true.</p>",
+              "is_correct": true,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "Neither of the above statements are true.",
+          "solution_html": "<p>Neither of the above statements are true.</p>",
+          "difficulty_level": 1.0,
+          "concept_tags": [
+            "probability",
+            "set theory",
+            "events",
+            "independence"
+          ]
+        }
+      ]
     }
   ]
 }

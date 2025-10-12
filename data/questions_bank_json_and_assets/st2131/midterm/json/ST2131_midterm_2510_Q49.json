@@ -1,55 +1,30 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": "2510",
-  "assessment_type": "midterm",
-  "version": 1,
-  "update_timestamp": "2025-09-14T18:40:00+08:00",
-  "question_media": [],
-  "question_no": 49,
-  "is_multi": false,
-  "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1)=0.3, p(2)=0.25, p(3)=0.35, p(4)=0.1. A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).",
-  "question_stem_html": "<p>Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1)=0.3, p(2)=0.25, p(3)=0.35, p(4)=0.1. A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).</p>",
-  "items": [
+  "files": [
     {
-      "part_number": "",
-      "type": "choices",
-      "subtype": "mcq",
-      "part_stem": "Find P(E).",
-      "part_stem_html": "<p>Find P(E).</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "0.42",
-          "text_html": "<p>0.42</p>",
-          "is_correct": true,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "0.1",
-          "text_html": "<p>0.1</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "0.52",
-          "text_html": "<p>0.52</p>",
-          "is_correct": false,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "Correct option: A",
-      "solution_html": "<p>Correct option: <strong>A</strong></p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q49.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q49.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q49",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 49,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
-      "concept_tags": []
+      "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1)=0.3, p(2)=0.25, p(3)=0.35, p(4)=0.1. A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).",
+      "question_stem_html": "<p>Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1)=0.3, p(2)=0.25, p(3)=0.35, p(4)=0.1. A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).</p>",
+      "concept_tags": [],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

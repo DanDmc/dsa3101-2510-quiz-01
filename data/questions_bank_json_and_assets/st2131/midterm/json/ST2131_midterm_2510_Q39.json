@@ -1,55 +1,30 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": "2510",
-  "assessment_type": "midterm",
-  "version": 1,
-  "update_timestamp": "2025-09-14T18:40:00+08:00",
-  "question_media": [],
-  "question_no": 39,
-  "is_multi": false,
-  "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?",
-  "question_stem_html": "<p>Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?</p>",
-  "items": [
+  "files": [
     {
-      "part_number": "",
-      "type": "choices",
-      "subtype": "mcq",
-      "part_stem": "Which of the following statements is not true for all possible choices of A, B and C?",
-      "part_stem_html": "<p>Which of the following statements is not true for all possible choices of A, B and C?</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)",
-          "text_html": "<p>A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "A ∩ (B ∩ C) = (A ∩ B) ∩ (A ∪ C)",
-          "text_html": "<p>A ∩ (B ∩ C) = (A ∩ B) ∩ (A ∪ C)</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "(A ∪ B) ∩ C = A ∪ (B ∩ C)",
-          "text_html": "<p>(A ∪ B) ∩ C = A ∪ (B ∩ C)</p>",
-          "is_correct": true,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "Correct option: C",
-      "solution_html": "<p>Correct option: <strong>C</strong></p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q39.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q39.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q39",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 39,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
-      "concept_tags": []
+      "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?",
+      "question_stem_html": "<p>Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?</p>",
+      "concept_tags": [],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

@@ -1,69 +1,38 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 18,
-  "is_multi": false,
-  "question_stem": "The cdf of X is given by the following function, for i >= 1:\nWhat is the pmf of X?",
-  "question_stem_html": "<p>The cdf of X is given by the following function, for i >= 1:</p>\n<p>What is the pmf of X?</p>",
-  "version": 1,
-  "update_timestamp": "2025-09-17T22:20:59+08:00",
-  "question_media": [
+  "files": [
     {
-      "type": "image",
-      "src": "/assets/images/image22_2.png",
-      "alt": ""
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q18.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q18.json",
+      "uploaded_by": null
     }
   ],
-  "items": [
+  "questions": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single",
-      "part_stem": "The cdf of X is given by the following function, for i >= 1:\nWhat is the pmf of X?",
-      "part_stem_html": "<p>The cdf of X is given by the following function, for i >= 1:</p>\n<p>What is the pmf of X?</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "P(X=i) = 1/[i(i+1)] for i = 1, 2, 3, 4, 5, 6, ...",
-          "text_html": "<p>P(X=i) = 1/[i(i+1)] for i = 1, 2, 3, 4, 5, 6, ...</p>",
-          "is_correct": true,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "P(X=i) = 1 - 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ...",
-          "text_html": "<p>P(X=i) = 1 - 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ...</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "P(X=i) = 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ...",
-          "text_html": "<p>P(X=i) = 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ...</p>",
-          "is_correct": false,
-          "explanation": null
-        }
+      "question_id": "ST2131_midterm_2510_Q18",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 18,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "The cdf of X is given by the following function, for i >= 1:\nWhat is the pmf of X?",
+      "question_stem_html": "<p>The cdf of X is given by the following function, for i >= 1:</p>\n<p>What is the pmf of X?</p>",
+      "concept_tags": [
+        "statistics"
       ],
-      "items_media": [
+      "question_media": [
         {
           "type": "image",
           "src": "/assets/images/image22_2.png",
           "alt": ""
         }
       ],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "TBD. Provide full working.",
-      "solution_html": "<p>TBD. Provide full working.</p>",
-      "difficulty_level": 1.0,
-      "concept_tags": [
-        "statistics"
-      ]
+      "last_used": null
     }
   ]
 }

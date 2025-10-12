@@ -1,57 +1,32 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 24,
-  "is_multi": false,
-  "question_stem": "Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).",
-  "question_stem_html": "<p>Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).</p>",
-  "version": 1,
-  "update_timestamp": "2025-09-17T22:20:59+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single",
-      "part_stem": "Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).",
-      "part_stem_html": "<p>Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "a/(1-b)",
-          "text_html": "<p>a/(1-b)</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "(1-b-a)/(1-b)",
-          "text_html": "<p>(1-b-a)/(1-b)</p>",
-          "is_correct": true,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "ab",
-          "text_html": "<p>ab</p>",
-          "is_correct": false,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "TBD. Provide full working.",
-      "solution_html": "<p>TBD. Provide full working.</p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q24.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q24.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q24",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 24,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
+      "question_stem": "Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).",
+      "question_stem_html": "<p>Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).</p>",
       "concept_tags": [
         "statistics"
-      ]
+      ],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

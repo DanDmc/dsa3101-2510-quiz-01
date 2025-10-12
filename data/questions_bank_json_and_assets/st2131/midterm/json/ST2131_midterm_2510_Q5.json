@@ -1,23 +1,36 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 5,
-  "is_multi": false,
-  "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?",
-  "question_stem_html": "<p>If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?</p>",
-  "version": 1,
-  "update_timestamp": "2025-10-06T18:45:00+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single-choice",
-      "part_stem": "Choose the correct value.",
-      "part_stem_html": "<p>Choose the correct value.</p>",
-      "choices": [
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q5.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q5.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q5",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 5,
+      "question_type": "mcq",
+      "difficulty_level": 0.94,
+      "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?",
+      "question_stem_html": "<p>If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?</p>",
+      "concept_tags": [
+        "combinatorics",
+        "permutations",
+        "distribution",
+        "grouping distinct objects"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
         {
           "choice_id": "A",
           "text": "8! / (2!2!2!2!)",
@@ -40,14 +53,55 @@
           "explanation": ""
         }
       ],
-      "items_media": [],
-      "scoring": { "points": 1.0 },
-      "feedback": {},
-      "shuffle_choices": false,
-      "solution": "8! / (2!2!2!2!)",
-      "solution_html": "<p>\\( \\frac{8!}{2!2!2!2!} \\)</p>",
-      "difficulty_level": 0.94,
-      "concept_tags": ["combinatorics", "permutations", "distribution", "grouping distinct objects"]
+      "_solution": "8! / (2!2!2!2!)",
+      "_solution_html": "<p>\\( \\frac{8!}{2!2!2!2!} \\)</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Choose the correct value.",
+          "part_stem_html": "<p>Choose the correct value.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "8! / (2!2!2!2!)",
+              "text_html": "<p>\\( \\frac{8!}{2!2!2!2!} \\)</p>",
+              "is_correct": true,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "C(8, 4)",
+              "text_html": "<p>\\( \\binom{8}{4} \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "C",
+              "text": "8! / 4!",
+              "text_html": "<p>\\( \\frac{8!}{4!} \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "8! / (2!2!2!2!)",
+          "solution_html": "<p>\\( \\frac{8!}{2!2!2!2!} \\)</p>",
+          "difficulty_level": 0.94,
+          "concept_tags": [
+            "combinatorics",
+            "permutations",
+            "distribution",
+            "grouping distinct objects"
+          ]
+        }
+      ]
     }
   ]
 }

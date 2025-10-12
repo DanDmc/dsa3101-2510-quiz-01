@@ -1,53 +1,34 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 2,
-  "is_multi": false,
-  "question_stem": "A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?",
-  "question_stem_html": "<p>A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?</p>",
-  "version": 1,
-  "update_timestamp": "2025-10-06T18:25:00+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single-choice",
-      "part_stem": "Choose the correct value.",
-      "part_stem_html": "<p>Choose the correct value.</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "C(60, 30)",
-          "text_html": "<p>\\( \\binom{60}{30} \\)</p>",
-          "is_correct": true,
-          "explanation": ""
-        },
-        {
-          "choice_id": "B",
-          "text": "C(60, 30) / 2!",
-          "text_html": "<p>\\( \\frac{\\binom{60}{30}}{2!} \\)</p>",
-          "is_correct": false,
-          "explanation": ""
-        },
-        {
-          "choice_id": "C",
-          "text": "2! × C(60, 30)",
-          "text_html": "<p>\\( 2! \\times \\binom{60}{30} \\)</p>",
-          "is_correct": false,
-          "explanation": ""
-        }
-      ],
-      "items_media": [],
-      "scoring": { "points": 1.0 },
-      "feedback": {},
-      "shuffle_choices": false,
-      "solution": "C(60, 30)",
-      "solution_html": "<p>\\( \\binom{60}{30} \\)</p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q2.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q2.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q2",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 2,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
-      "concept_tags": ["combinatorics", "binomial coefficient", "counting"]
+      "question_stem": "A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?",
+      "question_stem_html": "<p>A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?</p>",
+      "concept_tags": [
+        "combinatorics",
+        "binomial coefficient",
+        "counting"
+      ],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

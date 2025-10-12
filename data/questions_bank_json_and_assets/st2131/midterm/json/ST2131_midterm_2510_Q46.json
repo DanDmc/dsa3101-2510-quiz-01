@@ -1,49 +1,30 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": "2510",
-  "assessment_type": "midterm",
-  "version": 1,
-  "update_timestamp": "2025-09-14T18:40:00+08:00",
-  "question_media": [],
-  "question_no": 46,
-  "is_multi": false,
-  "question_stem": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
-  "question_stem_html": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
-  "items": [
+  "files": [
     {
-      "part_number": "",
-      "type": "choices",
-      "subtype": "t/f",
-      "part_stem": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
-      "part_stem_html": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "True",
-          "text_html": "<p>True</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "False",
-          "text_html": "<p>False</p>",
-          "is_correct": true,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": false,
-      "solution": "False",
-      "solution_html": "<p>False</p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q46.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q46.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q46",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 46,
+      "question_type": "mcq",
       "difficulty_level": 0.91,
-      "concept_tags": [
-      ]
+      "question_stem": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
+      "question_stem_html": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
+      "concept_tags": [],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

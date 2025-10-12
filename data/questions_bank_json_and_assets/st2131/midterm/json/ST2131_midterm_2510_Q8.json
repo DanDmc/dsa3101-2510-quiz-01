@@ -1,23 +1,36 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 8,
-  "is_multi": false,
-  "question_stem": "A fair coin is tossed independently 10 times. Define the following events: A_k: the k-th toss is heads; S: the total number of heads observed in the 10 tosses is even (note that 0 is an even number). What is P(S | A1 A2 A3 ... A10)?",
-  "question_stem_html": "<p>A fair coin is tossed independently 10 times. Define the following events:</p><ul><li>\\(A_k\\): the k-th toss is heads</li><li>\\(S\\): the total number of heads observed in the 10 tosses is even (note that 0 is an even number)</li></ul><p>What is \\( P(S \\mid A_1 A_2 A_3 \\ldots A_{10}) \\)?</p>",
-  "version": 1,
-  "update_timestamp": "2025-10-06T19:00:00+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single-choice",
-      "part_stem": "Choose the correct value.",
-      "part_stem_html": "<p>Choose the correct value.</p>",
-      "choices": [
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q8.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q8.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q8",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 8,
+      "question_type": "mcq",
+      "difficulty_level": 0.94,
+      "question_stem": "A fair coin is tossed independently 10 times. Define the following events: A_k: the k-th toss is heads; S: the total number of heads observed in the 10 tosses is even (note that 0 is an even number). What is P(S | A1 A2 A3 ... A10)?",
+      "question_stem_html": "<p>A fair coin is tossed independently 10 times. Define the following events:</p><ul><li>\\(A_k\\): the k-th toss is heads</li><li>\\(S\\): the total number of heads observed in the 10 tosses is even (note that 0 is an even number)</li></ul><p>What is \\( P(S \\mid A_1 A_2 A_3 \\ldots A_{10}) \\)?</p>",
+      "concept_tags": [
+        "conditional probability",
+        "independence",
+        "events",
+        "parity of outcomes"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
         {
           "choice_id": "A",
           "text": "1",
@@ -40,14 +53,55 @@
           "explanation": ""
         }
       ],
-      "items_media": [],
-      "scoring": { "points": 1.0 },
-      "feedback": {},
-      "shuffle_choices": false,
-      "solution": "1",
-      "solution_html": "<p>1</p>",
-      "difficulty_level": 0.94,
-      "concept_tags": ["conditional probability", "independence", "events", "parity of outcomes"]
+      "_solution": "1",
+      "_solution_html": "<p>1</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Choose the correct value.",
+          "part_stem_html": "<p>Choose the correct value.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "1",
+              "text_html": "<p>1</p>",
+              "is_correct": true,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "0",
+              "text_html": "<p>0</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "C",
+              "text": "(0.5)^10",
+              "text_html": "<p>\\( (0.5)^{10} \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "1",
+          "solution_html": "<p>1</p>",
+          "difficulty_level": 0.94,
+          "concept_tags": [
+            "conditional probability",
+            "independence",
+            "events",
+            "parity of outcomes"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1,64 +1,32 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 19,
-  "is_multi": false,
-  "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by",
-  "question_stem_html": "<p>Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by</p>",
-  "version": 1,
-  "update_timestamp": "2025-09-17T22:20:59+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single",
-      "part_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by",
-      "part_stem_html": "<p>Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen. Find P(X=1 | E).",
-          "text_html": "<p>child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen. Find P(X=1 | E).</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "A",
-          "text": "0.42",
-          "text_html": "<p>0.42</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "0.1",
-          "text_html": "<p>0.1</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "0.24",
-          "text_html": "<p>0.24</p>",
-          "is_correct": true,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "TBD. Provide full working.",
-      "solution_html": "<p>TBD. Provide full working.</p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q19.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q19.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q19",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 19,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
+      "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by",
+      "question_stem_html": "<p>Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by</p>",
       "concept_tags": [
         "statistics"
-      ]
+      ],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

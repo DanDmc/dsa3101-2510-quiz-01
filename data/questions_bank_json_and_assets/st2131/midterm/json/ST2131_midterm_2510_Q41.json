@@ -1,55 +1,30 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": "2510",
-  "assessment_type": "midterm",
-  "version": 1,
-  "update_timestamp": "2025-09-14T18:40:00+08:00",
-  "question_media": [],
-  "question_no": 41,
-  "is_multi": false,
-  "question_stem": "There are n socks in a drawer, 3 of which are red. What is the value of n if, when 2 of the socks are chosen randomly, the probability that they are both red is 1/2?",
-  "question_stem_html": "<p>There are n socks in a drawer, 3 of which are red. What is the value of n if, when 2 of the socks are chosen randomly, the probability that they are both red is 1/2?</p>",
-  "items": [
+  "files": [
     {
-      "part_number": "",
-      "type": "choices",
-      "subtype": "mcq",
-      "part_stem": "What is the value of n?",
-      "part_stem_html": "<p>What is the value of n?</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "n=4",
-          "text_html": "<p>n=4</p>",
-          "is_correct": true,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "n=6",
-          "text_html": "<p>n=6</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "n=5",
-          "text_html": "<p>n=5</p>",
-          "is_correct": false,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "Correct option: A",
-      "solution_html": "<p>Correct option: <strong>A</strong></p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q41.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q41.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q41",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 41,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
-      "concept_tags": []
+      "question_stem": "There are n socks in a drawer, 3 of which are red. What is the value of n if, when 2 of the socks are chosen randomly, the probability that they are both red is 1/2?",
+      "question_stem_html": "<p>There are n socks in a drawer, 3 of which are red. What is the value of n if, when 2 of the socks are chosen randomly, the probability that they are both red is 1/2?</p>",
+      "concept_tags": [],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }

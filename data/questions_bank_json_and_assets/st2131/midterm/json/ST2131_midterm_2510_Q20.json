@@ -1,57 +1,32 @@
 {
-  "question_id": null,
-  "course": "ST2131",
-  "semester": 2510,
-  "assessment_type": "midterm",
-  "question_no": 20,
-  "is_multi": false,
-  "question_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?",
-  "question_stem_html": "<p>An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?</p>",
-  "version": 1,
-  "update_timestamp": "2025-09-17T22:20:59+08:00",
-  "question_media": [],
-  "items": [
+  "files": [
     {
-      "part_number": "a",
-      "type": "mcq",
-      "subtype": "single",
-      "part_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?",
-      "part_stem_html": "<p>An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?</p>",
-      "choices": [
-        {
-          "choice_id": "A",
-          "text": "There are k - 1 white balls in the first r-1 draws, and the r-th draw is a white ball.",
-          "text_html": "<p>There are k - 1 white balls in the first r-1 draws, and the r-th draw is a white ball.</p>",
-          "is_correct": true,
-          "explanation": null
-        },
-        {
-          "choice_id": "B",
-          "text": "There are r balls drawn.",
-          "text_html": "<p>There are r balls drawn.</p>",
-          "is_correct": false,
-          "explanation": null
-        },
-        {
-          "choice_id": "C",
-          "text": "There are k white balls in the first r draws.",
-          "text_html": "<p>There are k white balls in the first r draws.</p>",
-          "is_correct": false,
-          "explanation": null
-        }
-      ],
-      "items_media": [],
-      "scoring": {
-        "points": 1.0
-      },
-      "feedback": {},
-      "shuffle_choices": true,
-      "solution": "TBD. Provide full working.",
-      "solution_html": "<p>TBD. Provide full working.</p>",
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q20.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q20.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q20",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 20,
+      "question_type": "mcq",
       "difficulty_level": 1.0,
+      "question_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?",
+      "question_stem_html": "<p>An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?</p>",
       "concept_tags": [
         "statistics"
-      ]
+      ],
+      "question_media": [],
+      "last_used": null
     }
   ]
 }
