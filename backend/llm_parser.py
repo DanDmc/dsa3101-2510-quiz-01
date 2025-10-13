@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 
 # === 1. configuration ===
-API_KEY = "AIzaSyBoCIKzP_K3n1o6gKLSItv1sg9IFZKH6u8"  # replace or load from .env later
+API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyBoCIKzP_K3n1o6gKLSItv1sg9IFZKH6u8")
 MODEL = "gemini-2.5-flash"
 
 TEXT_DIR = os.path.join("data", "text_extracted")
@@ -22,14 +22,19 @@ The input text below may contain multiple questions, sometimes with code blocks,
 Each question usually begins with a line such as "Question #:" or with a numbered sequence.
 
 Your task:
-1. Identify each distinct question.
-2. Ignore any answer options, checkmarks, solutions, "Item Weight", "Item Psychometrics", or metadata sections.
-3. If the text contains code output, math equations, or R/Python logs, **keep only what is necessary** to understand the question context.
-4. Clean up formatting — add missing spaces and punctuation so that each question stem is coherent and human-readable.
-5. Generate **1–3 relevant concept tags** that you are reasonably confident represent what the question tests (e.g., "simple regression", "hypothesis testing", "probability", "combinatorics").
-6. If unsure about tags, return an empty list `[]`.
-7. Keep "difficulty_level" as null.
-8. Keep "question_id" as null (it will be populated later by MySQL).
+1. Identify each distinct question or subpart.
+2. **IMPORTANT**: Preserve question numbering exactly as it appears in the source:
+   - If questions are numbered "1a", "1b", "2a", use those as question_no (as strings)
+   - If questions are numbered "(a)", "(b)", "(c)", use "1a", "1b", "1c" format
+   - If questions are numbered "1", "2", "3", use those (as strings)
+   - Question numbers should always be strings to handle formats like "1a", "2b", etc.
+3. Ignore any answer options, checkmarks, solutions, "Item Weight", "Item Psychometrics", or metadata sections.
+4. If the text contains code output, math equations, or R/Python logs, **keep only what is necessary** to understand the question context.
+5. Clean up formatting – add missing spaces and punctuation so that each question stem is coherent and human-readable.
+6. Generate **1–3 relevant concept tags** that you are reasonably confident represent what the question tests (e.g., "simple regression", "hypothesis testing", "probability", "combinatorics").
+7. If unsure about tags, return an empty list `[]`.
+8. Keep "difficulty_level" as null.
+9. Keep "question_id" as null (it will be populated later by MySQL).
 
 You must return **only valid JSON**, formatted as an array of question objects.
 
@@ -38,18 +43,18 @@ Each object must strictly follow this schema:
   "question_id": null,
   "version_id": 1,
   "file_id": null,
-  "question_no": <integer>,
+  "question_no": "<string: e.g. '1', '1a', '2b', etc>",
   "question_type": "mcq" | "mrq" | "coding" | "open-ended" | "fill-in-the-blanks" | "others",
   "difficulty_level": null,
-  "question_stem": "<cleaned, coherent text of the question only — no answers, no explanations>",
+  "question_stem": "<cleaned, coherent text of the question only – no answers, no explanations>",
   "question_stem_html": null,
   "concept_tags": ["tag1", "tag2"],
   "question_media": [],
   "last_used": null
 }}
 
-Return only a valid JSON array — no markdown, no commentary.
-Your response must begin with "[" and end with "]" — no ```json or ``` or markdown code fences.
+Return only a valid JSON array – no markdown, no commentary.
+Your response must begin with "[" and end with "]" – no ```json or ``` or markdown code fences.
 
 
 Here is the text to parse:

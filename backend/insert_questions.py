@@ -1,12 +1,11 @@
 import os
 import json
-import uuid
 import mysql.connector
 from datetime import datetime
 
 # === 1. DB connection settings ===
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "db",  # ✅ Changed from "localhost" to "db" for Docker
     "user": "root",
     "password": "root",
     "database": "quizbank",
@@ -33,7 +32,7 @@ def get_file_id(cursor, file_name):
 def insert_question(cursor, q, file_id):
     insert_query = """
         INSERT INTO questions (
-            question_id, version_id, file_id,
+            question_base_id, version_id, file_id,
             question_no, question_type, difficulty_level,
             question_stem, question_stem_html,
             concept_tags, question_media,
@@ -41,8 +40,11 @@ def insert_question(cursor, q, file_id):
         )
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
     """
+    
+    # For initial import, question_base_id = id (will be set after insert)
+    # We'll update it after getting the lastrowid
     data = (
-        q.get("question_id") or str(uuid.uuid4()),   # 👈 generate UUID if null
+        0,  # Temporary, will update after insert
         q.get("version_id", 1),
         file_id,
         q.get("question_no"),
@@ -57,6 +59,12 @@ def insert_question(cursor, q, file_id):
         datetime.now(),
     )
     cursor.execute(insert_query, data)
+    question_id = cursor.lastrowid
+    
+    # Set question_base_id = id for initial imports (no versions yet)
+    cursor.execute("UPDATE questions SET question_base_id = %s WHERE id = %s", (question_id, question_id))
+    
+    return question_id
 
 # === 4. Loop through JSON files ===
 json_files = [f for f in os.listdir(JSON_DIR) if f.lower().endswith(".json")]
@@ -85,20 +93,12 @@ for json_file in json_files:
 
         success_count = 0
         for q in questions:
-            # ✅ Auto-populate question_id if missing
-            if not q.get("question_id"):
-                q["question_id"] = str(uuid.uuid4())
-                print(f"🆔 Assigned question_id={q['question_id']} for question_no={q.get('question_no')}")
-
-            insert_question(cursor, q, file_id)
+            question_id = insert_question(cursor, q, file_id)
+            print(f"🆔 Inserted id={question_id} for question_no={q.get('question_no')}")
             success_count += 1
 
         conn.commit()
         print(f"✅ Inserted {success_count} / {len(questions)} questions for {pdf_name}\n")
-
-        # Optional: overwrite JSON file with updated IDs (for debugging or persistence)
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(questions, f, indent=2, ensure_ascii=False)
 
     except Exception as e:
         conn.rollback()

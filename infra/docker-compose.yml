@@ -8,7 +8,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ../infra/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 5s
@@ -20,20 +20,19 @@ services:
     container_name: quizbank-adminer
     ports:
       - "8080:8080"
+    depends_on:
+      - db
 
   backend:
     build:
-      context: ".."               # 👈 Go up one level to project root
-      dockerfile: "backend/Dockerfile"
+      context: ".."
+      dockerfile: "infra/Dockerfile"
     container_name: quizbank-backend
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - "../backend:/app/backend"
-      - "../data:/app/data"
-      - "../infra:/app/infra"
+      - ../data:/app/data
     environment:
       - PYTHONUNBUFFERED=1
-
-
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-AIzaSyBoCIKzP_K3n1o6gKLSItv1sg9IFZKH6u8}

@@ -1,0 +1,15 @@
+[
+  {
+    "question_id": null,
+    "version_id": 1,
+    "file_id": null,
+    "question_no": "1",
+    "question_type": "mcq",
+    "difficulty_level": null,
+    "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:\nY = β0 + β1 ln(X1) + e\nwhere X1 corresponds to distance to the nearest MRT. The following output was obtained from Python:\n\n## OLS Regression Results\n## ==============================================================================\n## Dep. Variable: price R-squared: 0.539\n## Model: OLS Adj. R-squared: 0.538\n## Method: Least Squares F-statistic: 482.2\n## Date: Mon, 08 Sep 2025 Prob (F-statistic): 2.52e-71\n## Time: 16:28:40 Log-Likelihood: -1507.3\n## No. Observations: 414 AIC: 3019.\n## Df Residuals: 412 BIC: 3027.\n## Df Model: 1\n## Covariance Type: nonrobust\n## ==============================================================================\n## coef std err t P>|t| [0.025 0.975]\n## ------------------------------------------------------------------------------\n## Intercept 95.0169 2.637 36.034 0.000 89.833 100.200\n## ldist -8.9235 0.406 -21.959 0.000 -9.722 -8.125\n## ==============================================================================\n## Omnibus: 178.772 Durbin-Watson: 2.109\n## Prob(Omnibus): 0.000 Jarque-Bera (JB): 1764.720\n## Skew: 1.566 Prob(JB): 0.00\n## Kurtosis: 12.617 Cond. No. 38.5\n## ==============================================================================\n\nWhat is the null hypothesis corresponding to the t-statistic with value -21.959?",
+    "question_stem_html": null,
+    "concept_tags": ["simple linear regression", "hypothesis testing", "regression interpretation"],
+    "question_media": [],
+    "last_used": null
+  }
+]

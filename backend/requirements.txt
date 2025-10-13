@@ -1,7 +1,6 @@
 # --- Core ---
 python-dotenv          # for reading .env variables (e.g. Gemini API key)
 requests               # if you use any direct HTTP calls
-uuid                   # for unique question IDs (if you auto-generate later)
 
 # --- Database ---
 mysql-connector-python # connects Python → MySQL (used in insert_to_db.py)
