@@ -1,51 +1,54 @@
 CREATE DATABASE IF NOT EXISTS quizbank;
 USE quizbank;
 
-CREATE TABLE questions (
+-- ──────────────────────────────────────────────
+-- 1) Source files (PDFs, Rmds, etc.)
+-- ──────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS files (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  question_id VARCHAR(64) UNIQUE,
-  course VARCHAR(32) NOT NULL,
+  file_id VARCHAR(64) UNIQUE,
+  file_version_id INT DEFAULT 1,
+  course VARCHAR(32),
+  year INT,
   semester VARCHAR(64),
-  assessment_type VARCHAR(64),
+  assessment_type ENUM('quiz','midterm','final','assessment','project','others') NOT NULL,
+  file_name VARCHAR(255),
+  file_path TEXT,
+  uploaded_by VARCHAR(128),
+  uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ──────────────────────────────────────────────
+-- 2) Questions
+-- ──────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS questions (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  question_id VARCHAR(64) NOT NULL,
+  version_id INT DEFAULT 1,
+  file_id BIGINT NOT NULL,
   question_no INT,
-  is_multi BOOLEAN,
+  question_type ENUM('mcq','mrq','coding','open-ended','fill-in-the-blanks','others') NOT NULL,
+  difficulty_level FLOAT,
   question_stem LONGTEXT,
   question_stem_html LONGTEXT,
-  version INT DEFAULT 1,
-  update_timestamp DATETIME,
+  concept_tags JSON,
   question_media JSON,
-  concept_tags JSON,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  last_used DATE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE (question_id, version_id),
+  FOREIGN KEY (file_id) REFERENCES files(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE items (
+-- ──────────────────────────────────────────────
+-- 3) Version history (optional)
+-- ──────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS question_versions (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  question_id BIGINT NOT NULL,
-  part_number VARCHAR(8),
-  type VARCHAR(64),
-  subtype VARCHAR(64),
-  language VARCHAR(32),
-  code_snippet LONGTEXT,
-  part_stem LONGTEXT,
-  part_stem_html LONGTEXT,
-  solution LONGTEXT,
-  solution_html LONGTEXT,
-  difficulty_level FLOAT,
-  shuffle_choices BOOLEAN,
-  scoring JSON,
-  feedback JSON,
-  items_media JSON,
-  concept_tags JSON,
-  FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE choices (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  item_id BIGINT NOT NULL,
-  choice_id VARCHAR(64),
-  text LONGTEXT,
-  text_html LONGTEXT,
-  is_correct BOOLEAN,
-  explanation LONGTEXT,
-  FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
+  question_id VARCHAR(64) NOT NULL,
+  old_version INT,
+  new_version INT,
+  changed_by VARCHAR(128),
+  change_description TEXT,
+  changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;

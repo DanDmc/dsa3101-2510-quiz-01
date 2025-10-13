@@ -1,41 +1,39 @@
-version: "3.9"
-
 services:
   db:
     image: mysql:8.0
-    # platform: linux/amd64   #Uncomment this line for Mac users
     container_name: quizbank-db
-    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: quizbank
     ports:
-      - "3306:3306"          # Expose MySQL for local/remote connections
+      - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
-    command: ["--default-authentication-plugin=mysql_native_password"]
+      - ../infra/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 5s
-      timeout: 5s
-      retries: 10
+      timeout: 3s
+      retries: 30
 
   adminer:
     image: adminer:latest
     container_name: quizbank-adminer
     ports:
-      - "8080:8080"          # Web UI to browse the database
+      - "8080:8080"
+
+  backend:
+    build:
+      context: ".."               # 👈 Go up one level to project root
+      dockerfile: "backend/Dockerfile"
+    container_name: quizbank-backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    volumes:
+      - "../backend:/app/backend"
+      - "../data:/app/data"
+      - "../infra:/app/infra"
+    environment:
+      - PYTHONUNBUFFERED=1
 
-  # backend:
-  #   build: 
-  #     context: .
-  #     dockerfile: ./Dockerfile_backend
-  #   restart: always
-  #   depends_on:
-  #     - db
-  #   env_file: .env
-  #   ports:
-  #     - "5001:5000"
 
-volumes:
-  mysql_data:
