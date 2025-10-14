@@ -3,6 +3,7 @@ import os
 import MySQLdb
 import pandas as pd
 from sqlalchemy import func, or_
+from contextlib import closing
 import json
 
 app = Flask(__name__)
@@ -14,28 +15,21 @@ def get_connection():
         passwd=os.getenv("MYSQL_PASSWORD","root"),
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
-from contextlib import closing
-import json
-import MySQLdb
-from flask import request, jsonify
 
 @app.get("/health")
 def health(): return {"ok": True}
 
 @app.route("/getquestion", methods=["GET"])
 def getquestion():
-    # ---- filters (all optional) ----
     course          = request.args.get("course")
     year            = request.args.get("year", type=int)
     semester        = request.args.get("semester")
     assessment_type = request.args.get("assessment_type")
     question_type   = request.args.get("question_type")
     question_no     = request.args.get("question_no", type=int)
-
-    # difficulty: exact or range
     difficulty      = request.args.get("difficulty_level", type=float)
 
-    # pagination & sort (defaults)
+    # setting defaults and sorts
     limit  = request.args.get("limit", 50, type=int)
     offset = request.args.get("offset", 0, type=int)
     order_by_arg = (request.args.get("order_by") or "updated_at").lower()
@@ -50,14 +44,14 @@ def getquestion():
         order_by = "q.updated_at"
     sort_sql = "ASC" if sort_arg == "asc" else "DESC"
 
-    # columns to select
+    # columns to show
     cols = [
         "q.id","q.question_base_id","q.version_id","q.file_id","q.question_no","q.question_type",
         "q.difficulty_level","q.question_stem","q.question_stem_html","q.concept_tags",
         "q.question_media","q.last_used","q.created_at","q.updated_at"
     ]
 
-    # base SQL + WHERE 1=1 so every filter can just add AND ...
+    # SQL portion
     sql_parts = [
         f"SELECT {', '.join(cols)}",
         "FROM questions q",
@@ -85,7 +79,6 @@ def getquestion():
     if question_no is not None:
         sql_parts.append("AND q.question_no = %s")
         args.append(question_no)
-
     if difficulty is not None:
         sql_parts.append("AND q.difficulty_level = %s")
         args.append(difficulty)
@@ -106,7 +99,7 @@ def getquestion():
             pass
         rows = cur.fetchall()
 
-    # parse JSON-like columns
+    # parse JSON columns such as concept_tags and question_media
     def parse_json_field(v):
         if v is None: return None
         try:
