@@ -2,6 +2,7 @@ services:
   db:
     image: mysql:8.0
     container_name: quizbank-db
+    platform: linux/amd64 # uncomment for non-mac
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: quizbank
@@ -28,6 +29,7 @@ services:
       context: ".."
       dockerfile: "infra/Dockerfile"
     container_name: quizbank-backend
+    platform: linux/amd64 # uncomment for non-mac
     depends_on:
       db:
         condition: service_healthy
@@ -36,3 +38,14 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - GEMINI_API_KEY=${GEMINI_API_KEY:-AIzaSyBoCIKzP_K3n1o6gKLSItv1sg9IFZKH6u8}
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile_api
+    container_name: quizbank-api
+    ports:
+      - "5001:5000"
+    depends_on:
+      db:
+        condition: service_healthy
