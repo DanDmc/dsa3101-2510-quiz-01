@@ -25,6 +25,7 @@ services:
       - db
 
   backend:
+    platform: linux/amd64
     build:
       context: ".."
       dockerfile: "infra/Dockerfile"
