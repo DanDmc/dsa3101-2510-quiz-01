@@ -28,6 +28,11 @@ def getquestion():
     question_type   = request.args.get("question_type")
     question_no     = request.args.get("question_no", type=int)
     difficulty      = request.args.get("difficulty_level", type=float)
+    tags: list[str] = request.args.getlist("concept_tags")
+    if not tags:
+        req = request.args.get("concept_tags")
+        if req:
+            tags = [t.strip() for t in req.split(",") if t.strip()] 
 
     # setting defaults and sorts
     limit  = request.args.get("limit", 50, type=int)
@@ -82,6 +87,11 @@ def getquestion():
     if difficulty is not None:
         sql_parts.append("AND q.difficulty_level = %s")
         args.append(difficulty)
+    if tags: # to accept all individual requested tag, combine with OR to match any of the tags provided
+        or_parts = ["JSON_CONTAINS(q.concept_tags, JSON_QUOTE(%s), '$')" for _ in tags]
+        sql_parts.append("AND (" + " OR ".join(or_parts) + ")")
+        args.extend(tags)
+
 
     # ORDER BY before LIMIT/OFFSET
     sql_parts.append(f"ORDER BY {order_by} {sort_sql}")
@@ -99,13 +109,20 @@ def getquestion():
             pass
         rows = cur.fetchall()
 
-    # parse JSON columns such as concept_tags and question_media
+    # parse JSON columns such as concept_tags and question_media, store JSON columns as str/bytes, normalise to Python types.
     def parse_json_field(v):
         if v is None: return None
-        try:
-            return json.loads(v) if isinstance(v, (str, bytes)) else v
-        except Exception:
-            return v
+        if isinstance(v, (bytes, bytearray)):
+            v = v.decode("utf-8", errors="ignore")
+        if isinstance(v, str):
+            v = v.strip()
+            if not v:
+                return None
+            try:
+                return json.loads(v)
+            except Exception:
+                pass
+        return v
 
     items = []
     for r in rows:
@@ -119,8 +136,8 @@ def getquestion():
             "difficulty_level": r["difficulty_level"],
             "question_stem": r["question_stem"],
             "question_stem_html": r["question_stem_html"],
-            "concept_tags": parse_json_field(r["concept_tags"]),
-            "question_media": parse_json_field(r["question_media"]),
+            "concept_tags": parse_json_field(r["concept_tags"]) or [],
+            "question_media": parse_json_field(r["question_media"]) or [],
             "last_used": r["last_used"].isoformat() if r["last_used"] else None,
             "created_at": r["created_at"].isoformat() if r["created_at"] else None,
             "updated_at": r["updated_at"].isoformat() if r["updated_at"] else None,
