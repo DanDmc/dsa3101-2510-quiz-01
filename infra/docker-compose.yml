@@ -30,7 +30,6 @@ services:
       context: ".."
       dockerfile: "infra/Dockerfile"
     container_name: quizbank-backend
-    platform: linux/amd64 # uncomment for non-mac
     depends_on:
       db:
         condition: service_healthy
