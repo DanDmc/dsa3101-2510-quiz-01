@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file, abort
 import os
 import MySQLdb
 import pandas as pd
 from sqlalchemy import func, or_
 from contextlib import closing
+import mimetypes
 import json
 
 app = Flask(__name__)
@@ -16,7 +17,7 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
-@app.get("/health")
+@app.route("/health", methods=["GETs"])
 def health(): return {"ok": True}
 
 @app.route("/getquestion", methods=["GET"])
@@ -51,7 +52,7 @@ def getquestion():
 
     # columns to show
     cols = [
-        "q.id","q.question_base_id","q.version_id","q.file_id","q.question_no","q.question_type",
+        "q.id","q.question_base_id","q.version_id","q.file_id","f.file_name","q.question_no","q.question_type",
         "q.difficulty_level","q.question_stem","q.question_stem_html","q.concept_tags",
         "q.question_media","q.last_used","q.created_at","q.updated_at"
     ]
@@ -131,6 +132,7 @@ def getquestion():
             "question_base_id": r["question_base_id"],
             "version_id": r["version_id"],
             "file_id": r["file_id"],
+            "file_name": r["file_name"],
             "question_no": r["question_no"],
             "question_type": r["question_type"],
             "difficulty_level": r["difficulty_level"],
@@ -144,6 +146,48 @@ def getquestion():
         })
 
     return jsonify({"total": len(items), "items": items})
+
+# Directory for files in the container
+file_base_directory = os.getenv("file_base_directory", "/app/data")
+
+def _safe_join_file(base_dir: str, file_path: str) -> str:
+    candidate = file_path if os.path.isabs(file_path) else os.path.join(base_dir, file_path)
+    candidate = os.path.normpath(candidate)
+    base_dir_norm = os.path.normpath(base_dir)
+    if not candidate.startswith(base_dir_norm):
+        raise FileNotFoundError("Invalid file path")
+    return candidate
+
+def _get_file_row(file_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("SELECT id, file_name, file_path, upload_at FROM files WHERE id=%s", (file_id,))
+        return cur.fetchone()
+    
+@app.route("/files/<int:file_id>/download", methods=["GET"])
+def download_file(file_id: int):
+    file_row = _get_file_row(file_id)
+    if not file_row:
+        abort(404, description="Invalid file")
+
+    try:
+        path_in_db = file_row.get("file_path") or file_row.get("file_name")
+        full_path = _safe_join_file(file_base_directory, path_in_db)
+    except FileNotFoundError:
+        abort(404, description="Invalid path")
+    
+    if not os.path.exists(full_path):
+        abort(404, description="File not in folder")
+    
+    guessed, _ = mimetypes.guess_type(file_row["file_name"] or full_path)
+    return send_file(
+        full_path, 
+        mimetype=guessed or "application/octet-stream",
+        as_attachment=True,
+        download_name=file_row.get("file_name") or os.path.basename(full_path),
+        conditional=True
+    )
+    
 
 # @app.route("/add_question", methods=["POST"])
 # def add_question():
