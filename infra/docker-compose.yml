@@ -25,7 +25,7 @@ services:
       - db
 
   backend:
-    platform: linux/amd64
+    platform: linux/amd64 # uncomment for non-mac
     build:
       context: ".."
       dockerfile: "infra/Dockerfile"
