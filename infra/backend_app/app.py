@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file, abort
 import os
 import MySQLdb
 import pandas as pd
 from sqlalchemy import func, or_
 from contextlib import closing
+import mimetypes
 import json
 
 app = Flask(__name__)
@@ -16,9 +17,11 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
-@app.get("/health")
+# HEALTH
+@app.route("/health", methods=["GETs"])
 def health(): return {"ok": True}
 
+# GET QUESTIONS
 @app.route("/getquestion", methods=["GET"])
 def getquestion():
     course          = request.args.get("course")
@@ -51,7 +54,7 @@ def getquestion():
 
     # columns to show
     cols = [
-        "q.id","q.question_base_id","q.version_id","q.file_id","q.question_no","q.question_type",
+        "q.id","q.question_base_id","q.version_id","q.file_id","f.file_name","q.question_no","q.question_type",
         "q.difficulty_level","q.question_stem","q.question_stem_html","q.concept_tags",
         "q.question_media","q.last_used","q.created_at","q.updated_at"
     ]
@@ -131,6 +134,7 @@ def getquestion():
             "question_base_id": r["question_base_id"],
             "version_id": r["version_id"],
             "file_id": r["file_id"],
+            "file_name": r["file_name"],
             "question_no": r["question_no"],
             "question_type": r["question_type"],
             "difficulty_level": r["difficulty_level"],
@@ -145,15 +149,66 @@ def getquestion():
 
     return jsonify({"total": len(items), "items": items})
 
-# @app.route("/add_question", methods=["POST"])
-# def add_question():
-#     content = request.get_json(force=True, silence=True) or {} #read JSON
-#     #add primary key fields for the database
-#     primary = ["question_id", "file_id", "question_type"]
-#     missing = [i for i in primary if not content.get(i)]
-#     if missing:
-#         return jsonify({["error"]: f"Missing key: {', '.join(missing)}"}), 400
-#     #restrict the question types 
-#     allowed_qn_types = {'mcq', 'mrq', 'coding', 'open-ended', 'fill-in-the-blanks', 'others'}
-#     if content.get("question_type") not in allowed_qn_types:
-#         return jsonify({"error": "invalid question type"}), 400
+# DOWNLOAD
+# Directory for files in the container
+file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
+
+def _strip_known_prefixes(p: str) -> str:
+    # file_base_directory set as /app/data/source_files, so want to remove this part from the file_path
+    prefixes = ("data/", "source_files/")
+    for pref in prefixes:
+        if p.startswith(pref):
+            return p[len(pref):]
+    return p
+
+def _safe_join_file(base_dir: str, file_path: str) -> str:
+    # ensure file path is consistent to be in the file_base_directory
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+
+    # if the path is already from to the file_base_directory
+    if os.path.isabs(file_path):
+        candidate = os.path.normpath(file_path)
+    else:
+    # strip and connect to file_base_directory to ensure consistency in connectedness
+        cleaned = _strip_known_prefixes(file_path.strip())
+        candidate = os.path.normpath(os.path.join(base_dir, cleaned))
+
+    base_dir_norm = os.path.normpath(base_dir)
+    # Ensure candidate stays inside base_dir (no traversal)
+    if not (candidate == base_dir_norm or candidate.startswith(base_dir_norm + os.sep)):
+        raise FileNotFoundError("Invalid file path")
+    return candidate
+
+def _get_file_row(file_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
+        return cur.fetchone()
+
+@app.route("/files/<int:file_id>/download", methods=["GET"])
+def download_file(file_id: int):
+    file_row = _get_file_row(file_id)
+    if not file_row:
+        abort(404, description="Invalid file")
+
+    try:
+        path_in_db = (file_row.get("file_name") or "").strip()
+        full_path = _safe_join_file(file_base_directory, path_in_db)
+    except FileNotFoundError as e:
+        abort(404, description=str(e))
+
+    if not os.path.exists(full_path):
+        abort(404, description="File not in folder")
+
+    guessed, _ = mimetypes.guess_type(file_row.get("file_name") or full_path)
+    app.logger.info("DOWNLOAD full_path=%s base=%s dbpath=%s",
+                full_path, file_base_directory, path_in_db)
+
+    return send_file(
+        full_path,
+        mimetype=guessed or "application/octet-stream",
+        as_attachment=True,
+        download_name=file_row.get("file_name") or os.path.basename(full_path),
+        conditional=True,
+    )
