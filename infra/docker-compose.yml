@@ -46,6 +46,10 @@ services:
     container_name: quizbank-api
     ports:
       - "5001:5000"
+    environment:
+      file_base_directory: /app/data/source_files
+    volumes:
+      - ../data:/app/data
     depends_on:
       db:
         condition: service_healthy
