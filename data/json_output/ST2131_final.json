@@ -38,12 +38,12 @@
     "question_no": "3",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is p, where p >0.5. We flip the coin twice, and define the following events: A_1: we observe head followed by a tail A_2: we observe a tail followed by a head. What is P(A_1 | A_1 U A_2)?",
+    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is p, where p > 0.5. We flip the coin twice, and define the following events:\nA₁: we observe head followed by a tail\nA₂: we observe a tail followed by a head.\nWhat is P(A₁ | A₁ ∪ A₂)?",
     "question_stem_html": null,
     "concept_tags": [
       "conditional probability",
-      "probability",
-      "event relations"
+      "biased coin",
+      "events"
     ],
     "question_media": [],
     "last_used": null
@@ -58,8 +58,8 @@
     "question_stem": "If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible?",
     "question_stem_html": null,
     "concept_tags": [
+      "combinations with repetition",
       "stars and bars",
-      "combinations",
       "combinatorics"
     ],
     "question_media": [],
@@ -75,7 +75,9 @@
     "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?",
     "question_stem_html": null,
     "concept_tags": [
-      "combinatorics"
+      "permutations",
+      "combinations",
+      "distribution"
     ],
     "question_media": [],
     "last_used": null
@@ -87,11 +89,11 @@
     "question_no": "6",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Which of the following [missing functions A, B, C] is not a cumulative distribution function?",
+    "question_stem": "Which of the following is not a cumulative distribution function?",
     "question_stem_html": null,
     "concept_tags": [
       "cumulative distribution function",
-      "random variables"
+      "probability theory"
     ],
     "question_media": [],
     "last_used": null
@@ -103,12 +105,12 @@
     "question_no": "7",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E_i to be the event that head appears first on the i-th toss. What is P(A wins)?",
+    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define Eᵢ to be the event that head appears first on the i-th toss. What is P(A wins)?",
     "question_stem_html": null,
     "concept_tags": [
       "geometric distribution",
       "probability",
-      "event independence"
+      "sequential events"
     ],
     "question_media": [],
     "last_used": null
@@ -120,12 +122,12 @@
     "question_no": "8",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "A fair coin is tossed independently 10 times. Define the following events: A_k: the k-th toss is heads S: the total number of heads observed in the 10 tosses is even. (Note that 0 is an even number). What is P(S | A_1 A_2 A_3 ... A_10)?",
+    "question_stem": "A fair coin is tossed independently 10 times. Define the following events:\nAₖ: the k-th toss is heads\nS: the total number of heads observed in the 10 tosses is even. (Note that 0 is an even number).\nWhat is P(S | A₁ A₂ A₃ ... A₁₀)?",
     "question_stem_html": null,
     "concept_tags": [
       "conditional probability",
-      "probability",
-      "event independence"
+      "coin toss",
+      "independence"
     ],
     "question_media": [],
     "last_used": null
@@ -137,12 +139,12 @@
     "question_no": "9",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E_i to be the event that head appears first on the i-th toss. Which of the following statements [missing statements A and B] is true about the sequence of events E_i?",
+    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define Eᵢ to be the event that head appears first on the i-th toss. Which of the following statements is true about the sequence of events Eᵢ?",
     "question_stem_html": null,
     "concept_tags": [
-      "sequences of events",
-      "probability",
-      "event independence"
+      "events",
+      "probability sequences",
+      "independence"
     ],
     "question_media": [],
     "last_used": null
@@ -154,11 +156,11 @@
     "question_no": "10",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that p(x) and q(x) are two distinct pmfs. Then for any b such that 0 <b <1, r(x) = bp(x) + (1-b)q(x) is also a pmf.",
+    "question_stem": "Suppose that p(x) and q(x) are two distinct pmfs. Then for any b such that 0 < b < 1, r(x) = bp(x) + (1-b)q(x) is also a pmf.",
     "question_stem_html": null,
     "concept_tags": [
       "probability mass function",
-      "random variables"
+      "convex combination"
     ],
     "question_media": [],
     "last_used": null
@@ -170,11 +172,11 @@
     "question_no": "11",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Consider the following pmf [missing function definition], for i = {1, 2, 3, 4, 5, ...} What is the value of c?",
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n[MISSING PMF DEFINITION]\nWhat is the value of c?",
     "question_stem_html": null,
     "concept_tags": [
       "probability mass function",
-      "random variables"
+      "normalization constant"
     ],
     "question_media": [],
     "last_used": null
@@ -189,9 +191,9 @@
     "question_stem": "Two fair six-sided dice are rolled. Let X be the product of the two dice. What is P(X >= 33)?",
     "question_stem_html": null,
     "concept_tags": [
-      "joint probability",
       "probability",
-      "random variables"
+      "dice roll",
+      "sample space"
     ],
     "question_media": [],
     "last_used": null
@@ -203,11 +205,11 @@
     "question_no": "13",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality [missing formula] holds:",
+    "question_stem": "Suppose that P(A) > 0, P(B) > 0 and P(AB) > 0. Then the following equality holds:\n[MISSING EQUALITY]\n",
     "question_stem_html": null,
     "concept_tags": [
-      "probability",
-      "event relations"
+      "probability theory",
+      "set theory for events"
     ],
     "question_media": [],
     "last_used": null
@@ -219,12 +221,11 @@
     "question_no": "14",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Consider the following pmf [missing function definition], for i = {1, 2, 3, 4, 5, ...} Find P(X = 1 | {X=1} U {X=2})",
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n[MISSING PMF DEFINITION]\nFind P(X = 1 | {X=1} ∪ {X=2})",
     "question_stem_html": null,
     "concept_tags": [
-      "probability mass function",
       "conditional probability",
-      "random variables"
+      "probability mass function"
     ],
     "question_media": [],
     "last_used": null
@@ -239,7 +240,9 @@
     "question_stem": "A deck of playing cards has 52 cards. Four of these cards are Aces. Suppose that a well-shuffled deck of cards is dealt out. What is the probability that the 14th card dealt out is an Ace?",
     "question_stem_html": null,
     "concept_tags": [
-      "probability"
+      "probability",
+      "card deck",
+      "symmetry"
     ],
     "question_media": [],
     "last_used": null
@@ -251,11 +254,11 @@
     "question_no": "16",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "The cdf of X is given by the following function [missing function definition], for i in {1,2,3,4,5,6, ... } : What is the support of X?",
+    "question_stem": "The cdf of X is given by the following function, for i in {1,2,3,4,5,6, ... } : \n[MISSING CDF DEFINITION]\nWhat is the support of X?",
     "question_stem_html": null,
     "concept_tags": [
       "cumulative distribution function",
-      "random variables"
+      "support of random variable"
     ],
     "question_media": [],
     "last_used": null
@@ -267,12 +270,11 @@
     "question_no": "17",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "The cdf of X is given by the following function [missing function definition], for i = 1, 2, 3, 4, 5,.... : What is P(X <2)?",
+    "question_stem": "The cdf of X is given by the following function, for i = 1, 2, 3, 4, 5,.... : \n[MISSING CDF DEFINITION]\nWhat is P(X < 2)?",
     "question_stem_html": null,
     "concept_tags": [
       "cumulative distribution function",
-      "random variables",
-      "probability"
+      "probability calculation"
     ],
     "question_media": [],
     "last_used": null
@@ -284,12 +286,12 @@
     "question_no": "18",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "The cdf of X is given by the following function, for i >= 1: What is the pmf of X?",
+    "question_stem": "The cdf of X is given by the following function, for i >= 1:\n[MISSING CDF DEFINITION]\nWhat is the pmf of X?",
     "question_stem_html": null,
     "concept_tags": [
       "cumulative distribution function",
       "probability mass function",
-      "random variables"
+      "discrete random variable"
     ],
     "question_media": [],
     "last_used": null
@@ -301,11 +303,11 @@
     "question_no": "19",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by the table: p(1)=0.1, p(2)=0.25, p(3)=0.35, p(4)=0.3 A child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen. Find P(X=1 | E).",
+    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1) = 0.1, p(2) = 0.25, p(3) = 0.35, p(4) = 0.3.\nA child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen. Find P(X=1 | E).",
     "question_stem_html": null,
     "concept_tags": [
       "conditional probability",
-      "random variables",
+      "discrete random variable",
       "probability mass function"
     ],
     "question_media": [],
@@ -321,9 +323,9 @@
     "question_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?",
     "question_stem_html": null,
     "concept_tags": [
+      "urn problems",
       "hypergeometric distribution",
-      "random variables",
-      "probability"
+      "discrete random variable"
     ],
     "question_media": [],
     "last_used": null
@@ -333,14 +335,14 @@
     "version_id": 1,
     "file_id": null,
     "question_no": "21",
-    "question_type": "others",
+    "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E, F and G below. There is only one matching description for each event. 1. E occurs. 2. At least two of the events occur. 3. Exactly two events occur. 4. The empty set occurs. 5. None of the three events occur. 6. Only E occurs. _____________ 1 (E U F U G)c _____________ 2 EF U EG U FG",
+    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E, F and G below. There is only one matching description for each event.\n1. E occurs.\n2. At least two of the events occur.\n3. Exactly two events occur.\n4. The empty set occurs.\n5. None of the three events occur.\n6. Only E occurs.\nMatch the following:\n(E ∪ F ∪ G)ᶜ\nEF ∪ EG ∪ FG",
     "question_stem_html": null,
     "concept_tags": [
-      "set theory for events",
-      "event relations",
-      "probability"
+      "set theory",
+      "probability events",
+      "sample space"
     ],
     "question_media": [],
     "last_used": null
@@ -350,14 +352,14 @@
     "version_id": 1,
     "file_id": null,
     "question_no": "22",
-    "question_type": "others",
+    "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event. 1. E occurs. 2. At least two of the events occur. 3. Exactly two events occur. 4. Exactly one of the events occurs. 5. Only E occurs. 6. At least one of the events occurs. _____________ 1 E U F U G _____________ 2 E Fc Gc",
+    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event.\n1. E occurs.\n2. At least two of the events occur.\n3. Exactly two events occur.\n4. Exactly one of the events occurs.\n5. Only E occurs.\n6. At least one of the events occurs.\nMatch the following:\nE ∪ F ∪ G\nE Fᶜ Gᶜ",
     "question_stem_html": null,
     "concept_tags": [
-      "set theory for events",
-      "event relations",
-      "probability"
+      "set theory",
+      "probability events",
+      "sample space"
     ],
     "question_media": [],
     "last_used": null
@@ -369,12 +371,12 @@
     "question_no": "23",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events: A_k: the k-th toss is heads. S_n: the total number of heads observed in the n tosses is even. (Note that 0 is an even number). Is the collection of events A_1, A_2, A_3, ... A_n, S_n independent? Hint: Consider P(S_n | A_1 A_2 A_3 ... A_n)",
+    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events:\nAₖ: the k-th toss is heads.\nSₙ: the total number of heads observed in the n tosses is even. (Note that 0 is an even number).\nIs the collection of events A₁, A₂, A₃, ... Aₙ, Sₙ independent? Hint: Consider P(Sₙ | A₁ A₂ A₃ ... Aₙ)",
     "question_stem_html": null,
     "concept_tags": [
-      "event independence",
+      "independence of events",
       "conditional probability",
-      "probability"
+      "coin toss"
     ],
     "question_media": [],
     "last_used": null
@@ -389,9 +391,8 @@
     "question_stem": "Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).",
     "question_stem_html": null,
     "concept_tags": [
-      "event independence",
-      "conditional probability",
-      "probability"
+      "independence of events",
+      "probability calculation"
     ],
     "question_media": [],
     "last_used": null
@@ -403,12 +404,12 @@
     "question_no": "25",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events: A_k: the k-th toss is heads. What is P(A_1 A_2 A_3 A_4 ... A_n)?",
+    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events:\nAₖ: the k-th toss is heads.\nWhat is P(A₁ A₂ A₃ A₄ ... Aₙ)?",
     "question_stem_html": null,
     "concept_tags": [
-      "conditional probability",
-      "probability",
-      "event independence"
+      "independence of events",
+      "coin toss",
+      "probability"
     ],
     "question_media": [],
     "last_used": null
@@ -420,12 +421,11 @@
     "question_no": "26",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that E_1, E_2, ..., E_n are independent events. Which of the following statements [missing options A, B, C's content] is true for any such collection of events?",
+    "question_stem": "Suppose that E₁, E₂, ... , Eₙ are independent events. Which of the following statements is true for any such collection of events?\n[MISSING STATEMENTS]",
     "question_stem_html": null,
     "concept_tags": [
-      "event independence",
-      "event relations",
-      "probability"
+      "independence of events",
+      "probability theory"
     ],
     "question_media": [],
     "last_used": null
@@ -437,12 +437,13 @@
     "question_no": "27",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define E_n to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. What does the event correspond to?",
+    "question_stem": "Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12.\nWe define Eₙ to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. What does the event ⋃_{n=1}^{∞} Eₙ correspond to?",
     "question_stem_html": null,
     "concept_tags": [
-      "sequences of events",
       "probability",
-      "event independence"
+      "dice roll",
+      "sequential events",
+      "union of events"
     ],
     "question_media": [],
     "last_used": null
@@ -454,12 +455,12 @@
     "question_no": "28",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that X is a discrete random variable with support on the set {1,2,3,4}. We define the sequence of events E_n to be {X=n}. What is P(X=1)? (Inferred from the provided correct option A.)",
+    "question_stem": "Suppose that X is a discrete random variable with support on the set {1,2,3,4}. We define the sequence of events Eₙ to be [MISSING DEFINITION OF Eₙ]. What is [MISSING MATHEMATICAL EXPRESSION, LIKELY A LIMIT INVOLVING Eₙ]?",
     "question_stem_html": null,
     "concept_tags": [
-      "sequences of events",
-      "random variables",
-      "probability"
+      "discrete random variable",
+      "sequence of events",
+      "limit of probabilities"
     ],
     "question_media": [],
     "last_used": null
@@ -471,12 +472,12 @@
     "question_no": "29",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that A and B are mutually exclusive, and P(A) >0 and P(B) >0. Which of the following statements is false?",
+    "question_stem": "Suppose that A and B are mutually exclusive, and P(A) > 0 and P(B) > 0. Which of the following statements is false?",
     "question_stem_html": null,
     "concept_tags": [
       "mutually exclusive events",
-      "event independence",
-      "event relations"
+      "independence of events",
+      "conditional probability"
     ],
     "question_media": [],
     "last_used": null
@@ -491,9 +492,8 @@
     "question_stem": "Suppose that A and B are events with positive probability. Determine if the following statement is true or false: If A and B are not mutually exclusive, then they are independent.",
     "question_stem_html": null,
     "concept_tags": [
-      "event independence",
       "mutually exclusive events",
-      "event relations"
+      "independence of events"
     ],
     "question_media": [],
     "last_used": null
@@ -505,12 +505,12 @@
     "question_no": "31",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that A and B form a partition of the sample space, and P(A) >0 and P(B) >0. Which of the following statements is false?",
+    "question_stem": "Suppose that A and B form a partition of the sample space, and P(A) > 0 and P(B) > 0. Which of the following statements is false?",
     "question_stem_html": null,
     "concept_tags": [
-      "sample space partition",
-      "event independence",
-      "event relations"
+      "partition of sample space",
+      "conditional probability",
+      "independence of events"
     ],
     "question_media": [],
     "last_used": null
@@ -525,9 +525,9 @@
     "question_stem": "A mobile phone manufacturing company has two factories X and Y. Factories X and Y produce 30% and 70% of all mobile phones respectively. 9% of the phones produced by factory X are defective, and 1% of the phones produced by factory Y are defective. If a phone bought from the company is found to be defective, what is the probability that it was produced by factory X?",
     "question_stem_html": null,
     "concept_tags": [
-      "bayes' theorem",
+      "Bayes' theorem",
       "conditional probability",
-      "probability"
+      "total probability"
     ],
     "question_media": [],
     "last_used": null
@@ -539,11 +539,11 @@
     "question_no": "33",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Which of the following [missing functions A, B, C] is not a probability mass function?",
+    "question_stem": "Which of the following is not a probability mass function?\n[MISSING FUNCTIONS]",
     "question_stem_html": null,
     "concept_tags": [
       "probability mass function",
-      "random variables"
+      "discrete random variable"
     ],
     "question_media": [],
     "last_used": null
@@ -555,12 +555,11 @@
     "question_no": "34",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Consider the following pmf [missing function definition], for i = {1, 2, 3, 4, 5, ...} Evaluate the cdf at i=2.",
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n[MISSING PMF DEFINITION]\nEvaluate the cdf at i=2.",
     "question_stem_html": null,
     "concept_tags": [
       "probability mass function",
-      "cumulative distribution function",
-      "random variables"
+      "cumulative distribution function"
     ],
     "question_media": [],
     "last_used": null
@@ -576,8 +575,7 @@
     "question_stem_html": null,
     "concept_tags": [
       "mutually exclusive events",
-      "event relations",
-      "probability"
+      "probability of intersection"
     ],
     "question_media": [],
     "last_used": null
@@ -592,9 +590,9 @@
     "question_stem": "How many ways can we arrange the letters in the word \"VISITING\" such that no two \"I\"s are adjacent? Hint: Experiment 1: Permute the non-I letters. Experiment 2: Choose where to put the I's.",
     "question_stem_html": null,
     "concept_tags": [
-      "permutations with restrictions",
       "permutations",
-      "combinatorics"
+      "combinatorics",
+      "gap method"
     ],
     "question_media": [],
     "last_used": null
@@ -610,7 +608,6 @@
     "question_stem_html": null,
     "concept_tags": [
       "permutations with repetition",
-      "permutations",
       "combinatorics"
     ],
     "question_media": [],
@@ -623,12 +620,12 @@
     "question_no": "38",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define E_n to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. Is E_n an increasing or decreasing sequence?",
+    "question_stem": "Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12.\nWe define Eₙ to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. Is Eₙ an increasing or decreasing sequence?",
     "question_stem_html": null,
     "concept_tags": [
-      "sequences of events",
+      "sequence of events",
       "probability",
-      "event independence"
+      "dice roll"
     ],
     "question_media": [],
     "last_used": null
@@ -640,11 +637,11 @@
     "question_no": "39",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements [missing statements A, B, and C] is not true for all possible choices of A, B and C?",
+    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?\n[MISSING STATEMENTS]",
     "question_stem_html": null,
     "concept_tags": [
-      "event relations",
-      "probability"
+      "set theory",
+      "probability properties"
     ],
     "question_media": [],
     "last_used": null
@@ -659,9 +656,9 @@
     "question_stem": "A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the probability that there will be no complete pair?",
     "question_stem_html": null,
     "concept_tags": [
-      "derangements",
-      "combinatorial probability",
-      "combinatorics"
+      "combinations",
+      "probability",
+      "sampling without replacement"
     ],
     "question_media": [],
     "last_used": null
@@ -677,8 +674,8 @@
     "question_stem_html": null,
     "concept_tags": [
       "combinations",
-      "combinatorics",
-      "probability"
+      "probability",
+      "hypergeometric distribution"
     ],
     "question_media": [],
     "last_used": null
@@ -690,12 +687,12 @@
     "question_no": "42",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1) If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is P(Y = -5)?",
+    "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1). If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is P(Y = -5)?",
     "question_stem_html": null,
     "concept_tags": [
-      "transformations of random variables",
       "probability mass function",
-      "random variables"
+      "transformation of random variables",
+      "discrete random variable"
     ],
     "question_media": [],
     "last_used": null
@@ -707,12 +704,12 @@
     "question_no": "43",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1) If we let Y = 1 if X <= 2 and 0 otherwise, what is P(Y = 0)?",
+    "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1). If we let Y = 1 if X <= 2 and 0 otherwise, what is P(Y = 0)?",
     "question_stem_html": null,
     "concept_tags": [
-      "transformations of random variables",
       "probability mass function",
-      "random variables"
+      "transformation of random variables",
+      "discrete random variable"
     ],
     "question_media": [],
     "last_used": null
@@ -727,7 +724,8 @@
     "question_stem": "There are 4 TV repairmen and 8 TV repair jobs. If it is possible for a single repairman to do multiple jobs, how many possible assignments of repairmen to jobs are there?",
     "question_stem_html": null,
     "concept_tags": [
-      "combinatorics"
+      "counting principles",
+      "permutations with repetition"
     ],
     "question_media": [],
     "last_used": null
@@ -739,11 +737,11 @@
     "question_no": "45",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "If P(A) = 1/4 and P(B) = 1/3, then [missing inequality/statement].",
+    "question_stem": "If P(A) = 1/4 and P(B) = 1/3, then [MISSING INEQUALITY/EQUALITY STATEMENT].",
     "question_stem_html": null,
     "concept_tags": [
-      "probability",
-      "event relations"
+      "probability bounds",
+      "union of events"
     ],
     "question_media": [],
     "last_used": null
@@ -755,11 +753,12 @@
     "question_no": "46",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "If P(A)=1/3 and P(Bc)=1/4 then it is still possible for A and B to be disjoint.",
+    "question_stem": "If P(A) = 1/3 and P(Bᶜ) = 1/4 then it is still possible for A and B to be disjoint.",
     "question_stem_html": null,
     "concept_tags": [
-      "event relations",
-      "probability"
+      "disjoint events",
+      "probability of complement",
+      "set theory"
     ],
     "question_media": [],
     "last_used": null
@@ -774,9 +773,9 @@
     "question_stem": "A company has two factories X and Y. Factories X and Y produce 40% and 60% of all watches respectively. 2% of the watches produced by factory X are defective, and 3% of the watches produced by factory Y are defective. If a watch bought from the company is found to be defective, what is the probability that it was produced by factory Y?",
     "question_stem_html": null,
     "concept_tags": [
-      "bayes' theorem",
+      "Bayes' theorem",
       "conditional probability",
-      "probability"
+      "total probability"
     ],
     "question_media": [],
     "last_used": null
@@ -791,9 +790,9 @@
     "question_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. What is the support of X?",
     "question_stem_html": null,
     "concept_tags": [
-      "hypergeometric distribution",
-      "random variables",
-      "probability"
+      "urn problems",
+      "support of random variable",
+      "hypergeometric distribution"
     ],
     "question_media": [],
     "last_used": null
@@ -805,12 +804,12 @@
     "question_no": "49",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by the table: p(1)=0.3, p(2)=0.25, p(3)=0.35, p(4)=0.1 A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).",
+    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1) = 0.3, p(2) = 0.25, p(3) = 0.35, p(4) = 0.1.\nA child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).",
     "question_stem_html": null,
     "concept_tags": [
+      "probability mass function",
       "conditional probability",
-      "random variables",
-      "probability mass function"
+      "discrete random variable"
     ],
     "question_media": [],
     "last_used": null
