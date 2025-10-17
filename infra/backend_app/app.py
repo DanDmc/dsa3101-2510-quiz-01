@@ -20,127 +20,146 @@ def get_connection():
 def health(): return {"ok": True}
 
 @app.route("/getquestion", methods=["GET"])
-def getquestion():
-    course          = request.args.get("course")
-    year            = request.args.get("year", type=int)
-    semester        = request.args.get("semester")
+def get_question():
+    # Query params
+    course = request.args.get("course")
+    year = request.args.get("year")
+    semester = request.args.get("semester")
     assessment_type = request.args.get("assessment_type")
-    question_type   = request.args.get("question_type")
-    question_no     = request.args.get("question_no", type=int)
-    difficulty      = request.args.get("difficulty_level", type=float)
-    tags: list[str] = request.args.getlist("concept_tags")
-    if not tags:
-        req = request.args.get("concept_tags")
-        if req:
-            tags = [t.strip() for t in req.split(",") if t.strip()] 
 
-    # setting defaults and sorts
-    limit  = request.args.get("limit", 50, type=int)
-    offset = request.args.get("offset", 0, type=int)
-    order_by_arg = (request.args.get("order_by") or "updated_at").lower()
-    sort_arg     = (request.args.get("sort") or "desc").lower()
+    question_type = request.args.get("question_type")
+    question_no = request.args.get("question_no")
+    difficulty_level = request.args.get("difficulty_level")
 
-    # whitelist ordering
+    # concept_tags can be ?concept_tags=probability&concept_tags=bayes or ?concept_tags=probability,bayes
+    raw_tags = request.args.getlist("concept_tags")
+    concept_tags = []
+    for t in raw_tags:
+        concept_tags.extend([s.strip() for s in t.split(",") if s.strip()])
+
+    # pagination / sorting
+    limit = int(request.args.get("limit", 50))
+    offset = int(request.args.get("offset", 0))
+    order_by_arg = (request.args.get("order_by") or "").lower()
+    sort_arg = (request.args.get("sort") or "desc").lower()
+
+    # Whitelist order_by to prevent SQL injection
     if order_by_arg == "created_at":
-        order_by = "q.created_at"
+        order_by_sql = "q.created_at"
     elif order_by_arg == "difficulty":
-        order_by = "q.difficulty_level"
+        order_by_sql = "q.difficulty_level"
     else:
-        order_by = "q.updated_at"
+        order_by_sql = "q.updated_at"
     sort_sql = "ASC" if sort_arg == "asc" else "DESC"
 
-    # columns to show
-    cols = [
-        "q.id","q.question_base_id","q.version_id","q.file_id","q.question_no","q.question_type",
-        "q.difficulty_level","q.question_stem","q.question_stem_html","q.concept_tags",
-        "q.question_media","q.last_used","q.created_at","q.updated_at"
+    # SELECT columns (include some file metadata for convenience)
+    select_cols = [
+        "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
+        "q.question_type", "q.difficulty_level", "q.question_stem", "q.question_stem_html",
+        "q.concept_tags", "q.question_media", "q.last_used", "q.created_at", "q.updated_at",
+        "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
 
-    # SQL portion
-    sql_parts = [
-        f"SELECT {', '.join(cols)}",
-        "FROM questions q",
-        "JOIN files f ON q.file_id = f.id",
-        "WHERE 1=1"
-    ]
-    args = []
+    # Build WHERE with parameters
+    where_clauses = []
+    params = []
 
-    # filters
+    # ---- File-level filters (JOIN target) ----
     if course:
-        sql_parts.append("AND f.course = %s")
-        args.append(course)
-    if year is not None:
-        sql_parts.append("AND f.year = %s")
-        args.append(year)
+        where_clauses.append("f.course = %s")
+        params.append(course)
+    if year:
+        where_clauses.append("f.year = %s")
+        params.append(year)
     if semester:
-        sql_parts.append("AND f.semester = %s")
-        args.append(semester)
+        where_clauses.append("f.semester = %s")
+        params.append(semester)
     if assessment_type:
-        sql_parts.append("AND f.assessment_type = %s")
-        args.append(assessment_type)
+        where_clauses.append("f.assessment_type = %s")
+        params.append(assessment_type)
+
+    # ---- Question-level filters ----
     if question_type:
-        sql_parts.append("AND q.question_type = %s")
-        args.append(question_type)
-    if question_no is not None:
-        sql_parts.append("AND q.question_no = %s")
-        args.append(question_no)
-    if difficulty is not None:
-        sql_parts.append("AND q.difficulty_level = %s")
-        args.append(difficulty)
-    if tags: # to accept all individual requested tag, combine with OR to match any of the tags provided
-        or_parts = ["JSON_CONTAINS(q.concept_tags, JSON_QUOTE(%s), '$')" for _ in tags]
-        sql_parts.append("AND (" + " OR ".join(or_parts) + ")")
-        args.extend(tags)
+        where_clauses.append("q.question_type = %s")
+        params.append(question_type)
+    if question_no:
+        where_clauses.append("q.question_no = %s")
+        params.append(question_no)
+    if difficulty_level:
+        where_clauses.append("q.difficulty_level = %s")
+        params.append(difficulty_level)
 
+    if concept_tags:
+        # AND logic: require ALL provided tags to be present in q.concept_tags (a JSON array)
+        # MySQL will return true only if every element in the candidate array exists in the target array.
+        where_clauses.append("JSON_CONTAINS(q.concept_tags, CAST(%s AS JSON))")
+        params.append(json.dumps(concept_tags))
 
-    # ORDER BY before LIMIT/OFFSET
-    sql_parts.append(f"ORDER BY {order_by} {sort_sql}")
-    sql_parts.append("LIMIT %s OFFSET %s")
-    args.extend([limit, offset])   # <-- ensure BOTH are appended
+    where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
-    # run (and always close the connection)
-    with closing(get_connection()) as conn:
-        cur = conn.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute(" ".join(sql_parts), args)
-        # DEBUG: print the final SQL MySQLdb executed (helps catch % issues)
-        try:
-            app.logger.debug(getattr(cur, "_last_executed", "<no _last_executed>"))
-        except Exception:
-            pass
+    sql = f"""
+        SELECT {", ".join(select_cols)}
+        FROM questions q
+        JOIN files f ON f.id = q.file_id
+        {where_sql}
+        ORDER BY {order_by_sql} {sort_sql}
+        LIMIT %s OFFSET %s
+    """
+    params.extend([limit, offset])
+
+    # Execute
+    with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
+        cur.execute(sql, params)
         rows = cur.fetchall()
 
-    # parse JSON columns such as concept_tags and question_media, store JSON columns as str/bytes, normalise to Python types.
-    def parse_json_field(v):
-        if v is None: return None
-        if isinstance(v, (bytes, bytearray)):
-            v = v.decode("utf-8", errors="ignore")
-        if isinstance(v, str):
-            v = v.strip()
-            if not v:
-                return None
-            try:
-                return json.loads(v)
-            except Exception:
-                pass
-        return v
-
+    # Map to dicts
     items = []
-    for r in rows:
+    for row in rows:
+        (
+            q_id, q_base_id, q_version_id, file_id, q_no,
+            q_type, diff_level, stem, stem_html,
+            concept_json, media_json, last_used, created_at, updated_at,
+            f_course, f_year, f_semester, f_assessment, f_name, f_path
+        ) = row
+
+        # Convert JSON text to Python objects if present
+        try:
+            concept_list = json.loads(concept_json) if concept_json else []
+        except Exception:
+            concept_list = concept_json  # fallback raw
+
+        try:
+            media_list = json.loads(media_json) if media_json else []
+        except Exception:
+            media_list = media_json  # fallback raw
+
+        def ts(v):
+            # jsonify can't handle datetime directly; convert to ISO strings
+            return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
+
         items.append({
-            "id": r["id"],
-            "question_base_id": r["question_base_id"],
-            "version_id": r["version_id"],
-            "file_id": r["file_id"],
-            "question_no": r["question_no"],
-            "question_type": r["question_type"],
-            "difficulty_level": r["difficulty_level"],
-            "question_stem": r["question_stem"],
-            "question_stem_html": r["question_stem_html"],
-            "concept_tags": parse_json_field(r["concept_tags"]) or [],
-            "question_media": parse_json_field(r["question_media"]) or [],
-            "last_used": r["last_used"].isoformat() if r["last_used"] else None,
-            "created_at": r["created_at"].isoformat() if r["created_at"] else None,
-            "updated_at": r["updated_at"].isoformat() if r["updated_at"] else None,
+            "id": q_id,
+            "question_base_id": q_base_id,
+            "version_id": q_version_id,
+            "file_id": file_id,
+            "question_no": q_no,
+            "question_type": q_type,
+            "difficulty_level": float(diff_level) if diff_level is not None else None,
+            "question_stem": stem,
+            "question_stem_html": stem_html,
+            "concept_tags": concept_list,
+            "question_media": media_list,
+            "last_used": ts(last_used),
+            "created_at": ts(created_at),
+            "updated_at": ts(updated_at),
+
+            # Helpful file metadata in the payload
+            "course": f_course,
+            "year": f_year,
+            "semester": f_semester,
+            "assessment_type": f_assessment,
+            "file_name": f_name,
+            "file_path": f_path,
         })
 
     return jsonify({"total": len(items), "items": items})

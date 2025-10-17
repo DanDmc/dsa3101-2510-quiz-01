@@ -6,9 +6,12 @@
     "question_no": "1a",
     "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "If we use a linear regression model with an intercept to predict a response y based on a regressor x, given 100 observations, the average of the residuals, (1/100) * sum from i=1 to 100 (e_i), will always be zero. True or False?",
+    "question_stem": "If we use a linear regression model with an intercept to predict a response y based on a regressor x given 100 observations, the average of the residuals, (1/100) * sum(e_i) from i=1 to 100, will always be zero. True or False?",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "residuals", "model assumptions"],
+    "concept_tags": [
+      "linear regression",
+      "residuals"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -21,7 +24,11 @@
     "difficulty_level": null,
     "question_stem": "If I am using House Price and Household Monthly Income (both in Singapore dollars) as two features for the K-means algorithm to divide Singapore households into groups, I do not need to standardize them since they have the same units. True or False?",
     "question_stem_html": null,
-    "concept_tags": ["K-means clustering", "data standardization", "feature scaling"],
+    "concept_tags": [
+      "K-means",
+      "data standardization",
+      "feature scaling"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -32,9 +39,13 @@
     "question_no": "1c",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "A data set contains information on 100 patients and their cancer status. Let Column Y be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased and 0 = no-diseased. Let p denote P(Y = diseased). Using a fitted decision tree, named DT, the prediction of p for the test points is obtained by `pred.prob = predict(DT, new.data = test, ___)` where in the blank space, we add:",
+    "question_stem": "Using a fitted decision tree, named DT, the prediction of p for the test points is obtained by:\n`pred.prob = predict(DT, new.data = test, ___)`\nwhere in the blank space, we add:",
     "question_stem_html": null,
-    "concept_tags": ["decision trees", "R programming", "prediction", "classification"],
+    "concept_tags": [
+      "decision trees",
+      "R programming",
+      "prediction methods"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -45,9 +56,13 @@
     "question_no": "1d",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Using a fitted Naive Bayes classifier, named nb, the prediction of p for the test points is obtained by `pred.prob = predict(nb, new.data = test, ___)` where in the blank space, we add:",
+    "question_stem": "Using a fitted Naive Bayes classifier, named nb, the prediction of p for the test points is obtained by:\n`pred.prob = predict(nb, new.data = test, ___)`\nwhere in the blank space, we add:",
     "question_stem_html": null,
-    "concept_tags": ["Naive Bayes", "R programming", "prediction", "classification"],
+    "concept_tags": [
+      "naive bayes",
+      "R programming",
+      "prediction methods"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -58,9 +73,13 @@
     "question_no": "1e",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "Using a fitted logistic regression, named lr, the prediction of p for the test points is obtained by `pred.prob = predict(lr, new.data = test, ___)` where in the blank space, we add:",
+    "question_stem": "Using a fitted logistic regression, named lr, the prediction of p for the test points is obtained by:\n`pred.prob = predict(lr, new.data = test, ___)`\nwhere in the blank space, we add:",
     "question_stem_html": null,
-    "concept_tags": ["logistic regression", "R programming", "prediction", "classification"],
+    "concept_tags": [
+      "logistic regression",
+      "R programming",
+      "prediction methods"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -71,9 +90,13 @@
     "question_no": "1f",
     "question_type": "mcq",
     "difficulty_level": null,
-    "question_stem": "In order to obtain the prediction of p for the test points using a fitted 9-NN classifier, the R code is of the form `pred.prob = knn(train, test, cl, k = 9,___)` where in the blank space, we add:",
+    "question_stem": "In order to obtain the prediction of p for the test points using a fitted 9-NN classifier, the R code is of the form:\n`pred.prob = knn(train, test, cl, k = 9,___)`\nwhere in the blank space, we add:",
     "question_stem_html": null,
-    "concept_tags": ["KNN", "R programming", "prediction", "classification"],
+    "concept_tags": [
+      "KNN",
+      "R programming",
+      "prediction methods"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -86,7 +109,11 @@
     "difficulty_level": null,
     "question_stem": "When constructing a classification model that helps to predict if a person has a disease, which is genetically transmitted and has costly treatment with significant side effects, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
     "question_stem_html": null,
-    "concept_tags": ["classification", "Type I error", "Type II error", "medical diagnosis", "cost-benefit analysis"],
+    "concept_tags": [
+      "classification evaluation",
+      "Type I error",
+      "Type II error"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -99,7 +126,11 @@
     "difficulty_level": null,
     "question_stem": "When constructing a classification model that helps to predict if a person has a highly contagious disease, such as Covid-19, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
     "question_stem_html": null,
-    "concept_tags": ["classification", "Type I error", "Type II error", "medical diagnosis", "public health"],
+    "concept_tags": [
+      "classification evaluation",
+      "Type I error",
+      "Type II error"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -112,7 +143,11 @@
     "difficulty_level": null,
     "question_stem": "A histogram of the house’s price and a scatter plot of the house’s price against house’s size are given in Figure 1. Comment if it is suitable to fit a linear regression model for price?",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "data visualization", "model assumptions", "scatter plot", "histogram"],
+    "concept_tags": [
+      "linear regression",
+      "data visualization",
+      "assumptions of linear models"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -123,9 +158,13 @@
     "question_no": "2b",
     "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "A linear model, called M, is fitted. The summary output of model M is given in Figure 2 (next page). Write down the fitted equation of model M. Report the coefficient of the variable 'garage' in model M and interpret it.",
+    "question_stem": "A linear model, called M, is fitted. The summary output of model M is given in Figure 2 (next page). Write down the fitted equation of model M. Report the coefficient of the variable `garage` in model M and interpret it.",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "model interpretation", "coefficients", "regression equation"],
+    "concept_tags": [
+      "linear regression",
+      "model interpretation",
+      "regression coefficients"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -138,7 +177,11 @@
     "difficulty_level": null,
     "question_stem": "Comment on the goodness of fit of model M.",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "goodness of fit", "R-squared", "model evaluation"],
+    "concept_tags": [
+      "linear regression",
+      "model evaluation",
+      "goodness of fit"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -149,9 +192,13 @@
     "question_no": "2d",
     "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "The information of a new house is given below. Using model M, calculate the predicted price of this house. `size = 1500 sqft, bedrooms = 3, garage = 1`",
+    "question_stem": "The information of a new house is given below. Using model M, calculate the predicted price of this house.\nsize = 1500 sqft, bedrooms = 3, garage = 1",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "prediction", "model application"],
+    "concept_tags": [
+      "linear regression",
+      "prediction",
+      "model application"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -164,7 +211,11 @@
     "difficulty_level": null,
     "question_stem": "Write code to fit a linear regression model using all the input features, to be named as LM, for predicting the probability of having diabetes. Is there any insignificant variable in model LM?",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "R programming", "feature significance", "p-value"],
+    "concept_tags": [
+      "linear regression",
+      "R programming",
+      "hypothesis testing"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -177,7 +228,11 @@
     "difficulty_level": null,
     "question_stem": "Comment on the goodness of fit of model LM.",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "goodness of fit", "model evaluation"],
+    "concept_tags": [
+      "linear regression",
+      "model evaluation",
+      "goodness of fit"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -190,7 +245,11 @@
     "difficulty_level": null,
     "question_stem": "State at least two disadvantages of fitting a linear model for a binary response.",
     "question_stem_html": null,
-    "concept_tags": ["linear regression", "binary response", "model limitations", "probability prediction"],
+    "concept_tags": [
+      "linear regression",
+      "binary response",
+      "model limitations"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -201,9 +260,13 @@
     "question_no": "3.4",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Run the command `set.seed(2904)`. Then, write code to randomly split data into two subsets: one set with 800 rows, to be named as `train.set`, and the other set with the rest of rows, to be named as `test.set`.",
+    "question_stem": "Run the command `set.seed(2904)`. Then, write code to randomly split data into two subsets, one set with 800 rows, to be named as `train.set` and the other set with the rest of rows, to be named as `test.set`.",
     "question_stem_html": null,
-    "concept_tags": ["data splitting", "R programming", "reproducibility", "train-test split"],
+    "concept_tags": [
+      "data splitting",
+      "R programming",
+      "reproducibility"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -214,9 +277,16 @@
     "question_no": "3.5",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Let m denote a vector of possible values for the argument `minsplit` which ranges from 40 up to 50 inclusively. For each value in m, write code to: (i) fit a decision tree using `train.set`; (ii) use the fitted tree to predict the diabetes status of people in `test.set`; (iii) derive the precision and the Type I error rate for the prediction in (ii).",
+    "question_stem": "Let `m` denote a vector of possible values for the argument `minsplit` which ranges from 40 up to 50 inclusively. For each value in `m`, write code to: (i) fit a decision tree using `train.set`; (ii) use the fitted tree to predict the diabetes status of people in `test.set`; (iii) derive the precision and the Type I error rate for the prediction in (ii).",
     "question_stem_html": null,
-    "concept_tags": ["decision trees", "model tuning", "precision", "Type I error", "R programming", "classification metrics"],
+    "concept_tags": [
+      "decision trees",
+      "hyperparameter tuning",
+      "model evaluation",
+      "R programming",
+      "precision",
+      "Type I error"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -227,9 +297,13 @@
     "question_no": "3.6",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Consider `minsplit = 50`, write code to fit a decision tree, to be named as DT. Report the name of the most important variable in that tree.",
+    "question_stem": "Consider `minsplit = 50`, write code to fit a decision tree, to be named as `DT`. Report the name of the most important variable in that tree.",
     "question_stem_html": null,
-    "concept_tags": ["decision trees", "feature importance", "R programming"],
+    "concept_tags": [
+      "decision trees",
+      "feature importance",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -240,9 +314,14 @@
     "question_no": "3.7",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Write code to plot the ROC curve of the tree DT in black color based on its prediction for `test.set`. Derive and report the value of AUC.",
+    "question_stem": "Write code to plot the ROC curve of the tree `DT` in black color based on its prediction for `test.set`. Derive and report the value of AUC.",
     "question_stem_html": null,
-    "concept_tags": ["ROC curve", "AUC", "decision trees", "R programming", "model evaluation"],
+    "concept_tags": [
+      "ROC curve",
+      "AUC",
+      "model evaluation",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -253,9 +332,13 @@
     "question_no": "3.8",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "We now fit a Naive Bayes classifier using `train.set`. Write code to fit the classifier, to be named as NB.",
+    "question_stem": "We now fit a naive Bayes classifier using `train.set`. Write code to fit the classifier, to be named as `NB`.",
     "question_stem_html": null,
-    "concept_tags": ["Naive Bayes", "classification", "R programming"],
+    "concept_tags": [
+      "naive bayes",
+      "classification",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -266,9 +349,14 @@
     "question_no": "3.9",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Write code to plot the ROC curve of the classifier NB in blue color based on its prediction for `test.set`. Derive and report the value of AUC.",
+    "question_stem": "Write code to plot the ROC curve of the classifier `NB` in blue color based on its prediction for `test.set`. Derive and report the value of AUC.",
     "question_stem_html": null,
-    "concept_tags": ["ROC curve", "AUC", "Naive Bayes", "R programming", "model evaluation"],
+    "concept_tags": [
+      "ROC curve",
+      "AUC",
+      "model evaluation",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -281,7 +369,13 @@
     "difficulty_level": null,
     "question_stem": "Let δ denote the threshold used for the ROC curve in Question 9. Write code to plot a figure that shows how the TPR and the FPR change when the threshold δ changes.",
     "question_stem_html": null,
-    "concept_tags": ["ROC curve", "TPR", "FPR", "threshold", "R programming", "visualization"],
+    "concept_tags": [
+      "ROC curve",
+      "thresholding",
+      "TPR",
+      "FPR",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -292,9 +386,14 @@
     "question_no": "3.11",
     "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "Propose a value of the threshold δ such that the classifier NB can attain a TPR of at least 0.9 while the FPR is as low as possible.",
+    "question_stem": "Propose a value of the threshold δ such that the classifier `NB` can attain a TPR of at least 0.9 while the FPR is as low as possible.",
     "question_stem_html": null,
-    "concept_tags": ["classification", "threshold optimization", "TPR", "FPR", "model selection"],
+    "concept_tags": [
+      "classification threshold",
+      "TPR",
+      "FPR",
+      "model optimization"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -305,9 +404,13 @@
     "question_no": "3.12",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of the classifier NB when it is used to predict the diabetes status for `test.set`.",
+    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of the classifier `NB` when it is used to predict the diabetes status for `test.set`.",
     "question_stem_html": null,
-    "concept_tags": ["accuracy", "Naive Bayes", "R programming", "classification metrics"],
+    "concept_tags": [
+      "classification accuracy",
+      "thresholding",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -320,7 +423,11 @@
     "difficulty_level": null,
     "question_stem": "Write code to fit a logistic regression model using `train.set` by including all the given input features. What is the most insignificant feature in that fitted model?",
     "question_stem_html": null,
-    "concept_tags": ["logistic regression", "feature significance", "R programming", "p-value"],
+    "concept_tags": [
+      "logistic regression",
+      "feature selection",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -331,9 +438,13 @@
     "question_no": "3.14",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Write code to fit a logistic regression model using `train.set`, to be named as LR, by including all the given input features except the most insignificant feature found in Question 13.",
+    "question_stem": "Write code to fit a logistic regression model using `train.set`, to be named as `LR`, by including all the given input features except the most insignificant feature found in Question 13.",
     "question_stem_html": null,
-    "concept_tags": ["logistic regression", "model building", "feature selection", "R programming"],
+    "concept_tags": [
+      "logistic regression",
+      "feature selection",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -344,9 +455,13 @@
     "question_no": "3.15",
     "question_type": "open-ended",
     "difficulty_level": null,
-    "question_stem": "Using the model LR, compute and report the odds ratio of having diabetes between a person that has hypertension and a person without hypertension, given that they both have the same values for the other features.",
+    "question_stem": "Using the model `LR`, compute and report the odds ratio of having diabetes between a person that has hypertension and a person without hypertension, given that they both have the same values for the other features.",
     "question_stem_html": null,
-    "concept_tags": ["logistic regression", "odds ratio", "model interpretation", "hypertension"],
+    "concept_tags": [
+      "logistic regression",
+      "odds ratio",
+      "model interpretation"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -357,9 +472,13 @@
     "question_no": "3.16",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of model LR when it is used to predict the diabetes status for `test.set`.",
+    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of model `LR` when it is used to predict the diabetes status for `test.set`.",
     "question_stem_html": null,
-    "concept_tags": ["accuracy", "logistic regression", "R programming", "classification metrics"],
+    "concept_tags": [
+      "logistic regression",
+      "classification accuracy",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -370,9 +489,14 @@
     "question_no": "3.17",
     "question_type": "coding",
     "difficulty_level": null,
-    "question_stem": "Write code to plot the ROC curve of the model LR in red color based on its prediction for `test.set`. Derive and report the value of AUC.",
+    "question_stem": "Write code to plot the ROC curve of the model `LR` in red color based on its prediction for `test.set`. Derive and report the value of AUC.",
     "question_stem_html": null,
-    "concept_tags": ["ROC curve", "AUC", "logistic regression", "R programming", "model evaluation"],
+    "concept_tags": [
+      "ROC curve",
+      "AUC",
+      "model evaluation",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -385,7 +509,11 @@
     "difficulty_level": null,
     "question_stem": "Standardize all the quantitative input features in `train.set` and `test.set`.",
     "question_stem_html": null,
-    "concept_tags": ["data standardization", "feature scaling", "R programming", "KNN pre-processing"],
+    "concept_tags": [
+      "feature scaling",
+      "data preprocessing",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -398,7 +526,11 @@
     "difficulty_level": null,
     "question_stem": "Write code to fit a KNN classifier with k = 5 using `train.set` to predict the winning probabilities for `test.set`.",
     "question_stem_html": null,
-    "concept_tags": ["KNN", "classification", "R programming", "probability prediction"],
+    "concept_tags": [
+      "KNN",
+      "classification",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -411,7 +543,11 @@
     "difficulty_level": null,
     "question_stem": "Write code to find the predicted probability of having diabetes for each person in `test.set`.",
     "question_stem_html": null,
-    "concept_tags": ["KNN", "prediction probability", "R programming", "classification"],
+    "concept_tags": [
+      "KNN",
+      "prediction probability",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   },
@@ -424,7 +560,11 @@
     "difficulty_level": null,
     "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of the 5-NN classifier above when it is used to predict the diabetes status for `test.set`. Report the accuracy.",
     "question_stem_html": null,
-    "concept_tags": ["accuracy", "KNN", "R programming", "classification metrics"],
+    "concept_tags": [
+      "KNN",
+      "classification accuracy",
+      "R programming"
+    ],
     "question_media": [],
     "last_used": null
   }
