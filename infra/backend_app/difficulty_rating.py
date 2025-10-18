@@ -1,4 +1,4 @@
-# train_difficulty.py
+# difficulty_rating.py
 import os, json
 import pandas as pd
 import numpy as np
@@ -36,6 +36,7 @@ def has_column(conn, table: str, col: str) -> bool:
         """, (table, col))
         return c.fetchone()[0] == 1
 
+# concept tags stored as JSON in sql db, so ensure is python list
 def parse_tags(val):
     if not val:
         return []
@@ -46,8 +47,9 @@ def parse_tags(val):
     except Exception:
         return []
 
-# ---------- Train ----------
+# model
 def main():
+    # select fields that are used in the model
     sql = """
         SELECT question_stem, question_type, concept_tags, difficulty_rating
         FROM questions
@@ -57,30 +59,42 @@ def main():
         df = pd.read_sql(sql, conn)
 
     if df.empty:
-        print("No labeled rows in questions.difficulty_rating — add some labels first.")
+        print("No labeled rows in questions.difficulty_rating")
         return
 
-    # Ensure numeric in [0,1]; coerce bad values to NaN then drop
+    # Ensure numeric in [0,1]; drop row that has NA in difficulty_rating
     y = pd.to_numeric(df["difficulty_rating"], errors="coerce")
     y = y.clip(0.0, 1.0)
     df = df.assign(y=y).dropna(subset=["y"])
 
-    # Text features = stem + tags as space-joined
-    df["tags_text"] = df["concept_tags"].apply(parse_tags).apply(lambda xs: " ".join(xs))
-    df["text"] = (df["question_stem"].fillna("") + " " + df["tags_text"]).str.strip()
+    # convert concept tags to text
+    df["tags_text"] = df["concept_tags"].apply(parse_tags).apply(lambda x: " ".join(x))
 
-    X = df[["text", "question_type"]]
+    # X and y
+    X = df[["question_stem", "tags_text", "question_type"]]
     y = df["y"].astype(float)
 
-    text_vec = TfidfVectorizer(min_df=3, ngram_range=(1,2), max_features=20000)
+    # Vectorizers for each branch using TFIDF
+    stem_vec = TfidfVectorizer(min_df=3, ngram_range=(1,2), max_features=20000)
+    tags_vec = TfidfVectorizer(min_df=1, ngram_range=(1,1), max_features=5000)
+
     cat_enc  = OneHotEncoder(handle_unknown="ignore")
 
-    pre = ColumnTransformer([
-        ("text", text_vec, "text"),
-        ("cats", cat_enc, ["question_type"]),
-    ])
+    # Column-wise transformers; weight tags lower if desired
+    pre = ColumnTransformer(
+        transformers=[
+            ("stem", stem_vec, "question_stem"),
+            ("tags", tags_vec, "tags_text"),
+            ("cats", cat_enc, ["question_type"]),
+        ],
+        transformer_weights={  # tweak these if you want to rebalance
+            "stem": 1.0,
+            "tags": 0.5,
+            "cats": 1.0,
+        }
+    )
 
-    model = Ridge(alpha=1.0, random_state=42)  # strong, fast baseline
+    model = Ridge(alpha=1.0, random_state=42)
     pipe = Pipeline([("prep", pre), ("reg", model)])
 
     Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)
