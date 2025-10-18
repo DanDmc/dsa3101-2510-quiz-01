@@ -6,3 +6,6 @@ seaborn
 plotly
 matplotlib
 pymysql
+numpy
+scikit-learn
+joblib
