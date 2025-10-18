@@ -17,6 +17,18 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
+# check if table has the column mentioned
+def has_column(conn, table: str, col: str) -> bool:
+    with closing(conn.cursor()) as c:
+        c.execute("""
+          SELECT COUNT(*)
+          FROM INFORMATION_SCHEMA.COLUMNS
+          WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = %s
+            AND COLUMN_NAME = %s
+        """, (table, col))
+        return c.fetchone()[0] == 1
+
 # HEALTH
 @app.route("/health", methods=["GETs"])
 def health(): return {"ok": True}
