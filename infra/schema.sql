@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS questions (
   file_id BIGINT NOT NULL,                      -- Which file this came from
   question_no VARCHAR(20),
   question_type ENUM('mcq','mrq','coding','open-ended','fill-in-the-blanks','others') NOT NULL,
-  difficulty_level FLOAT,
+  difficulty_rating_manual  FLOAT,
+  difficulty_rating_model  FLOAT,
   question_stem LONGTEXT,
   question_stem_html LONGTEXT,
   concept_tags JSON,

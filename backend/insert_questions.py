@@ -2,22 +2,39 @@ import os
 import json
 import mysql.connector
 from datetime import datetime
+import time
 
 # === 1. DB connection settings ===
 DB_CONFIG = {
-    "host": "db",  # ✅ Changed from "localhost" to "db" for Docker
-    "user": "root",
-    "password": "root",
-    "database": "quizbank",
-    "port": 3306,
+    "host": os.getenv("MYSQL_HOST", "db"),
+    "user": os.getenv("MYSQL_USER", "root"),
+    "password": os.getenv("MYSQL_PASSWORD", "root"),
+    "database": os.getenv("MYSQL_DATABASE", "quizbank"),
+    "port": int(os.getenv("MYSQL_PORT", 3306)),
 }
 
 # === 2. Paths ===
 JSON_DIR = os.path.join("data", "json_output")
 
-# === 3. Connect to MySQL ===
-conn = mysql.connector.connect(**DB_CONFIG)
-cursor = conn.cursor()
+# === 3. Connect to MySQL with retry logic ===
+max_retries = 5
+retry_delay = 3
+
+for attempt in range(max_retries):
+    try:
+        print(f"📡 Attempting to connect to database (attempt {attempt + 1}/{max_retries})...")
+        conn = mysql.connector.connect(**DB_CONFIG)
+        cursor = conn.cursor()
+        print("✅ Successfully connected to database!")
+        break
+    except mysql.connector.Error as e:
+        if attempt < max_retries - 1:
+            print(f"⚠️ Connection failed: {e}")
+            print(f"⏳ Retrying in {retry_delay} seconds...")
+            time.sleep(retry_delay)
+        else:
+            print(f"❌ Failed to connect after {max_retries} attempts")
+            raise
 
 # --- helper: get file_id by pdf name ---
 def get_file_id(cursor, file_name):
@@ -33,12 +50,13 @@ def insert_question(cursor, q, file_id):
     insert_query = """
         INSERT INTO questions (
             question_base_id, version_id, file_id,
-            question_no, question_type, difficulty_level,
+            question_no, question_type, 
+            difficulty_rating_manual, difficulty_rating_model,
             question_stem, question_stem_html,
             concept_tags, question_media,
             last_used, created_at, updated_at
         )
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
     """
     
     # For initial import, question_base_id = id (will be set after insert)
@@ -49,7 +67,8 @@ def insert_question(cursor, q, file_id):
         file_id,
         q.get("question_no"),
         q.get("question_type"),
-        q.get("difficulty_level"),
+        q.get("difficulty_rating_manual"),
+        q.get("difficulty_rating_model"),
         q.get("question_stem"),
         q.get("question_stem_html"),
         json.dumps(q.get("concept_tags", [])),
@@ -68,6 +87,12 @@ def insert_question(cursor, q, file_id):
 
 # === 4. Loop through JSON files ===
 json_files = [f for f in os.listdir(JSON_DIR) if f.lower().endswith(".json")]
+
+if not json_files:
+    print("⚠️ No JSON files found in json_output directory")
+    print("💡 Make sure llm_parser.py has run successfully first")
+else:
+    print(f"\n📁 Found {len(json_files)} JSON file(s) to process\n")
 
 for json_file in json_files:
     json_path = os.path.join(JSON_DIR, json_file)
@@ -94,7 +119,8 @@ for json_file in json_files:
         success_count = 0
         for q in questions:
             question_id = insert_question(cursor, q, file_id)
-            print(f"🆔 Inserted id={question_id} for question_no={q.get('question_no')}")
+            difficulty_info = f", difficulty={q.get('difficulty_rating_manual', 'N/A')}" if q.get('difficulty_rating_manual') else ""
+            print(f"🆔 Inserted id={question_id} for question_no={q.get('question_no')}{difficulty_info}")
             success_count += 1
 
         conn.commit()
