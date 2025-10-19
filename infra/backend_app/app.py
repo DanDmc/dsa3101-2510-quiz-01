@@ -6,8 +6,38 @@ from sqlalchemy import func, or_
 from contextlib import closing
 import mimetypes
 import json
+from pathlib import Path
+import tempfile, shutil, hashlib, subprocess, shlex
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+# ---- Upload / pipeline config ----
+app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
+app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
+ALLOWED_EXTENSIONS = {"pdf"}
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "data"
+SRC_DIR  = DATA_DIR / "source_files"
+TXT_DIR  = DATA_DIR / "text_extracted"
+JSON_DIR = DATA_DIR / "json_output"
+for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
+    _d.mkdir(parents=True, exist_ok=True)
+
+def _allowed_pdf(filename: str) -> bool:
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def _ensure_dirs(*parts) -> Path:
+    p = Path(app.config["UPLOAD_FOLDER"]).joinpath(*[str(x or "unknown") for x in parts])
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+def _run(cmd, env_extra=None, timeout=900):
+    env = dict(os.environ)
+    if env_extra: env.update(env_extra)
+    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
+    return p.returncode, p.stdout.strip(), p.stderr.strip()
 
 def get_connection():
     return MySQLdb.connect(
@@ -32,7 +62,6 @@ def get_question():
 
     question_type = request.args.get("question_type")
     question_no = request.args.get("question_no")
-    difficulty_level = request.args.get("difficulty_level")
 
     # concept_tags can be ?concept_tags=probability&concept_tags=bayes or ?concept_tags=probability,bayes
     raw_tags = request.args.getlist("concept_tags")
@@ -58,7 +87,7 @@ def get_question():
     # SELECT columns (include some file metadata for convenience)
     select_cols = [
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
-        "q.question_type", "q.difficulty_level", "q.question_stem", "q.question_stem_html",
+        "q.question_type", "q.question_stem", "q.question_stem_html",
         "q.concept_tags", "q.question_media", "q.last_used", "q.created_at", "q.updated_at",
         "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
@@ -88,9 +117,6 @@ def get_question():
     if question_no:
         where_clauses.append("q.question_no = %s")
         params.append(question_no)
-    if difficulty_level:
-        where_clauses.append("q.difficulty_level = %s")
-        params.append(difficulty_level)
 
     if concept_tags:
         # AND logic: require ALL provided tags to be present in q.concept_tags (a JSON array)
@@ -120,7 +146,7 @@ def get_question():
     for row in rows:
         (
             q_id, q_base_id, q_version_id, file_id, q_no,
-            q_type, diff_level, stem, stem_html,
+            q_type, stem, stem_html,
             concept_json, media_json, last_used, created_at, updated_at,
             f_course, f_year, f_semester, f_assessment, f_name, f_path
         ) = row
@@ -147,7 +173,6 @@ def get_question():
             "file_id": file_id,
             "question_no": q_no,
             "question_type": q_type,
-            "difficulty_level": float(diff_level) if diff_level is not None else None,
             "question_stem": stem,
             "question_stem_html": stem_html,
             "concept_tags": concept_list,
@@ -232,7 +257,10 @@ def download_file(file_id: int):
     )
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
 @app.get("/upload")
 def upload_page():
     return render_template_string("""
@@ -340,3 +368,7 @@ def upload_file():
         "pipeline": logs
     }), 201
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
