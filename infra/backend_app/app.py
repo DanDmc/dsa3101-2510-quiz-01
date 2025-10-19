@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file, abort
+from flask import Flask, request, jsonify, send_file, abort, render_template_string
 import os
 import MySQLdb
 import pandas as pd
@@ -230,3 +230,113 @@ def download_file(file_id: int):
         download_name=file_row.get("file_name") or os.path.basename(full_path),
         conditional=True,
     )
+
+
+
+@app.get("/upload")
+def upload_page():
+    return render_template_string("""
+<!doctype html><html><head><meta charset='utf-8'><title>Upload PDF</title></head>
+<body style="font-family:system-ui;padding:2rem;max-width:720px">
+  <h1>Upload a PDF</h1>
+  <form action="/upload_file" method="post" enctype="multipart/form-data">
+    <label>PDF file <input type="file" name="file" accept="application/pdf" required></label><br><br>
+    <label>Course <input type="text" name="course" placeholder="ST1131"></label><br>
+    <label>Year <input type="text" name="year" placeholder="2024"></label><br>
+    <label>Semester <input type="text" name="semester" placeholder="Sem 1"></label><br>
+    <label>Assessment Type <input type="text" name="assessment_type" placeholder="quiz"></label><br><br>
+    <button type="submit">Upload</button>
+  </form>
+</body></html>
+""")
+
+
+
+@app.post("/upload_file")
+def upload_file():
+    course = request.form.get("course")
+    year = request.form.get("year")
+    semester = request.form.get("semester")
+    assessment_type = request.form.get("assessment_type")
+
+    if "file" not in request.files:
+        return jsonify({"error":"No file part"}), 400
+    f = request.files["file"]
+    if not f or f.filename == "":
+        return jsonify({"error":"No selected file"}), 400
+    if not _allowed_pdf(f.filename):
+        return jsonify({"error":"Only .pdf allowed"}), 400
+
+    head = f.stream.read(5)
+    f.stream.seek(0)
+    if head != b"%PDF-":
+        return jsonify({"error":"Invalid PDF header"}), 400
+
+    # Save to uploads
+    original_name = secure_filename(f.filename)
+    h = hashlib.sha256()
+    tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
+    with open(tmp_path, "wb") as w:
+        while True:
+            chunk = f.stream.read(1024*1024)
+            if not chunk: break
+            h.update(chunk); w.write(chunk)
+    file_hash = h.hexdigest()
+    dest_dir = _ensure_dirs(course, year, semester, assessment_type)
+    dest_path = dest_dir / f"{file_hash}.pdf"
+    if not dest_path.exists():
+        shutil.move(str(tmp_path), dest_path)
+    else:
+        try: os.unlink(tmp_path)
+        except Exception: pass
+
+    # Insert into files
+    file_id = None
+    try:
+        with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
+            cur.execute(
+                """INSERT INTO files (course, year, semester, assessment_type, file_name, file_path)
+                     VALUES (%s,%s,%s,%s,%s,%s)""",
+                (course, year, semester, assessment_type, original_name, str(dest_path))
+            )
+            conn.commit()
+            file_id = cur.lastrowid
+    except Exception as e:
+        return jsonify({"saved": True, "message":"PDF saved but DB insert failed", "db_error": str(e), "path": str(dest_path)}), 201
+
+    # Stage the original filename into data/source_files for pipeline
+    src_pdf = SRC_DIR / original_name
+    try:
+        if not src_pdf.exists():
+            shutil.copyfile(str(dest_path), src_pdf)
+    except Exception as e:
+        return jsonify({"saved": True, "file_id": file_id, "error": f"could not stage PDF: {e}"}), 500
+
+    logs = {}
+
+    # 1) Extract text (filter to this PDF via TARGET_PDF)
+    code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": original_name})
+    logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
+    if code != 0:
+        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
+
+    base = Path(original_name).stem
+
+    # 2) LLM parse (filter via TARGET_BASE) -- requires GEMINI_API_KEY env
+    code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
+    logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
+    if code != 0:
+        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"}), 500
+
+    # 3) Insert questions (filter via TARGET_BASE)
+    code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
+    logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
+    if code != 0:
+        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
+
+    return jsonify({
+        "saved": True,
+        "file": {"file_id": file_id, "original_name": original_name, "stored_path": str(dest_path)},
+        "pipeline": logs
+    }), 201
+
