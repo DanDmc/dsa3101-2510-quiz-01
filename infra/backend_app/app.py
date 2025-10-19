@@ -257,10 +257,6 @@ def download_file(file_id: int):
     )
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
 @app.get("/upload")
 def upload_page():
     return render_template_string("""
@@ -368,7 +364,3 @@ def upload_file():
         "pipeline": logs
     }), 201
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
