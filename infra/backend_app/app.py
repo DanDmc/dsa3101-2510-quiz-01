@@ -1,44 +1,13 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file, abort
 import os
 import MySQLdb
 import pandas as pd
 from sqlalchemy import func, or_
 from contextlib import closing
+import mimetypes
 import json
-from flask import render_template_string
-import tempfile, shutil, hashlib, subprocess, shlex
-from pathlib import Path
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-
-# ---- Upload / pipeline config ----
-app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
-app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
-ALLOWED_EXTENSIONS = {"pdf"}
-
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
-SRC_DIR  = DATA_DIR / "source_files"
-TXT_DIR  = DATA_DIR / "text_extracted"
-JSON_DIR = DATA_DIR / "json_output"
-for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
-    _d.mkdir(parents=True, exist_ok=True)
-
-def _allowed_pdf(filename: str) -> bool:
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def _ensure_dirs(*parts) -> Path:
-    p = Path(app.config["UPLOAD_FOLDER"]).joinpath(*[str(x or "unknown") for x in parts])
-    p.mkdir(parents=True, exist_ok=True)
-    return p
-
-def _run(cmd, env_extra=None, timeout=900):
-    env = dict(os.environ)
-    if env_extra: env.update(env_extra)
-    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
-    return p.returncode, p.stdout.strip(), p.stderr.strip()
-
 
 def get_connection():
     return MySQLdb.connect(
@@ -48,252 +17,216 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
-@app.get("/health")
+# HEALTH
+@app.route("/health", methods=["GETs"])
 def health(): return {"ok": True}
 
+# GET QUESTIONS
 @app.route("/getquestion", methods=["GET"])
-def getquestion():
-    course          = request.args.get("course")
-    year            = request.args.get("year", type=int)
-    semester        = request.args.get("semester")
+def get_question():
+    # Query params
+    course = request.args.get("course")
+    year = request.args.get("year")
+    semester = request.args.get("semester")
     assessment_type = request.args.get("assessment_type")
-    question_type   = request.args.get("question_type")
-    question_no     = request.args.get("question_no", type=int)
-    difficulty      = request.args.get("difficulty_level", type=float)
-    tags: list[str] = request.args.getlist("concept_tags")
-    if not tags:
-        req = request.args.get("concept_tags")
-        if req:
-            tags = [t.strip() for t in req.split(",") if t.strip()] 
 
-    # setting defaults and sorts
-    limit  = request.args.get("limit", 50, type=int)
-    offset = request.args.get("offset", 0, type=int)
-    order_by_arg = (request.args.get("order_by") or "updated_at").lower()
-    sort_arg     = (request.args.get("sort") or "desc").lower()
+    question_type = request.args.get("question_type")
+    question_no = request.args.get("question_no")
+    difficulty_level = request.args.get("difficulty_level")
 
-    # whitelist ordering
+    # concept_tags can be ?concept_tags=probability&concept_tags=bayes or ?concept_tags=probability,bayes
+    raw_tags = request.args.getlist("concept_tags")
+    concept_tags = []
+    for t in raw_tags:
+        concept_tags.extend([s.strip() for s in t.split(",") if s.strip()])
+
+    # pagination / sorting
+    limit = int(request.args.get("limit", 50))
+    offset = int(request.args.get("offset", 0))
+    order_by_arg = (request.args.get("order_by") or "").lower()
+    sort_arg = (request.args.get("sort") or "desc").lower()
+
+    # Whitelist order_by to prevent SQL injection
     if order_by_arg == "created_at":
-        order_by = "q.created_at"
+        order_by_sql = "q.created_at"
     elif order_by_arg == "difficulty":
-        order_by = "q.difficulty_level"
+        order_by_sql = "q.difficulty_level"
     else:
-        order_by = "q.updated_at"
+        order_by_sql = "q.updated_at"
     sort_sql = "ASC" if sort_arg == "asc" else "DESC"
 
-    # columns to show
-    cols = [
-        "q.id","q.question_base_id","q.version_id","q.file_id","q.question_no","q.question_type",
-        "q.difficulty_level","q.question_stem","q.question_stem_html","q.concept_tags",
-        "q.question_media","q.last_used","q.created_at","q.updated_at"
+    # SELECT columns (include some file metadata for convenience)
+    select_cols = [
+        "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
+        "q.question_type", "q.difficulty_level", "q.question_stem", "q.question_stem_html",
+        "q.concept_tags", "q.question_media", "q.last_used", "q.created_at", "q.updated_at",
+        "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
 
-    # SQL portion
-    sql_parts = [
-        f"SELECT {', '.join(cols)}",
-        "FROM questions q",
-        "JOIN files f ON q.file_id = f.id",
-        "WHERE 1=1"
-    ]
-    args = []
+    # Build WHERE with parameters
+    where_clauses = []
+    params = []
 
-    # filters
+    # ---- File-level filters (JOIN target) ----
     if course:
-        sql_parts.append("AND f.course = %s")
-        args.append(course)
-    if year is not None:
-        sql_parts.append("AND f.year = %s")
-        args.append(year)
+        where_clauses.append("f.course = %s")
+        params.append(course)
+    if year:
+        where_clauses.append("f.year = %s")
+        params.append(year)
     if semester:
-        sql_parts.append("AND f.semester = %s")
-        args.append(semester)
+        where_clauses.append("f.semester = %s")
+        params.append(semester)
     if assessment_type:
-        sql_parts.append("AND f.assessment_type = %s")
-        args.append(assessment_type)
+        where_clauses.append("f.assessment_type = %s")
+        params.append(assessment_type)
+
+    # ---- Question-level filters ----
     if question_type:
-        sql_parts.append("AND q.question_type = %s")
-        args.append(question_type)
-    if question_no is not None:
-        sql_parts.append("AND q.question_no = %s")
-        args.append(question_no)
-    if difficulty is not None:
-        sql_parts.append("AND q.difficulty_level = %s")
-        args.append(difficulty)
-    if tags:
-        # AND logic: require all tags to be present in q.concept_tags
-        sql_parts.append("AND JSON_CONTAINS(q.concept_tags, CAST(%s AS JSON))")
-        args.append(json.dumps(tags))
+        where_clauses.append("q.question_type = %s")
+        params.append(question_type)
+    if question_no:
+        where_clauses.append("q.question_no = %s")
+        params.append(question_no)
+    if difficulty_level:
+        where_clauses.append("q.difficulty_level = %s")
+        params.append(difficulty_level)
 
+    if concept_tags:
+        # AND logic: require ALL provided tags to be present in q.concept_tags (a JSON array)
+        # MySQL will return true only if every element in the candidate array exists in the target array.
+        where_clauses.append("JSON_CONTAINS(q.concept_tags, CAST(%s AS JSON))")
+        params.append(json.dumps(concept_tags))
 
-    # ORDER BY before LIMIT/OFFSET
-    sql_parts.append(f"ORDER BY {order_by} {sort_sql}")
-    sql_parts.append("LIMIT %s OFFSET %s")
-    args.extend([limit, offset])   # <-- ensure BOTH are appended
+    where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
-    # run (and always close the connection)
-    with closing(get_connection()) as conn:
-        cur = conn.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute(" ".join(sql_parts), args)
-        # DEBUG: print the final SQL MySQLdb executed (helps catch % issues)
-        try:
-            app.logger.debug(getattr(cur, "_last_executed", "<no _last_executed>"))
-        except Exception:
-            pass
+    sql = f"""
+        SELECT {", ".join(select_cols)}
+        FROM questions q
+        JOIN files f ON f.id = q.file_id
+        {where_sql}
+        ORDER BY {order_by_sql} {sort_sql}
+        LIMIT %s OFFSET %s
+    """
+    params.extend([limit, offset])
+
+    # Execute
+    with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
+        cur.execute(sql, params)
         rows = cur.fetchall()
 
-    # parse JSON columns such as concept_tags and question_media, store JSON columns as str/bytes, normalise to Python types.
-    def parse_json_field(v):
-        if v is None: return None
-        if isinstance(v, (bytes, bytearray)):
-            v = v.decode("utf-8", errors="ignore")
-        if isinstance(v, str):
-            v = v.strip()
-            if not v:
-                return None
-            try:
-                return json.loads(v)
-            except Exception:
-                pass
-        return v
-
+    # Map to dicts
     items = []
-    for r in rows:
+    for row in rows:
+        (
+            q_id, q_base_id, q_version_id, file_id, q_no,
+            q_type, diff_level, stem, stem_html,
+            concept_json, media_json, last_used, created_at, updated_at,
+            f_course, f_year, f_semester, f_assessment, f_name, f_path
+        ) = row
+
+        # Convert JSON text to Python objects if present
+        try:
+            concept_list = json.loads(concept_json) if concept_json else []
+        except Exception:
+            concept_list = concept_json  # fallback raw
+
+        try:
+            media_list = json.loads(media_json) if media_json else []
+        except Exception:
+            media_list = media_json  # fallback raw
+
+        def ts(v):
+            # jsonify can't handle datetime directly; convert to ISO strings
+            return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
+
         items.append({
-            "id": r["id"],
-            "question_base_id": r["question_base_id"],
-            "version_id": r["version_id"],
-            "file_id": r["file_id"],
-            "question_no": r["question_no"],
-            "question_type": r["question_type"],
-            "difficulty_level": r["difficulty_level"],
-            "question_stem": r["question_stem"],
-            "question_stem_html": r["question_stem_html"],
-            "concept_tags": parse_json_field(r["concept_tags"]) or [],
-            "question_media": parse_json_field(r["question_media"]) or [],
-            "last_used": r["last_used"].isoformat() if r["last_used"] else None,
-            "created_at": r["created_at"].isoformat() if r["created_at"] else None,
-            "updated_at": r["updated_at"].isoformat() if r["updated_at"] else None,
+            "id": q_id,
+            "question_base_id": q_base_id,
+            "version_id": q_version_id,
+            "file_id": file_id,
+            "question_no": q_no,
+            "question_type": q_type,
+            "difficulty_level": float(diff_level) if diff_level is not None else None,
+            "question_stem": stem,
+            "question_stem_html": stem_html,
+            "concept_tags": concept_list,
+            "question_media": media_list,
+            "last_used": ts(last_used),
+            "created_at": ts(created_at),
+            "updated_at": ts(updated_at),
+
+            # Helpful file metadata in the payload
+            "course": f_course,
+            "year": f_year,
+            "semester": f_semester,
+            "assessment_type": f_assessment,
+            "file_name": f_name,
+            "file_path": f_path,
         })
 
     return jsonify({"total": len(items), "items": items})
 
-# @app.route("/add_question", methods=["POST"])
-# def add_question():
-#     content = request.get_json(force=True, silence=True) or {} #read JSON
-#     #add primary key fields for the database
-#     primary = ["question_id", "file_id", "question_type"]
-#     missing = [i for i in primary if not content.get(i)]
-#     if missing:
-#         return jsonify({["error"]: f"Missing key: {', '.join(missing)}"}), 400
-#     #restrict the question types 
-#     allowed_qn_types = {'mcq', 'mrq', 'coding', 'open-ended', 'fill-in-the-blanks', 'others'}
-#     if content.get("question_type") not in allowed_qn_types:
-#         return jsonify({"error": "invalid question type"}), 400
+# DOWNLOAD
+# Directory for files in the container
+file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
 
-@app.get("/upload")
-def upload_page():
-    return render_template_string("""
-<!doctype html><html><head><meta charset='utf-8'><title>Upload PDF</title></head>
-<body style="font-family:system-ui;padding:2rem;max-width:720px">
-  <h1>Upload a PDF</h1>
-  <form action="/upload_file" method="post" enctype="multipart/form-data">
-    <label>PDF file <input type="file" name="file" accept="application/pdf" required></label><br><br>
-    <label>Course <input type="text" name="course" placeholder="ST1131"></label><br>
-    <label>Year <input type="text" name="year" placeholder="2024"></label><br>
-    <label>Semester <input type="text" name="semester" placeholder="Sem 1"></label><br>
-    <label>Assessment Type <input type="text" name="assessment_type" placeholder="quiz"></label><br><br>
-    <button type="submit">Upload</button>
-  </form>
-</body></html>
-""")
+def _strip_known_prefixes(p: str) -> str:
+    # file_base_directory set as /app/data/source_files, so want to remove this part from the file_path
+    prefixes = ("data/", "source_files/")
+    for pref in prefixes:
+        if p.startswith(pref):
+            return p[len(pref):]
+    return p
 
+def _safe_join_file(base_dir: str, file_path: str) -> str:
+    # ensure file path is consistent to be in the file_base_directory
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
 
-
-@app.post("/upload_file")
-def upload_file():
-    course = request.form.get("course")
-    year = request.form.get("year")
-    semester = request.form.get("semester")
-    assessment_type = request.form.get("assessment_type")
-
-    if "file" not in request.files:
-        return jsonify({"error":"No file part"}), 400
-    f = request.files["file"]
-    if not f or f.filename == "":
-        return jsonify({"error":"No selected file"}), 400
-    if not _allowed_pdf(f.filename):
-        return jsonify({"error":"Only .pdf allowed"}), 400
-
-    head = f.stream.read(5)
-    f.stream.seek(0)
-    if head != b"%PDF-":
-        return jsonify({"error":"Invalid PDF header"}), 400
-
-    # Save to uploads
-    original_name = secure_filename(f.filename)
-    h = hashlib.sha256()
-    tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
-    with open(tmp_path, "wb") as w:
-        while True:
-            chunk = f.stream.read(1024*1024)
-            if not chunk: break
-            h.update(chunk); w.write(chunk)
-    file_hash = h.hexdigest()
-    dest_dir = _ensure_dirs(course, year, semester, assessment_type)
-    dest_path = dest_dir / f"{file_hash}.pdf"
-    if not dest_path.exists():
-        shutil.move(str(tmp_path), dest_path)
+    # if the path is already from to the file_base_directory
+    if os.path.isabs(file_path):
+        candidate = os.path.normpath(file_path)
     else:
-        try: os.unlink(tmp_path)
-        except Exception: pass
+    # strip and connect to file_base_directory to ensure consistency in connectedness
+        cleaned = _strip_known_prefixes(file_path.strip())
+        candidate = os.path.normpath(os.path.join(base_dir, cleaned))
 
-    # Insert into files
-    file_id = None
+    base_dir_norm = os.path.normpath(base_dir)
+    # Ensure candidate stays inside base_dir (no traversal)
+    if not (candidate == base_dir_norm or candidate.startswith(base_dir_norm + os.sep)):
+        raise FileNotFoundError("Invalid file path")
+    return candidate
+
+def _get_file_row(file_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
+        return cur.fetchone()
+
+@app.route("/files/<int:file_id>/download", methods=["GET"])
+def download_file(file_id: int):
+    file_row = _get_file_row(file_id)
+    if not file_row:
+        abort(404, description="Invalid file")
+
     try:
-        with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
-            cur.execute(
-                """INSERT INTO files (course, year, semester, assessment_type, file_name, file_path)
-                     VALUES (%s,%s,%s,%s,%s,%s)""",
-                (course, year, semester, assessment_type, original_name, str(dest_path))
-            )
-            conn.commit()
-            file_id = cur.lastrowid
-    except Exception as e:
-        return jsonify({"saved": True, "message":"PDF saved but DB insert failed", "db_error": str(e), "path": str(dest_path)}), 201
+        path_in_db = (file_row.get("file_name") or "").strip()
+        full_path = _safe_join_file(file_base_directory, path_in_db)
+    except FileNotFoundError as e:
+        abort(404, description=str(e))
 
-    # Stage the original filename into data/source_files for pipeline
-    src_pdf = SRC_DIR / original_name
-    try:
-        if not src_pdf.exists():
-            shutil.copyfile(str(dest_path), src_pdf)
-    except Exception as e:
-        return jsonify({"saved": True, "file_id": file_id, "error": f"could not stage PDF: {e}"}), 500
+    if not os.path.exists(full_path):
+        abort(404, description="File not in folder")
 
-    logs = {}
+    guessed, _ = mimetypes.guess_type(file_row.get("file_name") or full_path)
+    app.logger.info("DOWNLOAD full_path=%s base=%s dbpath=%s",
+                full_path, file_base_directory, path_in_db)
 
-    # 1) Extract text (filter to this PDF via TARGET_PDF)
-    code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": original_name})
-    logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
-    if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
-
-    base = Path(original_name).stem
-
-    # 2) LLM parse (filter via TARGET_BASE) -- requires GEMINI_API_KEY env
-    code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
-    logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
-    if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"}), 500
-
-    # 3) Insert questions (filter via TARGET_BASE)
-    code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
-    logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
-    if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
-
-    return jsonify({
-        "saved": True,
-        "file": {"file_id": file_id, "original_name": original_name, "stored_path": str(dest_path)},
-        "pipeline": logs
-    }), 201
-
+    return send_file(
+        full_path,
+        mimetype=guessed or "application/octet-stream",
+        as_attachment=True,
+        download_name=file_row.get("file_name") or os.path.basename(full_path),
+        conditional=True,
+    )
