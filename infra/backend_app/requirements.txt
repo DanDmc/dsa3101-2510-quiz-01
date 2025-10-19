@@ -6,3 +6,10 @@ seaborn
 plotly
 matplotlib
 pymysql
+python-dotenv
+requests
+mysql-connector-python
+pdfplumber
+pillow
+google-generativeai
+gunicorn
