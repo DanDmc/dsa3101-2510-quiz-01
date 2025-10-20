@@ -17,7 +17,7 @@ JSON_DIR = os.path.join("data", "json_output")
 
 # === 3. Connect to MySQL ===
 conn = mysql.connector.connect(**DB_CONFIG)
-cursor = conn.cursor()
+cursor = conn.cursor(buffered = True)
 
 # --- helper: get file_id by pdf name ---
 def get_file_id(cursor, file_name):
@@ -33,12 +33,12 @@ def insert_question(cursor, q, file_id):
     insert_query = """
         INSERT INTO questions (
             question_base_id, version_id, file_id,
-            question_no, question_type, difficulty_level,
+            question_no, question_type, difficulty_rating_manual, difficulty_rating_model,
             question_stem, question_stem_html,
             concept_tags, question_media,
             last_used, created_at, updated_at
         )
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
     """
     
     # For initial import, question_base_id = id (will be set after insert)
@@ -49,7 +49,8 @@ def insert_question(cursor, q, file_id):
         file_id,
         q.get("question_no"),
         q.get("question_type"),
-        q.get("difficulty_level"),
+        q.get("difficulty_rating_manual"),
+        q.get("difficulty_rating_model"),
         q.get("question_stem"),
         q.get("question_stem_html"),
         json.dumps(q.get("concept_tags", [])),

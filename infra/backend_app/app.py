@@ -42,8 +42,8 @@ def _run(cmd, env_extra=None, timeout=900):
 def get_connection():
     return MySQLdb.connect(
         host=os.getenv("MYSQL_HOST", "db"),
-        user=os.getenv("MYSQL_USER", "root"),
-        passwd=os.getenv("MYSQL_PASSWORD","root"),
+        user=os.getenv("MYSQL_USER", "quizbank_user"),
+        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
