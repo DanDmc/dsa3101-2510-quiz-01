@@ -71,7 +71,7 @@ services:
       - MYSQL_PORT=3306
     volumes:
       - ../data:/app/data
-      - ./models:app/models
+      - ./models:/app/models
     depends_on:
       db:
         condition: service_healthy
