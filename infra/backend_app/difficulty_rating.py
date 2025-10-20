@@ -1,111 +1,129 @@
-# difficulty_rating.py
-import os, json
-import pandas as pd
-import numpy as np
+import os
+import json
 from contextlib import closing
 
+import numpy as np
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, FunctionTransformer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 import joblib
-import MySQLdb
 
-# quizbank
+# --- DB driver: prefer MySQLdb, fall back to PyMySQL (works on macOS) ---
+try:
+    import MySQLdb as mysql  # mysqlclient
+except ImportError:  # pure python fallback
+    import pymysql as mysql  # type: ignore
+
+# --- Load ../.env automatically when running locally ---
+try:
+    from dotenv import load_dotenv
+    load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
+except Exception:
+    pass
+
+
+# ---------------------- DB helpers ----------------------
 def get_conn():
-    return MySQLdb.connect(
-        host=os.getenv("MYSQL_HOST", "db"),
-        user=os.getenv("MYSQL_USER", "root"),
-        passwd=os.getenv("MYSQL_PASSWORD", "root"),
+    """Create a DB connection using env vars (matches docker-compose)."""
+    return mysql.connect(
+        host=os.getenv("MYSQL_HOST", "127.0.0.1"),
+        user=os.getenv("MYSQL_USER", "quizbank_user"),
+        passwd=os.getenv("MYSQL_PASSWORD", "quizbank_pass"),
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
-        charset="utf8mb4"
+        port=int(os.getenv("MYSQL_PORT", "3306")),
+        charset="utf8mb4",
     )
 
-# check if there is the column mentioned
-def has_column(conn, table: str, col: str) -> bool:
-    with closing(conn.cursor()) as c:
-        c.execute("""
-          SELECT COUNT(*)
-          FROM INFORMATION_SCHEMA.COLUMNS
-          WHERE TABLE_SCHEMA = DATABASE()
-            AND TABLE_NAME = %s
-            AND COLUMN_NAME = %s
-        """, (table, col))
-        return c.fetchone()[0] == 1
 
-# concept tags stored as JSON in sql db, so ensure is python list
 def parse_tags(val):
-    if not val:
-        return []
+    """concept_tags is stored as JSON (string) in DB; normalize to space-joined text."""
+    if val is None or val == "":
+        return ""
     if isinstance(val, (list, tuple)):
-        return list(val)
+        return " ".join(map(str, val))
     try:
-        return json.loads(val) or []
+        parsed = json.loads(val)
+        if isinstance(parsed, (list, tuple)):
+            return " ".join(map(str, parsed))
+        return str(parsed)
     except Exception:
-        return []
+        return str(val)
 
-# model
+
+# ---------------------- Pipeline build ----------------------
+def concat_text_cols(df: pd.DataFrame):
+        return (df["question_stem"].fillna("") + " " + df["tags_text"].fillna("")).to_numpy()
+
+def build_pipeline() -> Pipeline:
+    # Separate TF-IDF vectorizers for each text column (no custom function)
+    stem_branch = Pipeline(steps=[
+        ("tfidf_stem", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=20000)),
+    ])
+    tags_branch = Pipeline(steps=[
+        ("tfidf_tags", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=20000)),
+    ])
+    cat_branch = Pipeline(steps=[
+        ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=True)),
+    ])
+
+    prep = ColumnTransformer(
+        transformers=[
+            ("stem", stem_branch, "question_stem"),
+            ("tags", tags_branch, "tags_text"),
+            ("cat",  cat_branch,  ["question_type"]),
+        ],
+        remainder="drop",
+        sparse_threshold=1.0,
+    )
+
+    reg = Ridge(alpha=1.0, random_state=42)
+    pipe = Pipeline(steps=[("prep", prep), ("reg", reg)])
+    return pipe
+
+# ---------------------- Training entry ----------------------
 def main():
-    # select fields that are used in the model
+    # Pull labeled data
     sql = """
-        SELECT question_stem, question_type, concept_tags, difficulty_rating
+        SELECT question_stem, question_type, concept_tags, difficulty_rating_manual
         FROM questions
-        WHERE difficulty_rating IS NOT NULL
+        WHERE difficulty_rating_manual IS NOT NULL
     """
     with closing(get_conn()) as conn:
         df = pd.read_sql(sql, conn)
 
     if df.empty:
-        print("No labeled rows in questions.difficulty_rating")
+        print("[difficulty] No labeled rows found in questions.difficulty_rating_manual")
         return
 
-    # Ensure numeric in [0,1]; drop row that has NA in difficulty_rating
-    y = pd.to_numeric(df["difficulty_rating"], errors="coerce")
-    y = y.clip(0.0, 1.0)
+    # Target in [0,1]
+    y = pd.to_numeric(df["difficulty_rating_manual"], errors="coerce").clip(0.0, 1.0)
     df = df.assign(y=y).dropna(subset=["y"])
 
-    # convert concept tags to text
-    df["tags_text"] = df["concept_tags"].apply(parse_tags).apply(lambda x: " ".join(x))
+    # Build feature columns expected by the API
+    df["tags_text"] = df["concept_tags"].apply(parse_tags)
 
-    # X and y
-    X = df[["question_stem", "tags_text", "question_type"]]
+    X = df[["question_stem", "tags_text", "question_type"]].copy()
     y = df["y"].astype(float)
 
-    # Vectorizers for each branch using TFIDF
-    stem_vec = TfidfVectorizer(min_df=3, ngram_range=(1,2), max_features=20000)
-    tags_vec = TfidfVectorizer(min_df=1, ngram_range=(1,1), max_features=5000)
-
-    cat_enc  = OneHotEncoder(handle_unknown="ignore")
-
-    # Column-wise transformers; weight tags lower if desired
-    pre = ColumnTransformer(
-        transformers=[
-            ("stem", stem_vec, "question_stem"),
-            ("tags", tags_vec, "tags_text"),
-            ("cats", cat_enc, ["question_type"]),
-        ],
-        transformer_weights={  # tweak these if you want to rebalance
-            "stem": 1.0,
-            "tags": 0.5,
-            "cats": 1.0,
-        }
-    )
-
-    model = Ridge(alpha=1.0, random_state=42)
-    pipe = Pipeline([("prep", pre), ("reg", model)])
-
+    # Train pipeline
+    pipe = build_pipeline()
     Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)
     pipe.fit(Xtr, ytr)
     pred = np.clip(pipe.predict(Xte), 0.0, 1.0)
 
-    print(f"MAE={mean_absolute_error(yte, pred):.4f}  R2={r2_score(yte, pred):.4f}  n_test={len(yte)}")
+    print(f"[difficulty] MAE={mean_absolute_error(yte, pred):.4f}  R2={r2_score(yte, pred):.4f}  n_test={len(yte)}")
 
-    os.makedirs("models", exist_ok=True)
-    joblib.dump(pipe, "models/difficulty_v1.pkl")
-    print("Saved: models/difficulty_v1.pkl")
+    # Save pipeline (NOT just Ridge) to the configured path
+    out_path = os.getenv("diff_model_path", "./models/difficulty_v1.pkl")
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    joblib.dump(pipe, out_path)
+    print(f"[difficulty] Saved Pipeline to {out_path}")
+
 
 if __name__ == "__main__":
     main()

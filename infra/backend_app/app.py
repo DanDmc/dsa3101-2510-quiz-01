@@ -303,7 +303,7 @@ def predict_row(row: dict) -> float:
     yhat = float(difficulty_model.predict(X)[0])
     return float(np.clip(yhat, 0.0, 1.0))
 
-@app.post("/predict_difficulty")
+@app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
 
     if difficulty_model is None:
@@ -313,7 +313,7 @@ def predict_difficulty():
     dry_run = request.args.get("dry_run", default=0, type=int) == 1
 
     # SQL portion
-    where = "WHERE q.difficulty_rating IS NULL"
+    where = "WHERE q.difficulty_rating_manual IS NULL"
     args = []
     if file_id:
         where += " AND q.file_id=%s"
@@ -339,7 +339,7 @@ def predict_difficulty():
                 "id": r["id"],
                 "question_base_id": r["question_base_id"],
                 "file_id": r["file_id"],
-                "predicted_difficulty_rating": round(yhat, 4),
+                "difficulty_rating_model": round(yhat, 4),
             })
             if not dry_run:
                 to_update.append((yhat, r["id"]))
@@ -347,7 +347,7 @@ def predict_difficulty():
         if not dry_run and to_update:
             cur.executemany("""
                 UPDATE questions
-                   SET predicted_difficulty_rating = %s
+                   SET difficulty_rating_model = %s
                  WHERE id = %s
             """, to_update)
             conn.commit()

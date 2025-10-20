@@ -49,6 +49,7 @@ services:
         condition: service_healthy
     volumes:
       - ../data:/app/data
+      - ./models:/app/models  
     environment:
       - PYTHONUNBUFFERED=1
       - MYSQL_HOST=db
