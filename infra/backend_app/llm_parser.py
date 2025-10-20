@@ -1,5 +1,21 @@
 import os
 import google.generativeai as genai
+# --- injected filter: process a single base if TARGET_BASE is set ---
+import os as _os_injected
+_ORIG_LISTDIR = _os_injected.listdir
+def _filtered_listdir(path):
+    try:
+        target = _os_injected.getenv("TARGET_BASE")
+        if target and ("text_extracted" in str(path)):
+            want = f"{target}.txt"
+            return [f for f in _ORIG_LISTDIR(path) if f == want]
+    except Exception:
+        pass
+    return _ORIG_LISTDIR(path)
+_os_injected.listdir = _filtered_listdir
+# --- end injected filter ---
+
+
 
 # === 1. configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyBoCIKzP_K3n1o6gKLSItv1sg9IFZKH6u8")
@@ -28,18 +44,13 @@ Your task:
    - If questions are numbered "(a)", "(b)", "(c)", use "1a", "1b", "1c" format
    - If questions are numbered "1", "2", "3", use those (as strings)
    - Question numbers should always be strings to handle formats like "1a", "2b", etc.
-3. Extract difficulty rating if present in the source text:
-   - Look for labels like "Difficulty Level", "P-value", "Item Difficulty", "Difficulty:", etc.
-   - If found, extract the numeric value (e.g., 0.75, 0.5, 85%)
-   - Convert percentages to decimal (e.g., 85% → 0.85)
-   - If no difficulty rating is found, set to null
-4. Ignore any answer options, checkmarks, solutions, "Item Weight", "Item Psychometrics" (except difficulty), or metadata sections.
-5. If the text contains code output, math equations, embedded images, or R/Python logs, try to conver them into text. Keep what is necessary to understand the question context as much as possible.
-6. Clean up formatting – add missing spaces and punctuation so that each question stem is coherent and human-readable.
-7. Generate **1–3 relevant concept tags** that you are reasonably confident represent what the question tests (e.g., "simple regression", "hypothesis testing", "probability", "combinatorics").
-8. If unsure about tags, return an empty list `[]`.
-9. Keep "difficulty_rating_model" as null (will be populated by ML model later).
-10. Keep "question_id" as null (it will be populated later by MySQL).
+3. Ignore any answer options, checkmarks, solutions, "Item Weight", "Item Psychometrics", or metadata sections.
+4. If the text contains code output, math equations, or R/Python logs, **keep only what is necessary** to understand the question context.
+5. Clean up formatting – add missing spaces and punctuation so that each question stem is coherent and human-readable.
+6. Generate **1–3 relevant concept tags** that you are reasonably confident represent what the question tests (e.g., "simple regression", "hypothesis testing", "probability", "combinatorics").
+7. If unsure about tags, return an empty list `[]`.
+8. Keep "difficulty_level" as null.
+9. Keep "question_id" as null (it will be populated later by MySQL).
 
 You must return **only valid JSON**, formatted as an array of question objects.
 
@@ -50,7 +61,7 @@ Each object must strictly follow this schema:
   "file_id": null,
   "question_no": "<string: e.g. '1', '1a', '2b', etc>",
   "question_type": "mcq" | "mrq" | "coding" | "open-ended" | "fill-in-the-blanks" | "others",
-  "difficulty_rating_manual": null | <float between 0 and 1>,
+  "difficulty_rating_manual": null,
   "difficulty_rating_model": null,
   "question_stem": "<cleaned, coherent text of the question only – no answers, no explanations>",
   "question_stem_html": null,
