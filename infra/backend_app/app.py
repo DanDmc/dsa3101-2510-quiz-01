@@ -6,6 +6,10 @@ from sqlalchemy import func, or_
 from contextlib import closing
 import mimetypes
 import json
+import datetime
+import numpy as np
+import pandas as pd
+import joblib
 from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
@@ -47,8 +51,20 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
+# check if table has the column mentioned
+def has_column(conn, table: str, col: str) -> bool:
+    with closing(conn.cursor()) as c:
+        c.execute("""
+          SELECT COUNT(*)
+          FROM INFORMATION_SCHEMA.COLUMNS
+          WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = %s
+            AND COLUMN_NAME = %s
+        """, (table, col))
+        return c.fetchone()[0] == 1
+
 # HEALTH
-@app.route("/health", methods=["GETs"])
+@app.route("/health", methods=["GET"])
 def health(): return {"ok": True}
 
 # GET QUESTIONS
@@ -256,6 +272,92 @@ def download_file(file_id: int):
         conditional=True,
     )
 
+# DIFFICULTY RATING MODEL
+# load the difficulty rating model
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
+difficulty_model = None
+try:
+    difficulty_model = joblib.load(MODEL_PATH)
+    app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
+except Exception as e:
+    app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
+
+def parse_tags(val):
+    if not val:
+        return []
+    if isinstance(val, (list, tuple)):
+        return list(val)
+    try:
+        return json.loads(val) or []
+    except Exception:
+        return []
+
+def predict_row(row: dict) -> float:
+    stem = (row.get("question_stem") or "").strip()
+    tags_text = " ".join(parse_tags(row.get("concept_tags")))
+    X = pd.DataFrame([{
+        "question_stem": stem,
+        "tags_text": tags_text,
+        "question_type": row.get("question_type") or "",
+    }])
+    yhat = float(difficulty_model.predict(X)[0])
+    return float(np.clip(yhat, 0.0, 1.0))
+
+@app.route("/predict_difficulty", methods=["POST"])
+def predict_difficulty():
+
+    if difficulty_model is None:
+        return jsonify({"error": "model not loaded"}), 503
+
+    file_id = request.args.get("file_id", type=int)
+    dry_run = request.args.get("dry_run", default=0, type=int) == 1
+
+    # SQL portion
+    where = "WHERE q.difficulty_rating_manual IS NULL"
+    args = []
+    if file_id:
+        where += " AND q.file_id=%s"
+        args.append(file_id)
+
+    sql = f"""
+        SELECT q.id, q.question_base_id, q.file_id,
+               q.question_type, q.question_stem, q.concept_tags
+        FROM questions q
+        {where}
+    """
+
+    to_update, results = [], []
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute(sql, tuple(args))
+        rows = cur.fetchall()
+
+        for r in rows:
+            yhat = predict_row(r)
+            results.append({
+                "id": r["id"],
+                "question_base_id": r["question_base_id"],
+                "file_id": r["file_id"],
+                "difficulty_rating_model": round(yhat, 4),
+            })
+            if not dry_run:
+                to_update.append((yhat, r["id"]))
+
+        if not dry_run and to_update:
+            cur.executemany("""
+                UPDATE questions
+                   SET difficulty_rating_model = %s
+                 WHERE id = %s
+            """, to_update)
+            conn.commit()
+
+    return jsonify({
+        "processed": len(results),
+        "updated": 0 if dry_run else len(to_update),
+        "dry_run": dry_run,
+        "items": results[:100],
+    })
 
 @app.get("/upload")
 def upload_page():
