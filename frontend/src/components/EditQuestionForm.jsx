@@ -31,7 +31,7 @@ function EditQuestionForm({ questionNumber, question, onQuestionChange }) {
   };
 
   return (
-    <Card sx={{ ml: 8 }}>
+    <Card sx={{ ml: 6 }}>
       <CardContent>
         {/* Dropdowns and Required Toggle */}
         <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 3, gap: 2, width: '800px' }}>
