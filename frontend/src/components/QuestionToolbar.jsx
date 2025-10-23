@@ -22,9 +22,9 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
   };
   
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', mb: 3}}>
       {/* Left side: Action Buttons */}
-      <Box sx={{ display: 'flex', gap: 1 }}>
+      <Box sx={{ display: 'flex', gap: 3 }}>
         <Button 
           variant="contained" 
           startIcon={<CreateIcon />}
@@ -53,8 +53,9 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
       </Box>
 
       {/* Right side: Search and View (Kept the same) */}
-      <Box sx={{ display: 'flex', gap: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
         <TextField
+          sx={{ width: 400 }}
           variant="outlined"
           size="small"
           placeholder="Search for..."
@@ -66,7 +67,7 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
             ),
           }}
         />
-        <IconButton sx={{ backgroundColor: '#f57c00', color: 'white', borderRadius: '8px', '&:hover': { backgroundColor: '#e65100' }}}>
+        <IconButton sx={{ backgroundColor: '#f57c00', color: 'white', borderRadius: '8px', '&:hover': { backgroundColor: '#e65100' }, ml: 2}}>
           <ViewListIcon />
         </IconButton>
       </Box>

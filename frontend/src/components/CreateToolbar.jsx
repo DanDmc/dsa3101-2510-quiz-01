@@ -13,6 +13,7 @@ function CreateToolbar() {
         justifyContent: 'space-between', 
         alignItems: 'center', 
         mb: 2,
+        ml: 8,
         // The background in the screenshot is slightly off-white, matching the surrounding page
       }}
     >

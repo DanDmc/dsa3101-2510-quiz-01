@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function QuestionGroups({ groups }) {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 , width: '450px'}}>
       <Button 
         variant="contained" 
         startIcon={<AddIcon />} 

@@ -9,9 +9,9 @@ import PersonIcon from '@mui/icons-material/Person';
 function Header({ goToHomePage }) {
   
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#3b5998' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#3b5998' }}>
       <Toolbar disableGutters>
-        <Container maxWidth="xl" disableGutters>
+        <Container maxWidth={false} disableGutters>
           
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', py: 1 }}>
             

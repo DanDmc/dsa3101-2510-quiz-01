@@ -17,7 +17,7 @@ function QuestionStepper({ questions, activeQuestion, setActiveQuestion }) {
   };
   
   return (
-    <Card sx={{ p: 0, height: 'auto' }}>
+    <Card sx={{ p: 0, height: 'auto', width: '400px', ml: 4 }}>
       <Box sx={{ p: 2, backgroundColor: '#f0f0f0' }}>
         <Typography variant="subtitle1" fontWeight="bold">
           QUESTION ({questions.length})

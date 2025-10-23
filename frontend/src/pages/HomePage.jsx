@@ -1,11 +1,9 @@
-// src/pages/HomePage.jsx
-
 import React, { useState } from 'react';
-import { Box, Container, Grid, CssBaseline } from '@mui/material';
+// We've removed Box, Container, and CssBaseline from here
+import { Grid, Box } from '@mui/material';
 
-// Import your custom components (saved in '../components/')
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+// Import your custom components
+// ❌ We've REMOVED Header and Footer imports
 import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
@@ -37,41 +35,36 @@ function HomePage({ goToCreatePage, goToEditPage }) {
     setSelected([]);
   };
 
+  // --- THIS RETURN BLOCK IS UPDATED ---
+  // We've removed the outer <Box>, <CssBaseline>, <Header>, <Container>, and <Footer>
+  // This component now *only* returns the Grid for the page content.
+  // This Grid will be placed inside the <Container> from your App component.
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f4f7fa' }}>
-      <CssBaseline />
-      <Header /> 
+    <Grid container spacing={13}>
       
-      <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
-        <Grid container spacing={3}>
-          
-          <Grid item xs={12} md={9}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {/* 👈 PASS the navigation functions and the selected IDs down */}
-              <QuestionToolbar 
-                numSelected={selected.length} 
-                selectedIds={selected} 
-                goToCreatePage={goToCreatePage} 
-                goToEditPage={goToEditPage}
-              />
-              <QuestionTable 
-                questions={questions}
-                selected={selected}
-                setSelected={setSelected}
-                onSelectAllClick={handleSelectAllClick}
-              />
-            </Box>
-          </Grid>
-          
-          <Grid item xs={12} md={3}>
-            <QuestionGroups groups={mockGroups} />
-          </Grid>
-          
-        </Grid>
-      </Container>
+      <Grid item xs={12} md={9}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {/* 👈 PASS the navigation functions and the selected IDs down */}
+          <QuestionToolbar 
+            numSelected={selected.length} 
+            selectedIds={selected} 
+            goToCreatePage={goToCreatePage} 
+            goToEditPage={goToEditPage}
+          />
+          <QuestionTable 
+            questions={questions}
+            selected={selected}
+            setSelected={setSelected}
+            onSelectAllClick={handleSelectAllClick}
+          />
+        </Box>
+      </Grid>
       
-      <Footer /> 
-    </Box>
+      <Grid item xs={12} md={3} sx={{ marginTop: 10 }}>
+        <QuestionGroups groups={mockGroups} />
+      </Grid>
+      
+    </Grid>
   );
 }
 

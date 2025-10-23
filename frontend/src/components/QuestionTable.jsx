@@ -46,8 +46,8 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
-    <Card>
-      <TableContainer>
+    <Card sx={{ width: '870px' }}>
+      <TableContainer >
         <Table>
           <TableHead sx={{ backgroundColor: '#f9f9f9' }}>
             <TableRow>

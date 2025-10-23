@@ -33,13 +33,7 @@ function EditPage({ goToHomePage }) { // 👈 Receive goToHomePage as prop
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f4f7fa' }}>
-      <CssBaseline />
-
-      {/* Header with clickable title and home icon */}
-      <Header goToHomePage={goToHomePage} />
-
-      <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
+    <Container maxWidth sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
         <Box mb={2}>
           <Typography variant="h5" component="h1" fontWeight="bold">
             Question mass edit {questions.length}
@@ -80,9 +74,6 @@ function EditPage({ goToHomePage }) { // 👈 Receive goToHomePage as prop
 
         </Grid>
       </Container>
-
-      <Footer />
-    </Box>
   );
 }
 

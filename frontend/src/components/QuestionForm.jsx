@@ -16,7 +16,7 @@ function QuestionForm({ activeQuestion }) {
     <Card>
       <CardContent>
         {/* Dropdowns and Required Toggle */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 3, gap: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 4, gap: 2 }}>
           
           <FormControl variant="outlined" size="small" sx={{ minWidth: 150 }}>
             <InputLabel>Multiple choice</InputLabel>

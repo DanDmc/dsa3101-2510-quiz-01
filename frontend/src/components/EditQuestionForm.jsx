@@ -31,10 +31,10 @@ function EditQuestionForm({ questionNumber, question, onQuestionChange }) {
   };
 
   return (
-    <Card>
+    <Card sx={{ ml: 8 }}>
       <CardContent>
         {/* Dropdowns and Required Toggle */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 3, gap: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 3, gap: 2, width: '800px' }}>
           
           <FormControl variant="outlined" size="small" sx={{ minWidth: 150 }}>
             <InputLabel>Open-ended</InputLabel>
