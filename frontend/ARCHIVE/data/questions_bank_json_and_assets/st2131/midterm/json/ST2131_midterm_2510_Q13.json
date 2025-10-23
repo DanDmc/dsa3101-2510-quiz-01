@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q13.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q13.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q13",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 13,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:",
+      "question_stem_html": "<p>Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:</p>",
+      "concept_tags": [
+        "statistics"
+      ],
+      "question_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image20.png",
+          "alt": ""
+        }
+      ],
+      "last_used": null
+    }
+  ]
+}

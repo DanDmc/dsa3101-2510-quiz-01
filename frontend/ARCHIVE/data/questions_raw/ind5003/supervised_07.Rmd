@@ -1,0 +1,30 @@
+Question
+========
+
+Which of the following scikit-learn models is/are typically used for regression 
+problems (not classification)?
+
+Answerlist
+----------
+
+* Decision Tree Regression
+* Logistic Regression
+* Linear Regression
+* Naive Bayes
+
+Solution
+========
+
+Answerlist
+----------
+* Correct
+* This is a model for performing binary classification.
+* Correct.
+* This is used for classification.
+
+Meta-information
+================
+exname: supervised
+extype: mchoice
+exsolution: 1010
+exshuffle: 4

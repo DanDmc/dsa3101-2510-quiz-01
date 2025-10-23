@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "This question is to be answered using Python.\nConsider the stud_perf dataset once again. There were three measures of performance of the students:\nIn this question, we shall investigate the agreement between G1 and G3 scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.\nFirst, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]\nYou should now have two new columns G1_bin and G3_bin in the dataset.\nNext, create a contingency table with G1_bin in the rows and G3_bin in the columns.\nConvert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.\nIf we let pij be the proportion in row i and column j, then the strictest version of agreement is η0=∑i=110pii What is the range of values for η0? Which values correspond to higher agreement?",
+  "question_stem_html": "<p>This question is to be answered using Python.</p>\n<p>Consider the stud_perf dataset once again. There were three measures of performance of the students:</p>\n<p>In this question, we shall investigate the agreement between G1 and G3 scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.</p>\n<p>First, read in the dataset, and divide the G1 and G3 scores into 10 bins:</p>\n<p>[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]</p>\n<p>You should now have two new columns G1_bin and G3_bin in the dataset.</p>\n<p>Next, create a contingency table with G1_bin in the rows and G3_bin in the columns.</p>\n<p>Convert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.</p>\n<p>If we let pij be the proportion in row i and column j, then the strictest version of agreement is η0=∑i=110pii What is the range of values for η0? Which values correspond to higher agreement?</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "This question is to be answered using Python.\nConsider the stud_perf dataset once again. There were three measures of performance of the students:\nIn this question, we shall investigate the agreement between G1 and G3 scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.\nFirst, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]\nYou should now have two new columns G1_bin and G3_bin in the dataset.\nNext, create a contingency table with G1_bin in the rows and G3_bin in the columns.\nConvert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.\nIf we let pij be the proportion in row i and column j, then the strictest version of agreement is η0=∑i=110pii What is the range of values for η0? Which values correspond to higher agreement?",
+      "part_stem_html": "<p>This question is to be answered using Python.</p>\n<p>Consider the stud_perf dataset once again. There were three measures of performance of the students:</p>\n<p>In this question, we shall investigate the agreement between G1 and G3 scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.</p>\n<p>First, read in the dataset, and divide the G1 and G3 scores into 10 bins:</p>\n<p>[0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16], (16,18], (18,20]</p>\n<p>You should now have two new columns G1_bin and G3_bin in the dataset.</p>\n<p>Next, create a contingency table with G1_bin in the rows and G3_bin in the columns.</p>\n<p>Convert the cell counts into proportions. The sum of entries in all cells should now equal to 1. Create a visualisation of this table of proportions that is relevant to the goal of measuring agreement.</p>\n<p>If we let pij be the proportion in row i and column j, then the strictest version of agreement is η0=∑i=110pii What is the range of values for η0? Which values correspond to higher agreement?</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 8.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

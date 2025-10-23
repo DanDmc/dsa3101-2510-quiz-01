@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Question 3\nThe coefficient for weight was found to be 1.69. Select the correct interpretation.\nA\nFor every 1kg increase in weight, satell increases by 1.69\nB\nFor every 1.69 increase in weight, satell increases by 1\nC\nFor every 1kg increase in weight, satell increases by a factor of 1.69 \nD\nThe correlation coefficient of weight and satell is 1.69",
+  "question_stem_html": "<pre>Question 3\nThe coefficient for weight was found to be 1.69. Select the correct interpretation.\nA\nFor every 1kg increase in weight, satell increases by 1.69\nB\nFor every 1.69 increase in weight, satell increases by 1\nC\nFor every 1kg increase in weight, satell increases by a factor of 1.69 \nD\nThe correlation coefficient of weight and satell is 1.69</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "or every 1.69 increase in weight, satell increases by 1",
+          "text_html": "<p>or every 1.69 increase in weight, satell increases by 1</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "or every 1kg increase in weight, satell increases by a factor of 1.69",
+          "text_html": "<p>or every 1kg increase in weight, satell increases by a factor of 1.69</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he correlation coefficient of weight and satell is 1.69",
+          "text_html": "<p>he correlation coefficient of weight and satell is 1.69</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

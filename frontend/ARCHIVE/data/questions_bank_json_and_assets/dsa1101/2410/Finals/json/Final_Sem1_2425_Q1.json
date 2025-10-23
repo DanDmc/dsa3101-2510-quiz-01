@@ -1,0 +1,67 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Final",
+  "question_no": 1,
+  "is_multi": true,
+  "question_stem": "\n\n1. (10 points) No R code is required. Type your answers as comments in the R code (cid:28)le.\n\nIn 1990, 1200 randomly selected post-menopausal women were recruited for a study to\ninvestigate the e(cid:27)ect of using Post-Menopausal Hormone (PMH) on the incidence of breast\ncancer. 200 of them were randomly chosen to be the users and the rest 1000 were the\nnon-users.\nThe table below summarizes the results after 5 years.\n\nBreast Cancer Status\n\nPMH Use Present\n\nAbsent\n\nYes\n\nNo\n\n79\n\n318\n\n121\n\n682",
+  "question_stem_html": "<pre>\n\n1. (10 points) No R code is required. Type your answers as comments in the R code (cid:28)le.\n\nIn 1990, 1200 randomly selected post-menopausal women were recruited for a study to\ninvestigate the e(cid:27)ect of using Post-Menopausal Hormone (PMH) on the incidence of breast\ncancer. 200 of them were randomly chosen to be the users and the rest 1000 were the\nnon-users.\nThe table below summarizes the results after 5 years.\n\nBreast Cancer Status\n\nPMH Use Present\n\nAbsent\n\nYes\n\nNo\n\n79\n\n318\n\n121\n\n682</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T21:40:24+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": null,
+      "part_stem": "(a) Calculate and report the conditional probabilities that help to investigate if using\n\nPMH increases the chance of getting breast cancer.",
+      "part_stem_html": "<pre>(a) Calculate and report the conditional probabilities that help to investigate if using\n\nPMH increases the chance of getting breast cancer.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "b",
+      "type": "essay",
+      "subtype": null,
+      "part_stem": "(b) Calculate and report the odds ratio for the table above. Interpret it in the context of\n\nthis study.",
+      "part_stem_html": "<pre>(b) Calculate and report the odds ratio for the table above. Interpret it in the context of\n\nthis study.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

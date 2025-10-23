@@ -1,0 +1,93 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 8,
+  "is_multi": true,
+  "question_stem": "Consider the following qqplot:\n\nQQ-plot of data\n\nWhich of the following datasets corresponds to it?\n\npossible histograms of data",
+  "question_stem_html": "<div><p><br>Consider the following qqplot:</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-1-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-1\" width=\"444\" height=\"444\" loading=\"lazy\">\n<p class=\"caption\">QQ-plot of data</p>\n</div>\n<p>Which of the following datasets corresponds to it?</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-2-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-2\" width=\"1042\" height=\"347\" loading=\"lazy\">\n<p class=\"caption\">possible histograms of data</p>\n</div>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/unnamed-chunk-1-1.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/unnamed-chunk-2-1.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "Consider the following qqplot:\n\nQQ-plot of data\n\nWhich of the following datasets corresponds to it?\n\npossible histograms of data",
+      "part_stem_html": "<div><p><br>Consider the following qqplot:</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-1-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-1\" width=\"444\" height=\"444\" loading=\"lazy\">\n<p class=\"caption\">QQ-plot of data</p>\n</div>\n<p>Which of the following datasets corresponds to it?</p>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-2-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-2\" width=\"1042\" height=\"347\" loading=\"lazy\">\n<p class=\"caption\">possible histograms of data</p>\n</div>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "45958",
+          "text": "45958",
+          "text_html": "<ol style=\"list-style-type: lower-roman\">\n<li></li>\n</ol>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "67786",
+          "text": "67786",
+          "text_html": "<ol start=\"2\" style=\"list-style-type: lower-roman\">\n<li></li>\n</ol>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "38126",
+          "text": "38126",
+          "text_html": "<ol start=\"3\" style=\"list-style-type: lower-roman\">\n<li></li>\n</ol>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "86730",
+          "text": "86730",
+          "text_html": "<ol start=\"4\" style=\"list-style-type: lower-roman\">\n<li></li>\n</ol>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "32973",
+          "text": "None of the above",
+          "text_html": "None of the above",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/unnamed-chunk-1-1.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/unnamed-chunk-2-1.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "The qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. This histogram has thinner tails on both sides, so it is not the answer.\n\nThe qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. The histogram also has this property, so this is indeed the right answer.\n\nThe qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. However this histogram has a thinner right tail and a fatter left tail.\n\nThe qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. This histogram actually looks close to Normal; it would not result in such a qq-plot.",
+      "solution_html": "The qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. This histogram has thinner tails on both sides, so it is not the answer.\n\nThe qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. The histogram also has this property, so this is indeed the right answer.\n\nThe qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. However this histogram has a thinner right tail and a fatter left tail.\n\nThe qq-plot indicates that the original data has a fatter tail on the right but thinner (than Normal) tail on the left. This histogram actually looks close to Normal; it would not result in such a qq-plot.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

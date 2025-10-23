@@ -1,0 +1,82 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: quizbank-db
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: quizbank
+      MYSQL_USER: quizbank_user
+      MYSQL_PASSWORD: quizbank_pass
+      TZ: Asia/Singapore
+    ports:
+      - "3306:3306"
+    volumes:
+      # ✅ Persist database data so you don’t lose it between restarts
+      - mysql_data:/var/lib/mysql
+
+      # ✅ Initialize schema + seed data only on first run
+      - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./seed_data.sql:/docker-entrypoint-initdb.d/2-seed.sql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+
+  adminer:
+    image: adminer:latest
+    container_name: quizbank-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  backend:
+    platform: linux/amd64
+    build:
+      context: ".."
+      dockerfile: "infra/Dockerfile"
+    container_name: quizbank-backend
+    env_file:
+      - ../.env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../data:/app/data
+      - ./models:/app/models  
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+    restart: on-failure
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile_api
+    container_name: quizbank-api
+    env_file:
+      - ../.env
+    ports:
+      - "5001:5000"
+    environment:
+      - file_base_directory=/app/data/source_files
+      - diff_model_path=/app/models/difficulty_v1.pkl
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+    volumes:
+      - ../data:/app/data
+      - ./models:/app/models
+    depends_on:
+      db:
+        condition: service_healthy
+
+# ✅ Declare the named volume for MySQL persistence
+volumes:
+  mysql_data:

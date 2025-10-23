@@ -1,0 +1,67 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY2024/2025 Sem 1",
+  "assessment_type": "Midterm",
+  "question_no": 2,
+  "is_multi": true,
+  "question_stem": "2. ( 10 p oints ) Alena Lee is w orking for a compan y where her curren t salary is $50,000 ann ually\nand the salary is increased 5% ev ery y ear.\nSo far, un til end of 2024, she has a sa ving amoun t of $30,000.\nShe plans to form a start-up compan y whic h will requires an initial amoun t of $100,000.",
+  "question_stem_html": "<pre>2. ( 10 p oints ) Alena Lee is w orking for a compan y where her curren t salary is $50,000 ann ually\nand the salary is increased 5% ev ery y ear.\nSo far, un til end of 2024, she has a sa ving amoun t of $30,000.\nShe plans to form a start-up compan y whic h will requires an initial amoun t of $100,000.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T21:00:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "1",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "1. De\u001cne a function, function.y ear , whic h helps to calculate and return the n um b er of y ears\nthat Alena Lee could sa v e up enough money if the prop ortion of ann ual salary she puts for\nsa vings is \u001cxed at 0.2 (20%).",
+      "part_stem_html": "<pre>1. De\u001cne a function, function.y ear , whic h helps to calculate and return the n um b er of y ears\nthat Alena Lee could sa v e up enough money if the prop ortion of ann ual salary she puts for\nsa vings is \u001cxed at 0.2 (20%).</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "# Part 1 \n\n\n\nrate = 0.05 # rate of salary increasing yearly\n\nsaved = 30000 \nyear = 0\nfunction.year = function(salary, portion_save = 0.2){\n\twhile(saved <100000 ) {\n\t\tsalary = salary*(1 + rate) # MUST INCREASE AT THE START \n\t\tyear = year + 1\n\t\tsaved = saved + portion_save *salary\n\n\t\t#print(c(saved, salary) )\n\t}\n\treturn(year)\n}\n\nfunction.year(salary = 50000) \n# this means if Alena Lee saves 20% of her annual salary, then she needs 6 years to get saved >=100k\n\n\n\n# PART 2 \n################# TO GET WHAT PROPOTION TO SAVE MONEY, THERE ARE 2 METHODS:\n\n################# FIRST METHOD: USE WHILE LOOP AND THE FUNCTION DEFINED ABOVE\n\nF = function(salary){\n\t\nportion= seq(0.01, 1, by = 0.01) \nyear = 6\ni= 1\nwhile( (year >5) & (i <=100) ){\n\tsaved = 30000\n\tyear = 0\n\tportion_save = portion[i] # we need this for the return/output of the function\n\tyear = function.year(salary, portion_save = portion[i])\n\tif (year >5) {i = i+ 1}\n}\nreturn(portion_save)\n\n}\n\nF(salary = 50000) # 0.25\n\n# That means, to have enough 100k in 5 years, \n# she needs to save at least 25% of the salary\n\n\n#############",
+      "solution_html": "<pre><code class=\"language-r\"># Part 1 \n\n\n\nrate = 0.05 # rate of salary increasing yearly\n\nsaved = 30000 \nyear = 0\nfunction.year = function(salary, portion_save = 0.2){\n\twhile(saved &lt;100000 ) {\n\t\tsalary = salary*(1 + rate) # MUST INCREASE AT THE START \n\t\tyear = year + 1\n\t\tsaved = saved + portion_save *salary\n\n\t\t#print(c(saved, salary) )\n\t}\n\treturn(year)\n}\n\nfunction.year(salary = 50000) \n# this means if Alena Lee saves 20% of her annual salary, then she needs 6 years to get saved &gt;=100k\n\n\n\n# PART 2 \n################# TO GET WHAT PROPOTION TO SAVE MONEY, THERE ARE 2 METHODS:\n\n################# FIRST METHOD: USE WHILE LOOP AND THE FUNCTION DEFINED ABOVE\n\nF = function(salary){\n\t\nportion= seq(0.01, 1, by = 0.01) \nyear = 6\ni= 1\nwhile( (year &gt;5) &amp; (i &lt;=100) ){\n\tsaved = 30000\n\tyear = 0\n\tportion_save = portion[i] # we need this for the return/output of the function\n\tyear = function.year(salary, portion_save = portion[i])\n\tif (year &gt;5) {i = i+ 1}\n}\nreturn(portion_save)\n\n}\n\nF(salary = 50000) # 0.25\n\n# That means, to have enough 100k in 5 years, \n# she needs to save at least 25% of the salary\n\n\n#############</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "2",
+      "type": "code",
+      "subtype": "r",
+      "part_stem": "2. Using function function.y ear de\u001cned ab o v e, write R co des that help to calculate the\nsmallest prop ortion of ann ual salary that she should sa v e so that she could ha v e enough\nmoney for her start-up at the end of 2029, (5 y ears coun ting from start of 2025 to end of\n2029).\nNote: The prop ortions of sa ving salary should b e up to 2 decimal places only .\nEND OF QUESTIONS\n4",
+      "part_stem_html": "<pre>2. Using function function.y ear de\u001cned ab o v e, write R co des that help to calculate the\nsmallest prop ortion of ann ual salary that she should sa v e so that she could ha v e enough\nmoney for her start-up at the end of 2029, (5 y ears coun ting from start of 2025 to end of\n2029).\nNote: The prop ortions of sa ving salary should b e up to 2 decimal places only .\nEND OF QUESTIONS\n4</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "R code",
+          "text_html": "<p>R code</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "SECOND METHOD: USE FOR LOOP FOR ALL THE POSSIBLE PROPORTIONS: 0.01 TO 1.00\n# AND USE FUNCTION DEFINED ABOVE TO CALCULATE NUMBER OF YEARS\n\n# idea: we'll try for each value of proportion, starting from 0.01 -> 0.02 -> 0.03..., till 0.99 and 1\n# to see how many years it takes to get the saved value be >=100k.\n# the smallest proportion that helps to save enough money in 5 years is chosen.\n# the variable i of the for loop will run through the indexes of vector \"portion\", from 1 to 100\n\nnumber.year = numeric() \n\nportion= seq(0.01, 1, by = 0.01) \n\nfor (i in 1:100) {\n\tportion_save = portion[i]\n\tsaved = 30000\n\tyear = 0\n\tyear = function.year(salary = 50000, portion_save = portion[i])\n\tnumber.year = append(number.year, year)\n\ti = i + 1\t\n}\n\ncbind(portion, number.year)\n# this matrix list the number of years to get saved value >=100k (2nd col), for \n# each value of proportion (in 1st col)\n# it shows that when proportion = 0.25 or larger, the number of years to get \n# saved value be >=100 is 5 years or less than 5 years.",
+      "solution_html": "<pre><code class=\"language-r\">SECOND METHOD: USE FOR LOOP FOR ALL THE POSSIBLE PROPORTIONS: 0.01 TO 1.00\n# AND USE FUNCTION DEFINED ABOVE TO CALCULATE NUMBER OF YEARS\n\n# idea: we&#x27;ll try for each value of proportion, starting from 0.01 -&gt; 0.02 -&gt; 0.03..., till 0.99 and 1\n# to see how many years it takes to get the saved value be &gt;=100k.\n# the smallest proportion that helps to save enough money in 5 years is chosen.\n# the variable i of the for loop will run through the indexes of vector &quot;portion&quot;, from 1 to 100\n\nnumber.year = numeric() \n\nportion= seq(0.01, 1, by = 0.01) \n\nfor (i in 1:100) {\n\tportion_save = portion[i]\n\tsaved = 30000\n\tyear = 0\n\tyear = function.year(salary = 50000, portion_save = portion[i])\n\tnumber.year = append(number.year, year)\n\ti = i + 1\t\n}\n\ncbind(portion, number.year)\n# this matrix list the number of years to get saved value &gt;=100k (2nd col), for \n# each value of proportion (in 1st col)\n# it shows that when proportion = 0.25 or larger, the number of years to get \n# saved value be &gt;=100 is 5 years or less than 5 years.</code></pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

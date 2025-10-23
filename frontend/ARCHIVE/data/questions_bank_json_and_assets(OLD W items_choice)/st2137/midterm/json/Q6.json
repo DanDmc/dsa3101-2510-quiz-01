@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2).\nConsider the following output from pandas\n## time                                                   \n##      count     mean       std   min     25%     50%     75%    max  plant                                                              \n##       20.0   9.3820  3.997653  4.42  7.4475   8.515  11.045  21.62      1\n##       20.0  11.3535  5.126156  2.33  8.4400  11.960  13.845  25.75      2\nAssuming the dataframe has been read in as wip, which of the following options will generate this output.",
+  "question_stem_html": "<div><p> </p>\n<p>In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.</p>\n<p>The data set <code>wip.txt</code> contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).</p>\n<p>There are two variables in the data set: <code>time</code> and <code>plant</code> (either 1 or 2).</p>\n<p>Consider the following output from pandas</p>\n<pre><code>## time                                                   \n##      count     mean       std   min     25%     50%     75%    max  plant                                                              \n##       20.0   9.3820  3.997653  4.42  7.4475   8.515  11.045  21.62      1\n##       20.0  11.3535  5.126156  2.33  8.4400  11.960  13.845  25.75      2</code></pre>\n<p>Assuming the dataframe has been read in as <code>wip</code>, which of the following options will generate this output.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2).\nConsider the following output from pandas\n## time                                                   \n##      count     mean       std   min     25%     50%     75%    max  plant                                                              \n##       20.0   9.3820  3.997653  4.42  7.4475   8.515  11.045  21.62      1\n##       20.0  11.3535  5.126156  2.33  8.4400  11.960  13.845  25.75      2\nAssuming the dataframe has been read in as wip, which of the following options will generate this output.",
+      "part_stem_html": "<div><p> </p>\n<p>In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.</p>\n<p>The data set <code>wip.txt</code> contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).</p>\n<p>There are two variables in the data set: <code>time</code> and <code>plant</code> (either 1 or 2).</p>\n<p>Consider the following output from pandas</p>\n<pre><code>## time                                                   \n##      count     mean       std   min     25%     50%     75%    max  plant                                                              \n##       20.0   9.3820  3.997653  4.42  7.4475   8.515  11.045  21.62      1\n##       20.0  11.3535  5.126156  2.33  8.4400  11.960  13.845  25.75      2</code></pre>\n<p>Assuming the dataframe has been read in as <code>wip</code>, which of the following options will generate this output.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "82763",
+          "text": "wip.groupby(plant).info",
+          "text_html": "<code>wip.groupby(plant).info</code>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "93214",
+          "text": "wip.groupby(plant).info()",
+          "text_html": "<code>wip.groupby(plant).info()</code>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "61088",
+          "text": "wip.groupby(plant).describe",
+          "text_html": "<code>wip.groupby(plant).describe</code>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "42017",
+          "text": "wip.groupby('plant').describe()",
+          "text_html": "<code>wip.groupby('plant').describe()</code>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

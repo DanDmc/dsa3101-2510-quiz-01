@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q47.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q47.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q47",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 47,
+      "question_type": "mcq",
+      "difficulty_level": 0.94,
+      "question_stem": "A company has two factories X and Y. Factories X and Y produce 40% and 60% of all watches respectively. 2% of the watches produced by factory X are defective, and 3% of the watches produced by factory Y are defective. If a watch bought from the company is found to be defective, what is the probability that it was produced by factory Y?",
+      "question_stem_html": "<p>A company has two factories X and Y. Factories X and Y produce 40% and 60% of all watches respectively. 2% of the watches produced by factory X are defective, and 3% of the watches produced by factory Y are defective. If a watch bought from the company is found to be defective, what is the probability that it was produced by factory Y?</p>",
+      "concept_tags": [],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

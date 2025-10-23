@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Q2. How to explore the association between the response bbd and age? (MCQ)\nBox plot of age for two groups of bbd\nHistogram of age\nCorrelation coefficient of bbd and age\nScatter plot for bbd and age",
+  "question_stem_html": "<pre>Q2. How to explore the association between the response bbd and age? (MCQ)\nBox plot of age for two groups of bbd\nHistogram of age\nCorrelation coefficient of bbd and age\nScatter plot for bbd and age</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "ox plot of age for two groups of bbd",
+          "text_html": "<p>ox plot of age for two groups of bbd</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "istogram of age",
+          "text_html": "<p>istogram of age</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "orrelation coefficient of bbd and age",
+          "text_html": "<p>orrelation coefficient of bbd and age</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "catter plot for bbd and age",
+          "text_html": "<p>catter plot for bbd and age</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: Box plot of age for two groups of bbd",
+      "solution_html": "<pre>ANS: Box plot of age for two groups of bbd</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

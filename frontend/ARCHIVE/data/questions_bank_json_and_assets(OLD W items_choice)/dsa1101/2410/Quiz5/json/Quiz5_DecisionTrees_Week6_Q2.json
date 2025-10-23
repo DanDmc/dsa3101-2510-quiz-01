@@ -1,0 +1,41 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Question 2 (correct answer in yellow highlight)\nThe leaf node in the square (no 1763/1942) means\n\nAmong 1789 customers saying “no” to the subscription of the bank service, the probability that they belong to poutcome = failure, other or unknown is 1763/1942.\n\nAmong all the 2000 customers, there are 1942 of them has poutcome = failure, other or unknown. Among those 1942 customers, 1763 of them did not subscribe the bank service.",
+  "question_stem_html": "<pre>Question 2 (correct answer in yellow highlight)\nThe leaf node in the square (no 1763/1942) means\n\nAmong 1789 customers saying “no” to the subscription of the bank service, the probability that they belong to poutcome = failure, other or unknown is 1763/1942.\n\nAmong all the 2000 customers, there are 1942 of them has poutcome = failure, other or unknown. Among those 1942 customers, 1763 of them did not subscribe the bank service.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 14,
+  "is_multi": false,
+  "question_stem": "Suppose that the data in liverpool_2223_season.csv has been read into R as a dataframe liverpool.\n\nExplain what the following code does:\n\nliverpool \n\nplot of chunk unnamed-chunk-1\n\n\nComment if the above code is an improvement or not, over:\n\nbarplot(table(liverpool$GF))\n\nplot of chunk unnamed-chunk-2",
+  "question_stem_html": "<div><p> </p>\n<p>Suppose that the data in <code>liverpool_2223_season.csv</code> has been read into R as a dataframe <code>liverpool</code>.</p>\n<ul>\n<li>Explain what the following code does:</li>\n</ul>\n<pre><code>liverpool <- read.csv(\"liverpool_2223_season.csv\")\nrange_gf <- range(liverpool$GF)\ngf_vals <- range_gf[1]:range_gf[2]\ngf_tbl <- rep(0, length=length(gf_vals))\nnames(gf_tbl) <- gf_vals\n\ntmp_table <- table(liverpool$GF)\ngf_tbl[names(tmp_table)] <- tmp_table\n\nbarplot(gf_tbl)</code></pre>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-1-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-1\" loading=\"lazy\">\n<p class=\"caption\">plot of chunk unnamed-chunk-1</p>\n</div>\n<ul>\n<li>Comment if the above code is an improvement or not, over:</li>\n</ul>\n<pre><code>barplot(table(liverpool$GF))</code></pre>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-2-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-2\" loading=\"lazy\">\n<p class=\"caption\">plot of chunk unnamed-chunk-2</p>\n</div>\n<p><br><br><br></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/unnamed-chunk-1-1.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/unnamed-chunk-2-1.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Suppose that the data in liverpool_2223_season.csv has been read into R as a dataframe liverpool.\n\nExplain what the following code does:\n\nliverpool \n\nplot of chunk unnamed-chunk-1\n\n\nComment if the above code is an improvement or not, over:\n\nbarplot(table(liverpool$GF))\n\nplot of chunk unnamed-chunk-2",
+      "part_stem_html": "<div><p> </p>\n<p>Suppose that the data in <code>liverpool_2223_season.csv</code> has been read into R as a dataframe <code>liverpool</code>.</p>\n<ul>\n<li>Explain what the following code does:</li>\n</ul>\n<pre><code>liverpool <- read.csv(\"liverpool_2223_season.csv\")\nrange_gf <- range(liverpool$GF)\ngf_vals <- range_gf[1]:range_gf[2]\ngf_tbl <- rep(0, length=length(gf_vals))\nnames(gf_tbl) <- gf_vals\n\ntmp_table <- table(liverpool$GF)\ngf_tbl[names(tmp_table)] <- tmp_table\n\nbarplot(gf_tbl)</code></pre>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-1-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-1\" loading=\"lazy\">\n<p class=\"caption\">plot of chunk unnamed-chunk-1</p>\n</div>\n<ul>\n<li>Comment if the above code is an improvement or not, over:</li>\n</ul>\n<pre><code>barplot(table(liverpool$GF))</code></pre>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-2-1.png?canvas_download=1\" alt=\"plot of chunk unnamed-chunk-2\" loading=\"lazy\">\n<p class=\"caption\">plot of chunk unnamed-chunk-2</p>\n</div>\n<p><br><br><br></p></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/unnamed-chunk-1-1.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/unnamed-chunk-2-1.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Explanation of code:\n\n# returns a vector of length 2, consisting of the max and min of the number of \n# goals scored by liverpool in a game.\nrange_gf \n\nThe benefit of the above code is that it also depicts the zero counts. Using the other piece of code would give a false view of the data to a viewer.\n\n\n\nExplanation of code:\n\n# returns a vector of length 2, consisting of the max and min of the number of \n# goals scored by liverpool in a game.\nrange_gf \n\nThe benefit of the above code is that it also depicts the zero counts. Using the other piece of code would give a false view of the data to a viewer.\n\n\n\nExplanation of code:\n\n# returns a vector of length 2, consisting of the max and min of the number of \n# goals scored by liverpool in a game.\nrange_gf \n\nThe benefit of the above code is that it also depicts the zero counts.\nUsing the other piece of code would give a false view of the data to\na viewer.",
+      "solution_html": "<ul>\n<li>Explanation of code:</li>\n</ul>\n<pre><code># returns a vector of length 2, consisting of the max and min of the number of \n# goals scored by liverpool in a game.\nrange_gf <- range(liverpool$GF)\n\n# creates a placeholder vector for the number of times a number of goals was \n# scored in a a game.\ngf_vals <- range_gf[1]:range_gf[2]\ngf_tbl <- rep(0, length=length(gf_vals))\n# adds names to the placeholder vector\nnames(gf_tbl) <- gf_vals\n\n# Tabulates the number of times a particular number of goals was scored.\ntmp_table <- table(liverpool$GF)\n# Fills up the placeholder with the number of goals scored. Unmodified \n# values are left as 0\ngf_tbl[names(tmp_table)] <- tmp_table\n\nbarplot(gf_tbl)</code></pre>\n<ul>\n<li>The benefit of the above code is that it also depicts the zero counts. Using the other piece of code would give a false view of the data to a viewer.</li>\n</ul>\n\n<ul>\n<li>Explanation of code:</li>\n</ul>\n<pre><code># returns a vector of length 2, consisting of the max and min of the number of \n# goals scored by liverpool in a game.\nrange_gf <- range(liverpool$GF)\n\n# creates a placeholder vector for the number of times a number of goals was \n# scored in a a game.\ngf_vals <- range_gf[1]:range_gf[2]\ngf_tbl <- rep(0, length=length(gf_vals))\n# adds names to the placeholder vector\nnames(gf_tbl) <- gf_vals\n\n# Tabulates the number of times a particular number of goals was scored.\ntmp_table <- table(liverpool$GF)\n# Fills up the placeholder with the number of goals scored. Unmodified \n# values are left as 0\ngf_tbl[names(tmp_table)] <- tmp_table\n\nbarplot(gf_tbl)</code></pre>\n<ul>\n<li>The benefit of the above code is that it also depicts the zero counts. Using the other piece of code would give a false view of the data to a viewer.</li>\n</ul>\n\n<ul>\n<li>Explanation of code:</li>\n</ul>\n<pre><code># returns a vector of length 2, consisting of the max and min of the number of \n# goals scored by liverpool in a game.\nrange_gf <- range(liverpool$GF)\n\n# creates a placeholder vector for the number of times a number of goals was \n# scored in a a game.\ngf_vals <- range_gf[1]:range_gf[2]\ngf_tbl <- rep(0, length=length(gf_vals))\n# adds names to the placeholder vector\nnames(gf_tbl) <- gf_vals\n\n# Tabulates the number of times a particular number of goals was scored.\ntmp_table <- table(liverpool$GF)\n# Fills up the placeholder with the number of goals scored. Unmodified \n# values are left as 0\ngf_tbl[names(tmp_table)] <- tmp_table\n\nbarplot(gf_tbl)</code></pre>\n<ul>\n<li>The benefit of the above code is that it also depicts the zero counts.\nUsing the other piece of code would give a false view of the data to\na viewer.</li>\n</ul>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "Consider the broken line regression model fitted to the Taiwan real estate price data, with housing age as the explanatory variable. In the notes, we used the value 25 years. In the following function, we can input the age to set the breakpoint at. The function should return the adjusted R² for the corresponding regression model. Fill in the two blanks with the correct Python expressions.",
+  "question_stem_html": "<p>Consider the broken line regression model fitted to the Taiwan real estate price data, with housing age as the explanatory variable.</p><p>In the notes, we used 25 years. In the following function, we can input the age to set the breakpoint at. The function should return the adjusted R² for the corresponding regression model.</p><p>Fill in the two blanks with the correct Python expressions.</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T17:55:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_07.png",
+      "alt": "Python function code with two blanks to fill in for housing_break function."
+    }
+  ],
+  "items": [
+    {
+      "type": "code",
+      "language": "python",
+      "solution_html": "<p><strong>Filled Code:</strong></p><pre><code>def housing_break(age, data):\n    tmp_data = data.copy()\n    tmp_data['x3'] = [(x - age) if x > age else 0 for x in data.house_age]\n    lm_age_mrt_2 = ols('price ~ house_age + x3', data=tmp_data).fit()\n    return lm_age_mrt_2.rsquared_adj</code></pre><p><strong>Answers:</strong><br>(1) (x - age) if x > age else 0<br>(2) rsquared_adj</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "confidence interval", "CI", "python", "adjusted-R2"]
+    }
+  ]
+}

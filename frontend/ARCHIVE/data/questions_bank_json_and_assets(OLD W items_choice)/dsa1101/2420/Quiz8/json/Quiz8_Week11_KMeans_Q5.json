@@ -1,0 +1,51 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Question 5\n\nWe can also use the KNN algorithm to cluster or group the flats based on their floor_area_sqm and amenities instead of using the K-means algorithm. True or False?\nA\nTrue\nB\nFalse",
+  "question_stem_html": "<pre>Question 5\n\nWe can also use the KNN algorithm to cluster or group the flats based on their floor_area_sqm and amenities instead of using the K-means algorithm. True or False?\nA\nTrue\nB\nFalse</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "k-means",
+        "clustering"
+      ]
+    }
+  ]
+}

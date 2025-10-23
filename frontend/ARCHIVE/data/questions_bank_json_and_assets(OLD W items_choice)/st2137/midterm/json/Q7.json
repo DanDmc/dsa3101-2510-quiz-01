@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 7,
+  "is_multi": true,
+  "question_stem": "What is the name of the R function for printing statements to the console, without any other side effect (e.g. returning a string object)?",
+  "question_stem_html": "<div><p>What is the name of the R function for printing statements to the console, without any other side effect (e.g. returning a string object)?</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "What is the name of the R function for printing statements to the console, without any other side effect (e.g. returning a string object)?",
+      "part_stem_html": "<div><p>What is the name of the R function for printing statements to the console, without any other side effect (e.g. returning a string object)?</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "50525",
+          "text": "print()",
+          "text_html": "<code>print()</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "73324",
+          "text": "cat()",
+          "text_html": "<code>cat()</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "27149",
+          "text": "paste()",
+          "text_html": "<code>paste()</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "88959",
+          "text": "sink(\"console\")",
+          "text_html": "<code>sink(\"console\")</code>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "In R, the print function will return an object. Try this:\nx \nx\n\npaste( ) is for combining and returning strings. Here is an example:\nx \nx\n\nsink is for redirecting output to a file. The command shown will redirect output to a file named \"console\".",
+      "solution_html": "<p>In R, the print function will return an object. Try this:</p>\n<p><code>x <- print(\"Hello world\")</code></p>\n<p><code>x</code></p>\n\n<p>paste( ) is for combining and returning strings. Here is an example:</p>\n<p><code>x <- paste(\"Hello\", \"world\")</code></p>\n<p><code>x</code></p>\n\nsink is for redirecting output to a file. The command shown will redirect output to a file named \"console\".",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

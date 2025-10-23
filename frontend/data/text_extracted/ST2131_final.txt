@@ -1,0 +1,616 @@
+DRAFT
+Do Not Use Until Posted.
+____________________________________________________________________________
+for export - Confidential
+Course Name: -
+Notices:
+This exam has no notices
+Question #: 1
+From a collection of nine paintings, four are to be selected to hang side-by-side on
+a gallery wall in positions 1, 2, 3 and 4. In how many ways can this be done?
+✓A. 3024
+B. 6561
+C. 24
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 2
+A group of 60 freshmen are to be randomly assigned into two classes of 30
+students each, one on the first floor and one on the second floor. In how many
+ways can this be done?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 3
+Suppose we have with us a biased coin. In other words, the probability of heads is
+p, where p >0.5. We flip the coin twice, and define the following events:
+A : we observe head followed by a tail
+1
+A : we observe a tail followed by a head.
+2
+What is P(A | A U A )?
+1 1 2
+✓A. 1/2
+B. p
+C. 1-p
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.93 - - - - 0.37
+Question #: 4
+Question: If 8 identical blackboards are to be divided among 4 schools, how many
+divisions are possible?
+Answer:
+A. True
+✓B. False
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 5
+If 8 distinct blackboards are to be divided equally among 4 schools, how many
+possible assignments are there?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.94 - - - - 0.09
+Question #: 6
+Which of the following is not a cumulative distribution function?
+A.
+B.
+✓C.
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 7
+Two players, A and B, alternately and independently flip a coin
+and the first player to obtain a head wins. Assume player A flips
+first. Define to be the event that head appears first on the i-th
+E
+i
+toss. What is P(A wins)?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.83 - - - - 0.35
+Question #: 8
+A fair coin is tossed independently 10 times. Define the following events:
+A : the k-th toss is heads
+k
+S: the total number of heads observed in the 10 tosses is even. (Note that 0 is an
+even number).
+What is P(S | A A A ... A )?
+1 2 3 10
+✓A. 1
+B. 0
+C. (0.5)10
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.94 - - - - 0.34
+Question #: 9
+Two players, A and B, alternately and independently flip a coin and the first player
+to obtain a head wins. Assume player A flips first. Define E to be the event that
+i
+head appears first on the i-th toss. Which of the following statements is true about
+the sequence of events E?
+i
+A.
+B.
+✓C. Neither of the above statements are true.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 10
+Suppose that p(x) and q(x) are two distinct pmfs. Then for any b such that 0 <b <1,
+r(x) = bp(x) + (1-b)q(x) is also a pmf.
+✓A. True
+B. False
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.83 - - - - 0.49
+Question #: 11
+Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}
+What is the value of c?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.86 - - - - 0.43
+Question #: 12
+Two fair six-sided dice are rolled. Let X be the product of the two dice. What is P(X
+>= 33)?
+✓A. 1/36
+B. 33/36
+C. 3/36
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 13
+Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:
+✓A. True
+B. False
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 14
+Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}
+Find P(X = 1 | {X=1} U {X=2})
+✓A. 0.8
+B. 0.608
+C. 0.760
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.94 - - - - 0.30
+Question #: 15
+A deck of playing cards has 52 cards. Four of these cards are Aces. Suppose that
+a well-shuffled deck of cards is dealt out. What is the probability that the 14th card
+dealt out is an Ace?
+✓A. 1/13
+B. 1/4
+C. 1/52
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 16
+The cdf of X is given by the following function, for i in {1,2,3,4,5,6, ... } :
+What is the support of X?
+✓A. {1, 2, 3, 4, 5,...}
+B. {0, 1, 2, 3, 4, 5,...}
+C. {0,1}
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 17
+The cdf of X is given by the following function, for i = 1, 2, 3, 4, 5,.... :
+What is P(X <2)?
+✓A. 1/2
+B. 2/3
+C. 1/3
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.98 - - - - 0.21
+Question #: 18
+The cdf of X is given by the following function, for i >= 1:
+What is the pmf of X?
+✓A. P(X=i) = 1/[i(i+1)] for i = 1, 2, 3, 4, 5, 6, ...
+B. P(X=i) = 1 - 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ...
+C. P(X=i) = 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ...
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.91 - - - - 0.50
+Question #: 19
+Let X be a random variable denoting the number of children in a family. X has
+support {1,2,3,4}, and pmf given by
+p(1) p(2) p(3) p(4)
+0.1 0.25 0.35 0.3
+A child from this family is chosen at random (i.e. all children within a family are
+equally likely to be selected). Let E be the event that the eldest child is chosen.
+Find P(X=1 | E).
+A. 0.42
+B. 0.1
+✓C. 0.24
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.9 - - - - 0.28
+Question #: 20
+An urn has n white and m black balls. Balls are randomly withdrawn without
+replacement, one at a time, until a total of k white balls have been withdrawn,
+where k <= n. The random variable X is the total number of balls that have been
+withdrawn. Which of the following events is equivalent to {X = r}, where r is an
+integer in the support of X?
+✓A. There are k - 1 white balls in the first r-1 draws, and the r-th draw is a white ball.
+B. There are r balls drawn.
+C. There are k white balls in the first r draws.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.73 - - - - 0.53
+Question #: 21
+Let E, F and G be three events from a sample space. Match the following
+descriptions to the events regarding E, F and G below. There is only one matching
+description for each event.
+1. E occurs. 2. At least two of the events occur.
+3. Exactly two events occur. 4. The empty set occurs.
+5. None of the three events occur. 6. Only E occurs.
+_____________ 1 (E U F U G)c
+_____________ 2 EF U EG U FG
+1. 5
+2. 2
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.98 - - - - 0.29
+Question #: 22
+Let E, F and G be three events from a sample space. Match the following
+descriptions to the events regarding E,F and G below. There is only one matching
+description for each event.
+1. E occurs. 2. At least two of the events occur.
+3. Exactly two events occur. 4. Exactly one of the events occurs.
+5. Only E occurs. 6. At least one of the events occurs.
+_____________ 1 E U F U G
+_____________ 2 E Fc Gc
+1. 6
+2. 5
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.91 - - - - 0.31
+Question #: 23
+A fair coin is tossed independently n times, where n >= 2. Define the following
+events:
+A : the k-th toss is heads.
+k
+S : the total number of heads observed in the n tosses is even. (Note that 0 is an
+n
+even number).
+Is the collection of events A , A , A , ... A , S independent?
+1 2 3 n n
+Hint: Consider P(S | A A A ... A )
+n 1 2 3 n
+A. True
+✓B. False
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 24
+Suppose that A and B are independent events such that the probability that
+neither occurs is a, and the probability that B occurs is b. Find P(A).
+A. a/(1-b)
+✓B. (1-b-a)/(1-b)
+C. ab
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 25
+A fair coin is tossed independently n times, where n >= 2. Define the following
+events:
+A : the k-th toss is heads.
+k
+What is P(A A A A ... A )?
+1 2 3 4 n
+A. 1/2
+✓B. (1/2)^n
+C. k! / n!
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.96 - - - - 0.19
+Question #: 26
+Suppose that E , E , ... .E are independent events. Which of the following
+1 2 n
+statements is true for any such collection of events?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.88 - - - - 0.51
+Question #: 27
+Independent trials are performed indefintely, where each trial consists of rolling a
+pair of fair six-sided dice, and then summing the values on the dice at each trial.
+Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes
+of the first three trials are recorded as 3, 7 and then 12.
+We define E to be the event that no 5 or 7 appears on the first n-1 trials and a 5
+n
+appears on the n-th trial. What does the event
+correspond to?
+A. A 5 never appears.
+B. A 7 never appears.
+✓C. A 5 appears before a 7.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.35 - - - - 0.38
+Question #: 28
+Suppose that X is a discrete random variable with support on the set {1,2,3,4}. We
+define the sequence of events E to be
+n
+What is
+?
+✓A. P(X=1)
+B. P(1 <X <2)
+C. 0
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.82 - - - - 0.41
+Question #: 29
+Suppose that A and B are mutually exclusive, and P(A) >0 and P(B) >0. Which of
+the following statements is false?
+A. P(A|B)=0
+✓B. A and B are independent.
+C. A and B are dependent.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.86 - - - - 0.41
+Question #: 30
+Suppose that A and B are events with positive probability. Determine if the
+following statement is true or false:
+If A and B are not mutually exclusive, then they are independent.
+A. True
+✓B. False
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 31
+Suppose that A and B form a partition of the sample space, and P(A) >0 and P(B)
+>0. Which of the following statements is false?
+A. P(A | Bc) = 1
+✓B. A and B are independent.
+C. A and B are dependent.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.75 - - - - 0.64
+Question #: 32
+A mobile phone manufacturing company has two factories X and Y. Factories X
+and Y produce 30% and 70% of all mobile phones respectively. 9% of the phones
+produced by factory X are defective, and 1% of the phones produced by factory Y
+are defective. If a phone bought from the company is found to be defective, what is
+the probability that it was produced by factory X?
+✓A. 0.79
+B. 0.027
+C. 0.30
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.98 - - - - 0.13
+Question #: 33
+Which of the following is not a probability mass function?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 34
+Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}
+Evaluate the cdf at i=2.
+✓A. 0.760
+B. 0.608
+C. 0.152
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.99 - - - - 0.07
+Question #: 35
+A and B are mutually exclusive events. Further, P(A) = 0.3 and P(B) = 0.2. What is
+the probability that both events occur?
+A. There is insufficient information to compute this probability.
+B. 0.06
+✓C. 0
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 36
+How many ways can we arrange the letters in the word "VISITING" such that no two "I"s are
+adjacent? Hint: Experiment 1: Permute the non-I letters. Experiment 2: Choose where
+to put the I's.
+A. 6720
+✓B. 2400
+C. 480
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.96 - - - - 0.23
+Question #: 37
+How many ways can we arrange the letters in the word "VISITING"?
+✓A. 6720
+B. 2400
+C. 480
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 38
+Independent trials are performed indefintely, where each trial consists of rolling a
+pair of fair six-sided dice, and then summing the values on the dice at each trial.
+Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes
+of the first three trials are recorded as 3, 7 and then 12.
+We define E to be the event that no 5 or 7 appears on the first n-1 trials and a 5
+n
+appears on the n-th trial. Is E an increasing or decreasing sequence?
+n
+A. An increasing sequence.
+B. A decreasing sequence.
+✓C. It is neither increasing or decreasing.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.57 - - - - 0.37
+Question #: 39
+Suppose that A, B and C are events from a sample space. Which of the following
+statements is not true for all possible choices of A, B and C?
+A.
+B.
+✓C.
+Item Weight: 1.0
+Item Psychometrics:
+No item psychometrics are available at this time, this item has yet to be scored in any
+assessment.
+Question #: 40
+A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the
+probability that there will be no complete pair?
+✓A.
+B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 41
+There are n socks in a drawer, 3 of which are red. What is the value of n if, when 2
+of the socks are chosen randomly, the probability that they are both red is 1/2?
+✓A. n=4
+B. n=6
+C. n=5
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - 0.00
+Question #: 42
+Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this
+set, the pmf is given by
+P(X = i) = 1/i - 1/(i+1)
+If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is
+P(Y = -5)?
+✓A. 1/56
+B. 1/20
+C. -1/5
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.99 - - - - -0.05
+Question #: 43
+Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this
+set, the pmf is given by
+P(X = i) = 1/i - 1/(i+1)
+If we let Y = 1 if X <= 2 and 0 otherwise, what is P(Y = 0)?
+A. 1
+B. 1/2
+✓C. 1/3
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.95 - - - - 0.28
+Question #: 44
+There are 4 TV repairmen and 8 TV repair jobs. If it is possible for a single
+repairman to do multiple jobs, how many possible assignments of repairmen to
+jobs are there?
+A.
+✓B.
+C.
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -
+Question #: 45
+If P(A) = 1/4 and P(B) = 1/3, then
+.
+✓A. True
+B. False
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.64 - - - - 0.41
+Question #: 46
+If P(A)=1/3 and P(Bc)=1/4 then it is still possible for A and B to be disjoint.
+A. True
+✓B. False
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.91 - - - - 0.32
+Question #: 47
+A company has two factories X and Y. Factories X and Y produce 40% and 60%
+of all watches respectively. 2% of the watches produced by factory X are
+defective, and 3% of the watches produced by factory Y are defective. If a watch
+bought from the company is found to be defective, what is the probability that it
+was produced by factory Y?
+✓A. 0.69
+B. 0.018
+C. 0.026
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.94 - - - - 0.36
+Question #: 48
+An urn has n white and m black balls. Balls are randomly withdrawn without
+replacement, one at a time, until a total of k white balls have been withdrawn,
+where k <= n. The random variable X is the total number of balls that have been
+withdrawn. What is the support of X?
+A. {1, 2, 3, ... , n+m}
+✓B. {k, k+1, ... , n+m}
+C. {1, 2, 3, ..., k}
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+0.98 - - - - 0.23
+Question #: 49
+Let X be a random variable denoting the number of children in a family. X has
+support {1,2,3,4}, and pmf given by
+p(1) p(2) p(3) p(4)
+0.3 0.25 0.35 0.1
+A child from this family is chosen at random (i.e. all children are equally likely to be
+selected). Let E be the event that the youngest child is chosen. Find P(E).
+✓A. 0.42
+B. 0.1
+C. 0.52
+Item Weight: 1.0
+Item Psychometrics:
+Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
+Level/P-value Biserial(Question)
+1.0 - - - - -

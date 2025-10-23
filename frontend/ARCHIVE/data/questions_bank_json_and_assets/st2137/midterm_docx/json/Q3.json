@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Consider the following two histograms (created with Python) from the liverpool dataset used in Tutorial 2:\nWhat is the argument needed to convert the Histogram A into Histogram B?\nliverpool.GF.hist(    1    )\n1. Choice of: freq=False | density=True | type=\"percent\" | type=\"density\" - Correct Answer:freq=False",
+  "question_stem_html": "<p>Consider the following two histograms (created with Python) from the liverpool dataset used in Tutorial 2:</p>\n<p>What is the argument needed to convert the Histogram A into Histogram B?</p>\n<p>liverpool.GF.hist(    1    )</p>\n<p>1. Choice of: freq=False | density=True | type=\"percent\" | type=\"density\" - Correct Answer:freq=False</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image1.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Consider the following two histograms (created with Python) from the liverpool dataset used in Tutorial 2:\nWhat is the argument needed to convert the Histogram A into Histogram B?\nliverpool.GF.hist(    1    )\n1. Choice of: freq=False | density=True | type=\"percent\" | type=\"density\" - Correct Answer:freq=False",
+      "part_stem_html": "<p>Consider the following two histograms (created with Python) from the liverpool dataset used in Tutorial 2:</p>\n<p>What is the argument needed to convert the Histogram A into Histogram B?</p>\n<p>liverpool.GF.hist(    1    )</p>\n<p>1. Choice of: freq=False | density=True | type=\"percent\" | type=\"density\" - Correct Answer:freq=False</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image1.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

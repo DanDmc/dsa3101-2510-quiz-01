@@ -1,0 +1,203 @@
+NATIONAL UNIVERSITY OF SINGAPORE
+DSA1101 INTRODUCTION TO DATA SCIENCE
+(Semester 2 : AY 2024/2025)
+Time Allowed: 2 Hours
+INSTRUCTIONS TO STUDENTS
+1. Please indicate only your student number on your answer (cid:28)le. Do not indicate
+your name.
+2. ThisexampapercontainsTHREE(3)questionsandcomprisesEIGHT (8)printed
+pages (including the cover page).
+3. The data (cid:28)le used for this exam is given in the folder (cid:16)For Finals(cid:17) on
+Canvas/DSA1101/Files.
+4. This is an OPEN BOOK BLOCK INTERNET exam. You may refer to your lecture
+notes, tutorials, textbooks or any notes that you have made, but you are not allowed
+to perform any online search.
+5. The use of o(cid:31)ine Large Language Models (LLMs) is prohibited for this exam.
+6. Both programmable calculators and non-programmable calculators are allowed.
+7. Students are required to answer ALL questions. Total mark is 100.
+8. During the exam, you are not allowed to communicate with any person other than
+the invigilators.
+9. At the end of the exam,
+(cid:136)
+Copy and paste your R code into the Examplify text box. Indentation and
+alignment may not be retained when pasting, but that is acceptable.
+(cid:136)
+Save an exact copy of your R (cid:28)le on your laptop, and upload it to
+Canvas/DSA1101/Assignments/Final Exam Submission immediately after the
+exam.
+10. Do not modify the code in your submission (cid:28)le. Any di(cid:27)erence found (except for
+indentation or alignment) between Examplify and Canvas submissions will be penal-
+ized.
+DSA1101
+1.
+(20 points)
+Part I: True/False Questions. No explanation is required.
+(a) If we use linear regression model with intercept to predict a response y based on a
+regressor x given 100 observations, the average of the residuals, (1/100)
+(cid:80)100
+e , will
+i=1 i
+always be zero. True or False?
+(b) If I am using House Price and Household Monthly Income (both in Singapore dollars)
+astwofeaturesfortheK-meansalgorithmtodivideSingaporehouseholdsintogroups,
+I do not need to standardize them since they have the same units. True or False?
+Part II: Multiple Choice Questions. No explanation is required.
+A data set contains information on 100 patients and their cancer status. Let Column
+Y be the response variable (cancer status) with two categories, 0 and 1, where 1 =
+diseased and 0 = no-diseased. Let p denote P(Y = diseased).
+(c) Using a (cid:28)tted decision tree, named DT, the prediction of p for the test points is
+obtained by
+pred.prob = predict(DT, new.data = test, ___)
+where in the blank space, we add
+A. type = (cid:16)raw(cid:17)
+B. prob = TRUE
+C. type = (cid:16)class(cid:17)
+D. type = (cid:16)prob(cid:17)
+E. type = (cid:16)response(cid:17)
+(d) Using a (cid:28)tted Naive Bayes classi(cid:28)er, named nb, the prediction of p for the test points
+is obtained by
+pred.prob = predict(nb, new.data = test, ___)
+where in the blank space, we add
+A. type = (cid:16)raw(cid:17)
+B. prob = TRUE
+C. type = (cid:16)class(cid:17)
+D. type = (cid:16)prob(cid:17)
+E. type = (cid:16)response(cid:17)
+2
+DSA1101
+(e) Using a (cid:28)tted logistic regression, named lr, the prediction of p for the test points is
+obtained by
+pred.prob = predict(lr, new.data = test, ___)
+where in the blank space, we add
+A. type = (cid:16)raw(cid:17)
+B. prob = TRUE
+C. type = (cid:16)class(cid:17)
+D. type = (cid:16)prob(cid:17)
+E. type = (cid:16)response(cid:17)
+(f) In order to obtain the prediction of p for the test points using a (cid:28)tted 9-NN classi(cid:28)er,
+the R code is of the form
+pred.prob = knn(train, test, cl, k = 9,___)
+where in the blank space, we add
+A. type = (cid:16)raw(cid:17)
+B. prob = TRUE
+C. type = (cid:16)class(cid:17)
+D. type = (cid:16)prob(cid:17)
+E. type = (cid:16)response(cid:17)
+Part III: Open-Ended Questions. Explanation is required.
+(g) When constructing a classi(cid:28)cation model that helps to predict if a person has a
+disease, which is genetically transmitted and has costly treatment with signi(cid:28)cant
+side e(cid:27)ects, which type of error rate (Type I or Type II) should be prioritized for
+minimization? Explain your answer.
+(h) When constructing a classi(cid:28)cation model that helps to predict if a person has a highly
+contagious disease, such as Covid-19, which type of error rate (Type I or Type II)
+should be prioritized for minimization? Explain your answer.
+3
+DSA1101
+2.
+(10 points) A data set on house selling price in the US was randomly collected. A
+model that helps to predict the selling price of a house using other variables is to be (cid:28)tted.
+The description of variables in the data set is given below.
+Variable Description
+price house’s price in thousand US dollars
+size house’s size in square feet (sqft)
+bedrooms number of bedrooms
+garage 1 = with garage; 0 = no garage
+Figure 1: Histogram of price (left) and scatter plot of price against size (right)
+(a) A histogram of the house’s price and a scatter plot of the house’s price against house’s
+size are given in Figure 1. Comment if it is suitable to (cid:28)t a linear regression model
+for price?
+(b) A linear model, called M, is (cid:28)tted. The summary output of model M is given in
+Figure 2 (next page).
+Write down the (cid:28)tted equation of model M.
+Report the coe(cid:30)cient of the variable garage in model M and interpret it.
+(c) Comment on the goodness of (cid:28)t of model M.
+(d) The information of a new house is given below. Using model M, calculate the pre-
+dicted price of this house.
+size = 1500 sqft, bedrooms = 3, garage = 1
+4
+DSA1101
+Figure 2: Summary output of model M
+5
+DSA1101
+3.
+(70 points) Consider a random sample of 1,000 people. Their health information is
+recorded for a study about factors that may a(cid:27)ect the diabetes status of people. The data
+set is given in the (cid:28)le diabetes-dataset-1k.csv. The table below gives the description
+for some variables in this study.
+Variable Description
+age person’s age (in years)
+hypertension 0 = No, 1 = Yes
+heart_disease 0 = No, 1 = Yes
+bmi the Body Mass Index
+HbA1c_level Hemoglobin A1c level (%)
+blood_glucose_level blood glucose level (mg/dL)
+diabetes 0 = No, 1 = Yes
+For the questions below,
+(cid:136)
+Load the data set into R and name it as data.
+(cid:136)
+Report the (cid:28)nal numerical answer to three signi(cid:28)cant (cid:28)gures if its absolute value is
+smaller than one (e.g. 0.0123) and to three decimal places if its absolute value is
+larger than one (e.g. -2.345).
+Part I: Linear Model (8 points)
+For this part, there is no need to split the data set given into a train set and a test
+set.
+1. Write code to (cid:28)t a linear regression model using all the input features, to be named
+as LM, for predicting the probability of having diabetes. Is there any insigni(cid:28)cant
+variable in model LM?
+2. Comment on the goodness of (cid:28)t of model LM.
+3. State at least two disadvantages of (cid:28)tting a linear model for a binary response.
+Part II: Decision Trees (16 points)
+All the decision tree models below are using Information Gain for branch split.
+4. Run the command set.seed(2904).
+Then, write code to randomly split data into two subsets, one set with 800 rows, to
+be named as train.set and other set with the rest of rows, to be named as test.set.
+6
+DSA1101
+5. Let m denote a vector of possible values for the argument minsplit which ranges
+from 40 up to 50 inclusively.
+For each value in m, write code to
+(i) (cid:28)t a decision tree using train.set;
+(ii) use the (cid:28)tted tree to predict the diabetes status of people in test.set;
+(iii) derive the precision and the Type I error rate for the prediction in (ii).
+6. Consider minsplit = 50, write code to (cid:28)t a decision tree, to be named as DT.
+Report the name of the most important variable in that tree.
+7. WritecodetoplottheROCcurveofthetreeDTinblackcolorbasedonitsprediction
+for test.set. Derive and report the value of AUC.
+Part III: Naive Bayes Classi(cid:28)er (18 points)
+8. We now (cid:28)t a naive Bayes classi(cid:28)er using train.set. Write code to (cid:28)t the classi(cid:28)er,
+to be named as NB.
+9. Write code to plot the ROC curve of the classi(cid:28)er NB in blue color based on its
+prediction for test.set. Derive and report the value of AUC.
+10. Let δ denote the threshold used for the ROC curve in Question 9. Write code to plot
+a (cid:28)gure that shows how the TPR and the FPR change when the threshold δ changes.
+11. Propose a value of the threshold δ such that the classi(cid:28)er NB can attain a TPR of
+at least 0.9 while the FPR is as low as possible.
+12. With the proposed value of δ in Question 11, write code to calculate the accuracy of
+the classi(cid:28)er NB when it is used to predict the diabetes status for test.set.
+Part III: Logistic Regression Model (16 points)
+13. Write code to (cid:28)t a logistic regression model using train.set by including all the given
+input features. What is the most insigni(cid:28)cant feature in that (cid:28)tted model?
+14. Write code to (cid:28)t a logistic regression model using train.set, to be named as LR, by
+including all the given input features except the most insigni(cid:28)cant feature found in
+Question 13.
+15. Using the model LR, compute and report the odds ratio of having diabetes between
+a person that has hypertension and a person without hypertension, given that they
+both have the same values for the other features.
+7
+DSA1101
+16. With the proposed value of δ in Question 11, write code to calculate the accuracy of
+model LR when it is used to predict the diabetes status for test.set.
+17. WritecodetoplottheROCcurveofthemodelLRinredcolorbasedonitsprediction
+for test.set. Derive and report the value of AUC.
+Part IV: KNN classi(cid:28)er (12 points)
+18. Standardize all the quantitative input features in train.set and test.set.
+19. Write code to (cid:28)t a KNN classi(cid:28)er with k = 5 using train.set to predict the winning
+probabilities for test.set.
+20. Write code to (cid:28)nd the predicted probability of having diabetes for each person in
+test.set.
+21. With the proposed value of δ in Question 11, write code to calculate the accuracy of
+the 5-NN classi(cid:28)er above when it is used to predict the diabetes status for test.set.
+Report the accuracy.
+(cid:21)END OF PAPER(cid:21)
+8

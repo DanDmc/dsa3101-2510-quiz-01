@@ -1,0 +1,53 @@
+## Warning: package ’reticulate’ was built under R version 4.2.3
+Question
+SupposethatthefollowingsimplelinearregressionmodelhasbeenfittedtotheTaiwanrealestatedatafrom
+topic 05:
+Y =β +β ln(X )+e
+0 1 1
+where X corresponds to distance to the nearest MRT. The following output was obtained from Python:
+1
+## OLS Regression Results
+## ==============================================================================
+## Dep. Variable: price R-squared: 0.539
+## Model: OLS Adj. R-squared: 0.538
+## Method: Least Squares F-statistic: 482.2
+## Date: Mon, 08 Sep 2025 Prob (F-statistic): 2.52e-71
+## Time: 16:28:40 Log-Likelihood: -1507.3
+## No. Observations: 414 AIC: 3019.
+## Df Residuals: 412 BIC: 3027.
+## Df Model: 1
+## Covariance Type: nonrobust
+## ==============================================================================
+## coef std err t P>|t| [0.025 0.975]
+## ------------------------------------------------------------------------------
+## Intercept 95.0169 2.637 36.034 0.000 89.833 100.200
+## ldist -8.9235 0.406 -21.959 0.000 -9.722 -8.125
+## ==============================================================================
+## Omnibus: 178.772 Durbin-Watson: 2.109
+## Prob(Omnibus): 0.000 Jarque-Bera (JB): 1764.720
+## Skew: 1.566 Prob(JB): 0.00
+## Kurtosis: 12.617 Cond. No. 38.5
+## ==============================================================================
+##
+## Notes:
+## [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+What is the null hypothesis corresponding to the t-statistic with value -21.959?
+Answerlist
+• H : β =0
+0 1
+• H : β =0
+0 0
+• H : β ˆ =0
+0 1
+• H : β ˆ =0
+0 0
+Solution
+Answerlist
+• This is correct.
+1
+• This corresponds to the test for the intercept in the model, not the coefficient for ldist.
+• Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol.
+• Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol.
+Meta-information
+exname: regression, inference, taiwan extype: schoice exsolution: 1000 exshuffle: 4
+2

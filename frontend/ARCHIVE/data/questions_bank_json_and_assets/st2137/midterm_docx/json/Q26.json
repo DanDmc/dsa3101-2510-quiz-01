@@ -1,0 +1,92 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 26,
+  "is_multi": false,
+  "question_stem": "In the topic on regression, we fitted the following simple linear regression model to the concrete data:\nwhere\n: is the Flow, and\n: is amount of Water in the mixture.\nThe summary output for the model (from Python) is as follows:\nThe null hypothesis for the F-test above is\nH0:β1=β0=0",
+  "question_stem_html": "<p>In the topic on regression, we fitted the following simple linear regression model to the concrete data:</p>\n<p>where</p>\n<p>: is the Flow, and</p>\n<p>: is amount of Water in the mixture.</p>\n<p>The summary output for the model (from Python) is as follows:</p>\n<p>The null hypothesis for the F-test above is</p>\n<p>H0:β1=β0=0</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image14.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image15.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image16.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image17.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the topic on regression, we fitted the following simple linear regression model to the concrete data:\nwhere\n: is the Flow, and\n: is amount of Water in the mixture.\nThe summary output for the model (from Python) is as follows:\nThe null hypothesis for the F-test above is\nH0:β1=β0=0",
+      "part_stem_html": "<p>In the topic on regression, we fitted the following simple linear regression model to the concrete data:</p>\n<p>where</p>\n<p>: is the Flow, and</p>\n<p>: is amount of Water in the mixture.</p>\n<p>The summary output for the model (from Python) is as follows:</p>\n<p>The null hypothesis for the F-test above is</p>\n<p>H0:β1=β0=0</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image14.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image15.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image16.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image17.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

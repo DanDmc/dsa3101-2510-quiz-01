@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz1",
+  "question_no": 9,
+  "is_multi": true,
+  "question_stem": "Which of the following variables are continuous, when the measurement is as precise as possible?",
+  "question_stem_html": "<div>Which of the following variables are continuous, when the measurement is as precise as possible?&nbsp;</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mrq",
+      "part_stem": "Which of the following variables are continuous, when the measurement is as precise as possible?",
+      "part_stem_html": "<div>Which of the following variables are continuous, when the measurement is as precise as possible?&nbsp;</div>",
+      "choices": [
+        {
+          "choice_id": "27db0037-55a8-41eb-833f-f6c3bfb0b86f",
+          "text": "Age of mother",
+          "text_html": "<p>Age of mother</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "ae32fc69-7008-4465-8198-765166ba6850",
+          "text": "Number of children in a family",
+          "text_html": "<p>Number of children in a family</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "2cc8cf51-74ef-4cbf-953d-f5583e4b02e0",
+          "text": "Cooking time for preparing dinner",
+          "text_html": "<p>Cooking time for preparing dinner</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "15edace3-b280-411d-a1f1-03903fca2c32",
+          "text": "Latitude of a city",
+          "text_html": "<p>Latitude of a city</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "55e5b02a-b9b3-4a5c-b9e3-47c4d4cfa425",
+          "text": "Longtitude of a city",
+          "text_html": "<p>Longtitude of a city</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "035f2ed1-7a04-404f-84ff-d97e306b7ef0",
+          "text": "Population size of a city",
+          "text_html": "<p>Population size of a city</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

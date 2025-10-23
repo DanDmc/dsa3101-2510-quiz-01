@@ -1,0 +1,56 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Which method in scikit-learn estimators is used to estimate the parameters of a model using the training data?",
+  "question_stem_html": "<p>Which method in scikit-learn estimators is used to estimate the parameters of a model using the training data?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:50:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "`fit()`",
+          "text_html": "<p><code>fit()</code></p>",
+          "is_correct": true,
+          "explanation": "True"
+        },
+        {
+          "choice_id": "B",
+          "text": "`predict()`",
+          "text_html": "<p><code>predict()</code></p>",
+          "is_correct": false,
+          "explanation": "This is used *after* fitting; to make predictions."
+        },
+        {
+          "choice_id": "C",
+          "text": "`score()`",
+          "text_html": "<p><code>score()</code></p>",
+          "is_correct": false,
+          "explanation": "This returns the *score* (e.g. $R^2$ or RMSE) on a new dataset, after fitting has been done."
+        },
+        {
+          "choice_id": "D",
+          "text": "`transform()`",
+          "text_html": "<p><code>transform()</code></p>",
+          "is_correct": false,
+          "explanation": "This is also only called *after* fitting: to transform a dataset, e.g. scaling, PCA, etc."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "`fit()`",
+      "solution_html": "<p><code>fit()</code></p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "scikit-learn", "estimators"]
+    }
+  ]
+}

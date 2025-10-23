@@ -1,0 +1,107 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q3.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q3.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q3",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 3,
+      "question_type": "mcq",
+      "difficulty_level": 0.93,
+      "question_stem": "Suppose we have with us a biased coin. The probability of heads is p, where p > 0.5. We flip the coin twice, and define the following events: A1: we observe head followed by a tail; A2: we observe a tail followed by a head. What is P(A1 | A1 ∪ A2)?",
+      "question_stem_html": "<p>Suppose we have with us a biased coin. The probability of heads is <em>p</em>, where <em>p &gt; 0.5</em>. We flip the coin twice, and define the following events:</p><ul><li><em>A₁</em>: we observe head followed by a tail</li><li><em>A₂</em>: we observe a tail followed by a head</li></ul><p>What is \\( P(A_1 \\mid A_1 \\cup A_2) \\)?</p>",
+      "concept_tags": [
+        "conditional probability",
+        "set operations",
+        "events",
+        "biased coin"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
+        {
+          "choice_id": "A",
+          "text": "1/2",
+          "text_html": "<p>\\( \\frac{1}{2} \\)</p>",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "p",
+          "text_html": "<p>\\( p \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "1 - p",
+          "text_html": "<p>\\( 1 - p \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        }
+      ],
+      "_solution": "1/2",
+      "_solution_html": "<p>\\( \\frac{1}{2} \\)</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Choose the correct value.",
+          "part_stem_html": "<p>Choose the correct value.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "1/2",
+              "text_html": "<p>\\( \\frac{1}{2} \\)</p>",
+              "is_correct": true,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "p",
+              "text_html": "<p>\\( p \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "C",
+              "text": "1 - p",
+              "text_html": "<p>\\( 1 - p \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "1/2",
+          "solution_html": "<p>\\( \\frac{1}{2} \\)</p>",
+          "difficulty_level": 0.93,
+          "concept_tags": [
+            "conditional probability",
+            "set operations",
+            "events",
+            "biased coin"
+          ]
+        }
+      ]
+    }
+  ]
+}

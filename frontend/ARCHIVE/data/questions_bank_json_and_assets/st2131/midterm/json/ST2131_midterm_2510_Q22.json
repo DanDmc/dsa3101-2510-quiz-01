@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q22.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q22.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q22",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 22,
+      "question_type": "open-ended",
+      "difficulty_level": 1.0,
+      "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event.\n_____________    1      E U F U G\n_____________    2      E Fc Gc\n1. 6\n2. 5",
+      "question_stem_html": "<p>Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event.</p>\n<p>_____________    1      E U F U G</p>\n<p>_____________    2      E Fc Gc</p>\n<p>1. 6</p>\n<p>2. 5</p>",
+      "concept_tags": [
+        "statistics"
+      ],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

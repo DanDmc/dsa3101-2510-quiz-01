@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz2",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Many years back, the scores of the ST1131 final exam had the following five-number summary:\n\nMinimum: 78.3\nLower quartile: 83.6\nMedian: 87.2\nUpper quartile: 88.8\nMaximum: 92.3\n\nWould a boxplot of this dataset show any outliers?",
+  "question_stem_html": "<div>\n<p>Many years back, the scores of the ST1131 final exam had&nbsp;the following five-number summary:</p>\n<ol>\n<li>Minimum: 78.3</li>\n<li>Lower quartile: 83.6</li>\n<li>Median: 87.2</li>\n<li>Upper quartile: 88.8</li>\n<li>Maximum: 92.3</li>\n</ol>\n<p>Would a boxplot of this dataset show any outliers?</p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mcq",
+      "part_stem": "Many years back, the scores of the ST1131 final exam had the following five-number summary:\n\nMinimum: 78.3\nLower quartile: 83.6\nMedian: 87.2\nUpper quartile: 88.8\nMaximum: 92.3\n\nWould a boxplot of this dataset show any outliers?",
+      "part_stem_html": "<div>\n<p>Many years back, the scores of the ST1131 final exam had&nbsp;the following five-number summary:</p>\n<ol>\n<li>Minimum: 78.3</li>\n<li>Lower quartile: 83.6</li>\n<li>Median: 87.2</li>\n<li>Upper quartile: 88.8</li>\n<li>Maximum: 92.3</li>\n</ol>\n<p>Would a boxplot of this dataset show any outliers?</p>\n</div>",
+      "choices": [
+        {
+          "choice_id": "50bdb080-4c2a-41e5-bca4-02a85d4f3e20",
+          "text": "Yes",
+          "text_html": "<p>Yes</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "0b9efe63-291d-4878-a789-b5f365c8f817",
+          "text": "No",
+          "text_html": "<p>No</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

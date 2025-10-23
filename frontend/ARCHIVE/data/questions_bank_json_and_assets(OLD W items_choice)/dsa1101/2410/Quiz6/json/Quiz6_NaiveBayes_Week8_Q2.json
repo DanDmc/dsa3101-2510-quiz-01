@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Q2. The values in “nb_prediction” are the class labels (no/yes) for each test point in the test data. True or False?",
+  "question_stem_html": "<pre>Q2. The values in “nb_prediction” are the class labels (no/yes) for each test point in the test data. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:20:18+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": "Ans: False. It’s the probabilities, since type = “raw” is specified in the command\nnb_prediction <- predict(nb_model, newdata = banktest[  , -11], type ='raw')\nIf we want to get the class labels (no/yes) then we should specify type = “class”."
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: False. It’s the probabilities, since type = “raw” is specified in the command\nnb_prediction <- predict(nb_model, newdata = banktest[  , -11], type ='raw')\nIf we want to get the class labels (no/yes) then we should specify type = “class”.",
+      "solution_html": "<pre>Ans: False. It’s the probabilities, since type = “raw” is specified in the command\nnb_prediction &lt;- predict(nb_model, newdata = banktest[  , -11], type =&#x27;raw&#x27;)\nIf we want to get the class labels (no/yes) then we should specify type = “class”.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "naive bayes"
+      ]
+    }
+  ]
+}

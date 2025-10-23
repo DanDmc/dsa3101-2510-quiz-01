@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Q6. This question has one or more than one answer that is correct.\nThe coefficient -0.157 (3dp) in the summary(M3) output for variable Age means\nAs Age increases by 1 unit (1 year), the probability of customer to churn will decrease by 0.157.\nAs Age increase by 1 unit (1 year), the log odds of customer to churn will decrease by 0.157.\nAs Age increase by 1 unit (1 year), the odds of customers to churn will decrease by 0.157.\n\nAs Age increase by 1 unit (1 year), the odds of customer to churn will decrease by 1.17 times.",
+  "question_stem_html": "<pre>Q6. This question has one or more than one answer that is correct.\nThe coefficient -0.157 (3dp) in the summary(M3) output for variable Age means\nAs Age increases by 1 unit (1 year), the probability of customer to churn will decrease by 0.157.\nAs Age increase by 1 unit (1 year), the log odds of customer to churn will decrease by 0.157.\nAs Age increase by 1 unit (1 year), the odds of customers to churn will decrease by 0.157.\n\nAs Age increase by 1 unit (1 year), the odds of customer to churn will decrease by 1.17 times.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:24:49+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he coefficient -0.157 (3dp) in the summary(M3) output for variable Age means",
+          "text_html": "<p>he coefficient -0.157 (3dp) in the summary(M3) output for variable Age means</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "s Age increases by 1 unit (1 year), the probability of customer to churn will decrease by 0.157.",
+          "text_html": "<p>s Age increases by 1 unit (1 year), the probability of customer to churn will decrease by 0.157.</p>",
+          "is_correct": true,
+          "explanation": "Ans: both options B and D are correct. \nExplanation: Refer to the correct answer of Q4 to get why B is correct.\nTo get an idea on why D is correct, we consider equation below.\nlog(y) = 5 * Age\nWhen Age increase by 1 then log(y) will increase by 5, hence the value of y will increase by an exponential of 5, exp(5)."
+        },
+        {
+          "choice_id": null,
+          "text": "s Age increase by 1 unit (1 year), the log odds of customer to churn will decrease by 0.157.",
+          "text_html": "<p>s Age increase by 1 unit (1 year), the log odds of customer to churn will decrease by 0.157.</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "s Age increase by 1 unit (1 year), the odds of customers to churn will decrease by 0.157.",
+          "text_html": "<p>s Age increase by 1 unit (1 year), the odds of customers to churn will decrease by 0.157.</p>",
+          "is_correct": true,
+          "explanation": "Ans: both options B and D are correct. \nExplanation: Refer to the correct answer of Q4 to get why B is correct.\nTo get an idea on why D is correct, we consider equation below.\nlog(y) = 5 * Age\nWhen Age increase by 1 then log(y) will increase by 5, hence the value of y will increase by an exponential of 5, exp(5)."
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: both options B and D are correct. \nExplanation: Refer to the correct answer of Q4 to get why B is correct.\nTo get an idea on why D is correct, we consider equation below.\nlog(y) = 5 * Age\nWhen Age increase by 1 then log(y) will increase by 5, hence the value of y will increase by an exponential of 5, exp(5).",
+      "solution_html": "<pre>Ans: both options B and D are correct. \nExplanation: Refer to the correct answer of Q4 to get why B is correct.\nTo get an idea on why D is correct, we consider equation below.\nlog(y) = 5 * Age\nWhen Age increase by 1 then log(y) will increase by 5, hence the value of y will increase by an exponential of 5, exp(5).</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "logistic regression"
+      ]
+    }
+  ]
+}

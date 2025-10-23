@@ -1,0 +1,42 @@
+{
+  "hash": "e3425341",
+  "configHash": "d5921aee",
+  "lockfileHash": "ca8f4f94",
+  "browserHash": "efa0a5e0",
+  "optimized": {
+    "@mui/material": {
+      "src": "../../node_modules/@mui/material/esm/index.js",
+      "file": "@mui_material.js",
+      "fileHash": "69962934",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "8a6dec97",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "72f4cab1",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "ca0337a0",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "react-BaqBjuxQ": {
+      "file": "react-BaqBjuxQ.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-Cndd9GYP": {
+      "file": "react-dom-Cndd9GYP.js",
+      "isDynamicEntry": false
+    }
+  }
+}

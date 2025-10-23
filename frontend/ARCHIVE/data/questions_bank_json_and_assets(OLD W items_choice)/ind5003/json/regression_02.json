@@ -1,0 +1,70 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05. The model is Y = β₀ + β₁ ln(X₁) + e, where X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python. What is the test statistic corresponding to the following hypothesis test? H₀: β₀ = 0; H₁: β₀ ≠ 0.",
+  "question_stem_html": "<p>Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math></p><p>where X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:</p><p>What is the test statistic corresponding to the following hypothesis test?</p><p><em>H</em><sub>0</sub>: β₀ = 0</p><p><em>H</em><sub>1</sub>: β₀ ≠ 0</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T16:45:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_01.png",
+      "alt": "OLS Regression Results table from Python output showing coefficients for Intercept and ldist."
+    }
+  ],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "95.0169",
+          "is_correct": false,
+          "explanation": "This is the estimate of β̂₀ (the intercept), not the test statistic."
+        },
+        {
+          "choice_id": "B",
+          "text": "36.034",
+          "is_correct": true,
+          "explanation": "This is the t-statistic corresponding to the hypothesis test for H₀: β₀ = 0."
+        },
+        {
+          "choice_id": "C",
+          "text": "-21.959",
+          "is_correct": false,
+          "explanation": "This is the t-statistic for testing H₀: β₁ = 0."
+        },
+        {
+          "choice_id": "D",
+          "text": "482.2",
+          "is_correct": false,
+          "explanation": "This is the F-statistic for the regression model."
+        },
+        {
+          "choice_id": "E",
+          "text": "2.52e-71",
+          "is_correct": false,
+          "explanation": "This is the p-value for the F-statistic, not the test statistic."
+        },
+        {
+          "choice_id": "F",
+          "text": "0.000",
+          "is_correct": false,
+          "explanation": "This is the p-value for the hypothesis test, not the test statistic."
+        }
+      ],
+      "items_media": [],
+      "scoring": { "points": 1.0 },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "36.034",
+      "solution_html": "<p>The correct test statistic for H<sub>0</sub>: β₀ = 0 is the t-value corresponding to the intercept, which is <strong>36.034</strong>.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "inference"]
+    }
+  ]
+}

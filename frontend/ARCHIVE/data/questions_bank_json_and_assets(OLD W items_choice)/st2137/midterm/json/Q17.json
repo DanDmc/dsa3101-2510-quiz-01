@@ -1,0 +1,86 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 17,
+  "is_multi": false,
+  "question_stem": "The following is a histogram of Fine.Aggr. from the concrete dataset used in our lecture notes. \n\nThe two density plots below (of the same variable as above) were created in R, using density(). Which single argument was modified, in order to create the two variations of the density plot?",
+  "question_stem_html": "<div><p><span data-contrast=\"none\">The following is a histogram of Fine.Aggr. from the concrete dataset used in our lecture notes.</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/r_density_args-001.png\" alt=\"r_density_args-001.png\" width=\"695\" height=\"278\" loading=\"lazy\"></p>\n<p><span data-contrast=\"none\">The two density plots below (of the same variable as above) were created in R, using density(). Which <em>single</em> argument was modified, in order to create the two variations of the density plot?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/r_density_args-002.png\" alt=\"r_density_args-002.png\" width=\"835\" height=\"334\" loading=\"lazy\"></span></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/r_density_args-001.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/r_density_args-002.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "The following is a histogram of Fine.Aggr. from the concrete dataset used in our lecture notes. \n\nThe two density plots below (of the same variable as above) were created in R, using density(). Which single argument was modified, in order to create the two variations of the density plot?",
+      "part_stem_html": "<div><p><span data-contrast=\"none\">The following is a histogram of Fine.Aggr. from the concrete dataset used in our lecture notes.</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/r_density_args-001.png\" alt=\"r_density_args-001.png\" width=\"695\" height=\"278\" loading=\"lazy\"></p>\n<p><span data-contrast=\"none\">The two density plots below (of the same variable as above) were created in R, using density(). Which <em>single</em> argument was modified, in order to create the two variations of the density plot?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/r_density_args-002.png\" alt=\"r_density_args-002.png\" width=\"835\" height=\"334\" loading=\"lazy\"></span></p></div>",
+      "choices": [
+        {
+          "choice_id": "1190",
+          "text": "bw",
+          "text_html": "bw",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "1099",
+          "text": "density",
+          "text_html": "density",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "3574",
+          "text": "kernel",
+          "text_html": "kernel",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "8566",
+          "text": "weights",
+          "text_html": "weights",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/r_density_args-001.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/r_density_args-002.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

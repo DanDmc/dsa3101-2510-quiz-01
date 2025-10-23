@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 5 - Decision Trees\nConsider again the dataset <bank-sample.csv> given in the lecture of Topic 5. One would want to build a model (a decision tree) which helps to predict if a customer will subscribe the bank’s service. A decision tree was built using 4 features (marital, education, loan, poutcome) while subscribe (no/yes) is the response. Refer to the photo provided for all subsequent questions.\n\nPlease revise the lecture notes (pdf slides for the details of the 5 variables).\nNote: in order to score better for this quiz, please watch the pre-recorded videos and attend the live lecture. If you did not attend the live lecture, please watch the record of the live lecture well before taking this quiz.\n\nQuestion 1\nHow many people in the data set subscribed to the bank service?\nA\n1789\nB\n211\nC\n58\nD\n32",
+  "question_stem_html": "<pre>Quiz 5 - Decision Trees\nConsider again the dataset &lt;bank-sample.csv&gt; given in the lecture of Topic 5. One would want to build a model (a decision tree) which helps to predict if a customer will subscribe the bank’s service. A decision tree was built using 4 features (marital, education, loan, poutcome) while subscribe (no/yes) is the response. Refer to the photo provided for all subsequent questions.\n\nPlease revise the lecture notes (pdf slides for the details of the 5 variables).\nNote: in order to score better for this quiz, please watch the pre-recorded videos and attend the live lecture. If you did not attend the live lecture, please watch the record of the live lecture well before taking this quiz.\n\nQuestion 1\nHow many people in the data set subscribed to the bank service?\nA\n1789\nB\n211\nC\n58\nD\n32</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "211",
+          "text_html": "<p>211</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "58",
+          "text_html": "<p>58</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "32",
+          "text_html": "<p>32</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz7",
+  "question_no": 17,
+  "is_multi": "",
+  "question_stem": "Researchers are interested in the effect of a certain nutrient on the growth rate of plant seedlings. Using a hydroponics grow procedure that utilized water containing the nutrient, they planted 25 tomato plants and recorded the heights of each plant 14 days after germination. Those heights, measured in millimeters have sample mean and sample standard deviation computed are 62.20 and 4.71 respectively. Give your answer to 3 decimal places.\n \nFind the point estimate of the population mean height of this variety of seedling 14 days after germination. [6aaadaed-8092-4e54-8913-8cdbe6b4ad01]\nFind the multiplier for the standard error for a 95% confidence interval. [08baf654-b342-42d3-821e-b6c2098fe5db]\nFind the margin of error for a 95% confidence interval. [6b223acd-59a3-4e1c-bbb1-30dae65bef69]\nFind the lower bound of the 95% confidence interval. [a36c8c1a-985f-4bb3-a45a-06a9180bb57a]\nFind the upper bound of the 95% confidence interval. [01174be3-11e5-476e-a5a1-e3697ba5c31a]",
+  "question_stem_html": "<div>\n<p>Researchers are interested in the effect of a certain nutrient on the growth rate of plant seedlings. Using a hydroponics grow procedure that utilized water containing the nutrient, they planted 25 tomato plants and recorded the heights of each plant 14 days after germination. Those heights, measured in millimeters have sample mean and sample standard deviation computed are 62.20 and 4.71 respectively. <strong>Give your answer to 3 decimal places.</strong></p>\n<p>&nbsp;</p>\n<p>Find the point estimate of the population mean height of this variety of seedling 14 days after germination. [6aaadaed-8092-4e54-8913-8cdbe6b4ad01]</p>\n<p><em></em>Find the multiplier for the standard error for a 95% confidence interval.<em> </em>[08baf654-b342-42d3-821e-b6c2098fe5db]</p>\n<p>Find the margin of error for a 95% confidence interval. [6b223acd-59a3-4e1c-bbb1-30dae65bef69]</p>\n<p>Find the lower bound of the 95% confidence interval. [a36c8c1a-985f-4bb3-a45a-06a9180bb57a]</p>\n<p>Find the upper bound of the 95% confidence interval. [01174be3-11e5-476e-a5a1-e3697ba5c31a]</p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "d",
+      "type": "free response",
+      "subtype": "fitb",
+      "part_stem": "Find the lower bound of the 95% confidence interval.",
+      "part_stem_html": "",
+      "choices": [],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 25,
+  "is_multi": false,
+  "question_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.\nThe value of 0.0148 corresponds to ∑i=1k∑j=1ni(Yij−Y¯¯)2 where Y¯¯ corresponds to the overall mean of all observations.",
+  "question_stem_html": "<p>In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.</p>\n<p>The value of 0.0148 corresponds to ∑i=1k∑j=1ni(Yij−Y¯¯)2 where Y¯¯ corresponds to the overall mean of all observations.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image13.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.\nThe value of 0.0148 corresponds to ∑i=1k∑j=1ni(Yij−Y¯¯)2 where Y¯¯ corresponds to the overall mean of all observations.",
+      "part_stem_html": "<p>In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output.</p>\n<p>The value of 0.0148 corresponds to ∑i=1k∑j=1ni(Yij−Y¯¯)2 where Y¯¯ corresponds to the overall mean of all observations.</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image13.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 10,
+  "is_multi": false,
+  "question_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2). The following code was run to create histograms for each plant.\nlibrary(lattice)\nwip \n\nWIP histograms\n\nWhat proportion of the sample from plant 1 has WIP less than or equals to 10 hours?",
+  "question_stem_html": "<div><p> </p>\n<p>In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.</p>\n<p>The data set <code>wip.txt</code> contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).</p>\n<p>There are two variables in the data set: <code>time</code> and <code>plant</code> (either 1 or 2). The following code was run to create histograms for each plant.</p>\n<pre><code>library(lattice)\nwip <- read.table(\"../data/wip.txt\", header=TRUE)\nhistogram(~time | plant, breaks=seq(0, 30, by=5), data=wip, type=\"density\")</code></pre>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-3-1.png?canvas_download=1\" alt=\"WIP histograms\" loading=\"lazy\">\n<p class=\"caption\">WIP histograms</p>\n</div>\n<p>What proportion of the sample from plant 1 has WIP less than or equals to 10 hours?</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/unnamed-chunk-3-1.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2). The following code was run to create histograms for each plant.\nlibrary(lattice)\nwip \n\nWIP histograms\n\nWhat proportion of the sample from plant 1 has WIP less than or equals to 10 hours?",
+      "part_stem_html": "<div><p> </p>\n<p>In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.</p>\n<p>The data set <code>wip.txt</code> contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).</p>\n<p>There are two variables in the data set: <code>time</code> and <code>plant</code> (either 1 or 2). The following code was run to create histograms for each plant.</p>\n<pre><code>library(lattice)\nwip <- read.table(\"../data/wip.txt\", header=TRUE)\nhistogram(~time | plant, breaks=seq(0, 30, by=5), data=wip, type=\"density\")</code></pre>\n<div class=\"figure\" style=\"text-align: center;\"><img src=\"$IMS-CC-FILEBASE$/assessment_questions/unnamed-chunk-3-1.png?canvas_download=1\" alt=\"WIP histograms\" loading=\"lazy\">\n<p class=\"caption\">WIP histograms</p>\n</div>\n<p>What proportion of the sample from plant 1 has WIP less than or equals to 10 hours?</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "82763",
+          "text": "0.4",
+          "text_html": "0.4",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "64216",
+          "text": "0.08",
+          "text_html": "0.08",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "92252",
+          "text": "0.13",
+          "text_html": "0.13",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "83943",
+          "text": "0.65",
+          "text_html": "0.65",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/unnamed-chunk-3-1.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "The histogram on the left corresponds to plant = 1.\nThe width of each bin is 5.\nTo find the proportion less than or equals to 10, we find the area of the first two rectangles (from the left.)\nThis yields: 0.12 * 5 + 0.01*5 = 0.65\nRemember that when density is TRUE, the sum of the area of the rectangles will be 1.\n\nThe histogram on the left corresponds to plant = 1.\nTo find the proportion less than or equals to 10,  find the area of the first two rectangles (from the left.)",
+      "solution_html": "<p>The histogram on the left corresponds to plant = 1.</p>\n<p>The width of each bin is 5.</p>\n<p>To find the proportion less than or equals to 10, we find the area of the first two rectangles (from the left.)</p>\n<p>This yields: 0.12 * 5 + 0.01*5 = 0.65</p>\n<p>Remember that when density is TRUE, the sum of the <span style=\"text-decoration: underline;\"><strong>area</strong></span> of the rectangles will be 1.</p>\n\n<p>The histogram on the left corresponds to plant = 1.</p>\n<p>To find the proportion less than or equals to 10,  find the area of the first two rectangles (from the left.)</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

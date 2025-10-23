@@ -1,0 +1,68 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("winequality-red.csv", dir="../data/wine+quality/")
+tmp_out <- include_supplement("winequality-white.csv", dir="../data/wine+quality/")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+
+from sklearn import tree
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import ConfusionMatrixDisplay
+
+wine_red = pd.read_csv("winequality-red.csv", delimiter=";" )
+wine_red['type'] = "red"
+wine_white = pd.read_csv("winequality-white.csv", delimiter=";")
+wine_white['type'] = "white"
+
+# remove spaces in column names:
+col_names = ['fixed_acidity', 'volatile_acidity', 'citric_acid', 'residual_sugar',
+             'chlorides', 'free_sulfur_dioxide', 'total_sulfur_dioxide',
+             'density', 'pH', 'sulphates', 'alcohol', 'quality', 'type']
+wine2 = pd.concat([wine_red, wine_white], ignore_index=True)
+wine2.columns = col_names
+```
+
+Question
+========
+The (red and white) wine quality datasets from the unsupervised learning topic 
+have been merged into a single dataframe with 6497 rows. A decision tree 
+classifier has been fit to the dataset as follows:
+
+```{python fig.align="center", fig.cap="Confusion matrix"}
+y = [1 if x=="red" else 0 for x in wine2.type]
+X = wine2.iloc[:, 0:11]
+X_train,X_test,y_train,y_test = train_test_split(X, y, test_size=0.2, random_state=14, stratify=y)
+
+clf = tree.DecisionTreeClassifier(max_depth=4)
+clf.fit(X_train, y_train)
+
+y_pred_train = clf.predict(X_train)
+ConfusionMatrixDisplay.from_predictions(y_train, y_pred_train, labels=clf.classes_, cmap='bone');
+```
+
+Compute the following metrics for **white wine** category, to 3 d.p.:
+
+* precision: ______(1)______
+* recall:    ______(2)______
+* accuracy:  ______(3)______
+
+Solution
+========
+
+* 3908/(3908+60) = 0.985
+* 3908/(3908+10) = 0.997
+* (3908+1219)/(5197) = 0.987
+
+Meta-information
+================
+exname: supervised, wine
+extype: string
+exstringtype: essay
+exsolution: nil

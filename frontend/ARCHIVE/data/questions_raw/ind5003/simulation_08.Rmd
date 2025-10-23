@@ -1,0 +1,38 @@
+Question
+========
+In Python, the following commands can be used to initialise the random number
+generator. Assess if the following statement is true or false.
+
+Random variables *cannot* be generated in Python without explicitly setting the
+seed.
+
+```
+from numpy.random import default_rng
+rng = default_rng(5003)
+```
+
+Answerlist
+----------
+
+* True
+* False
+
+Solution
+========
+
+Answerlist
+----------
+
+* The statement is incorrect. We can always jump straight into generation
+  without setting the seed; Python will use a function of the timestamp to 
+  set the seed.
+* Well done! The statement is indeed false. We can always begin generating 
+  without setting the seed.
+
+Meta-information
+================
+exname: simulation seed
+extype: schoice
+exsolution: 01
+exshuffle: 2
+

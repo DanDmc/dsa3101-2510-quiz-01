@@ -1,0 +1,33 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q44.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q44.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q44",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 44,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "4 TV repairmen and 8 jobs; each job assigned to one repairman, repetitions allowed. How many assignments?",
+      "question_stem_html": "4 TV repairmen and 8 jobs; each job assigned to one repairman, repetitions allowed. How many assignments?",
+      "concept_tags": [
+        "functions counting",
+        "assignments"
+      ],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

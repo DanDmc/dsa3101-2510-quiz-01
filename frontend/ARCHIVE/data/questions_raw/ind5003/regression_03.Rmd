@@ -1,0 +1,63 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following simple linear regression model has been fitted to the 
+Taiwan real estate data from topic 05:
+
+$$
+Y = \beta_0 + \beta_1 \ln (X_1) + e
+$$
+
+where $X_1$ corresponds to distance to the nearest MRT. Which of the following 
+is/are correct interpretations of the fitted equation:
+$$
+\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 \ln (X_1)
+$$
+
+Answerlist
+----------
+* Every one unit increase in distance-to-MRT is associated with an average increase 
+  of $\beta$-units in $Y$.
+* Every one unit increase in distance-to-MRT is associated with an average increase 
+  of $\hat{\beta}$-units in $Y$.
+* Every doubling of distance-to-MRT is associated with an average increase of 
+  $\ln(2) \times \hat{\beta}$-units in $Y$.
+* Every one unit increase in $\ln(X)$ is associated with an average increase of 
+  $\hat{\beta}$-units in $Y$.
+
+Solution
+========
+
+Suppose that $\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 \ln(X_1)$. Then if we double 
+$X' = 2 X_1$, 
+
+\begin{eqnarray}
+\hat{Y}' &=& \hat{\beta}_0 + \hat{\beta}_1 \ln(X') \\ 
+&=& \hat{\beta}_0 + \hat{\beta}_1 \ln(2 X) \\  
+&=& \hat{\beta}_0 + \hat{\beta}_1 (\ln(2) + \ln(X)) \\  
+&=& \hat{\beta}_1 \ln(2) + \hat{Y}
+\end{eqnarray}
+
+Answerlist
+----------
+* False
+* False
+* True
+* True
+
+Meta-information
+================
+exname: regression, inference, taiwan
+extype: mchoice
+exsolution: 0011
+exshuffle: 4

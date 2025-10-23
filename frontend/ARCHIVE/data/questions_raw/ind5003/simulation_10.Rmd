@@ -1,0 +1,32 @@
+Question
+========
+
+Which of the following is a discrete random variable? 
+
+Answerlist
+----------
+
+* The amount of rainfall in a given day.  
+* The number of coin tosses until we observe heads.  
+* The time taken for a car to travel between two cities.  
+* The height of a randomly chosen student. 
+
+Solution
+========
+
+Answerlist
+----------
+
+* Continuous
+* Yes, this will be an integer count, so it is discrete. It could be a very
+  very large number though!
+* This is a variable that could be recorded with infinite precision. It is
+  continuous.
+* This is also continuous.
+
+Meta-information
+================
+exname: regression 
+extype: schoice
+exsolution: 0100
+exshuffle: 4

@@ -1,0 +1,23 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "An analyst at an airline company wishes to estimate how often passengers will need to wait for available check-in counters during peak travel seasons. The analyst plans to run a simulation to understand the relationship between the number of open counters, the passenger arrival rate, and the average time each passenger spends at the counter.\nWhat data should the analyst collect before implementing the solution?",
+  "question_stem_html": "<p>An analyst at an airline company wishes to estimate how often passengers will need to wait for available check-in counters during peak travel seasons. The analyst plans to run a simulation to understand the relationship between the number of open counters, the passenger arrival rate, and the average time each passenger spends at the counter.</p><p><strong>What data should the analyst collect before implementing the solution?</strong></p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:58:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "open-ended",
+      "subtype": "essay",
+      "solution_html": "<p>Here are some possible suggestions:</p><ol><li>Passenger arrival rates during peak travel times (e.g., how many passengers arrive per hour).</li><li>Number of check-in counters open at different times of day.</li><li>Average time a passenger spends at the counter (e.g., check-in process time).</li><li>Variations due to different passenger types (e.g., business, economy, families).</li></ol>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "data to collect"]
+    }
+  ]
+}

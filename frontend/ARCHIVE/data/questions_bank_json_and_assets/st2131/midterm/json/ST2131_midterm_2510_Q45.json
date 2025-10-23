@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q45.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q45.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q45",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 45,
+      "question_type": "mcq",
+      "difficulty_level": 0.64,
+      "question_stem": "If P(A) = 1/4 and P(B) = 1/3, then P(A ∪ B) ≥ 7/12.",
+      "question_stem_html": "<p>If P(A) = 1/4 and P(B) = 1/3, then <em>P(A ∪ B) ≥ 7/12</em>.</p>",
+      "concept_tags": [],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

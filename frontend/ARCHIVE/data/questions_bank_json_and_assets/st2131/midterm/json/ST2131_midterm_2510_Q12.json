@@ -1,0 +1,35 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q12.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q12.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q12",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 12,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "Two fair six-sided dice are rolled. Let X be the product of the two dice. What is P(X ≥ 33)?",
+      "question_stem_html": "<p>Two fair six-sided dice are rolled. Let <em>X</em> be the product of the two dice. What is \\( P(X \\ge 33) \\)?</p>",
+      "concept_tags": [
+        "probability",
+        "dice",
+        "discrete random variable",
+        "event counting"
+      ],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

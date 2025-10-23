@@ -1,0 +1,28 @@
+Question
+========
+
+An analyst at an airline company wishes to estimate how often passengers will
+need to wait for available check-in counters during peak travel seasons. The
+analyst plans to run a simulation to understand the relationship between the
+number of open counters, the passenger arrival rate, and the average time each
+passenger spends at the counter.
+
+What data should the analyst collect before implementing the solution?
+
+Solution
+========
+
+Here are some possible suggestions:
+
+1. Passenger arrival rates during peak travel times (e.g., how many passengers arrive per hour).
+2. Number of check-in counters open at different times of day. 
+3. Average time a passenger spends at the counter (e.g., check-in process time).
+4. Variations due to different passenger types (e.g., business, economy, families).
+
+
+Meta-information
+================
+exname: simulation, data to collect
+extype: string
+exstringtype: essay
+exsolution: nil

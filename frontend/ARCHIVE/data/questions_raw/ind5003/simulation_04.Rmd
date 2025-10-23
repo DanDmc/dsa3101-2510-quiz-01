@@ -1,0 +1,33 @@
+Question
+========
+
+An analyst working for a ride-sharing company wants to estimate the average
+waiting time for passengers during peak hours. The analyst intends to use 
+simulation modeling to understand how different factors such as the
+number of available drivers, traffic conditions, and demand for rides, affect
+waiting times over the course of a week.
+
+As the analyst *prepares to run this simulation*, what **specific** data should they
+collect to calibrate the model accurately? 
+
+Solution
+========
+
+Here are some possible suggestions:
+
+1. Passenger demand during peak hours (e.g., number of ride requests per hour).
+2. Number of drivers available during peak hours.
+3. Traffic condition data during peak hours (e.g., average speed or congestion levels).
+4. Average time it takes for drivers to reach passengers based on different 
+   locations in the city.
+5. Variability in response times due to weather conditions or special events.
+6. Cancellation rates (both passenger and driver).
+
+
+
+Meta-information
+================
+exname: simulation, data to collect
+extype: string
+exstringtype: essay
+exsolution: nil

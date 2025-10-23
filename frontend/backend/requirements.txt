@@ -1,0 +1,19 @@
+# --- Core ---
+python-dotenv          # for reading .env variables (e.g. Gemini API key)
+requests               # if you use any direct HTTP calls
+
+# --- Database ---
+mysql-connector-python # connects Python → MySQL (used in insert_to_db.py)
+
+# --- PDF handling ---
+pdfplumber             # extract text from PDFs
+pillow                 # pdfplumber dependency for page images (optional but safe)
+
+# --- Google AI Studio / Gemini ---
+google-generativeai    # official Gemini API SDK
+
+# --- Flask (for future UI integration) ---
+flask                  # lightweight web server for upload/verify routes
+
+# --- Docker support (optional utilities) ---
+gunicorn               # production WSGI server if you ever deploy Flask in Docker

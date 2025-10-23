@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 15,
+  "is_multi": false,
+  "question_stem": "",
+  "question_stem_html": "",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:20:59+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "",
+      "part_stem_html": "",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "deck of playing cards has 52 cards. Four of these cards are Aces. Suppose that a well-shuffled deck of cards is dealt out. What is the probability that the 14th card dealt out is an Ace?",
+          "text_html": "<p>deck of playing cards has 52 cards. Four of these cards are Aces. Suppose that a well-shuffled deck of cards is dealt out. What is the probability that the 14th card dealt out is an Ace?</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "A",
+          "text": "1/13",
+          "text_html": "<p>1/13</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "1/4",
+          "text_html": "<p>1/4</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "1/52",
+          "text_html": "<p>1/52</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "The heifers dataset was introduced on in the topic on ANOVA. An analyst used SAS to run the ANOVA procedure and estimate the contrast comparing the Control group to the rest of the five groups. This is the code that the analyst used:\nproc glm data=ST2137.HEIFERS;\nclass type;\nmodel org=type / clparm;\nmeans type / hovtest=levene welch plots=none;\nlsmeans type / adjust=tukey pdiff alpha=.05;\nestimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;\nrun;\nThe essential output for this particular contrast can be seen in the following figures:\nUse Python to recreate\nthe point estimate of the contrast, and\nthe confidence interval for the contrast.",
+  "question_stem_html": "<p>The heifers dataset was introduced on in the topic on ANOVA. An analyst used SAS to run the ANOVA procedure and estimate the contrast comparing the Control group to the rest of the five groups. This is the code that the analyst used:</p>\n<p>proc glm data=ST2137.HEIFERS;</p>\n<p>class type;</p>\n<p>model org=type / clparm;</p>\n<p>means type / hovtest=levene welch plots=none;</p>\n<p>lsmeans type / adjust=tukey pdiff alpha=.05;</p>\n<p>estimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;</p>\n<p>run;</p>\n<p>The essential output for this particular contrast can be seen in the following figures:</p>\n<p>Use Python to recreate</p>\n<p>the point estimate of the contrast, and</p>\n<p>the confidence interval for the contrast.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image4.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image5.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image6.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "The heifers dataset was introduced on in the topic on ANOVA. An analyst used SAS to run the ANOVA procedure and estimate the contrast comparing the Control group to the rest of the five groups. This is the code that the analyst used:\nproc glm data=ST2137.HEIFERS;\nclass type;\nmodel org=type / clparm;\nmeans type / hovtest=levene welch plots=none;\nlsmeans type / adjust=tukey pdiff alpha=.05;\nestimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;\nrun;\nThe essential output for this particular contrast can be seen in the following figures:\nUse Python to recreate\nthe point estimate of the contrast, and\nthe confidence interval for the contrast.",
+      "part_stem_html": "<p>The heifers dataset was introduced on in the topic on ANOVA. An analyst used SAS to run the ANOVA procedure and estimate the contrast comparing the Control group to the rest of the five groups. This is the code that the analyst used:</p>\n<p>proc glm data=ST2137.HEIFERS;</p>\n<p>class type;</p>\n<p>model org=type / clparm;</p>\n<p>means type / hovtest=levene welch plots=none;</p>\n<p>lsmeans type / adjust=tukey pdiff alpha=.05;</p>\n<p>estimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;</p>\n<p>run;</p>\n<p>The essential output for this particular contrast can be seen in the following figures:</p>\n<p>Use Python to recreate</p>\n<p>the point estimate of the contrast, and</p>\n<p>the confidence interval for the contrast.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image4.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image5.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image6.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 6.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Question 3\nWhich of the following lines of code will output the predicted probabilities of subscribing the bank service for the testing data?\nA\npredict(M1, newdata = bank.test)\nB\npredict(M1, newdata = bank.test, type = \"prob\")\nC\npredict(M1, newdata = bank.test, type = \"class\")\nD\npredict(M1, newdata = bank.test, type = \"raw\")",
+  "question_stem_html": "<pre>Question 3\nWhich of the following lines of code will output the predicted probabilities of subscribing the bank service for the testing data?\nA\npredict(M1, newdata = bank.test)\nB\npredict(M1, newdata = bank.test, type = &quot;prob&quot;)\nC\npredict(M1, newdata = bank.test, type = &quot;class&quot;)\nD\npredict(M1, newdata = bank.test, type = &quot;raw&quot;)</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redict(M1, newdata = bank.test, type = \"prob\")",
+          "text_html": "<p>redict(M1, newdata = bank.test, type = &quot;prob&quot;)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redict(M1, newdata = bank.test, type = \"class\")",
+          "text_html": "<p>redict(M1, newdata = bank.test, type = &quot;class&quot;)</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redict(M1, newdata = bank.test, type = \"raw\")",
+          "text_html": "<p>redict(M1, newdata = bank.test, type = &quot;raw&quot;)</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

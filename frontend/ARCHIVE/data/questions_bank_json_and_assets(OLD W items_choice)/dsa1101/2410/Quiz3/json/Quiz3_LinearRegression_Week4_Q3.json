@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Q3. The coefficient table from the summary output of model M2 and model M3 will be the same. True or False?",
+  "question_stem_html": "<pre>Q3. The coefficient table from the summary output of model M2 and model M3 will be the same. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "ANS: TRUE\nThe R code in line 16 has declared with R that column “color” inside data frame “crab” is categorical, hence, when fitting M3 with “data = crab” in line 18, R will have 3 coefficients for color. \nIt’s recommended to fit a linear model as M3."
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: TRUE\nThe R code in line 16 has declared with R that column “color” inside data frame “crab” is categorical, hence, when fitting M3 with “data = crab” in line 18, R will have 3 coefficients for color. \nIt’s recommended to fit a linear model as M3.",
+      "solution_html": "<pre>ANS: TRUE\nThe R code in line 16 has declared with R that column “color” inside data frame “crab” is categorical, hence, when fitting M3 with “data = crab” in line 18, R will have 3 coefficients for color. \nIt’s recommended to fit a linear model as M3.</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

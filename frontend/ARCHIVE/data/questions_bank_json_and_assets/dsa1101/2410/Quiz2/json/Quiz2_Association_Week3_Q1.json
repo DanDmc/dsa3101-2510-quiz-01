@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 2\nContent: Exploring the association between variables in a data set\nIn 1990, 1200 post-menopausal women were recruited for a study to\ninvestigate the effect of a Post-Menopausal Hormone (PMH) on the\nincidence of breast cancer (200 users and 1000 non-users). \nGiven a data set of 1200 women, breast_cancer.csv, in which we concern the columns below.\nbbd: Status having breast cancer, 1= Yes and 0 = No\nagemenop (Age): The age of the woman at menopausal\npmh: Status whether or not the woman use PMH (post-menopausal hormone). 2 = No and 3 = Yes\nbmi: The body mass index\n\nPurpose: We want to form a model/classifier that help us to predict the status of having breast cancer for women, based on their information of Age, PMH and BMI. \n\nQ1. In order to know if we should use variable Age in the model/classifier, we should explore the association between the response variable with Age. True or False?",
+  "question_stem_html": "<pre>Quiz 2\nContent: Exploring the association between variables in a data set\nIn 1990, 1200 post-menopausal women were recruited for a study to\ninvestigate the effect of a Post-Menopausal Hormone (PMH) on the\nincidence of breast cancer (200 users and 1000 non-users). \nGiven a data set of 1200 women, breast_cancer.csv, in which we concern the columns below.\nbbd: Status having breast cancer, 1= Yes and 0 = No\nagemenop (Age): The age of the woman at menopausal\npmh: Status whether or not the woman use PMH (post-menopausal hormone). 2 = No and 3 = Yes\nbmi: The body mass index\n\nPurpose: We want to form a model/classifier that help us to predict the status of having breast cancer for women, based on their information of Age, PMH and BMI. \n\nQ1. In order to know if we should use variable Age in the model/classifier, we should explore the association between the response variable with Age. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: TRUE"
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: TRUE",
+      "solution_html": "<pre>Ans: TRUE</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

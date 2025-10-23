@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Q6. Using model M3 to predict the number of satell for a new crab with color = 4, width = 26 cm, weight = 2.6 kg. The code is given in lines 24 and 26. The code is correct. True or False?",
+  "question_stem_html": "<pre>Q6. Using model M3 to predict the number of satell for a new crab with color = 4, width = 26 cm, weight = 2.6 kg. The code is given in lines 24 and 26. The code is correct. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": "ANS: FALSE.\nModel M3 has color as categorical, hence when creating a new crab, we need to specify color as categorical, by putting the number inside a quote sign, such as:\nnew.crab = data.frame(weight = 2.6, width = 26, color = “4”)\npredict(M3, newdata = new.crab)\nshould predict the number of satellites for the new crab."
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: FALSE.\nModel M3 has color as categorical, hence when creating a new crab, we need to specify color as categorical, by putting the number inside a quote sign, such as:\nnew.crab = data.frame(weight = 2.6, width = 26, color = “4”)\npredict(M3, newdata = new.crab)\nshould predict the number of satellites for the new crab.",
+      "solution_html": "<pre>ANS: FALSE.\nModel M3 has color as categorical, hence when creating a new crab, we need to specify color as categorical, by putting the number inside a quote sign, such as:\nnew.crab = data.frame(weight = 2.6, width = 26, color = “4”)\npredict(M3, newdata = new.crab)\nshould predict the number of satellites for the new crab.</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

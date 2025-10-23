@@ -1,0 +1,51 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz2",
+  "question_no": 1,
+  "is_multi": "",
+  "question_stem": "Match the following variables to the boxplots that follow.\nVariable 1: ST1232 Exam score (median = 90.71, minimum = 57.9, maximum = 99.4)\nVariable 2: IQ score (median = 99)\nBoxplot 1:\nBoxplot 2: \nBoxplot 1 is Variable [ef12e363-d23a-447c-b3ec-cf492ce7cd86]\nBoxplot 2 is Variable [35266dbd-68fd-4ad6-ad04-c0f43a61f5ba]",
+  "question_stem_html": "<div>\n<p>Match the following variables to the boxplots that follow.</p>\n<p><strong>Variable 1: </strong>ST1232 Exam score (median = 90.71, minimum = 57.9, maximum = 99.4)</p>\n<p><strong>Variable 2: </strong>IQ score (median = 99)</p>\n<p><strong>Boxplot 1:<img src=\"$IMS-CC-FILEBASE$/Uploaded Media/boxplot1.png\" alt=\"boxplot1.png\" data-old-link=\"/courses/80987/files/6794478/preview\"></strong></p>\n<p><strong>Boxplot 2: <img src=\"$IMS-CC-FILEBASE$/Uploaded Media/boxplot2.png\" alt=\"boxplot2.png\" data-old-link=\"/courses/80987/files/6794479/preview\"></strong></p>\n<p>Boxplot 1 is Variable [ef12e363-d23a-447c-b3ec-cf492ce7cd86]</p>\n<p>Boxplot 2 is Variable [35266dbd-68fd-4ad6-ad04-c0f43a61f5ba]</p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [
+    {
+      "src": "assets/boxplot1.png",
+      "alt": "boxplot1.png"
+    },
+    {
+      "src": "assets/boxplot2.png",
+      "alt": "boxplot2.png"
+    }
+  ],
+  "items": [
+    {
+      "part_number": "",
+      "type": "free response",
+      "subtype": "essay",
+      "part_stem": "Match the following variables to the boxplots that follow.\nVariable 1: ST1232 Exam score (median = 90.71, minimum = 57.9, maximum = 99.4)\nVariable 2: IQ score (median = 99)\nBoxplot 1:\nBoxplot 2: \nBoxplot 1 is Variable [ef12e363-d23a-447c-b3ec-cf492ce7cd86]\nBoxplot 2 is Variable [35266dbd-68fd-4ad6-ad04-c0f43a61f5ba]",
+      "part_stem_html": "<div>\n<p>Match the following variables to the boxplots that follow.</p>\n<p><strong>Variable 1: </strong>ST1232 Exam score (median = 90.71, minimum = 57.9, maximum = 99.4)</p>\n<p><strong>Variable 2: </strong>IQ score (median = 99)</p>\n<p><strong>Boxplot 1:<img src=\"$IMS-CC-FILEBASE$/Uploaded Media/boxplot1.png\" alt=\"boxplot1.png\" data-old-link=\"/courses/80987/files/6794478/preview\"></strong></p>\n<p><strong>Boxplot 2: <img src=\"$IMS-CC-FILEBASE$/Uploaded Media/boxplot2.png\" alt=\"boxplot2.png\" data-old-link=\"/courses/80987/files/6794479/preview\"></strong></p>\n<p>Boxplot 1 is Variable [ef12e363-d23a-447c-b3ec-cf492ce7cd86]</p>\n<p>Boxplot 2 is Variable [35266dbd-68fd-4ad6-ad04-c0f43a61f5ba]</p>\n</div>",
+      "choices": [],
+      "items_media": [
+        {
+          "src": "assets/boxplot1.png",
+          "alt": "boxplot1.png"
+        },
+        {
+          "src": "assets/boxplot2.png",
+          "alt": "boxplot2.png"
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

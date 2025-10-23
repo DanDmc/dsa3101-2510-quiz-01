@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "When performing a hypothesis test, it is acceptable to specify the significance level after the pp-value has been computed.",
+  "question_stem_html": "<div><p> </p>\n<p>When performing a hypothesis test, it is acceptable to specify the significance level after the <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>p</mi><annotation encoding=\"application/x-tex\">p</annotation></semantics></math>-value has been computed.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "When performing a hypothesis test, it is acceptable to specify the significance level after the pp-value has been computed.",
+      "part_stem_html": "<div><p> </p>\n<p>When performing a hypothesis test, it is acceptable to specify the significance level after the <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mi>p</mi><annotation encoding=\"application/x-tex\">p</annotation></semantics></math>-value has been computed.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "17722",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "88980",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "This is known as data snooping and should be avoided. The significance level should be specified even before the data is collected.",
+      "solution_html": "This is known as data snooping and should be avoided. The significance level should be specified even before the data is collected.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

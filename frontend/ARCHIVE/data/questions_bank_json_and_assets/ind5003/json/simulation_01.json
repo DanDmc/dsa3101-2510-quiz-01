@@ -1,0 +1,29 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "In the notes, we estimated the sample size required for a two-sample t-test with a desired power.\n\nIn this question, suppose a researcher can only afford a sample of size 30 (per group). He wants to see how quickly power falls as a function of the standard deviation when detecting a difference of 1.2 units at α = 5%. At what standard deviation does power first drop below 0.5?\n\nModify the code from the lectures to run the appropriate simulation and create a plot similar to the one shown.",
+  "question_stem_html": "<p>In the notes, we estimated the sample size required for a two-sample <em>t</em>-test with a desired power.</p><p>Suppose a researcher can only afford a sample of size <strong>30 per group</strong>. He wants to see how quickly power falls as a function of the standard deviation when detecting a difference of <strong>1.2</strong> units at <strong>α = 5%</strong>. <strong>At what standard deviation does power first drop below 0.5?</strong></p><p>Modify the code from the lectures to run the appropriate simulation and create a plot similar to the one shown.</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:35:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/simulation_01.png",
+      "alt": "Power vs standard deviation plot with a horizontal line at power = 0.5."
+    }
+  ],
+  "items": [
+    {
+      "type": "code",
+      "language": "python",
+      "code_snippet": "import numpy as np\nimport matplotlib.pyplot as plt\nfrom numpy.random import default_rng\nfrom scipy import stats\n\nrng = default_rng(5003)\n\n# one simulated two-sample test\ndef one_test(alpha, delta, sd, n):\n    x = rng.normal(0.0, sd, size=n)\n    y = rng.normal(delta, sd, size=n)\n    t = stats.ttest_ind(x, y, equal_var=True)\n    return int(t.pvalue < alpha)\n\n# grid of standard deviations\nsd_vals = np.arange(0.5, 4.5 + 1e-9, 0.5)\nreps = 200\nalpha = 0.05\ndelta = 1.2\nn = 30\n\npower_est = []\nfor s in sd_vals:\n    hits = [one_test(alpha, delta, s, n) for _ in range(reps)]\n    power_est.append(np.mean(hits))\n\n# find first sd where power < 0.5\nfirst_below = next((float(s) for s, p in zip(sd_vals, power_est) if p < 0.5), None)\nprint(f\"First SD with power < 0.5 (grid): {first_below}\")\n\n# plot\nplt.plot(sd_vals, power_est, 'o-')\nplt.axhline(0.5, linestyle='--')\nplt.xlabel('Std. Deviation')\nplt.ylabel('Power')\nplt.title('Power Estimates (two-sample t-test)')\nplt.tight_layout()\nplt.show()",
+      "solution_html": "<p><strong>Answer:</strong> On the 0.5-step grid, power first drops below 0.5 at <strong>σ = 2.5</strong>. Using a continuous approximation (noncentral <em>t</em>/<em>z</em>), the crossover occurs near <strong>σ ≈ 2.4</strong>.</p><p><strong>Why:</strong> As σ increases, the standardized effect size δ / (σ·√(2/n)) shrinks, reducing power. For α = 0.05 (two-sided), the crossover is around when this standardized effect is ≈ 1.96.</p><p><strong>Code (used):</strong></p><pre><code>import numpy as np\nimport matplotlib.pyplot as plt\nfrom numpy.random import default_rng\nfrom scipy import stats\n\nrng = default_rng(5003)\n\ndef one_test(alpha, delta, sd, n):\n    x = rng.normal(0.0, sd, size=n)\n    y = rng.normal(delta, sd, size=n)\n    t = stats.ttest_ind(x, y, equal_var=True)\n    return int(t.pvalue &lt; alpha)\n\nsd_vals = np.arange(0.5, 4.5 + 1e-9, 0.5)\nreps = 200\nalpha = 0.05; delta = 1.2; n = 30\npower_est = [np.mean([one_test(alpha, delta, s, n) for _ in range(reps)]) for s in sd_vals]\nfirst_below = next((float(s) for s, p in zip(sd_vals, power_est) if p &lt; 0.5), None)\nprint(f\"First SD with power &lt; 0.5 (grid): {first_below}\")\n\nplt.plot(sd_vals, power_est, 'o-')\nplt.axhline(0.5, linestyle='--')\nplt.xlabel('Std. Deviation'); plt.ylabel('Power')\nplt.title('Power Estimates (two-sample t-test)'); plt.tight_layout(); plt.show()\n</code></pre>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["power", "simulation", "2-sample", "t-test", "python", "statsmodels"]
+    }
+  ]
+}

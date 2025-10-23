@@ -1,0 +1,81 @@
+Question
+========
+
+The Palma Ratio has been recently considered as an alternative to the Gini coefficient
+that we considered in class. Here is the definition of Palma ratio, from 
+[Wikipedia](https://en.wikipedia.org/wiki/Income_inequality_metrics#Palma_ratio):
+
+> The Palma ratio is defined as the ratio of the richest 10% of the population's share of gross national income divided by the poorest 40%'s share. It is based on the work of Chilean economist Gabriel Palma who found that middle class incomes almost always represent about half of gross national income while the other half is split between the richest 10% and poorest 40%, but the share of those two groups varies considerably across countries.
+
+Which of the following is a correct and working implementation of the Palma ratio,
+given an input pandas Series containing the individual income of the members in a 
+population.
+
+Answerlist
+----------
+
+* Option a:
+
+```{python, eval=FALSE}
+def compute_palma_ratio(income_series):
+    qs = income_series.quantile(q = [0.4, 0.9])
+    lower_total = income_series[income_series <= qs.iloc[0]].sum()
+    upper_total = income_series[income_series > qs.iloc[1]].sum()
+
+    return upper_total/lower_total
+```
+
+* Option b:
+
+```{python, eval=FALSE}
+def compute_palma_ratio_v1(income_series):
+    qs = income_series.quantile(q=[0.4, 0.9])
+    lower_total = income_series[income_series < qs.iloc[0]].sum()
+    upper_total = income_series[income_series > qs.iloc[1]].sum()
+    
+    return top_10_total / bottom_40_total
+```
+
+* Option c:
+
+```{python, eval=FALSE}
+def compute_palma_ratio_v2(income_series):
+    qs = income_series.quantile(q=[0.4, 0.9])
+    bottom_40_total = income_series[income_series > qs.iloc[0]].sum()
+    top_10_total = income_series[income_series <= qs.iloc[1]].sum()
+    
+    return top_10_total / bottom_40_total
+```
+
+* Option d:
+
+```{python, eval=FALSE}
+def compute_palma_ratio_v3(income_series):
+    qs = income_series.quantile(q=[0.4, 0.9])
+    bottom_40_total = income_series[income_series <= qs.iloc[0]].sum()
+    top_10_total = income_series[income_series > qs.iloc[1]].sum()
+    
+    if bottom_40_total != 0 
+      return top_10_total / bottom_40_total 
+    else
+      return float('inf')
+```
+
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct implementation
+* Syntax error from names of variables
+* Logical error
+* Syntax error from missing semi-colon
+
+Meta-information
+================
+exname: simulation, statements
+extype: schoice
+exsolution: 1000
+exshuffle: 4

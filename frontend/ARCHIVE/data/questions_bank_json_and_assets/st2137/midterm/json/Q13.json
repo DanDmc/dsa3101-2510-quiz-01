@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 13,
+  "is_multi": false,
+  "question_stem": "A sequence is generated using the following recursive relation: xn=2xn−1−xn−2,n≥3 x_n = 2x_{n-1} - x_{n-2},\\quad n \\ge 3  where x1=0x_1 = 0 and x2=1x_2=1.\nWrite Python code to find x30x_{30} and ∑i=130xi\\sum_{i=1}^{30} x_i.",
+  "question_stem_html": "<div><p> </p>\n<p>A sequence is generated using the following recursive relation: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub><mo>,</mo><mspace></mspace><mi>n</mi><mo>≥</mo><mn>3</mn></mrow><annotation encoding=\"application/x-tex\"> x_n = 2x_{n-1} - x_{n-2},\\quad n \\ge 3 </annotation></semantics></math> where <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding=\"application/x-tex\">x_1 = 0</annotation></semantics></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding=\"application/x-tex\">x_2=1</annotation></semantics></math>.</p>\n<p>Write Python code to find <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\">x_{30}</annotation></semantics></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>30</mn></msubsup><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">\\sum_{i=1}^{30} x_i</annotation></semantics></math>.</p>\n<p><br><br><br></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "A sequence is generated using the following recursive relation: xn=2xn−1−xn−2,n≥3 x_n = 2x_{n-1} - x_{n-2},\\quad n \\ge 3  where x1=0x_1 = 0 and x2=1x_2=1.\nWrite Python code to find x30x_{30} and ∑i=130xi\\sum_{i=1}^{30} x_i.",
+      "part_stem_html": "<div><p> </p>\n<p>A sequence is generated using the following recursive relation: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub><mo>,</mo><mspace></mspace><mi>n</mi><mo>≥</mo><mn>3</mn></mrow><annotation encoding=\"application/x-tex\"> x_n = 2x_{n-1} - x_{n-2},\\quad n \\ge 3 </annotation></semantics></math> where <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding=\"application/x-tex\">x_1 = 0</annotation></semantics></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding=\"application/x-tex\">x_2=1</annotation></semantics></math>.</p>\n<p>Write Python code to find <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\">x_{30}</annotation></semantics></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>30</mn></msubsup><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">\\sum_{i=1}^{30} x_i</annotation></semantics></math>.</p>\n<p><br><br><br></p></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "import numpy as np\nx = np.zeros((30,))\nx[1] = 1.0\n\nfor i in range(2,30):\n  x[i] = 2*x[i-1] - x[i-2]\nThe value of x30      x_{30}\">x30 x_{30} is 29 and the sum is 435.\n\nimport numpy as np\nx = np.zeros((30,))\nx[1] = 1.0\n\nfor i in range(2,30):\n  x[i] = 2*x[i-1] - x[i-2]\nThe value of x30      x_{30}\">x30 x_{30} is 29 and the sum is 435.\n\nimport numpy as np\nx = np.zeros((30,))\nx[1] = 1.0\n\nfor i in range(2,30):\n  x[i] = 2*x[i-1] - x[i-2]\nThe value of x30      x_{30}\" role=\"presentation\">x30      x_{30} is 29 and the sum is\n435.",
+      "solution_html": "<pre><code>import numpy as np\nx = np.zeros((30,))\nx[1] = 1.0\n\nfor i in range(2,30):\n  x[i] = 2*x[i-1] - x[i-2]</code></pre>\n<p>The value of <span id=\"MathJax-Element-8-Frame\" class=\"MathJax_SVG\" style=\"font-size: 100%; display: inline-block; position: relative;\" role=\"presentation\" data-mathml=\"<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\">      x_{30}</annotation></semantics></math>\"><span class=\"MJX_Assistive_MathML\" role=\"presentation\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\"> x_{30}</annotation></semantics></math></span></span> is 29 and the sum is 435.</p>\n\n<pre><code>import numpy as np\nx = np.zeros((30,))\nx[1] = 1.0\n\nfor i in range(2,30):\n  x[i] = 2*x[i-1] - x[i-2]</code></pre>\n<p>The value of <span id=\"MathJax-Element-8-Frame\" class=\"MathJax_SVG\" style=\"font-size: 100%; display: inline-block; position: relative;\" role=\"presentation\" data-mathml=\"<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\">      x_{30}</annotation></semantics></math>\"><span class=\"MJX_Assistive_MathML\" role=\"presentation\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\"> x_{30}</annotation></semantics></math></span></span> is 29 and the sum is 435.</p>\n\n<pre><code>import numpy as np\nx = np.zeros((30,))\nx[1] = 1.0\n\nfor i in range(2,30):\n  x[i] = 2*x[i-1] - x[i-2]</code></pre>\n<p>The value of <span class=\"MathJax_Preview\" style=\"color: inherit;\"></span><span style=\"font-size: 100%; display: inline-block; position: relative;\" class=\"MathJax_SVG\" id=\"MathJax-Element-9-Frame\" data-mathml=\"<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\">      x_{30}</annotation></semantics></math>\" role=\"presentation\"><span class=\"MJX_Assistive_MathML\" role=\"presentation\"><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>x</mi><mn>30</mn></msub><annotation encoding=\"application/x-tex\">      x_{30}</annotation></semantics></math></span></span> is 29 and the sum is\n435.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

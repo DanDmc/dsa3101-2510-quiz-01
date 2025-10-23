@@ -1,0 +1,57 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "What is the shape of the training dataset (without the labels) when the following code is executed?",
+  "question_stem_html": "<p>What is the shape of the <em>training dataset</em> (without the labels) when the following code is executed?</p><pre><code class=\"language-python\">from sklearn.model_selection import train_test_split\nimport numpy as np\n\n# Generate sample data\nX = np.random.rand(100, 5)\ny = np.random.randint(0, 2, 100)\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nprint(X_train.shape)\n</code></pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:45:00+08:00",
+   "question_media": [
+    {
+      "src": "assets/supervised_03.png",
+      "alt": "Python Code."
+    } 
+  ],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "(80, 5)",
+          "is_correct": true,
+          "explanation": "True"
+        },
+        {
+          "choice_id": "B",
+          "text": "(100, 5)",
+          "is_correct": false,
+          "explanation": "False"
+        },
+        {
+          "choice_id": "C",
+          "text": "(20, 5)",
+          "is_correct": false,
+          "explanation": "False"
+        },
+        {
+          "choice_id": "D",
+          "text": "(80, 2)",
+          "is_correct": false,
+          "explanation": "False"
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "(80, 5)",
+      "solution_html": "<p>(80, 5)</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "train-test-split", "numpy", "data-shapes"]
+    }
+  ]
+}

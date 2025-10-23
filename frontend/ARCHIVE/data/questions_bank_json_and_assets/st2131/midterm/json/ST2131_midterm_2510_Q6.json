@@ -1,0 +1,107 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q6.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q6.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q6",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 6,
+      "question_type": "mcq",
+      "difficulty_level": null,
+      "question_stem": "Which of the following is not a cumulative distribution function?",
+      "question_stem_html": "<p>Which of the following is <strong>not</strong> a cumulative distribution function?</p>",
+      "concept_tags": [
+        "cdf",
+        "probability theory",
+        "distribution functions",
+        "properties of CDF"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
+        {
+          "choice_id": "A",
+          "text": "F(x) = { 0, x < 0 ; 0.3, 0 ≤ x < 1 ; 1, x ≥ 1 }",
+          "text_html": "<p>\\( F(x) = \\begin{cases} 0, & x < 0 \\\\ 0.3, & 0 \\le x < 1 \\\\ 1, & x \\ge 1 \\end{cases} \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "F(x) = { 0, x < 0 ; 1, x ≥ 1 }",
+          "text_html": "<p>\\( F(x) = \\begin{cases} 0, & x < 0 \\\\ 1, & x \\ge 1 \\end{cases} \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "F(x) = { 0, x ≤ 0 ; 0.5, 0 < x ≤ 1 ; 1, x > 1 }",
+          "text_html": "<p>\\( F(x) = \\begin{cases} 0, & x \\le 0 \\\\ 0.5, & 0 < x \\le 1 \\\\ 1, & x > 1 \\end{cases} \\)</p>",
+          "is_correct": true,
+          "explanation": ""
+        }
+      ],
+      "_solution": "F(x) = { 0, x ≤ 0 ; 0.5, 0 < x ≤ 1 ; 1, x > 1 }",
+      "_solution_html": "<p>\\( F(x) = \\begin{cases} 0, & x \\le 0 \\\\ 0.5, & 0 < x \\le 1 \\\\ 1, & x > 1 \\end{cases} \\)</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Select the function that is not a valid CDF.",
+          "part_stem_html": "<p>Select the function that is not a valid CDF.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "F(x) = { 0, x < 0 ; 0.3, 0 ≤ x < 1 ; 1, x ≥ 1 }",
+              "text_html": "<p>\\( F(x) = \\begin{cases} 0, & x < 0 \\\\ 0.3, & 0 \\le x < 1 \\\\ 1, & x \\ge 1 \\end{cases} \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "F(x) = { 0, x < 0 ; 1, x ≥ 1 }",
+              "text_html": "<p>\\( F(x) = \\begin{cases} 0, & x < 0 \\\\ 1, & x \\ge 1 \\end{cases} \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "C",
+              "text": "F(x) = { 0, x ≤ 0 ; 0.5, 0 < x ≤ 1 ; 1, x > 1 }",
+              "text_html": "<p>\\( F(x) = \\begin{cases} 0, & x \\le 0 \\\\ 0.5, & 0 < x \\le 1 \\\\ 1, & x > 1 \\end{cases} \\)</p>",
+              "is_correct": true,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "F(x) = { 0, x ≤ 0 ; 0.5, 0 < x ≤ 1 ; 1, x > 1 }",
+          "solution_html": "<p>\\( F(x) = \\begin{cases} 0, & x \\le 0 \\\\ 0.5, & 0 < x \\le 1 \\\\ 1, & x > 1 \\end{cases} \\)</p>",
+          "difficulty_level": null,
+          "concept_tags": [
+            "cdf",
+            "probability theory",
+            "distribution functions",
+            "properties of CDF"
+          ]
+        }
+      ]
+    }
+  ]
+}

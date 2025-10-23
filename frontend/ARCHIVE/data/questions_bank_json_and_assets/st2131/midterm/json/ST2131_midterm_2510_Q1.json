@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q1.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q1.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q1",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 1,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "From a collection of nine paintings, four are to be selected to hang side-by-side on a gallery wall in positions 1, 2, 3 and 4. In how many ways can this be done?",
+      "question_stem_html": "<p>From a collection of nine paintings, four are to be selected to hang side-by-side on a gallery wall in positions&nbsp;1, 2, 3 and 4. In how many ways can this be done?</p>",
+      "concept_tags": [
+        "combinatorics",
+        "permutations",
+        "counting"
+      ],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

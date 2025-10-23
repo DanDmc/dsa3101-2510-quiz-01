@@ -1,0 +1,119 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Final",
+  "question_no": 2,
+  "is_multi": true,
+  "question_stem": "2. ( 10 p oints ) A data set on house selling price in the US w as randomly collected. A\nmo del that helps to predict the selling price of a house using other v ariables is to b e \u001ctted.\nThe description of v ariables in the data set is giv en b elo w.\nV ariable Description\nprice house's price in thousand US dollars\nsize house's size in square feet (sqft)\nbedrooms n um b er of b edro oms\ngarage 1 = with garage; 0 = no garage\nFigure 1: Histogram of price (left) and scatter plot of price against size (righ t)\n(a) A histogram of the house's price and a scatter plot of the house's price against house's\nsize are giv en in Figure 1. Commen t if it is suitable to \u001ct a linear regression mo del\nfor price ?\n(b) A linear mo del, called M, is \u001ctted. The summary output of mo del M is giv en in\nFigure 2 (next page).\nW rite do wn the \u001ctted equation of mo del M.\nRep ort the co e\u001ecien t of the v ariable garage in mo del M and in terpret it.\n(c) Commen t on the go o dness of \u001ct of mo del M.\n(d) The information of a new house is giv en b elo w. Using mo del M, calculate the pre-\ndicted price of this house.\nsize = 1500 sqft, bedrooms = 3, garage = 1\n4\nDSA1101\nFigure 2: Summary output of mo del M\n5\nDSA1101",
+  "question_stem_html": "<pre>2. ( 10 p oints ) A data set on house selling price in the US w as randomly collected. A\nmo del that helps to predict the selling price of a house using other v ariables is to b e \u001ctted.\nThe description of v ariables in the data set is giv en b elo w.\nV ariable Description\nprice house&#x27;s price in thousand US dollars\nsize house&#x27;s size in square feet (sqft)\nbedrooms n um b er of b edro oms\ngarage 1 = with garage; 0 = no garage\nFigure 1: Histogram of price (left) and scatter plot of price against size (righ t)\n(a) A histogram of the house&#x27;s price and a scatter plot of the house&#x27;s price against house&#x27;s\nsize are giv en in Figure 1. Commen t if it is suitable to \u001ct a linear regression mo del\nfor price ?\n(b) A linear mo del, called M, is \u001ctted. The summary output of mo del M is giv en in\nFigure 2 (next page).\nW rite do wn the \u001ctted equation of mo del M.\nRep ort the co e\u001ecien t of the v ariable garage in mo del M and in terpret it.\n(c) Commen t on the go o dness of \u001ct of mo del M.\n(d) The information of a new house is giv en b elo w. Using mo del M, calculate the pre-\ndicted price of this house.\nsize = 1500 sqft, bedrooms = 3, garage = 1\n4\nDSA1101\nFigure 2: Summary output of mo del M\n5\nDSA1101</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(a) A histogram of the house's price and a scatter plot of the house's price against house's\nsize are giv en in Figure 1. Commen t if it is suitable to \u001ct a linear regression mo del\nfor price ?",
+      "part_stem_html": "<pre>(a) A histogram of the house&#x27;s price and a scatter plot of the house&#x27;s price against house&#x27;s\nsize are giv en in Figure 1. Commen t if it is suitable to \u001ct a linear regression mo del\nfor price ?</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "b",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(b) A linear mo del, called M, is \u001ctted. The summary output of mo del M is giv en in\nFigure 2 (next page).\nW rite do wn the \u001ctted equation of mo del M.\nRep ort the co e\u001ecien t of the v ariable garage in mo del M and in terpret it.",
+      "part_stem_html": "<pre>(b) A linear mo del, called M, is \u001ctted. The summary output of mo del M is giv en in\nFigure 2 (next page).\nW rite do wn the \u001ctted equation of mo del M.\nRep ort the co e\u001ecien t of the v ariable garage in mo del M and in terpret it.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "c",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(c) Commen t on the go o dness of \u001ct of mo del M.",
+      "part_stem_html": "<pre>(c) Commen t on the go o dness of \u001ct of mo del M.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "d",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(d) The information of a new house is giv en b elo w. Using mo del M, calculate the pre-\ndicted price of this house.\nsize = 1500 sqft, bedrooms = 3, garage = 1\n4\nDSA1101\nFigure 2: Summary output of mo del M\n5\nDSA1101",
+      "part_stem_html": "<pre>(d) The information of a new house is giv en b elo w. Using mo del M, calculate the pre-\ndicted price of this house.\nsize = 1500 sqft, bedrooms = 3, garage = 1\n4\nDSA1101\nFigure 2: Summary output of mo del M\n5\nDSA1101</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

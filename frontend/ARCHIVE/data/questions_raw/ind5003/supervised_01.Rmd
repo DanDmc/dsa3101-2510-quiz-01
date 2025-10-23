@@ -1,0 +1,29 @@
+Question
+========
+
+Which of the following is an example of a classification problem?
+
+Answerlist
+----------
+
+* Predicting tomorrow’s stock price based on today’s price.
+* Predicting the rental price of an apartment.
+* Identifying whether a tumor is present in an MRI scan.
+* Estimating how much a customer will spend on their next purchase.
+
+Solution
+========
+
+Answerlist
+----------
+* Regression
+* Regression
+* Classification
+* Regression
+
+Meta-information
+================
+exname: supervised
+extype: schoice
+exsolution: 0010
+exshuffle: 4

@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2). Suppose that the file has been read into R as a data frame wip. In the textbox below, insert the code to create the following boxplot:",
+  "question_stem_html": "<div><p>In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.</p>\n<p>The data set <code>wip.txt</code> contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).</p>\n<p>There are two variables in the data set: <code>time</code> and <code>plant</code> (either 1 or 2). Suppose that the file has been read into R as a data frame <code>wip</code>. In the textbox below, insert the code to create the following boxplot:</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"$IMS-CC-FILEBASE$/assessment_questions/image-2.png?canvas_download=1\" alt=\"image.png\" loading=\"lazy\"></p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image-2.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2). Suppose that the file has been read into R as a data frame wip. In the textbox below, insert the code to create the following boxplot:",
+      "part_stem_html": "<div><p>In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.</p>\n<p>The data set <code>wip.txt</code> contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).</p>\n<p>There are two variables in the data set: <code>time</code> and <code>plant</code> (either 1 or 2). Suppose that the file has been read into R as a data frame <code>wip</code>. In the textbox below, insert the code to create the following boxplot:</p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"$IMS-CC-FILEBASE$/assessment_questions/image-2.png?canvas_download=1\" alt=\"image.png\" loading=\"lazy\"></p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image-2.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "bwplot(time ~ plant, data=wip, horizontal = FALSE)",
+      "solution_html": "<code>bwplot(time ~ plant, data=wip, horizontal = FALSE)</code>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

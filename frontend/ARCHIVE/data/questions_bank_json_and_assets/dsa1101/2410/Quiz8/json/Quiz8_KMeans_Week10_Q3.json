@@ -1,0 +1,51 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Q3. Clustering by K-Means algorithm should only be used for quantitative variables. True or False?",
+  "question_stem_html": "<pre>Q3. Clustering by K-Means algorithm should only be used for quantitative variables. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:30:06+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: True\nExplanation: the algorithm calculates the Euclidian distance between the data points, hence, it should only be used for quantitative variable, not for categorical variable, especially nominal ones."
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: True\nExplanation: the algorithm calculates the Euclidian distance between the data points, hence, it should only be used for quantitative variable, not for categorical variable, especially nominal ones.",
+      "solution_html": "<pre>Ans: True\nExplanation: the algorithm calculates the Euclidian distance between the data points, hence, it should only be used for quantitative variable, not for categorical variable, especially nominal ones.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "k-means",
+        "clustering"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 3,
+  "is_multi": true,
+  "question_stem": "Suppose that the file liverpool_2223_season.csv has been read into Python as the pandas dataframe liverpool. The first few rows of the data are given below:\n\n\n\nDate\nDay\nVenue\nGF\nGA\nOpponent\n\n\n\n\n2022-08-06\nSat\nAway\n2\n2\nFulham\n\n\n2022-08-15\nMon\nHome\n1\n1\nCrystal Palace\n\n\n2022-08-22\nMon\nAway\n1\n2\nManchester Utd\n\n\n2022-08-27\nSat\nHome\n9\n0\nBournemouth\n\n\n2022-08-31\nWed\nHome\n2\n1\nNewcastle Utd\n\n\n2022-09-03\nSat\nAway\n0\n0\nEverton\n\n\n2022-10-01\nSat\nHome\n3\n3\nBrighton\n\n\n2022-10-09\nSun\nAway\n2\n3\nArsenal\n\n\n2022-10-16\nSun\nHome\n1\n0\nManchester City\n\n\n2022-10-19\nWed\nHome\n1\n0\nWest Ham\n\n\n\nThe default index has been created for the dataframe. Which of the following commands can be used to retrieve the first 5 rows (corresponding to August) and only columns GF, GA and Opponent?",
+  "question_stem_html": "<div><p> </p>\n<p>Suppose that the file <code>liverpool_2223_season.csv</code> has been read into Python as the pandas dataframe <code>liverpool</code>. The first few rows of the data are given below:</p>\n<table>\n<thead>\n<tr class=\"header\">\n<th>Date</th>\n<th>Day</th>\n<th>Venue</th>\n<th>GF</th>\n<th>GA</th>\n<th>Opponent</th>\n</tr>\n</thead>\n<tbody>\n<tr class=\"odd\">\n<td>2022-08-06</td>\n<td>Sat</td>\n<td>Away</td>\n<td>2</td>\n<td>2</td>\n<td>Fulham</td>\n</tr>\n<tr class=\"even\">\n<td>2022-08-15</td>\n<td>Mon</td>\n<td>Home</td>\n<td>1</td>\n<td>1</td>\n<td>Crystal Palace</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-08-22</td>\n<td>Mon</td>\n<td>Away</td>\n<td>1</td>\n<td>2</td>\n<td>Manchester Utd</td>\n</tr>\n<tr class=\"even\">\n<td>2022-08-27</td>\n<td>Sat</td>\n<td>Home</td>\n<td>9</td>\n<td>0</td>\n<td>Bournemouth</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-08-31</td>\n<td>Wed</td>\n<td>Home</td>\n<td>2</td>\n<td>1</td>\n<td>Newcastle Utd</td>\n</tr>\n<tr class=\"even\">\n<td>2022-09-03</td>\n<td>Sat</td>\n<td>Away</td>\n<td>0</td>\n<td>0</td>\n<td>Everton</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-10-01</td>\n<td>Sat</td>\n<td>Home</td>\n<td>3</td>\n<td>3</td>\n<td>Brighton</td>\n</tr>\n<tr class=\"even\">\n<td>2022-10-09</td>\n<td>Sun</td>\n<td>Away</td>\n<td>2</td>\n<td>3</td>\n<td>Arsenal</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-10-16</td>\n<td>Sun</td>\n<td>Home</td>\n<td>1</td>\n<td>0</td>\n<td>Manchester City</td>\n</tr>\n<tr class=\"even\">\n<td>2022-10-19</td>\n<td>Wed</td>\n<td>Home</td>\n<td>1</td>\n<td>0</td>\n<td>West Ham</td>\n</tr>\n</tbody>\n</table>\n<p>The default index has been created for the dataframe. Which of the following commands can be used to retrieve the first 5 rows (corresponding to August) and <em>only</em> columns <code>GF</code>, <code>GA</code> and <code>Opponent</code>?</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "multiple",
+      "part_stem": "Suppose that the file liverpool_2223_season.csv has been read into Python as the pandas dataframe liverpool. The first few rows of the data are given below:\n\n\n\nDate\nDay\nVenue\nGF\nGA\nOpponent\n\n\n\n\n2022-08-06\nSat\nAway\n2\n2\nFulham\n\n\n2022-08-15\nMon\nHome\n1\n1\nCrystal Palace\n\n\n2022-08-22\nMon\nAway\n1\n2\nManchester Utd\n\n\n2022-08-27\nSat\nHome\n9\n0\nBournemouth\n\n\n2022-08-31\nWed\nHome\n2\n1\nNewcastle Utd\n\n\n2022-09-03\nSat\nAway\n0\n0\nEverton\n\n\n2022-10-01\nSat\nHome\n3\n3\nBrighton\n\n\n2022-10-09\nSun\nAway\n2\n3\nArsenal\n\n\n2022-10-16\nSun\nHome\n1\n0\nManchester City\n\n\n2022-10-19\nWed\nHome\n1\n0\nWest Ham\n\n\n\nThe default index has been created for the dataframe. Which of the following commands can be used to retrieve the first 5 rows (corresponding to August) and only columns GF, GA and Opponent?",
+      "part_stem_html": "<div><p> </p>\n<p>Suppose that the file <code>liverpool_2223_season.csv</code> has been read into Python as the pandas dataframe <code>liverpool</code>. The first few rows of the data are given below:</p>\n<table>\n<thead>\n<tr class=\"header\">\n<th>Date</th>\n<th>Day</th>\n<th>Venue</th>\n<th>GF</th>\n<th>GA</th>\n<th>Opponent</th>\n</tr>\n</thead>\n<tbody>\n<tr class=\"odd\">\n<td>2022-08-06</td>\n<td>Sat</td>\n<td>Away</td>\n<td>2</td>\n<td>2</td>\n<td>Fulham</td>\n</tr>\n<tr class=\"even\">\n<td>2022-08-15</td>\n<td>Mon</td>\n<td>Home</td>\n<td>1</td>\n<td>1</td>\n<td>Crystal Palace</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-08-22</td>\n<td>Mon</td>\n<td>Away</td>\n<td>1</td>\n<td>2</td>\n<td>Manchester Utd</td>\n</tr>\n<tr class=\"even\">\n<td>2022-08-27</td>\n<td>Sat</td>\n<td>Home</td>\n<td>9</td>\n<td>0</td>\n<td>Bournemouth</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-08-31</td>\n<td>Wed</td>\n<td>Home</td>\n<td>2</td>\n<td>1</td>\n<td>Newcastle Utd</td>\n</tr>\n<tr class=\"even\">\n<td>2022-09-03</td>\n<td>Sat</td>\n<td>Away</td>\n<td>0</td>\n<td>0</td>\n<td>Everton</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-10-01</td>\n<td>Sat</td>\n<td>Home</td>\n<td>3</td>\n<td>3</td>\n<td>Brighton</td>\n</tr>\n<tr class=\"even\">\n<td>2022-10-09</td>\n<td>Sun</td>\n<td>Away</td>\n<td>2</td>\n<td>3</td>\n<td>Arsenal</td>\n</tr>\n<tr class=\"odd\">\n<td>2022-10-16</td>\n<td>Sun</td>\n<td>Home</td>\n<td>1</td>\n<td>0</td>\n<td>Manchester City</td>\n</tr>\n<tr class=\"even\">\n<td>2022-10-19</td>\n<td>Wed</td>\n<td>Home</td>\n<td>1</td>\n<td>0</td>\n<td>West Ham</td>\n</tr>\n</tbody>\n</table>\n<p>The default index has been created for the dataframe. Which of the following commands can be used to retrieve the first 5 rows (corresponding to August) and <em>only</em> columns <code>GF</code>, <code>GA</code> and <code>Opponent</code>?</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "54884",
+          "text": "liverpool.iloc[0:5, 3:]",
+          "text_html": "<code>liverpool.iloc[0:5, 3:]</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "57832",
+          "text": "liverpool.iloc[0:5, 3:6]",
+          "text_html": "<code>liverpool.iloc[0:5, 3:6]</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "77150",
+          "text": "liverpool.iloc[0:5, 'GA':'Opponent']",
+          "text_html": "<code>liverpool.iloc[0:5, 'GA':'Opponent']</code>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "5502",
+          "text": "liverpool.loc[0:4, 'GF':'Opponent']",
+          "text_html": "<code>liverpool.loc[0:4, 'GF':'Opponent']</code>",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "When using integer indexing (iloc), we cannot use column (e.g. 'GA' etc.) names to subset.",
+      "solution_html": "When using integer indexing (iloc), we cannot use column (e.g. 'GA' etc.) names to subset.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

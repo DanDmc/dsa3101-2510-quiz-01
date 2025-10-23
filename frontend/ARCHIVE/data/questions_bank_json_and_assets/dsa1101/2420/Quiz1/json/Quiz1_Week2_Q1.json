@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 1\nDSA1101 – Semester 2 AY2425\nIn the R code file for Topic 1, <Topic1_Rcode.R>, there is a part of code (in blue) and its output was given.\nColumn \"color\" is to specify the darkness of shell's color of a crab, where 2 means light color; 3 means medium color; 4 means dark color; and 5 means darker color.\nColumn \"spine\" is to specify the conditions of the spines of the crab: 1 means both spines are good; 2 means one of the two spines is worn or broken; 3 means both spines are worn or broken.\ndata1<-read.csv(\"C:/Data/crab.txt\",sep = \"\", header = TRUE)\n\ndata1[1:8,] #first 8 rows. The output is below.\n  color spine width satell weight\n1     3     3  28.3      8   3.05\n2     4     3  22.5      0   1.55\n3     2     1  26.0      9   2.30\n4     4     3  24.8      0   2.10\n5     4     3  26.0      4   2.60\n6     3     3  23.8      0   2.10\n7     2     1  26.5      0   2.35\n8     4     2  24.7      0   1.90\n\nUse it to answer questions below.\nNote: solution is highlighted.\n\nQ1. The values (2, 3, 4 and 5) in the column “color” in the data frame above are automatically recognized by R as the characters that represent the darkness of color. True or False?",
+  "question_stem_html": "<pre>Quiz 1\nDSA1101 – Semester 2 AY2425\nIn the R code file for Topic 1, &lt;Topic1_Rcode.R&gt;, there is a part of code (in blue) and its output was given.\nColumn &quot;color&quot; is to specify the darkness of shell&#x27;s color of a crab, where 2 means light color; 3 means medium color; 4 means dark color; and 5 means darker color.\nColumn &quot;spine&quot; is to specify the conditions of the spines of the crab: 1 means both spines are good; 2 means one of the two spines is worn or broken; 3 means both spines are worn or broken.\ndata1&lt;-read.csv(&quot;C:/Data/crab.txt&quot;,sep = &quot;&quot;, header = TRUE)\n\ndata1[1:8,] #first 8 rows. The output is below.\n  color spine width satell weight\n1     3     3  28.3      8   3.05\n2     4     3  22.5      0   1.55\n3     2     1  26.0      9   2.30\n4     4     3  24.8      0   2.10\n5     4     3  26.0      4   2.60\n6     3     3  23.8      0   2.10\n7     2     1  26.5      0   2.35\n8     4     2  24.7      0   1.90\n\nUse it to answer questions below.\nNote: solution is highlighted.\n\nQ1. The values (2, 3, 4 and 5) in the column “color” in the data frame above are automatically recognized by R as the characters that represent the darkness of color. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05. The model is Y = β₀ + β₁ ln(X₁) + e, where X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python. What is the estimated mean for a new observation with distance to MRT 1.5 km? Show all the Python code used.",
+  "question_stem_html": "<p>Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math></p><p>where X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:</p><p>What is the estimated mean for a new observation with distance to MRT 1.5 km? Show all the Python code used.</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T17:25:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_01.png",
+      "alt": "OLS Regression Results table from Python output."
+    }
+  ],
+  "items": [
+    {
+      "type": "code",
+      "language": "python",
+      "code_snippet": "new_df = sm.add_constant(pd.DataFrame({'dist_MRT': 1500.0}, index=[0]))\nnew_df['ldist'] = np.log(new_df.dist_MRT)\npredictions_out = lm_2.get_prediction(new_df)\n\nprint(f\"The estimated mean is {predictions_out.predicted_mean[0]:.3f}\")",
+      "solution_html": "<p>The estimated mean is 29.757.</p><p><code>new_df = sm.add_constant(pd.DataFrame({'dist_MRT': 1500.0}, index=[0]))<br>new_df['ldist'] = np.log(new_df.dist_MRT)<br>predictions_out = lm_2.get_prediction(new_df)<br><br>print(f'The estimated mean is {predictions_out.predicted_mean[0]:.3f}')<br># Output: 29.757</code></p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "prediction", "python", "statsmodels"]
+    }
+  ]
+}

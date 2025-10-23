@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "Q7. Brandon continues with the code below.\nspine = as.factor(data1$spine)\n\nAfter this line of code is run, column “spine” of “data1” now become a categorical variable. True or False?",
+  "question_stem_html": "<pre>Q7. Brandon continues with the code below.\nspine = as.factor(data1$spine)\n\nAfter this line of code is run, column “spine” of “data1” now become a categorical variable. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:04:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": "Ans: False. Back to Q3 and the answer of Q3. This code creates a new object/vector, named “spine” OUTSIDE of “data1”, it uses column “spine” of “data1” and factorizes it. So, this “spine” is a categorical variable. \nHowever, the column “spine” INSIDE “data1” is still memorized by R as a numeric column. This memory was created when function attach(data1) was run."
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: False. Back to Q3 and the answer of Q3. This code creates a new object/vector, named “spine” OUTSIDE of “data1”, it uses column “spine” of “data1” and factorizes it. So, this “spine” is a categorical variable. \nHowever, the column “spine” INSIDE “data1” is still memorized by R as a numeric column. This memory was created when function attach(data1) was run.",
+      "solution_html": "<pre>Ans: False. Back to Q3 and the answer of Q3. This code creates a new object/vector, named “spine” OUTSIDE of “data1”, it uses column “spine” of “data1” and factorizes it. So, this “spine” is a categorical variable. \nHowever, the column “spine” INSIDE “data1” is still memorized by R as a numeric column. This memory was created when function attach(data1) was run.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "R",
+        "data frame",
+        "factors",
+        "True/False"
+      ]
+    }
+  ]
+}

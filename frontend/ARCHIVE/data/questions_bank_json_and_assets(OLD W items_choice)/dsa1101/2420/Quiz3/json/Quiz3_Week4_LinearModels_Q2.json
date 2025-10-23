@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Question 2\nNote: attach(df) is a command that tells R to create new vectors by duplicating each column of \"df\". In other words, when this command is run, R will create as many vectors as the number of columns in \"df\". Each vector created is exactly the same as each column in \"df\" with the same name and same property (quantitative/categorical). However, those vectors created are OUTSIDE of the data frame \"df\". \n\nThe code snippet provided is run in sequence. Which of the following models treat color as a categorical variable?\n\n\nA\nM1 and M4\nB\nM1, M3 and M4\nC\nM2 and M3\nD\nAll of them",
+  "question_stem_html": "<pre>Question 2\nNote: attach(df) is a command that tells R to create new vectors by duplicating each column of &quot;df&quot;. In other words, when this command is run, R will create as many vectors as the number of columns in &quot;df&quot;. Each vector created is exactly the same as each column in &quot;df&quot; with the same name and same property (quantitative/categorical). However, those vectors created are OUTSIDE of the data frame &quot;df&quot;. \n\nThe code snippet provided is run in sequence. Which of the following models treat color as a categorical variable?\n\n\nA\nM1 and M4\nB\nM1, M3 and M4\nC\nM2 and M3\nD\nAll of them</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "1, M3 and M4",
+          "text_html": "<p>1, M3 and M4</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "2 and M3",
+          "text_html": "<p>2 and M3</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ll of them",
+          "text_html": "<p>ll of them</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

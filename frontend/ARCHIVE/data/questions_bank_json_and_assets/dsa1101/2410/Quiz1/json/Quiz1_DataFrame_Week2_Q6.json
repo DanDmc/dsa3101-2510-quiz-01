@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Q6. Fact: function attach(df) helps R to know every names inside data frame “df”, to know the values of each column, as well as the properties (categorical/numeric) of  each column.\nAfter all the code above was run, Brandon continues with function attach() as below.\nattach(data1)\nNow, there is no error appearing when Brandon runs the code\nspine\n\nTrue or False?",
+  "question_stem_html": "<pre>Q6. Fact: function attach(df) helps R to know every names inside data frame “df”, to know the values of each column, as well as the properties (categorical/numeric) of  each column.\nAfter all the code above was run, Brandon continues with function attach() as below.\nattach(data1)\nNow, there is no error appearing when Brandon runs the code\nspine\n\nTrue or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:04:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: TRUE. Because after function attach(data1) was run, R now knows that “spine” is a column inside “data1” and R knows all the values of that column."
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: TRUE. Because after function attach(data1) was run, R now knows that “spine” is a column inside “data1” and R knows all the values of that column.",
+      "solution_html": "<pre>Ans: TRUE. Because after function attach(data1) was run, R now knows that “spine” is a column inside “data1” and R knows all the values of that column.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "R",
+        "data frame",
+        "factors",
+        "True/False"
+      ]
+    }
+  ]
+}

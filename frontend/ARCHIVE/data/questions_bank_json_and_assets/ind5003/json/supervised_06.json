@@ -1,0 +1,52 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "What is the output of the following code snippet?\n\nfrom sklearn.metrics import accuracy_score\n\ny_true = [1, 0, 1, 1, 0]\ny_pred = [1, 0, 0, 1, 1]\nprint(accuracy_score(y_true, y_pred))",
+  "question_stem_html": "<p>What is the output of the following code snippet?</p><pre><code class=\"language-python\">from sklearn.metrics import accuracy_score\n\ny_true = [1, 0, 1, 1, 0]\ny_pred = [1, 0, 0, 1, 1]\nprint(accuracy_score(y_true, y_pred))\n</code></pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T20:00:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "0.2",
+          "is_correct": false,
+          "explanation": "Incorrect."
+        },
+        {
+          "choice_id": "B",
+          "text": "There will be an error message because no model has been fitted.",
+          "is_correct": false,
+          "explanation": "The function only requires a `ytrue` and a `ypred` array. It will still run as per normal."
+        },
+        {
+          "choice_id": "C",
+          "text": "0.4",
+          "is_correct": false,
+          "explanation": "Incorrect."
+        },
+        {
+          "choice_id": "D",
+          "text": "0.6",
+          "is_correct": true,
+          "explanation": "Correct - accuracy is the number of correct predictions (3) divided by the number of \n  total predictions made (5)."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "0.6",
+      "solution_html": "<p>0.6</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "metrics", "accuracy"]
+    }
+  ]
+}

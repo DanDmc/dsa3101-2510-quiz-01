@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q2.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q2.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q2",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 2,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?",
+      "question_stem_html": "<p>A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?</p>",
+      "concept_tags": [
+        "combinatorics",
+        "binomial coefficient",
+        "counting"
+      ],
+      "question_media": [],
+      "last_used": null
+    }
+  ]
+}

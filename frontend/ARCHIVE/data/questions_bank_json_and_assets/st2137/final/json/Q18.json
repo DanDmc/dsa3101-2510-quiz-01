@@ -1,0 +1,82 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 18,
+  "is_multi": false,
+  "question_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output. \n\nThe value of 0.0148 corresponds to \nwhere   corresponds to the overall mean of *all* observations.",
+  "question_stem_html": "<div><p>In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output. </p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/sas_anova_f_test.png\" alt=\"sas_anova_f_test.png\" loading=\"lazy\"></p>\n<p>The value of 0.0148 corresponds to </p>\n<p><img class=\"equation_image\" title=\"\\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( Y_{ij} - \\overline{\\overline{Y}} \\right)^2\" src=\"https://canvas.nus.edu.sg/equation_images/%255Csum_%257Bi%253D1%257D%255Ek%2520%255Csum_%257Bj%253D1%257D%255E%257Bn_i%257D%2520%255Cleft(%2520Y_%257Bij%257D%2520-%2520%255Coverline%257B%255Coverline%257BY%257D%257D%2520%255Cright)%255E2?scale=1\" alt=\"LaTeX: \\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( Y_{ij} - \\overline{\\overline{Y}} \\right)^2\" data-equation-content=\"\\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( Y_{ij} - \\overline{\\overline{Y}} \\right)^2\" data-ignore-a11y-check=\"\" loading=\"lazy\"><br>where <img class=\"equation_image\" title=\"\\overline{\\overline{Y}}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Coverline%257B%255Coverline%257BY%257D%257D?scale=1\" alt=\"LaTeX: \\overline{\\overline{Y}}\" data-equation-content=\"\\overline{\\overline{Y}}\" data-ignore-a11y-check=\"\" loading=\"lazy\">  corresponds to the overall mean of *all* observations.</p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/sas_anova_f_test.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Csum_%257Bi%253D1%257D%255Ek%2520%255Csum_%257Bj%253D1%257D%255E%257Bn_i%257D%2520%255Cleft(%2520Y_%257Bij%257D%2520-%2520%255Coverline%257B%255Coverline%257BY%257D%257D%2520%255Cright)%255E2?scale=1",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/%255Coverline%257B%255Coverline%257BY%257D%257D?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output. \n\nThe value of 0.0148 corresponds to \nwhere   corresponds to the overall mean of *all* observations.",
+      "part_stem_html": "<div><p>In the topic on One-Way ANOVA, we worked with the heifers dataset. The following is the SAS output. </p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded%20Media/sas_anova_f_test.png\" alt=\"sas_anova_f_test.png\" loading=\"lazy\"></p>\n<p>The value of 0.0148 corresponds to </p>\n<p><img class=\"equation_image\" title=\"\\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( Y_{ij} - \\overline{\\overline{Y}} \\right)^2\" src=\"https://canvas.nus.edu.sg/equation_images/%255Csum_%257Bi%253D1%257D%255Ek%2520%255Csum_%257Bj%253D1%257D%255E%257Bn_i%257D%2520%255Cleft(%2520Y_%257Bij%257D%2520-%2520%255Coverline%257B%255Coverline%257BY%257D%257D%2520%255Cright)%255E2?scale=1\" alt=\"LaTeX: \\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( Y_{ij} - \\overline{\\overline{Y}} \\right)^2\" data-equation-content=\"\\sum_{i=1}^k \\sum_{j=1}^{n_i} \\left( Y_{ij} - \\overline{\\overline{Y}} \\right)^2\" data-ignore-a11y-check=\"\" loading=\"lazy\"><br>where <img class=\"equation_image\" title=\"\\overline{\\overline{Y}}\" src=\"https://canvas.nus.edu.sg/equation_images/%255Coverline%257B%255Coverline%257BY%257D%257D?scale=1\" alt=\"LaTeX: \\overline{\\overline{Y}}\" data-equation-content=\"\\overline{\\overline{Y}}\" data-ignore-a11y-check=\"\" loading=\"lazy\">  corresponds to the overall mean of *all* observations.</p></div>",
+      "choices": [
+        {
+          "choice_id": "1596",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "2550",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/sas_anova_f_test.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Csum_%257Bi%253D1%257D%255Ek%2520%255Csum_%257Bj%253D1%257D%255E%257Bn_i%257D%2520%255Cleft(%2520Y_%257Bij%257D%2520-%2520%255Coverline%257B%255Coverline%257BY%257D%257D%2520%255Cright)%255E2?scale=1",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/%255Coverline%257B%255Coverline%257BY%257D%257D?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "False.\n0.0148 corresponds to the $MS_W$, but the expression corresponds to $SS_T$, which is 1.006 in this case.",
+      "solution_html": "<p>False.</p>\n<p>0.0148 corresponds to the $MS_W$, but the expression corresponds to $SS_T$, which is 1.006 in this case.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "A company measures the productivity of employees before and after they complete a new training program. The goal is to assess the impact of the training on employee productivity.\nAssuming the assumptions hold, the paired-sample t-test is appropriate in the above scenario (instead of the independent-sample t-test).",
+  "question_stem_html": "<div><p> </p>\n<p>A company measures the productivity of employees before and after they complete a new training program. The goal is to assess the impact of the training on employee productivity.</p>\n<p>Assuming the assumptions hold, the paired-sample t-test is appropriate in the above scenario (instead of the independent-sample t-test).</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "A company measures the productivity of employees before and after they complete a new training program. The goal is to assess the impact of the training on employee productivity.\nAssuming the assumptions hold, the paired-sample t-test is appropriate in the above scenario (instead of the independent-sample t-test).",
+      "part_stem_html": "<div><p> </p>\n<p>A company measures the productivity of employees before and after they complete a new training program. The goal is to assess the impact of the training on employee productivity.</p>\n<p>Assuming the assumptions hold, the paired-sample t-test is appropriate in the above scenario (instead of the independent-sample t-test).</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "2771",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "52726",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "This is a paired sample, since we have a before and after measurement on the same person.",
+      "solution_html": "This is a paired sample, since we have a before and after measurement on the same person.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

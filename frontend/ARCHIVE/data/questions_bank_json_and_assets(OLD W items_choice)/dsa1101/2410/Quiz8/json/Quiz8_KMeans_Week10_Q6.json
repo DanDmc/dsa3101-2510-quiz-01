@@ -1,0 +1,51 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Q6. If the quantitative variables in the data set are of very different magnitudes, we should standardize each of them before applying the K-Means algorithm. True or False?",
+  "question_stem_html": "<pre>Q6. If the quantitative variables in the data set are of very different magnitudes, we should standardize each of them before applying the K-Means algorithm. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:30:06+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: True.\nExplanation: This is because the algorithm calculates the Euclidian distance between data points. Hence, the variable with large magnitude will dominate the distance. That means, the clustering will mainly be affected by that variable and the contribution of variable (s) with small magnitude will become minor in clustering step."
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: True.\nExplanation: This is because the algorithm calculates the Euclidian distance between data points. Hence, the variable with large magnitude will dominate the distance. That means, the clustering will mainly be affected by that variable and the contribution of variable (s) with small magnitude will become minor in clustering step.",
+      "solution_html": "<pre>Ans: True.\nExplanation: This is because the algorithm calculates the Euclidian distance between data points. Hence, the variable with large magnitude will dominate the distance. That means, the clustering will mainly be affected by that variable and the contribution of variable (s) with small magnitude will become minor in clustering step.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "k-means",
+        "clustering"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 11,
+  "is_multi": false,
+  "question_stem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
+  "question_stem_html": "<div>Using the <code>student-mat.csv</code> dataset from our lectures, conduct a <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\chi^2</annotation></semantics></math>-test of independence on the variables <code>address</code> and <code>guardian</code> at the 5% significance level.</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
+      "part_stem_html": "<div>Using the <code>student-mat.csv</code> dataset from our lectures, conduct a <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\chi^2</annotation></semantics></math>-test of independence on the variables <code>address</code> and <code>guardian</code> at the 5% significance level.</div>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "This should do it:\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\n\nstud_perf  = pd.read_csv(\"../data/student/student-mat.csv\", delimiter=\";\")\naddress_guardian = pd.crosstab(stud_perf.address, stud_perf.guardian).to_numpy()\nchisq_output = stats.chi2_contingency(address_guardian)\nRemember to state all 5 steps clearly, including the final assumption.\n\nThis should do it:\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\n\nstud_perf  = pd.read_csv(\"../data/student/student-mat.csv\", delimiter=\";\")\naddress_guardian = pd.crosstab(stud_perf.address, stud_perf.guardian).to_numpy()\nchisq_output = stats.chi2_contingency(address_guardian)\nRemember to state all steps.\n\nThis should do it:\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\n\nstud_perf  = pd.read_csv(\"../data/student/student-mat.csv\", delimiter=\";\")\naddress_guardian = pd.crosstab(stud_perf.address, stud_perf.guardian).to_numpy()\nchisq_output = stats.chi2_contingency(address_guardian)\nRemember to state all steps.",
+      "solution_html": "<p>This should do it:</p>\n<pre><code>import pandas as pd\nimport numpy as np\nfrom scipy import stats\n\nstud_perf  = pd.read_csv(\"../data/student/student-mat.csv\", delimiter=\";\")\naddress_guardian = pd.crosstab(stud_perf.address, stud_perf.guardian).to_numpy()\nchisq_output = stats.chi2_contingency(address_guardian)</code></pre>\n<p>Remember to state all 5 steps clearly, including the final assumption.</p>\n\n<p>This should do it:</p>\n<pre><code>import pandas as pd\nimport numpy as np\nfrom scipy import stats\n\nstud_perf  = pd.read_csv(\"../data/student/student-mat.csv\", delimiter=\";\")\naddress_guardian = pd.crosstab(stud_perf.address, stud_perf.guardian).to_numpy()\nchisq_output = stats.chi2_contingency(address_guardian)</code></pre>\n<p>Remember to state all steps.</p>\n\n<p>This should do it:</p>\n<pre><code>import pandas as pd\nimport numpy as np\nfrom scipy import stats\n\nstud_perf  = pd.read_csv(\"../data/student/student-mat.csv\", delimiter=\";\")\naddress_guardian = pd.crosstab(stud_perf.address, stud_perf.guardian).to_numpy()\nchisq_output = stats.chi2_contingency(address_guardian)</code></pre>\n<p>Remember to state all steps.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

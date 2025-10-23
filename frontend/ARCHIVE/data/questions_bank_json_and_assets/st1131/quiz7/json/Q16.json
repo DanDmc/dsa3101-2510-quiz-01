@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz7",
+  "question_no": 16,
+  "is_multi": "",
+  "question_stem": "For t distribution with  degrees of freedom, what is the t–score that cuts off the bottom 5%? Give your answer to 3 decimal places.",
+  "question_stem_html": "<div>For <em>t</em> distribution with <img class=\"equation_image\" title=\"\\infty \" src=\"/equation_images/%255Cinfty%2520?scale=1\" alt=\"LaTeX: \\infty \" data-equation-content=\"\\infty \" data-ignore-a11y-check=\"\"> degrees of freedom, what is the <em>t</em>–score that cuts off the bottom 5%? <strong>Give your answer to 3 decimal places.</strong>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [
+    {
+      "src": "/equation_images/%255Cinfty%2520",
+      "alt": "LaTeX: \\infty "
+    }
+  ],
+  "items": [
+    {
+      "part_number": "",
+      "type": "free response",
+      "subtype": "fitb",
+      "part_stem": "For t distribution with  degrees of freedom, what is the t–score that cuts off the bottom 5%? Give your answer to 3 decimal places.",
+      "part_stem_html": "<div>For <em>t</em> distribution with <img class=\"equation_image\" title=\"\\infty \" src=\"/equation_images/%255Cinfty%2520?scale=1\" alt=\"LaTeX: \\infty \" data-equation-content=\"\\infty \" data-ignore-a11y-check=\"\"> degrees of freedom, what is the <em>t</em>–score that cuts off the bottom 5%? <strong>Give your answer to 3 decimal places.</strong>\n</div>",
+      "choices": [],
+      "items_media": [
+        {
+          "src": "/equation_images/%255Cinfty%2520",
+          "alt": "LaTeX: \\infty "
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

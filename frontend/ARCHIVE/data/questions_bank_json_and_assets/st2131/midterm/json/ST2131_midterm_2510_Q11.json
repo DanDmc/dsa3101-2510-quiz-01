@@ -1,0 +1,107 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q11.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q11.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q11",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 11,
+      "question_type": "mcq",
+      "difficulty_level": 0.86,
+      "question_stem": "Consider the following pmf, for j = {1, 2, 3, 4, 5, ...}: p(i) = c / i^3. What is the value of c?",
+      "question_stem_html": "<p>Consider the following pmf, for <em>j</em> = {1, 2, 3, 4, 5, ...}:</p><p>\\( p(i) = \\frac{c}{i^3} \\)</p><p>What is the value of <em>c</em>?</p>",
+      "concept_tags": [
+        "pmf",
+        "normalizing constant",
+        "series summation",
+        "discrete distributions"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
+        {
+          "choice_id": "A",
+          "text": "c = 1 / Σ_{i=1}^∞ (1 / i^3)",
+          "text_html": "<p>\\( c = \\frac{1}{\\sum_{i=1}^{\\infty} \\frac{1}{i^3}} \\)</p>",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "c = 1 / Σ_{i=1}^∞ i^3",
+          "text_html": "<p>\\( c = \\frac{1}{\\sum_{i=1}^{\\infty} i^3} \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "C",
+          "text": "c = Σ_{i=1}^∞ i^3",
+          "text_html": "<p>\\( c = \\sum_{i=1}^{\\infty} i^3 \\)</p>",
+          "is_correct": false,
+          "explanation": ""
+        }
+      ],
+      "_solution": "c = 1 / Σ_{i=1}^∞ (1 / i^3)",
+      "_solution_html": "<p>\\( c = \\frac{1}{\\sum_{i=1}^{\\infty} \\frac{1}{i^3}} \\)</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Choose the correct expression for c.",
+          "part_stem_html": "<p>Choose the correct expression for <em>c</em>.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "c = 1 / Σ_{i=1}^∞ (1 / i^3)",
+              "text_html": "<p>\\( c = \\frac{1}{\\sum_{i=1}^{\\infty} \\frac{1}{i^3}} \\)</p>",
+              "is_correct": true,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "c = 1 / Σ_{i=1}^∞ i^3",
+              "text_html": "<p>\\( c = \\frac{1}{\\sum_{i=1}^{\\infty} i^3} \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "C",
+              "text": "c = Σ_{i=1}^∞ i^3",
+              "text_html": "<p>\\( c = \\sum_{i=1}^{\\infty} i^3 \\)</p>",
+              "is_correct": false,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "c = 1 / Σ_{i=1}^∞ (1 / i^3)",
+          "solution_html": "<p>\\( c = \\frac{1}{\\sum_{i=1}^{\\infty} \\frac{1}{i^3}} \\)</p>",
+          "difficulty_level": 0.86,
+          "concept_tags": [
+            "pmf",
+            "normalizing constant",
+            "series summation",
+            "discrete distributions"
+          ]
+        }
+      ]
+    }
+  ]
+}

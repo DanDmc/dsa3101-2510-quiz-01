@@ -1,0 +1,57 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 9,
+  "is_multi": false,
+  "question_stem": "The (red and white) wine quality datasets from the unsupervised learning topic have been merged into a single dataframe with 6497 rows. A decision tree classifier has been fit to the dataset as follows:\n\n[See image]\n\nConsider a new wine with the following features, but unknown type.\n\n[See image]\n\nApply the decision tree rules to the above features to estimate the probability that the wine is red.",
+  "question_stem_html": "<p>The (red and white) wine quality datasets from the unsupervised learning topic have been merged into a single dataframe with 6497 rows. A decision tree classifier has been fit to the dataset as follows:</p><p><em>(details shown in image)</em></p><p>Consider a new wine with the following features, but unknown type.</p><p><em>(values shown in image)</em></p><p><strong>Apply the decision tree rules</strong> to the above features to estimate the probability that the wine is red.</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T20:12:30+08:00",
+  "question_media": [
+    {
+      "src": "assets/supervised_09.png",
+      "alt": "Decision tree rules and the specific wine feature vector for probability of being red."
+    }
+  ],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "0.008",
+          "is_correct": true,
+          "explanation": "Correct"
+        },
+        {
+          "choice_id": "B",
+          "text": "0.992",
+          "is_correct": false,
+          "explanation": "This is the estimated probability of white."
+        },
+        {
+          "choice_id": "C",
+          "text": "0.016",
+          "is_correct": false,
+          "explanation": "Incorrect - uses gini, which is not probability."
+        },
+        {
+          "choice_id": "D",
+          "text": "0.984",
+          "is_correct": false,
+          "explanation": "Incorrect - uses gini, which is not probability."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "0.008",
+      "solution_html": "<p>The correct leaf is the eighth from the right. Note that darker blue indicates higher probability of red, and darker orange indicates higher probability of white. In the terminal node, there are 3617 instances of white and 30 instances of red. Hence the estimated probability is 30/(30+3617) = 0.008.</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "decision-tree", "probability"]
+    }
+  ]
+}

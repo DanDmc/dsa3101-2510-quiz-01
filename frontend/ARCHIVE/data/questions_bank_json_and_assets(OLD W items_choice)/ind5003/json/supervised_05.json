@@ -1,0 +1,52 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Given a feature matrix `X` of shape 100 × 5, what is the shape of the corresponding label vector `y`?",
+  "question_stem_html": "<p>Given a feature matrix <code>X</code> of shape <em>100 × 5</em>, what is the shape of the corresponding label vector <code>y</code>?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:55:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "(1,5)",
+          "is_correct": false,
+          "explanation": "Incorrect"
+        },
+        {
+          "choice_id": "B",
+          "text": "(100,1)",
+          "is_correct": false,
+          "explanation": "Incorrect"
+        },
+        {
+          "choice_id": "C",
+          "text": "(100,)",
+          "is_correct": true,
+          "explanation": "Correct"
+        },
+        {
+          "choice_id": "D",
+          "text": "(5,1)",
+          "is_correct": false,
+          "explanation": "Incorrect"
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "(100,)",
+      "solution_html": "<p>(100,)</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["supervised-learning", "data-shapes", "labels"]
+    }
+  ]
+}

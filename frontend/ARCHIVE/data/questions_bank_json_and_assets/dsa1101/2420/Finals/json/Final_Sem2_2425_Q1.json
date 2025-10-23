@@ -1,0 +1,197 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Final",
+  "question_no": 1,
+  "is_multi": true,
+  "question_stem": "NA TIONAL UNIVERSITY OF SINGAPORE\nDSA1101 INTR ODUCTION TO D A T A SCIENCE\n(Semester 2 : A Y 2024/2025)\nTime Allo w ed: 2 Hours\nINSTR UCTIONS TO STUDENTS\n1. Please indicate only y our studen t n um b er on y our answ er \u001cle. Do not indicate\ny our name .\n2. This exam pap er con tains THREE (3) questions and comprises EIGHT (8) prin ted\npages (including the co v er page).\n3. The data \u001cle used for this exam is giv en in the folder \u0010F or Finals\u0011 on\nCan v as/DSA1101/Files.\n4. This is an OPEN BOOK BLOCK INTERNET exam. Y ou ma y refer to y our lecture\nnotes, tutorials, textb o oks or an y notes that y ou ha v e made, but y ou are not allo w ed\nto p erform an y online searc h.\n5. The use of o\u001fine Large Language Mo dels (LLMs) is prohibited for this exam.\n6. Both programmable calculators and non-programmable calculators are allo w ed.\n7. Studen ts are required to answ er ALL questions. T otal mark is 100.\n8. During the exam, y ou are not allo w ed to comm unicate with an y p erson other than\nthe in vigilators.\n9. A t the end of the exam,\n Cop y and paste y our R co de in to the Examplify text b o x. Inden tation and\nalignmen t ma y not b e retained when pasting, but that is acceptable.\n Sa v e an exact cop y of y our R \u001cle on y our laptop, and upload it to\nCan v as/DSA1101/Assignmen ts/Final Exam Submission immediately after the\nexam.\n10. Do not mo dify the co de in y our submission \u001cle. An y di\u001berence found (except for\ninden tation or alignmen t) b et w een Examplify and Can v as submissions will b e p enal-\nized.\nDSA1101\n\n1. ( 20 p oints )\nP art I: T rue/F alse Questions . No explanation is required.\n(a) If w e use linear regression mo del with in tercept to predict a resp onse y based on a\nregressor x giv en 100 observ ations, the a v erage of the residuals, (1/100)P100\ni=1ei , will\nalw a ys b e zero. T rue or F alse?\n(b) If I am using House Price and Household Mon thly Income (b oth in Singap ore dollars)\nas t w o features for the K-means algorithm to divide Singap ore households in to groups,\nI do not need to standardize them since they ha v e the same units. T rue or F alse?\nP art I I: Multiple Choice Questions . No explanation is required.\nA data set con tains information on 100 patien ts and their cancer status. Let Column\nY b e the resp onse v ariable (cancer status) with t w o categories, 0 and 1, where 1 =\ndiseased and 0 = no-diseased. Let p denote P(Y= diseased ) .\n(c) Using a \u001ctted decision tree, named DT , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(DT, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n(d) Using a \u001ctted Naiv e Ba y es classi\u001cer, named nb , the prediction of p for the test p oin ts\nis obtained b y\npred.prob = predict(nb, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n2\nDSA1101\n(e) Using a \u001ctted logistic regression, named lr , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(lr, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n(f ) In order to obtain the prediction of p for the test p oin ts using a \u001ctted 9-NN classi\u001cer,\nthe R co de is of the form\npred.prob = knn(train, test, cl, k = 9,___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\nP art I I I: Op en-Ended Questions . Explanation is required.\n(g) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a\ndisease, whic h is genetically transmitted and has costly treatmen t with signi\u001ccan t\nside e\u001bects, whic h t yp e of error rate (T yp e I or T yp e I I) should b e prioritized for\nminimization? Explain y our answ er.\n(h) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a highly\ncon tagious disease, suc h as Co vid-19, whic h t yp e of error rate (T yp e I or T yp e I I)\nshould b e prioritized for minimization? Explain y our answ er.\n3\nDSA1101",
+  "question_stem_html": "<pre>NA TIONAL UNIVERSITY OF SINGAPORE\nDSA1101 INTR ODUCTION TO D A T A SCIENCE\n(Semester 2 : A Y 2024/2025)\nTime Allo w ed: 2 Hours\nINSTR UCTIONS TO STUDENTS\n1. Please indicate only y our studen t n um b er on y our answ er \u001cle. Do not indicate\ny our name .\n2. This exam pap er con tains THREE (3) questions and comprises EIGHT (8) prin ted\npages (including the co v er page).\n3. The data \u001cle used for this exam is giv en in the folder \u0010F or Finals\u0011 on\nCan v as/DSA1101/Files.\n4. This is an OPEN BOOK BLOCK INTERNET exam. Y ou ma y refer to y our lecture\nnotes, tutorials, textb o oks or an y notes that y ou ha v e made, but y ou are not allo w ed\nto p erform an y online searc h.\n5. The use of o\u001fine Large Language Mo dels (LLMs) is prohibited for this exam.\n6. Both programmable calculators and non-programmable calculators are allo w ed.\n7. Studen ts are required to answ er ALL questions. T otal mark is 100.\n8. During the exam, y ou are not allo w ed to comm unicate with an y p erson other than\nthe in vigilators.\n9. A t the end of the exam,\n Cop y and paste y our R co de in to the Examplify text b o x. Inden tation and\nalignmen t ma y not b e retained when pasting, but that is acceptable.\n Sa v e an exact cop y of y our R \u001cle on y our laptop, and upload it to\nCan v as/DSA1101/Assignmen ts/Final Exam Submission immediately after the\nexam.\n10. Do not mo dify the co de in y our submission \u001cle. An y di\u001berence found (except for\ninden tation or alignmen t) b et w een Examplify and Can v as submissions will b e p enal-\nized.\nDSA1101\n\n1. ( 20 p oints )\nP art I: T rue/F alse Questions . No explanation is required.\n(a) If w e use linear regression mo del with in tercept to predict a resp onse y based on a\nregressor x giv en 100 observ ations, the a v erage of the residuals, (1/100)P100\ni=1ei , will\nalw a ys b e zero. T rue or F alse?\n(b) If I am using House Price and Household Mon thly Income (b oth in Singap ore dollars)\nas t w o features for the K-means algorithm to divide Singap ore households in to groups,\nI do not need to standardize them since they ha v e the same units. T rue or F alse?\nP art I I: Multiple Choice Questions . No explanation is required.\nA data set con tains information on 100 patien ts and their cancer status. Let Column\nY b e the resp onse v ariable (cancer status) with t w o categories, 0 and 1, where 1 =\ndiseased and 0 = no-diseased. Let p denote P(Y= diseased ) .\n(c) Using a \u001ctted decision tree, named DT , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(DT, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n(d) Using a \u001ctted Naiv e Ba y es classi\u001cer, named nb , the prediction of p for the test p oin ts\nis obtained b y\npred.prob = predict(nb, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n2\nDSA1101\n(e) Using a \u001ctted logistic regression, named lr , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(lr, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n(f ) In order to obtain the prediction of p for the test p oin ts using a \u001ctted 9-NN classi\u001cer,\nthe R co de is of the form\npred.prob = knn(train, test, cl, k = 9,___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\nP art I I I: Op en-Ended Questions . Explanation is required.\n(g) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a\ndisease, whic h is genetically transmitted and has costly treatmen t with signi\u001ccan t\nside e\u001bects, whic h t yp e of error rate (T yp e I or T yp e I I) should b e prioritized for\nminimization? Explain y our answ er.\n(h) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a highly\ncon tagious disease, suc h as Co vid-19, whic h t yp e of error rate (T yp e I or T yp e I I)\nshould b e prioritized for minimization? Explain y our answ er.\n3\nDSA1101</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(a) If w e use linear regression mo del with in tercept to predict a resp onse y based on a\nregressor x giv en 100 observ ations, the a v erage of the residuals, (1/100)P100\ni=1ei , will\nalw a ys b e zero. T rue or F alse?",
+      "part_stem_html": "<pre>(a) If w e use linear regression mo del with in tercept to predict a resp onse y based on a\nregressor x giv en 100 observ ations, the a v erage of the residuals, (1/100)P100\ni=1ei , will\nalw a ys b e zero. T rue or F alse?</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "b",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(b) If I am using House Price and Household Mon thly Income (b oth in Singap ore dollars)\nas t w o features for the K-means algorithm to divide Singap ore households in to groups,\nI do not need to standardize them since they ha v e the same units. T rue or F alse?\nP art I I: Multiple Choice Questions . No explanation is required.\nA data set con tains information on 100 patien ts and their cancer status. Let Column\nY b e the resp onse v ariable (cancer status) with t w o categories, 0 and 1, where 1 =\ndiseased and 0 = no-diseased. Let p denote P(Y= diseased ) .",
+      "part_stem_html": "<pre>(b) If I am using House Price and Household Mon thly Income (b oth in Singap ore dollars)\nas t w o features for the K-means algorithm to divide Singap ore households in to groups,\nI do not need to standardize them since they ha v e the same units. T rue or F alse?\nP art I I: Multiple Choice Questions . No explanation is required.\nA data set con tains information on 100 patien ts and their cancer status. Let Column\nY b e the resp onse v ariable (cancer status) with t w o categories, 0 and 1, where 1 =\ndiseased and 0 = no-diseased. Let p denote P(Y= diseased ) .</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "c",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(c) Using a \u001ctted decision tree, named DT , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(DT, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011",
+      "part_stem_html": "<pre>(c) Using a \u001ctted decision tree, named DT , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(DT, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "d",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(d) Using a \u001ctted Naiv e Ba y es classi\u001cer, named nb , the prediction of p for the test p oin ts\nis obtained b y\npred.prob = predict(nb, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n2\nDSA1101",
+      "part_stem_html": "<pre>(d) Using a \u001ctted Naiv e Ba y es classi\u001cer, named nb , the prediction of p for the test p oin ts\nis obtained b y\npred.prob = predict(nb, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n2\nDSA1101</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "e",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(e) Using a \u001ctted logistic regression, named lr , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(lr, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n(f ) In order to obtain the prediction of p for the test p oin ts using a \u001ctted 9-NN classi\u001cer,\nthe R co de is of the form\npred.prob = knn(train, test, cl, k = 9,___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\nP art I I I: Op en-Ended Questions . Explanation is required.",
+      "part_stem_html": "<pre>(e) Using a \u001ctted logistic regression, named lr , the prediction of p for the test p oin ts is\nobtained b y\npred.prob = predict(lr, new.data = test, ___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\n(f ) In order to obtain the prediction of p for the test p oin ts using a \u001ctted 9-NN classi\u001cer,\nthe R co de is of the form\npred.prob = knn(train, test, cl, k = 9,___)\nwhere in the blank space, w e add\nA. type = \u0010raw\u0011\nB. prob = TRUE\nC. type = \u0010class\u0011\nD. type = \u0010prob\u0011\nE. type = \u0010response\u0011\nP art I I I: Op en-Ended Questions . Explanation is required.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "g",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(g) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a\ndisease, whic h is genetically transmitted and has costly treatmen t with signi\u001ccan t\nside e\u001bects, whic h t yp e of error rate (T yp e I or T yp e I I) should b e prioritized for\nminimization? Explain y our answ er.",
+      "part_stem_html": "<pre>(g) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a\ndisease, whic h is genetically transmitted and has costly treatmen t with signi\u001ccan t\nside e\u001bects, whic h t yp e of error rate (T yp e I or T yp e I I) should b e prioritized for\nminimization? Explain y our answ er.</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "h",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "(h) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a highly\ncon tagious disease, suc h as Co vid-19, whic h t yp e of error rate (T yp e I or T yp e I I)\nshould b e prioritized for minimization? Explain y our answ er.\n3\nDSA1101",
+      "part_stem_html": "<pre>(h) When constructing a classi\u001ccation mo del that helps to predict if a p erson has a highly\ncon tagious disease, suc h as Co vid-19, whic h t yp e of error rate (T yp e I or T yp e I I)\nshould b e prioritized for minimization? Explain y our answ er.\n3\nDSA1101</pre>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

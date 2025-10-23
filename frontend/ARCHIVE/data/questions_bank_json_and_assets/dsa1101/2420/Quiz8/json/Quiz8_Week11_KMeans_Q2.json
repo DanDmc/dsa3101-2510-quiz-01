@@ -1,0 +1,65 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Question 2\n\nWhich line of code below is the correct way to find the Number of Points (or flats) in each cluster?\n\nGiven:\n\nkout <- kmeans(hdb[ , c(\"floor_area_sqm\" , \"amenities\")] , centers=2) \nA\nkout$withinss\nB\nkout$cluster\nC\nkout$centers\nD\nkout$size",
+  "question_stem_html": "<pre>Question 2\n\nWhich line of code below is the correct way to find the Number of Points (or flats) in each cluster?\n\nGiven:\n\nkout &lt;- kmeans(hdb[ , c(&quot;floor_area_sqm&quot; , &quot;amenities&quot;)] , centers=2) \nA\nkout$withinss\nB\nkout$cluster\nC\nkout$centers\nD\nkout$size</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:42:47+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "kout$withinss",
+          "text_html": "<p>kout$withinss</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "kout$cluster",
+          "text_html": "<p>kout$cluster</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "kout$centers",
+          "text_html": "<p>kout$centers</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "kout$size",
+          "text_html": "<p>kout$size</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": [
+        "k-means",
+        "clustering"
+      ]
+    }
+  ]
+}

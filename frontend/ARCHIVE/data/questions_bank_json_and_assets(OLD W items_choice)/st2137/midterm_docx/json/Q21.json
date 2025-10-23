@@ -1,0 +1,75 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 21,
+  "is_multi": false,
+  "question_stem": "This question is to be answered using R.\nThe dataset in taiwan_outlier_removed.csv contains information on housing prices from Taiwan. The dependent variable is price. We had worked with this data in our tutorial; the greatest outlier from there has been removed.\nIn this question, we shall work with price as the dependent variable, and the following two explanatory variables:\nldist: The (natural) log of the distance to the nearest MRT station. The original distance is in meters.\nnum_stores: The number of convenience stores within walking distance.\nRefer to the attached SAS output, and answer the questions 1–3. Following that, you will have to re-fit the model in R and run the additional analyses.\nInterpret the model, when the number of stores is 0. Make sure that your explanation does not involve the logarithm scale.\nThe adjusted \nfor this model is 0.59. Your colleague has fitted the same model, but without the log transform of distance. Are the two adjusted \ncomparable? Why or why not?\nStudy the SAS plots of residuals versus predictor and assess if there is anything unusual.\nUse R to return prediction intervals for the following two cases:\nWhen the number of stores is 5, and the distance to MRT is 2175m.\nWhen the number of stores is 2 and the distance to MRT is 965m.\nIdentify the most influential point (in absolute value) with regard to the beta coefficient for the number of stores. You can state the ID number of this point.\nOne of the columns in the influence matrix corresponds to dffit. What is the difference between this column and the unstandardised residuals that we compute?\nRe-create the following plot. What do you observe about the relationship between price and ldist, in the presence of num_stores? Hint: what is the association between ldist and num_stores?\nAttachment:\nattachment_for_itemid_258138.pdf",
+  "question_stem_html": "<p>This question is to be answered using R.</p>\n<p>The dataset in taiwan_outlier_removed.csv contains information on housing prices from Taiwan. The dependent variable is price. We had worked with this data in our tutorial; the greatest outlier from there has been removed.</p>\n<p>In this question, we shall work with price as the dependent variable, and the following two explanatory variables:</p>\n<p>ldist: The (natural) log of the distance to the nearest MRT station. The original distance is in meters.</p>\n<p>num_stores: The number of convenience stores within walking distance.</p>\n<p>Refer to the attached SAS output, and answer the questions 1–3. Following that, you will have to re-fit the model in R and run the additional analyses.</p>\n<p>Interpret the model, when the number of stores is 0. Make sure that your explanation does not involve the logarithm scale.</p>\n<p>The adjusted </p>\n<p>for this model is 0.59. Your colleague has fitted the same model, but without the log transform of distance. Are the two adjusted </p>\n<p>comparable? Why or why not?</p>\n<p>Study the SAS plots of residuals versus predictor and assess if there is anything unusual.</p>\n<p>Use R to return prediction intervals for the following two cases:</p>\n<p>When the number of stores is 5, and the distance to MRT is 2175m.</p>\n<p>When the number of stores is 2 and the distance to MRT is 965m.</p>\n<p>Identify the most influential point (in absolute value) with regard to the beta coefficient for the number of stores. You can state the ID number of this point.</p>\n<p>One of the columns in the influence matrix corresponds to dffit. What is the difference between this column and the unstandardised residuals that we compute?</p>\n<p>Re-create the following plot. What do you observe about the relationship between price and ldist, in the presence of num_stores? Hint: what is the association between ldist and num_stores?</p>\n<p>Attachment:</p>\n<p>attachment_for_itemid_258138.pdf</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "/assets/images/image11.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image11_1.png",
+      "alt": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/image12.png",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "This question is to be answered using R.\nThe dataset in taiwan_outlier_removed.csv contains information on housing prices from Taiwan. The dependent variable is price. We had worked with this data in our tutorial; the greatest outlier from there has been removed.\nIn this question, we shall work with price as the dependent variable, and the following two explanatory variables:\nldist: The (natural) log of the distance to the nearest MRT station. The original distance is in meters.\nnum_stores: The number of convenience stores within walking distance.\nRefer to the attached SAS output, and answer the questions 1–3. Following that, you will have to re-fit the model in R and run the additional analyses.\nInterpret the model, when the number of stores is 0. Make sure that your explanation does not involve the logarithm scale.\nThe adjusted \nfor this model is 0.59. Your colleague has fitted the same model, but without the log transform of distance. Are the two adjusted \ncomparable? Why or why not?\nStudy the SAS plots of residuals versus predictor and assess if there is anything unusual.\nUse R to return prediction intervals for the following two cases:\nWhen the number of stores is 5, and the distance to MRT is 2175m.\nWhen the number of stores is 2 and the distance to MRT is 965m.\nIdentify the most influential point (in absolute value) with regard to the beta coefficient for the number of stores. You can state the ID number of this point.\nOne of the columns in the influence matrix corresponds to dffit. What is the difference between this column and the unstandardised residuals that we compute?\nRe-create the following plot. What do you observe about the relationship between price and ldist, in the presence of num_stores? Hint: what is the association between ldist and num_stores?\nAttachment:\nattachment_for_itemid_258138.pdf",
+      "part_stem_html": "<p>This question is to be answered using R.</p>\n<p>The dataset in taiwan_outlier_removed.csv contains information on housing prices from Taiwan. The dependent variable is price. We had worked with this data in our tutorial; the greatest outlier from there has been removed.</p>\n<p>In this question, we shall work with price as the dependent variable, and the following two explanatory variables:</p>\n<p>ldist: The (natural) log of the distance to the nearest MRT station. The original distance is in meters.</p>\n<p>num_stores: The number of convenience stores within walking distance.</p>\n<p>Refer to the attached SAS output, and answer the questions 1–3. Following that, you will have to re-fit the model in R and run the additional analyses.</p>\n<p>Interpret the model, when the number of stores is 0. Make sure that your explanation does not involve the logarithm scale.</p>\n<p>The adjusted </p>\n<p>for this model is 0.59. Your colleague has fitted the same model, but without the log transform of distance. Are the two adjusted </p>\n<p>comparable? Why or why not?</p>\n<p>Study the SAS plots of residuals versus predictor and assess if there is anything unusual.</p>\n<p>Use R to return prediction intervals for the following two cases:</p>\n<p>When the number of stores is 5, and the distance to MRT is 2175m.</p>\n<p>When the number of stores is 2 and the distance to MRT is 965m.</p>\n<p>Identify the most influential point (in absolute value) with regard to the beta coefficient for the number of stores. You can state the ID number of this point.</p>\n<p>One of the columns in the influence matrix corresponds to dffit. What is the difference between this column and the unstandardised residuals that we compute?</p>\n<p>Re-create the following plot. What do you observe about the relationship between price and ldist, in the presence of num_stores? Hint: what is the association between ldist and num_stores?</p>\n<p>Attachment:</p>\n<p>attachment_for_itemid_258138.pdf</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image11.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image11_1.png",
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "/assets/images/image12.png",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 20.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

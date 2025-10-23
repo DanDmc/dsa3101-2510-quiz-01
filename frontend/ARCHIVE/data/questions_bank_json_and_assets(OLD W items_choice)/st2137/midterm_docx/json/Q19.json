@@ -1,0 +1,43 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 19,
+  "is_multi": false,
+  "question_stem": "The Γ(1.5,1) pdf is given by\nf(y)=1Γ(1.5)y1/2e−y,y>0 where Γ(z)=∫0∞tz−1e−tdt is the gamma function. In this question, we shall use R to generate random variables from this pdf. (You are not allowed to use rgamma() in this question, but you can use rexp() and runif().)\nThe algorithm we shall use is the rejection algorithm. Here is pseudo-code for how it works:\nGenerate X∼Exp(2/3) and independently, U∼Unif(0,1). To be explicit, the pdf for X is: fX(x)=23exp−2/3x,x>0\nIf U<(2eX3)1/2e−X/3 then set Y=X and return Y. This is the acceptance step.\nOtherwise, return to step 1 and generate a new X and U.\nRepeat steps 1 - 3 until a Y is accepted. This Y will follow the Γ(1.5,1) distribution.\nNote that not all X values will be accepted. The acceptance rate is the number of Y acceptednumber of (X,U) pairs generated\nWrite a function gen_one_Y() that takes no arguments and returns a vector of length two each time it is run: a single Y, and the number of X variables that were needed to get it.\nUse this function to generate 105 random variables from f(y).\nCreate a histogram of the random variables generated, along with the actual pdf.\nWhat is the acceptance rate? In other words, on average how many X variables are generated until a Y is accepted?\nThe correctness of the above algorithm can be proved theoretically. However, suppose you were given a vector of random variables, and you were told they were from a gamma distribution. Assuming you can use qgamma, explain how you can create a plot to assess if this claim is true. Hint: Think about modifying the qq-plots the we learnt about for normality.",
+  "question_stem_html": "<p>The Γ(1.5,1) pdf is given by</p>\n<p>f(y)=1Γ(1.5)y1/2e−y,y>0 where Γ(z)=∫0∞tz−1e−tdt is the gamma function. In this question, we shall use R to generate random variables from this pdf. (You are not allowed to use rgamma() in this question, but you can use rexp() and runif().)</p>\n<p>The algorithm we shall use is the rejection algorithm. Here is pseudo-code for how it works:</p>\n<p>Generate X∼Exp(2/3) and independently, U∼Unif(0,1). To be explicit, the pdf for X is: fX(x)=23exp−2/3x,x>0</p>\n<p>If U<(2eX3)1/2e−X/3 then set Y=X and return Y. This is the acceptance step.</p>\n<p>Otherwise, return to step 1 and generate a new X and U.</p>\n<p>Repeat steps 1 - 3 until a Y is accepted. This Y will follow the Γ(1.5,1) distribution.</p>\n<p>Note that not all X values will be accepted. The acceptance rate is the number of Y acceptednumber of (X,U) pairs generated</p>\n<p>Write a function gen_one_Y() that takes no arguments and returns a vector of length two each time it is run: a single Y, and the number of X variables that were needed to get it.</p>\n<p>Use this function to generate 105 random variables from f(y).</p>\n<p>Create a histogram of the random variables generated, along with the actual pdf.</p>\n<p>What is the acceptance rate? In other words, on average how many X variables are generated until a Y is accepted?</p>\n<p>The correctness of the above algorithm can be proved theoretically. However, suppose you were given a vector of random variables, and you were told they were from a gamma distribution. Assuming you can use qgamma, explain how you can create a plot to assess if this claim is true. Hint: Think about modifying the qq-plots the we learnt about for normality.</p>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:17:34+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "The Γ(1.5,1) pdf is given by\nf(y)=1Γ(1.5)y1/2e−y,y>0 where Γ(z)=∫0∞tz−1e−tdt is the gamma function. In this question, we shall use R to generate random variables from this pdf. (You are not allowed to use rgamma() in this question, but you can use rexp() and runif().)\nThe algorithm we shall use is the rejection algorithm. Here is pseudo-code for how it works:\nGenerate X∼Exp(2/3) and independently, U∼Unif(0,1). To be explicit, the pdf for X is: fX(x)=23exp−2/3x,x>0\nIf U<(2eX3)1/2e−X/3 then set Y=X and return Y. This is the acceptance step.\nOtherwise, return to step 1 and generate a new X and U.\nRepeat steps 1 - 3 until a Y is accepted. This Y will follow the Γ(1.5,1) distribution.\nNote that not all X values will be accepted. The acceptance rate is the number of Y acceptednumber of (X,U) pairs generated\nWrite a function gen_one_Y() that takes no arguments and returns a vector of length two each time it is run: a single Y, and the number of X variables that were needed to get it.\nUse this function to generate 105 random variables from f(y).\nCreate a histogram of the random variables generated, along with the actual pdf.\nWhat is the acceptance rate? In other words, on average how many X variables are generated until a Y is accepted?\nThe correctness of the above algorithm can be proved theoretically. However, suppose you were given a vector of random variables, and you were told they were from a gamma distribution. Assuming you can use qgamma, explain how you can create a plot to assess if this claim is true. Hint: Think about modifying the qq-plots the we learnt about for normality.",
+      "part_stem_html": "<p>The Γ(1.5,1) pdf is given by</p>\n<p>f(y)=1Γ(1.5)y1/2e−y,y>0 where Γ(z)=∫0∞tz−1e−tdt is the gamma function. In this question, we shall use R to generate random variables from this pdf. (You are not allowed to use rgamma() in this question, but you can use rexp() and runif().)</p>\n<p>The algorithm we shall use is the rejection algorithm. Here is pseudo-code for how it works:</p>\n<p>Generate X∼Exp(2/3) and independently, U∼Unif(0,1). To be explicit, the pdf for X is: fX(x)=23exp−2/3x,x>0</p>\n<p>If U<(2eX3)1/2e−X/3 then set Y=X and return Y. This is the acceptance step.</p>\n<p>Otherwise, return to step 1 and generate a new X and U.</p>\n<p>Repeat steps 1 - 3 until a Y is accepted. This Y will follow the Γ(1.5,1) distribution.</p>\n<p>Note that not all X values will be accepted. The acceptance rate is the number of Y acceptednumber of (X,U) pairs generated</p>\n<p>Write a function gen_one_Y() that takes no arguments and returns a vector of length two each time it is run: a single Y, and the number of X variables that were needed to get it.</p>\n<p>Use this function to generate 105 random variables from f(y).</p>\n<p>Create a histogram of the random variables generated, along with the actual pdf.</p>\n<p>What is the acceptance rate? In other words, on average how many X variables are generated until a Y is accepted?</p>\n<p>The correctness of the above algorithm can be proved theoretically. However, suppose you were given a vector of random variables, and you were told they were from a gamma distribution. Assuming you can use qgamma, explain how you can create a plot to assess if this claim is true. Hint: Think about modifying the qq-plots the we learnt about for normality.</p>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 12.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "TBD. Provide full working.",
+      "solution_html": "<p>TBD. Provide full working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "statistics"
+      ]
+    }
+  ]
+}

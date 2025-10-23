@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "In R, the command set.seed() can be used to initialise the random number generator. Random variables cannot be generated in R without setting the seed.",
+  "question_stem_html": "<div><p> </p>\n<p>In R, the command <code>set.seed()</code> can be used to initialise the random number generator. Random variables <em>cannot</em> be generated in R without setting the seed.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In R, the command set.seed() can be used to initialise the random number generator. Random variables cannot be generated in R without setting the seed.",
+      "part_stem_html": "<div><p> </p>\n<p>In R, the command <code>set.seed()</code> can be used to initialise the random number generator. Random variables <em>cannot</em> be generated in R without setting the seed.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "26874",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "95759",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Random variables can be generated without setting the seed. However, if we wish to reproduce the stream of random variables, we will have to set the seed first.",
+      "solution_html": "Random variables can be generated without setting the seed. However, if we wish to reproduce the stream of random variables, we will have to set the seed first.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

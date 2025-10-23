@@ -1,0 +1,50 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Consider the following SAS program:\nDATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a\n7 m 85 89 a\n;\nThe $ indicates that CA1 is to be read in as a numeric variable.",
+  "question_stem_html": "<div><p> </p>\n<p>Consider the following SAS program:</p>\n<pre><code>DATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a\n7 m 85 89 a\n;</code></pre>\n<p>The <code>$</code> indicates that CA1 is to be read in as a numeric variable.</p>\n<p> </p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Consider the following SAS program:\nDATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a\n7 m 85 89 a\n;\nThe $ indicates that CA1 is to be read in as a numeric variable.",
+      "part_stem_html": "<div><p> </p>\n<p>Consider the following SAS program:</p>\n<pre><code>DATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a\n7 m 85 89 a\n;</code></pre>\n<p>The <code>$</code> indicates that CA1 is to be read in as a numeric variable.</p>\n<p> </p></div>",
+      "choices": [
+        {
+          "choice_id": "30511",
+          "text": "True",
+          "text_html": "True",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "47976",
+          "text": "False",
+          "text_html": "False",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "The dollar sign corresponds to the variable *before* it. In this case, the statement indicates that gender should be read in as a character variable.",
+      "solution_html": "The dollar sign corresponds to the variable *before* it. In this case, the statement indicates that gender should be read in as a character variable.",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

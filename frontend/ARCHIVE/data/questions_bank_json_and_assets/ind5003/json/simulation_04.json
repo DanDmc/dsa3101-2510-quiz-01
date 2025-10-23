@@ -1,0 +1,23 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "An analyst working for a ride-sharing company wants to estimate the average waiting time for passengers during peak hours. The analyst intends to use simulation modeling to understand how different factors such as the number of available drivers, traffic conditions, and demand for rides, affect waiting times over the course of a week.\n\nAs the analyst prepares to run this simulation, what specific data should they collect to calibrate the model accurately?",
+  "question_stem_html": "<p>An analyst working for a ride-sharing company wants to estimate the average waiting time for passengers during peak hours. The analyst intends to use simulation modeling to understand how different factors such as the number of available drivers, traffic conditions, and demand for rides, affect waiting times over the course of a week.</p><p><strong>As the analyst prepares to run this simulation, what specific data should they collect to calibrate the model accurately?</strong></p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T18:50:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "open-ended",
+      "subtype": "essay",
+      "solution_html": "<p>Here are some possible suggestions:</p><ol><li>Passenger demand during peak hours (e.g., number of ride requests per hour).</li><li>Number of drivers available during peak hours.</li><li>Traffic condition data during peak hours (e.g., average speed or congestion levels).</li><li>Average time it takes for drivers to reach passengers based on different locations in the city.</li><li>Variability in response times due to weather conditions or special events.</li><li>Cancellation rates (both passenger and driver).</li></ol>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "data to collect", "calibration"]
+    }
+  ]
+}

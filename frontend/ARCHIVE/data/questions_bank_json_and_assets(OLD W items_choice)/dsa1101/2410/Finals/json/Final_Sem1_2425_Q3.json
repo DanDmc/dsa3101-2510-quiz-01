@@ -1,0 +1,119 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Final",
+  "question_no": 3,
+  "is_multi": true,
+  "question_stem": "\n\n3.\n(10 points) Consider a dataset about female horseshoe crabs during their mating\nseason. Researchers want to investigate the male crabs that group around the female and\npotentially fertilize her eggs (called satellites). The table below gives the description for\neach variable in this study.\nThe (cid:28)rst ten rows of the dataset is given in Figure 1.\n\nVariable Description\nsatell\ncolor\nweight\n\n1 = female crab has satellite(s), 0 = not having any satellites\nfemale crab’s color\nfemale crab weight (kg)\n\nFigure 1: The (cid:28)rst 10 rows of the dataset\n\nA model was (cid:28)tted for the dataset given, called model M. The summary output for model\nM is given in Figure 2.\n\n4\n\n\fDSA1101\n\nFigure 2: Summary output of model M\n\nNote: For the questions that follow, report numerical answers to three signi(cid:28)cant (cid:28)gures\nif they are smaller than one and to three decimal places if they are larger than one.",
+  "question_stem_html": "<pre>\n\n3.\n(10 points) Consider a dataset about female horseshoe crabs during their mating\nseason. Researchers want to investigate the male crabs that group around the female and\npotentially fertilize her eggs (called satellites). The table below gives the description for\neach variable in this study.\nThe (cid:28)rst ten rows of the dataset is given in Figure 1.\n\nVariable Description\nsatell\ncolor\nweight\n\n1 = female crab has satellite(s), 0 = not having any satellites\nfemale crab’s color\nfemale crab weight (kg)\n\nFigure 1: The (cid:28)rst 10 rows of the dataset\n\nA model was (cid:28)tted for the dataset given, called model M. The summary output for model\nM is given in Figure 2.\n\n4\n\n\fDSA1101\n\nFigure 2: Summary output of model M\n\nNote: For the questions that follow, report numerical answers to three signi(cid:28)cant (cid:28)gures\nif they are smaller than one and to three decimal places if they are larger than one.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T21:40:24+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": null,
+      "part_stem": "(a) Type the equation of model M into the R code (cid:28)le as comments. Explain in detail if\n\nany notation is used in the equation.",
+      "part_stem_html": "<pre>(a) Type the equation of model M into the R code (cid:28)le as comments. Explain in detail if\n\nany notation is used in the equation.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "b",
+      "type": "essay",
+      "subtype": null,
+      "part_stem": "(b) Report the coe(cid:30)cient of variable color in model M and interpret it.",
+      "part_stem_html": "<pre>(b) Report the coe(cid:30)cient of variable color in model M and interpret it.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "c",
+      "type": "essay",
+      "subtype": null,
+      "part_stem": "(c) Report the coe(cid:30)cient of variable weight in model M and interpret it. Is it signi(cid:28)cant\n\nin model M? Explain.",
+      "part_stem_html": "<pre>(c) Report the coe(cid:30)cient of variable weight in model M and interpret it. Is it signi(cid:28)cant\n\nin model M? Explain.</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    },
+    {
+      "part_number": "d",
+      "type": "essay",
+      "subtype": null,
+      "part_stem": "(d) Calculate and report the odds ratio of having satellites between two crabs below:\n\nCrab A: weight = 3 kg, color = light;\n\nCrab B: weight = 2 kg, color = dark.\n\n5",
+      "part_stem_html": "<pre>(d) Calculate and report the odds ratio of having satellites between two crabs below:\n\nCrab A: weight = 3 kg, color = light;\n\nCrab B: weight = 2 kg, color = dark.\n\n5</pre>",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "Your answer",
+          "text_html": "<p>Your answer</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

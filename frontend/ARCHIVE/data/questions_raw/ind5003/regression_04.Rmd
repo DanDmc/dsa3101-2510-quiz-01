@@ -1,0 +1,56 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following simple linear regression model has been fitted to the 
+Taiwan real estate data from topic 05:
+
+$$
+Y = \beta_0 + \beta_1 \ln (X_1) + e
+$$
+
+where $X_1$ corresponds to distance to the nearest MRT. The following output 
+was obtained from Python:
+
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+re2 = pd.read_csv("taiwan_dataset.csv")
+
+re2['ldist'] = np.log(re2.dist_MRT)
+lm_2 = ols('price ~ ldist', data=re2).fit()
+print(lm_2.summary())
+```
+
+What is the estimated mean for a new observation with distance to MRT 1.5km? Show 
+all the Python code used.
+
+Solution
+========
+
+```{python}
+new_df = sm.add_constant(pd.DataFrame({'dist_MRT' : 1500.0}, index=[0]))
+new_df['ldist']  = np.log(new_df.dist_MRT)
+predictions_out = lm_2.get_prediction(new_df)
+
+print(f"The estimated mean is {predictions_out.predicted_mean[0]:.3f}")
+```
+
+
+Meta-information
+================
+exname: regression, prediction, taiwan
+extype: string
+exsolution: `r fmt(29.75707695)`

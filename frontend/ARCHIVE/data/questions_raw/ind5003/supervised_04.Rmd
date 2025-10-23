@@ -1,0 +1,30 @@
+Question
+========
+
+Which method in scikit-learn estimators is used to estimate the parameters of a 
+model using the training data?
+
+Answerlist
+----------
+
+* `fit()`
+* `predict()`
+* `score()`
+* `transform()`
+
+Solution
+========
+
+Answerlist
+----------
+* True
+* This is used *after* fitting; to make predictions.
+* This returns the *score* (e.g. $R^2$ or RMSE) on a new dataset, after fitting has been done.
+* This is also only called *after* fitting: to transform a dataset, e.g. scaling, PCA, etc. 
+
+Meta-information
+================
+exname: supervised
+extype: schoice
+exsolution: 1000
+exshuffle: 4

@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "midterm",
+  "question_no": 25,
+  "is_multi": false,
+  "question_stem": "Suppose that . Which of the following R commands will return  2)\" src=\"https://canvas.nus.edu.sg/equation_images/P(X%2520%253E%25202)?scale=1\" alt=\"LaTeX: P(X > 2)\" data-equation-content=\"P(X > 2)\" data-ignore-a11y-check=\"\" loading=\"lazy\">?",
+  "question_stem_html": "<div><p>Suppose that <img class=\"equation_image\" title=\"X \\sim N(\\mu = 0,\\; \\sigma^2 = 4)\" src=\"https://canvas.nus.edu.sg/equation_images/X%2520%255Csim%2520N(%255Cmu%2520%253D%25200%252C%255C%253B%2520%255Csigma%255E2%2520%253D%25204)?scale=1\" alt=\"LaTeX: X \\sim N(\\mu = 0,\\; \\sigma^2 = 4)\" data-equation-content=\"X \\sim N(\\mu = 0,\\; \\sigma^2 = 4)\" data-ignore-a11y-check=\"\" loading=\"lazy\">. Which of the following R commands will return <img class=\"equation_image\" title=\"P(X > 2)\" src=\"https://canvas.nus.edu.sg/equation_images/P(X%2520%253E%25202)?scale=1\" alt=\"LaTeX: P(X > 2)\" data-equation-content=\"P(X > 2)\" data-ignore-a11y-check=\"\" loading=\"lazy\">?</p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:01+08:00",
+  "question_media": [
+    {
+      "type": "image",
+      "src": "https://canvas.nus.edu.sg/equation_images/X%2520%255Csim%2520N(%255Cmu%2520%253D%25200%252C%255C%253B%2520%255Csigma%255E2%2520%253D%25204)?scale=1",
+      "alt": ""
+    }
+  ],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Suppose that . Which of the following R commands will return  2)\" src=\"https://canvas.nus.edu.sg/equation_images/P(X%2520%253E%25202)?scale=1\" alt=\"LaTeX: P(X > 2)\" data-equation-content=\"P(X > 2)\" data-ignore-a11y-check=\"\" loading=\"lazy\">?",
+      "part_stem_html": "<div><p>Suppose that <img class=\"equation_image\" title=\"X \\sim N(\\mu = 0,\\; \\sigma^2 = 4)\" src=\"https://canvas.nus.edu.sg/equation_images/X%2520%255Csim%2520N(%255Cmu%2520%253D%25200%252C%255C%253B%2520%255Csigma%255E2%2520%253D%25204)?scale=1\" alt=\"LaTeX: X \\sim N(\\mu = 0,\\; \\sigma^2 = 4)\" data-equation-content=\"X \\sim N(\\mu = 0,\\; \\sigma^2 = 4)\" data-ignore-a11y-check=\"\" loading=\"lazy\">. Which of the following R commands will return <img class=\"equation_image\" title=\"P(X > 2)\" src=\"https://canvas.nus.edu.sg/equation_images/P(X%2520%253E%25202)?scale=1\" alt=\"LaTeX: P(X > 2)\" data-equation-content=\"P(X > 2)\" data-ignore-a11y-check=\"\" loading=\"lazy\">?</p></div>",
+      "choices": [
+        {
+          "choice_id": "6261",
+          "text": "pnorm(2, mean = 0, sd = 2, lower.tail = FALSE)",
+          "text_html": "pnorm(2, mean = 0, sd = 2, lower.tail = FALSE)",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "7889",
+          "text": "pnorm(2, mean = 0, var = 4, lower.tail = FALSE)",
+          "text_html": "pnorm(2, mean = 0, var = 4, lower.tail = FALSE)",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "7317",
+          "text": "1 - qnorm(2, mean = 0, sd = 2)",
+          "text_html": "1 - qnorm(2, mean = 0, sd = 2)",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "8911",
+          "text": "1 - qnorm(2, mean = 0, var = 4)",
+          "text_html": "1 - qnorm(2, mean = 0, var = 4)",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "type": "image",
+          "src": "https://canvas.nus.edu.sg/equation_images/X%2520%255Csim%2520N(%255Cmu%2520%253D%25200%252C%255C%253B%2520%255Csigma%255E2%2520%253D%25204)?scale=1",
+          "alt": ""
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "`qnorm` is for quantiles; those are out. In R, the argument for `pnorm` requires`sd`, not `var`.",
+      "solution_html": "<p>`qnorm` is for quantiles; those are out. In R, the argument for `pnorm` requires`sd`, not `var`.</p>\n<p> </p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

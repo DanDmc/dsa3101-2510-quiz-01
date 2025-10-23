@@ -1,0 +1,58 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "Quiz2",
+  "question_no": 8,
+  "is_multi": false,
+  "question_stem": "Consider Breast Cancer data (Topic2_EDA_4.pdf) which have variables \"pmh.use\" (Yes/No) and \"cancer\" (Absent/Present).  The contingency table of percentage is extracted from the lecture note and given below (please revise the data and the values given in the data) before answering the question.\n\nWhat is the value 60.5% referring to?",
+  "question_stem_html": "<div>\n<p>Consider Breast Cancer data (Topic2_EDA_4.pdf) which have variables \"pmh.use\" (Yes/No) and \"cancer\" (Absent/Present).&nbsp; The contingency table of percentage is extracted from the lecture note and given below (please revise the&nbsp;data and the values given in the data) before answering the question.</p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded Media/Picture5.png\" alt=\"Picture5.png\" data-old-link=\"/courses/80987/files/6794482/preview\"></p>\n<p>What is the value 60.5% referring to?</p>\n</div>",
+  "version": 1,
+  "update_timestamp": "2025-09-26T20:47:41+08:00",
+  "question_media": [
+    {
+      "src": "assets/Picture5.png",
+      "alt": "Picture5.png"
+    }
+  ],
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mcq",
+      "part_stem": "Consider Breast Cancer data (Topic2_EDA_4.pdf) which have variables \"pmh.use\" (Yes/No) and \"cancer\" (Absent/Present).  The contingency table of percentage is extracted from the lecture note and given below (please revise the data and the values given in the data) before answering the question.\n\nWhat is the value 60.5% referring to?",
+      "part_stem_html": "<div>\n<p>Consider Breast Cancer data (Topic2_EDA_4.pdf) which have variables \"pmh.use\" (Yes/No) and \"cancer\" (Absent/Present).&nbsp; The contingency table of percentage is extracted from the lecture note and given below (please revise the&nbsp;data and the values given in the data) before answering the question.</p>\n<p><img src=\"$IMS-CC-FILEBASE$/Uploaded Media/Picture5.png\" alt=\"Picture5.png\" data-old-link=\"/courses/80987/files/6794482/preview\"></p>\n<p>What is the value 60.5% referring to?</p>\n</div>",
+      "choices": [
+        {
+          "choice_id": "2889676c-09fa-4865-8b81-0cb999c33732",
+          "text": "Percentage of not having cancer among PMH users",
+          "text_html": "<p>Percentage of not having cancer among PMH users</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "67179ac2-5d97-4a52-a99f-bf3caf9faf98",
+          "text": "Percentage of PMH users among those not having cancer",
+          "text_html": "<p>Percentage of PMH users among those not having cancer</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [
+        {
+          "src": "assets/Picture5.png",
+          "alt": "Picture5.png"
+        }
+      ],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "",
+      "solution_html": "",
+      "difficulty_level": "",
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+flask
+pandas
+mysqlclient
+sqlalchemy
+seaborn
+plotly
+matplotlib
+mysql-connector-python==9.0.0

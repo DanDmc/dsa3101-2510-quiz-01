@@ -1,0 +1,29 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05. The model is Y = β₀ + β₁ ln(X₁) + e, where X₁ corresponds to distance to the nearest MRT. Suppose that I am hunting for a new property, but I am not willing to spend more than 50,000 NT dollars per ping. What is the closest distance to an MRT that I can afford, according to the above model?",
+  "question_stem_html": "<p>Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ln</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mi>e</mi></mrow><annotation encoding='application/x-tex'>Y = \\beta_0 + \\beta_1 \\ln(X_1) + e</annotation></semantics></math></p><p>where X₁ corresponds to distance to the nearest MRT.</p><p>Suppose that I am hunting for a new property, but I am not willing to spend more than 50,000 NT dollars per ping. What is the closest distance to an MRT that I can afford, according to the above model?</p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T17:27:00+08:00",
+  "question_media": [
+    {
+      "src": "assets/regression_01.png",
+      "alt": "OLS Regression Results table from Python output."
+    }
+  ],
+  "items": [
+    {
+      "type": "open-ended",
+      "language": "",
+      "code_snippet": "95.0169 − 8.9235 ln(X) ≤ 50\nX ≥ 155.21",
+      "solution_html": "<p>From the fitted model,</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mn>95.0169</mn><mo>−</mo><mn>8.9235</mn><mi>ln</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>≤</mo><mn>50</mn></mrow><annotation encoding='application/x-tex'>95.0169 - 8.9235 \\ln(X) \\le 50</annotation></semantics></math></p><p>Solving gives:</p><p><math xmlns='http://www.w3.org/1998/Math/MathML'><semantics><mrow><mi>X</mi><mo>≥</mo><mn>155.21</mn></mrow><annotation encoding='application/x-tex'>X \\ge 155.21</annotation></semantics></math></p><p>Thus, the closest affordable distance is approximately 155.21 m from the MRT.</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["regression", "prediction", "inverse-calculation"]
+    }
+  ]
+}

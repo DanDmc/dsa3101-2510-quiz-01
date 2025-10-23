@@ -1,0 +1,42 @@
+{
+  "question_id": null,
+  "course": "ST1131",
+  "semester": "",
+  "assessment_type": "",
+  "question_no": 1,
+  "is_multi": true,
+  "question_stem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
+  "question_stem_html": "Using the <code>student-mat.csv</code> dataset from our lectures, conduct a <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\chi^2</annotation></semantics></math>-test of independence on the variables <code>address</code> and <code>guardian</code> at the 5% significance level.",
+  "version": 1,
+  "update_timestamp": "2025-09-14T16:25:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "essay",
+      "subtype": "open-ended",
+      "part_stem": "Using the student-mat.csv dataset from our lectures, conduct a χ2\\chi^2-test of independence on the variables address and guardian at the 5% significance level.",
+      "part_stem_html": "Using the <code>student-mat.csv</code> dataset from our lectures, conduct a <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding=\"application/x-tex\">\\chi^2</annotation></semantics></math>-test of independence on the variables <code>address</code> and <code>guardian</code> at the 5% significance level.",
+      "choices": [
+        {
+          "choice_id": "Your answer",
+          "text": "text_str",
+          "text_html": "<p>text_str</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "text_str",
+      "solution_html": "<p>To conduct a χ2-test of independence on the variables address and guardian using the student-mat.csv dataset, follow these steps:</p>\n<ol>\n<li>Load the dataset into your preferred statistical software (e.g., R, Python).</li>\n<li>Create a contingency table for the two categorical variables: address and guardian.</li>\n<li>Use the chi-squared test function available in your software to perform the test on the contingency table.</li>\n<li>Check the p-value from the test results. If the p-value is less than 0.05, reject the null hypothesis and conclude that there is a significant association between address and guardian. Otherwise, fail to reject the null hypothesis.</li>\n</ol>\n<p>Make sure to report the test statistic, degrees of freedom, and p-value in your answer.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": ["statistics", "chi-squared test", "independence test"]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+In the notes, we estimated the sample size required for a two-sample t-test with
+a desired power. 
+
+In this question, suppose that a researcher can only afford a sample of size 30.
+However, he is interested to know how quickly the power of his test falls as a
+function of the standard deviation. Suppose that he is interested in detecting a
+difference of 1.2 units, at $\alpha=5\%$. At what standard deviation does power
+first drop below 0.5?
+
+Modify the code from the lectures to run the appropriate simulation and create 
+a plot similar to this one:
+
+```{python echo=FALSE, fig.align="center", fig.cap="Power analysis"}
+import matplotlib.pyplot as plt
+import numpy as np
+from numpy.random import default_rng
+from scipy import stats
+
+rng = default_rng(5003)
+
+def generate_one_sample(alpha, delta_m, sd1, n):
+    X = rng.normal(0, sd1, size=n)
+    Y = rng.normal(delta_m, sd1, size=n)
+    
+    ts2 = stats.ttest_ind(X, Y)
+    if ts2.pvalue < alpha:
+        return 1 # 1 means reject H0
+    else:
+        return 0
+
+sd_vals = np.arange(0.5, 5, step=0.5)
+
+power_est = []
+for s_ in sd_vals:
+    x = [generate_one_sample(0.05, 1.2, s_, 30) for ii in np.arange(0, 200)]
+    power_est.append(np.mean(x))
+    #print(f"Done with sd {s_:.3f}")
+
+ax = plt.plot(sd_vals, power_est, 'go-')
+plt.hlines(0.5, sd_vals[0], sd_vals[-1], colors='b', linestyles='dotted')
+plt.xlabel('Std. Deviation')
+plt.title('Power Estimates');
+```
+
+
+Solution
+========
+
+```{python eval=FALSE}
+import numpy as np
+from numpy.random import default_rng
+
+rng = default_rng(5003)
+
+def generate_one_sample(alpha, delta_m, sd1, n):
+    X = rng.normal(0, sd1, size=n)
+    Y = rng.normal(delta_m, sd1, size=n)
+    
+    ts2 = stats.ttest_ind(X, Y)
+    if ts2.pvalue < alpha:
+        return 1 # 1 means reject H0
+    else:
+        return 0
+
+sd_vals = np.arange(0.5, 5, step=0.5)
+
+power_est = []
+for s_ in sd_vals:
+    x = [generate_one_sample(0.05, 1.2, s_, 30) for ii in np.arange(0, 200)]
+    power_est.append(np.mean(x))
+    #print(f"Done with sd {s_:.3f}")
+
+ax = plt.plot(sd_vals, power_est, 'go-')
+plt.hlines(0.5, sd_vals[0], sd_vals[-1], colors='b', linestyles='dotted')
+plt.title('Power Estimates');
+```
+
+Meta-information
+================
+exname: simulation, 2-sample
+extype: string
+exstringtype: essay
+exsolution: nil

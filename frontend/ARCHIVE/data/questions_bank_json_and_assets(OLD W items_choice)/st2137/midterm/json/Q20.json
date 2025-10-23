@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 20,
+  "is_multi": false,
+  "question_stem": "What is the length of the resulting output in this Python code? \nmy_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']  result = my_list[2:8:2]  len(result)",
+  "question_stem_html": "<div><p><span data-contrast=\"none\">What is the length of the resulting output in this Python code?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<pre><span data-contrast=\"none\"><br>my_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">result = my_list[2:8:2] </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">len(result)</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></pre></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "What is the length of the resulting output in this Python code? \nmy_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']  result = my_list[2:8:2]  len(result)",
+      "part_stem_html": "<div><p><span data-contrast=\"none\">What is the length of the resulting output in this Python code?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<pre><span data-contrast=\"none\"><br>my_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">result = my_list[2:8:2] </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span><br><span data-contrast=\"none\">len(result)</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></pre></div>",
+      "choices": [
+        {
+          "choice_id": "5525",
+          "text": "6",
+          "text_html": "6",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "1698",
+          "text": "4",
+          "text_html": "4",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "7674",
+          "text": "3",
+          "text_html": "3",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "7144",
+          "text": "2",
+          "text_html": "2",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 6,
+  "is_multi": false,
+  "question_stem": "Q6. From the R code given, the three groups are formed randomly. True or False?",
+  "question_stem_html": "<pre>Q6. From the R code given, the three groups are formed randomly. True or False?</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "ANS: True\nThere should be 3 groups, labeled as 1, 2, and 3.\nEach name should be matched randomly to a label. Each label should have 3 names.\nVector <y> is a vector that has labels and it has been mixed up well by the function sample().\nFor example:\nIf vector y is: 3   1   1   2   2   3   3   2   1\nthen the 1st name <A> should be in group 3\nthe 2nd name <B> should be in group 1\nthe 3rd name <C> should be in group 1\nThe 4th name <D> should be in group 2\n...\nThe 9th name <I> should be in group 1.\n "
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "ANS: True\nThere should be 3 groups, labeled as 1, 2, and 3.\nEach name should be matched randomly to a label. Each label should have 3 names.\nVector <y> is a vector that has labels and it has been mixed up well by the function sample().\nFor example:\nIf vector y is: 3   1   1   2   2   3   3   2   1\nthen the 1st name <A> should be in group 3\nthe 2nd name <B> should be in group 1\nthe 3rd name <C> should be in group 1\nThe 4th name <D> should be in group 2\n...\nThe 9th name <I> should be in group 1.\n ",
+      "solution_html": "<pre>ANS: True\nThere should be 3 groups, labeled as 1, 2, and 3.\nEach name should be matched randomly to a label. Each label should have 3 names.\nVector &lt;y&gt; is a vector that has labels and it has been mixed up well by the function sample().\nFor example:\nIf vector y is: 3   1   1   2   2   3   3   2   1\nthen the 1st name &lt;A&gt; should be in group 3\nthe 2nd name &lt;B&gt; should be in group 1\nthe 3rd name &lt;C&gt; should be in group 1\nThe 4th name &lt;D&gt; should be in group 2\n...\nThe 9th name &lt;I&gt; should be in group 1.\n </pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

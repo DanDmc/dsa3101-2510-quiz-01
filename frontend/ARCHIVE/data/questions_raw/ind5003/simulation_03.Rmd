@@ -1,0 +1,34 @@
+Question
+========
+
+In which of the following situations is simulation modeling appropriate?
+
+Answerlist
+----------
+
+* A company wants to understand if a customer will churn (i.e. take his/her business 
+  elsewhere), using historical customer behavior.
+* A hospital is exploring the impact of different staffing levels on wait times 
+  in the emergency room during peak hours.
+* A retail chain wants to identify subsets of customers based on purchasing 
+  patterns, in order to offer more personalized marketing strategies to these groups.
+* A company is assessing how different weather patterns might affect delivery 
+  times with the aim to adjust their shipping/routing strategies accordingly.
+
+Solution
+========
+
+Answerlist
+----------
+
+* Incorrect: Supervised learning.
+* Correct: Simulation modeling (exploring staffing levels and their impact on wait times).
+* Incorrect: Unsupervised learning (grouping customers based on purchasing patterns without labels).
+* Correct: Simulation modeling (assessing how weather affects delivery times).
+
+Meta-information
+================
+exname: simulation, statements
+extype: mchoice
+exsolution: 0101
+exshuffle: 4

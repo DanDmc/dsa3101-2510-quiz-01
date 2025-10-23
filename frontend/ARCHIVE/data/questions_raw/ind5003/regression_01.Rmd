@@ -1,0 +1,61 @@
+```{r echo=FALSE}
+library(reticulate)
+tmp_out <- include_supplement("venv_paths.csv")
+tmp_out <- include_supplement("taiwan_dataset.csv", dir="../data")
+
+venv_paths <- read.csv("venv_paths.csv")
+id <- match(Sys.info()["nodename"], venv_paths$nodename)
+use_virtualenv(venv_paths$path[id])
+```
+
+Question
+========
+
+Suppose that the following simple linear regression model has been fitted to the 
+Taiwan real estate data from topic 05:
+
+$$
+Y = \beta_0 + \beta_1 \ln (X_1) + e
+$$
+
+where $X_1$ corresponds to distance to the nearest MRT. The following output 
+was obtained from Python:
+
+```{python echo=FALSE}
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+re2 = pd.read_csv("taiwan_dataset.csv")
+
+re2['ldist'] = np.log(re2.dist_MRT)
+lm_2 = ols('price ~ ldist', data=re2).fit()
+print(lm_2.summary())
+```
+
+What is the null hypothesis corresponding to the $t$-statistic with value -21.959?
+
+Answerlist
+----------
+* $H_0:\; \beta_1 = 0$
+* $H_0:\; \beta_0 = 0$
+* $H_0:\; \hat{\beta}_1 = 0$
+* $H_0:\; \hat{\beta}_0 = 0$
+
+Solution
+========
+
+Answerlist
+----------
+* This is correct.
+* This corresponds to the test for the intercept in the model, not the coefficient for `ldist`.
+* Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol.
+* Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol.
+
+Meta-information
+================
+exname: regression, inference, taiwan
+extype: schoice
+exsolution: 1000
+exshuffle: 4

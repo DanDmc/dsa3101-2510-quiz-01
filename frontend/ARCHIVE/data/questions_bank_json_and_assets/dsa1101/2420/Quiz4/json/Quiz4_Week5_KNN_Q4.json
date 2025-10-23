@@ -1,0 +1,76 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 2",
+  "assessment_type": "Quiz",
+  "question_no": 4,
+  "is_multi": false,
+  "question_stem": "Question 4\nSuppose you wanted to evaluate the performance of your KNN model with a confusion table. What inputs are required?\nA\nPredictions on the training data & actual outcomes of the testing data\nB\nPredictions on the testing data & actual outcomes of the testing data\nC\nPredictions on the testing data & actual outcomes of the training data\nD\nNone of the above",
+  "question_stem_html": "<pre>Question 4\nSuppose you wanted to evaluate the performance of your KNN model with a confusion table. What inputs are required?\nA\nPredictions on the training data &amp; actual outcomes of the testing data\nB\nPredictions on the testing data &amp; actual outcomes of the testing data\nC\nPredictions on the testing data &amp; actual outcomes of the training data\nD\nNone of the above</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:35:13+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "B",
+          "text_html": "<p>B</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redictions on the testing data & actual outcomes of the testing data",
+          "text_html": "<p>redictions on the testing data &amp; actual outcomes of the testing data</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "C",
+          "text_html": "<p>C</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "redictions on the testing data & actual outcomes of the training data",
+          "text_html": "<p>redictions on the testing data &amp; actual outcomes of the training data</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "D",
+          "text_html": "<p>D</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "one of the above",
+          "text_html": "<p>one of the above</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

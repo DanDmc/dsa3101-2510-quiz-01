@@ -1,0 +1,62 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 3,
+  "is_multi": false,
+  "question_stem": "Q3. How to explore the association between the response bbd and pmh (multiple answers)\nBox plot of pmh for two groups of bbd\nContingency table with conditional probabilities of having breast cancer for different categories of pmh\nOdds ratio\nCorrelation coefficient of pmh and bbd",
+  "question_stem_html": "<pre>Q3. How to explore the association between the response bbd and pmh (multiple answers)\nBox plot of pmh for two groups of bbd\nContingency table with conditional probabilities of having breast cancer for different categories of pmh\nOdds ratio\nCorrelation coefficient of pmh and bbd</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "ox plot of pmh for two groups of bbd",
+          "text_html": "<p>ox plot of pmh for two groups of bbd</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "ontingency table with conditional probabilities of having breast cancer for different categories of pmh",
+          "text_html": "<p>ontingency table with conditional probabilities of having breast cancer for different categories of pmh</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "dds ratio",
+          "text_html": "<p>dds ratio</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "orrelation coefficient of pmh and bbd",
+          "text_html": "<p>orrelation coefficient of pmh and bbd</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": " Ans: Contingency table and Odds ratio.",
+      "solution_html": "<pre> Ans: Contingency table and Odds ratio.</pre>",
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

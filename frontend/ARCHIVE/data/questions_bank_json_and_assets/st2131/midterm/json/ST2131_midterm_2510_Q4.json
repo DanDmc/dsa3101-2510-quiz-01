@@ -1,0 +1,87 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q4.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q4.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q4",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 4,
+      "question_type": "mcq",
+      "difficulty_level": null,
+      "question_stem": "If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible? The answer given is 8! / (4!4!). Is this correct?",
+      "question_stem_html": "<p>If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible?</p><p>Answer: \\( \\frac{8!}{4!4!} \\)</p><p>Is this correct?</p>",
+      "concept_tags": [
+        "combinatorics"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": false,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": true,
+          "explanation": ""
+        }
+      ],
+      "_solution": "False",
+      "_solution_html": "<p>False</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Determine whether the given answer is correct.",
+          "part_stem_html": "<p>Determine whether the given answer is correct.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "True",
+              "text_html": "<p>True</p>",
+              "is_correct": false,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "False",
+              "text_html": "<p>False</p>",
+              "is_correct": true,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "False",
+          "solution_html": "<p>False</p>",
+          "difficulty_level": null,
+          "concept_tags": [
+            "combinatorics"
+          ]
+        }
+      ]
+    }
+  ]
+}

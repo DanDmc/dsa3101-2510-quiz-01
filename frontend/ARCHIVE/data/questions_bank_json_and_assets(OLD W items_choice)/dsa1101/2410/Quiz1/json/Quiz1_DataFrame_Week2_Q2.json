@@ -1,0 +1,53 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 2,
+  "is_multi": false,
+  "question_stem": "Q2. To let R recognizes the first column of data frame above as a categorical, we need to sue a function to convert this column into a factor (*). True or False?\n(*) such as function as.factor(), or factor(). ",
+  "question_stem_html": "<pre>Q2. To let R recognizes the first column of data frame above as a categorical, we need to sue a function to convert this column into a factor (*). True or False?\n(*) such as function as.factor(), or factor(). </pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:04:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "true-false",
+      "part_stem": "True or False?",
+      "part_stem_html": "<p>True or False?</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": "Ans: TRUE. Both as.factor() and factor() could be used."
+        },
+        {
+          "choice_id": null,
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": "Ans: TRUE. Both as.factor() and factor() could be used.",
+      "solution_html": "<pre>Ans: TRUE. Both as.factor() and factor() could be used.</pre>",
+      "difficulty_level": null,
+      "concept_tags": [
+        "R",
+        "data frame",
+        "factors",
+        "True/False"
+      ]
+    }
+  ]
+}

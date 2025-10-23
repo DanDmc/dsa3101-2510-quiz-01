@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 5,
+  "is_multi": false,
+  "question_stem": "Question 5 (correct answer in yellow highlight)\nThe leaf node above the purple arrow (no 26/45) means\nAmong 1789 customers that did not subscribe the bank service, there are 26 of them that have the job = admin, blue-collar, management, retired, services or technician.\n\nIf a customer that has poutcome  = success; and education = secondary or tertiary; and job = admin, blue-collar, management, retired, services or technician; then we can predict that the probability s/he will not subscribe the bank service is 26/45.\n\n\nAmong 1789 customers that did not subscribe the bank service, the probability of them that have poutcome = success; and education = secondary or tertiary; and job = admin, blue-collar, management, retired, services or technician is 26/45.\n\nAmong 2000 customers, there are 58 of them that have poutcome = success; and among those 58, there are 50 of them that have education = secondary or tertiary; and there are 45 among those 50 that have job = admin, blue-collar, management, retired, services or technician; and there are 26 among those 45 that did not subscribe the bank service.",
+  "question_stem_html": "<pre>Question 5 (correct answer in yellow highlight)\nThe leaf node above the purple arrow (no 26/45) means\nAmong 1789 customers that did not subscribe the bank service, there are 26 of them that have the job = admin, blue-collar, management, retired, services or technician.\n\nIf a customer that has poutcome  = success; and education = secondary or tertiary; and job = admin, blue-collar, management, retired, services or technician; then we can predict that the probability s/he will not subscribe the bank service is 26/45.\n\n\nAmong 1789 customers that did not subscribe the bank service, the probability of them that have poutcome = success; and education = secondary or tertiary; and job = admin, blue-collar, management, retired, services or technician is 26/45.\n\nAmong 2000 customers, there are 58 of them that have poutcome = success; and among those 58, there are 50 of them that have education = secondary or tertiary; and there are 45 among those 50 that have job = admin, blue-collar, management, retired, services or technician; and there are 26 among those 45 that did not subscribe the bank service.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he leaf node above the purple arrow (no 26/45) means",
+          "text_html": "<p>he leaf node above the purple arrow (no 26/45) means</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "mong 1789 customers that did not subscribe the bank service, there are 26 of them that have the job = admin, blue-collar, management, retired, services or technician.",
+          "text_html": "<p>mong 1789 customers that did not subscribe the bank service, there are 26 of them that have the job = admin, blue-collar, management, retired, services or technician.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

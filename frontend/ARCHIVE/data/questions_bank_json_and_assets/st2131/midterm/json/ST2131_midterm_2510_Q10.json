@@ -1,0 +1,91 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q10.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q10.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q10",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 10,
+      "question_type": "mcq",
+      "difficulty_level": 0.83,
+      "question_stem": "Suppose that p(x) and q(x) are two distinct pmfs. Then for any b such that 0 < b < 1, r(x) = b p(x) + (1 - b) q(x) is also a pmf.",
+      "question_stem_html": "<p>Suppose that <em>p(x)</em> and <em>q(x)</em> are two distinct pmfs. Then for any <em>b</em> such that <em>0 &lt; b &lt; 1</em>,</p><p>\\( r(x) = b p(x) + (1 - b) q(x) \\)</p><p>is also a pmf.</p>",
+      "concept_tags": [
+        "pmf",
+        "convex combination",
+        "probability theory"
+      ],
+      "question_media": [],
+      "last_used": null,
+      "_choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "text_html": "<p>True</p>",
+          "is_correct": true,
+          "explanation": ""
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "text_html": "<p>False</p>",
+          "is_correct": false,
+          "explanation": ""
+        }
+      ],
+      "_solution": "True",
+      "_solution_html": "<p>True</p>",
+      "_raw_items": [
+        {
+          "part_number": "a",
+          "type": "mcq",
+          "subtype": "single-choice",
+          "part_stem": "Determine whether the statement is true or false.",
+          "part_stem_html": "<p>Determine whether the statement is true or false.</p>",
+          "choices": [
+            {
+              "choice_id": "A",
+              "text": "True",
+              "text_html": "<p>True</p>",
+              "is_correct": true,
+              "explanation": ""
+            },
+            {
+              "choice_id": "B",
+              "text": "False",
+              "text_html": "<p>False</p>",
+              "is_correct": false,
+              "explanation": ""
+            }
+          ],
+          "items_media": [],
+          "scoring": {
+            "points": 1.0
+          },
+          "feedback": {},
+          "shuffle_choices": false,
+          "solution": "True",
+          "solution_html": "<p>True</p>",
+          "difficulty_level": 0.83,
+          "concept_tags": [
+            "pmf",
+            "convex combination",
+            "probability theory"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+Question
+========
+
+A clinic takes on bookings and allocates patients to therapists according to a
+schedule. However, sometimes a patient cancels on short notice. The clinic would
+like to figure out an optimal strategy that maintains a high utilisation rate of
+therapists, while affording them decent breaks and rest time, and a short
+waiting time for patients. What data would you collect prior to the modeling,
+and what metrics would you extract using the data collector?
+
+Solution
+========
+
+Data to Collect:
+
+1. Historical Booking Data:
+    Number of patient bookings per day and per therapist.
+    Time slots allocated for each patient session.
+    Frequency and timing of last-minute cancellations (e.g., within 24 hours or less).
+    No-show rates for patients.
+
+2. Therapist Availability and Schedule:
+    Daily and weekly work schedules for each therapist.
+    Therapist preferences or limits on the number of sessions they can handle per day or week.
+    Duration of therapist breaks between sessions.
+
+3. Patient Data:
+    Average waiting time for patients between booking and the actual appointment.
+    Frequency of rescheduling by patients due to therapist unavailability.
+    Specific patient preferences for therapists (if any).
+
+4. Session Duration and Types:
+    Average duration of therapy sessions by type (e.g., physical therapy, counseling).
+    Variability in session lengths (e.g., some sessions running longer or shorter than expected).
+
+5. Cancellation Patterns:
+    Patterns of cancellation across days of the week, times of day, or specific patients.
+    The reasons provided for cancellations.
+
+6. Therapist Utilization:
+    Number of sessions per therapist each day/week.
+    Idle time between sessions for each therapist.
+    Therapist satisfaction data, if available (to understand the impact of utilization on well-being).
+
+Metrics to Extract:
+
+1. Utilization Rate of Therapists:
+    Percentage of available therapist hours that are used for patient appointments.
+    Time spent by therapists on breaks versus time spent with patients.
+
+2. Cancellation Impact:
+    Frequency of last-minute cancellations and the resulting impact on the therapist's schedule.
+    Time lost to cancellations (e.g., idle time that could not be rebooked).
+    Proportion of canceled slots that are successfully reallocated to other patients.
+
+3. Patient Waiting Time:
+    Average time patients wait between booking and appointment.
+    Variability in patient waiting times depending on cancellation or therapist availability.
+
+4. Therapist Breaks and Rest Time:
+    Average time therapists spend on breaks during a typical workday.
+    Distribution of break time across the day (e.g., short breaks between sessions versus longer midday breaks).
+    The ratio of rest time to session time to ensure therapists have enough downtime.
+
+5. Patient Satisfaction and Session Completion:
+    How cancellation rates and rescheduling affect patient satisfaction or follow-up appointments.
+    Completion rates for patient therapy plans, factoring in cancellations and reschedules.
+
+
+Meta-information
+================
+exname: simulation, data to collect
+extype: string
+exstringtype: essay
+exsolution: nil

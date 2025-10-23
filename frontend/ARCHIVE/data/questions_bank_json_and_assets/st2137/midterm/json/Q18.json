@@ -1,0 +1,64 @@
+{
+  "question_id": null,
+  "course": "ST2137",
+  "semester": 2510,
+  "assessment_type": "final",
+  "question_no": 18,
+  "is_multi": false,
+  "question_stem": "In 1935, Sir R A Fisher described an experiment involving a British woman. The woman claimed that if she was presented with a cup of milk tea, she would be able to distinguish whether milk or tea was added to the cup first. To test, she was given 8 cups of tea, in four of which milk was added first. \nThe data collected was as follows: \n\n\n\n\n  \n\n\n  Actual Milk  \n\n\n Actual  Tea \n\n\n\n\nGuessed Milk    \n\n\n3 \n\n\n1 \n\n\n\n\nGuessed Tea \n\n\n1 \n\n\n3 \n\n\n\n\n \n \n \n \n \nSuppose that Fisher’s Exact Test was applied to assess if there was any association between her guesses and the truth. Under the null hypothesis of Fisher’s Exact Test, what is the probability of observing the table above?",
+  "question_stem_html": "<div><p><span data-contrast=\"none\">In 1935, Sir R A Fisher described an experiment involving a British woman. The woman claimed that if she was presented with a cup of milk tea, she would be able to distinguish whether milk or tea was added to the cup first. To test, she was given 8 cups of tea, in four of which milk was added first.</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-contrast=\"none\">The data collected was as follows:</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<table style=\"border-collapse: collapse; border-color: #000000; border-style: solid; float: left;\" border=\"1\" data-tablestyle=\"MsoNormalTable\" data-tablelook=\"1696\">\n<tbody>\n<tr>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\"> </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">  Actual Milk </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\"> Actual  Tea</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n</tr>\n<tr>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">Guessed Milk   </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">3</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">1</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n</tr>\n<tr>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">Guessed Tea</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">1</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">3</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p> </p>\n<p> </p>\n<p> </p>\n<p> </p>\n<p> </p>\n<p><span data-contrast=\"none\">Suppose that Fisher’s Exact Test was applied to assess if there was any association between her guesses and the truth. Under the null hypothesis of Fisher’s Exact Test, what is the probability of observing the table above?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p></div>",
+  "version": 1,
+  "update_timestamp": "2025-09-17T22:44:12+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "In 1935, Sir R A Fisher described an experiment involving a British woman. The woman claimed that if she was presented with a cup of milk tea, she would be able to distinguish whether milk or tea was added to the cup first. To test, she was given 8 cups of tea, in four of which milk was added first. \nThe data collected was as follows: \n\n\n\n\n  \n\n\n  Actual Milk  \n\n\n Actual  Tea \n\n\n\n\nGuessed Milk    \n\n\n3 \n\n\n1 \n\n\n\n\nGuessed Tea \n\n\n1 \n\n\n3 \n\n\n\n\n \n \n \n \n \nSuppose that Fisher’s Exact Test was applied to assess if there was any association between her guesses and the truth. Under the null hypothesis of Fisher’s Exact Test, what is the probability of observing the table above?",
+      "part_stem_html": "<div><p><span data-contrast=\"none\">In 1935, Sir R A Fisher described an experiment involving a British woman. The woman claimed that if she was presented with a cup of milk tea, she would be able to distinguish whether milk or tea was added to the cup first. To test, she was given 8 cups of tea, in four of which milk was added first.</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<p><span data-contrast=\"none\">The data collected was as follows:</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p>\n<table style=\"border-collapse: collapse; border-color: #000000; border-style: solid; float: left;\" border=\"1\" data-tablestyle=\"MsoNormalTable\" data-tablelook=\"1696\">\n<tbody>\n<tr>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\"> </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">  Actual Milk </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\"> Actual  Tea</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n</tr>\n<tr>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">Guessed Milk   </span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">3</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">1</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n</tr>\n<tr>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">Guessed Tea</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">1</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n<td data-celllook=\"65536\">\n<p><span data-contrast=\"none\">3</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":3,\"335551620\":3,\"335559685\":0,\"335559737\":0,\"335559991\":0,\"469777462\":[720],\"469777927\":[0],\"469777928\":[0]}\"> </span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p> </p>\n<p> </p>\n<p> </p>\n<p> </p>\n<p> </p>\n<p><span data-contrast=\"none\">Suppose that Fisher’s Exact Test was applied to assess if there was any association between her guesses and the truth. Under the null hypothesis of Fisher’s Exact Test, what is the probability of observing the table above?</span><span data-ccp-props=\"{\"134245417\":false,\"335551550\":1,\"335551620\":1,\"335559685\":0,\"335559737\":0,\"335559991\":0}\"> </span></p></div>",
+      "choices": [
+        {
+          "choice_id": "5049",
+          "text": "0.5",
+          "text_html": "0.5",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "8776",
+          "text": "0.25",
+          "text_html": "0.25",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "3631",
+          "text": "0.5625",
+          "text_html": "0.5625",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "9012",
+          "text": "0.228",
+          "text_html": "0.228",
+          "is_correct": true,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Show working.",
+      "solution_html": "<p>Show working.</p>",
+      "difficulty_level": 1.0,
+      "concept_tags": [
+        "probability"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "question_id": null,
+  "course": "ST2131",
+  "semester": "2510",
+  "assessment_type": "midterm",
+  "version": 1,
+  "update_timestamp": "2025-09-14T18:40:00+08:00",
+  "question_media": [],
+  "question_no": 42,
+  "is_multi": false,
+  "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1). If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is P(Y = -5)?",
+  "question_stem_html": "<p>Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by <em>P(X = i) = 1/i - 1/(i+1)</em>. If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is <em>P(Y = -5)</em>?</p>",
+  "items": [
+    {
+      "part_number": "",
+      "type": "choices",
+      "subtype": "mcq",
+      "part_stem": "What is P(Y = -5)?",
+      "part_stem_html": "<p>What is <em>P(Y = -5)</em>?</p>",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "1/56",
+          "text_html": "<p>1/56</p>",
+          "is_correct": true,
+          "explanation": null
+        },
+        {
+          "choice_id": "B",
+          "text": "1/20",
+          "text_html": "<p>1/20</p>",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "choice_id": "C",
+          "text": "-1/5",
+          "text_html": "<p>-1/5</p>",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": 1.0
+      },
+      "feedback": {},
+      "shuffle_choices": true,
+      "solution": "Correct option: A",
+      "solution_html": "<p>Correct option: <strong>A</strong></p>",
+      "difficulty_level": 0.99,
+      "concept_tags": []
+    }
+  ]
+}

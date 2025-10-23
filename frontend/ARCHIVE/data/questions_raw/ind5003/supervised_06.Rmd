@@ -1,0 +1,39 @@
+Question
+========
+
+What is the output of the following code snippet?
+
+```{python eval=FALSE}
+from sklearn.metrics import accuracy_score
+
+y_true = [1, 0, 1, 1, 0]
+y_pred = [1, 0, 0, 1, 1]
+print(accuracy_score(y_true, y_pred))
+```
+
+
+Answerlist
+----------
+
+* 0.2
+* There will be an error message because no model has been fitted.
+* 0.4
+* 0.6
+
+Solution
+========
+
+Answerlist
+----------
+* Incorrect.
+* The function only requires a `ytrue` and a `ypred` array. It will still run as per normal.
+* Incorrect.
+* Correct - accuracy is the number of correct predictions (3) divided by the number of 
+  total predictions made (5).
+
+Meta-information
+================
+exname: supervised
+extype: schoice
+exsolution: 0001
+exshuffle: 4

@@ -1,0 +1,23 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 7,
+  "is_multi": false,
+  "question_stem": "A clinic takes on bookings and allocates patients to therapists according to a schedule. However, sometimes a patient cancels on short notice. The clinic would like to figure out an optimal strategy that maintains a high utilisation rate of therapists, while affording them decent breaks and rest time, and a short waiting time for patients. What data would you collect prior to the modeling, and what metrics would you extract using the data collector?",
+  "question_stem_html": "<p>A clinic takes on bookings and allocates patients to therapists according to a schedule. However, sometimes a patient cancels on short notice. The clinic would like to figure out an optimal strategy that maintains a high utilisation rate of therapists, while affording them decent breaks and rest time, and a short waiting time for patients.</p><p><strong>What data would you collect prior to the modeling, and what metrics would you extract using the data collector?</strong></p>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:10:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "open-ended",
+      "subtype": "essay",
+      "solution_html": "<p><strong>Data to Collect:</strong></p><ol><li><strong>Historical Booking Data:</strong> Number of patient bookings per day and per therapist. Time slots allocated for each patient session. Frequency and timing of last-minute cancellations (e.g., within 24 hours or less). No-show rates for patients.</li><li><strong>Therapist Availability and Schedule:</strong> Daily and weekly work schedules for each therapist. Therapist preferences or limits on the number of sessions they can handle per day or week. Duration of therapist breaks between sessions.</li><li><strong>Patient Data:</strong> Average waiting time for patients between booking and the actual appointment. Frequency of rescheduling by patients due to therapist unavailability. Specific patient preferences for therapists (if any).</li><li><strong>Session Duration and Types:</strong> Average duration of therapy sessions by type (e.g., physical therapy, counseling). Variability in session lengths (e.g., some sessions running longer or shorter than expected).</li><li><strong>Cancellation Patterns:</strong> Patterns of cancellation across days of the week, times of day, or specific patients. The reasons provided for cancellations.</li><li><strong>Therapist Utilization:</strong> Number of sessions per therapist each day/week. Idle time between sessions for each therapist. Therapist satisfaction data, if available (to understand the impact of utilization on well-being).</li></ol><p><strong>Metrics to Extract:</strong></p><ol><li><strong>Utilization Rate of Therapists:</strong> Percentage of available therapist hours that are used for patient appointments. Time spent by therapists on breaks versus time spent with patients.</li><li><strong>Cancellation Impact:</strong> Frequency of last-minute cancellations and the resulting impact on the therapist’s schedule. Time lost to cancellations (e.g., idle time that could not be rebooked). Proportion of canceled slots that are successfully reallocated to other patients.</li><li><strong>Patient Waiting Time:</strong> Average time patients wait between booking and appointment. Variability in patient waiting times depending on cancellation or therapist availability.</li><li><strong>Therapist Breaks and Rest Time:</strong> Average time therapists spend on breaks during a typical workday. Distribution of break time across the day (e.g., short breaks between sessions versus longer midday breaks). The ratio of rest time to session time to ensure therapists have enough downtime.</li><li><strong>Patient Satisfaction and Session Completion:</strong> How cancellation rates and rescheduling affect patient satisfaction or follow-up appointments. Completion rates for patient therapy plans, factoring in cancellations and reschedules.</li></ol>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "data to collect", "clinic scheduling", "utilisation"]
+    }
+  ]
+}

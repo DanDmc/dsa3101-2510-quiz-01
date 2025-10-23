@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "file_id": "ST2131_midterm_2510",
+      "file_version_id": 1,
+      "course": "ST2131",
+      "year": null,
+      "semester": "2510",
+      "assessment_type": "midterm",
+      "file_name": "ST2131_midterm_2510_Q14.json",
+      "file_path": "ST2131/midterm/2510/ST2131_midterm_2510_Q14.json",
+      "uploaded_by": null
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "ST2131_midterm_2510_Q14",
+      "version_id": 1,
+      "file_id": null,
+      "question_no": 14,
+      "question_type": "mcq",
+      "difficulty_level": 1.0,
+      "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\nFind P(X = 1 | {X=1} U {X=2})",
+      "question_stem_html": "<p>Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}</p>\n<p>Find P(X = 1 | {X=1} U {X=2})</p>",
+      "concept_tags": [
+        "statistics"
+      ],
+      "question_media": [
+        {
+          "type": "image",
+          "src": "/assets/images/image21.png",
+          "alt": ""
+        }
+      ],
+      "last_used": null
+    }
+  ]
+}

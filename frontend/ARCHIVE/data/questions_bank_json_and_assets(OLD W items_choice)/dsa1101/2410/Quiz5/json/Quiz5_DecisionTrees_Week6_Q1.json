@@ -1,0 +1,48 @@
+{
+  "question_id": null,
+  "course": "DSA1101",
+  "semester": "AY 2024/25 Sem 1",
+  "assessment_type": "Quiz",
+  "question_no": 1,
+  "is_multi": false,
+  "question_stem": "Quiz 5\nContent: Decision Trees\nFunctions in R: rpart(), rpart.plot().\nConsider again the dataset <bank-sample.csv> given in the lecture of Topic 5. One would want to build a model (a decision tree) which help to predict if a customer will subscribe the bank’s service, based on 8 factors (8 columns): job, marital, education, default, housing, loan, contact and poutcome.\n\nTo answer the questions below, please use the R code of Topic 5 to understand the data and to plot the tree as given in the photo below. \n\nQuestion 1 (correct answer in yellow highlight)\nThe node circled in red color (no 1789/2000) in the figure above means\nThe sample size is 2000 but only 1789 are available for data analysis.\n\nThe sample size is 2000 and 1789 of them belong to category “no” of the response variable “subscribe” (did not subscribe). The rest belongs to other category.\n\nThe sample size is 2000 but only 1789 of them has information about “poutcome”.\n\nThere are 1789 among 2000 observations in this tree.",
+  "question_stem_html": "<pre>Quiz 5\nContent: Decision Trees\nFunctions in R: rpart(), rpart.plot().\nConsider again the dataset &lt;bank-sample.csv&gt; given in the lecture of Topic 5. One would want to build a model (a decision tree) which help to predict if a customer will subscribe the bank’s service, based on 8 factors (8 columns): job, marital, education, default, housing, loan, contact and poutcome.\n\nTo answer the questions below, please use the R code of Topic 5 to understand the data and to plot the tree as given in the photo below. \n\nQuestion 1 (correct answer in yellow highlight)\nThe node circled in red color (no 1789/2000) in the figure above means\nThe sample size is 2000 but only 1789 are available for data analysis.\n\nThe sample size is 2000 and 1789 of them belong to category “no” of the response variable “subscribe” (did not subscribe). The rest belongs to other category.\n\nThe sample size is 2000 but only 1789 of them has information about “poutcome”.\n\nThere are 1789 among 2000 observations in this tree.</pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-05T22:10:16+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "part_number": "a",
+      "type": "mcq",
+      "subtype": "single",
+      "part_stem": "Answer the question.",
+      "part_stem_html": "<p>Answer the question.</p>",
+      "choices": [
+        {
+          "choice_id": null,
+          "text": "he node circled in red color (no 1789/2000) in the figure above means",
+          "text_html": "<p>he node circled in red color (no 1789/2000) in the figure above means</p>",
+          "is_correct": null,
+          "explanation": null
+        },
+        {
+          "choice_id": null,
+          "text": "he sample size is 2000 but only 1789 are available for data analysis.",
+          "text_html": "<p>he sample size is 2000 but only 1789 are available for data analysis.</p>",
+          "is_correct": null,
+          "explanation": null
+        }
+      ],
+      "items_media": [],
+      "scoring": {
+        "points": null
+      },
+      "feedback": {},
+      "shuffle_choices": false,
+      "solution": null,
+      "solution_html": null,
+      "difficulty_level": null,
+      "concept_tags": []
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "question_id": null,
+  "course": "IND5003",
+  "semester": "",
+  "assessment_type": "quiz",
+  "question_no": 8,
+  "is_multi": false,
+  "question_stem": "In Python, the following commands can be used to initialise the random number generator. Assess if the following statement is true or false.\nRandom variables cannot be generated in Python without explicitly setting the seed.\nfrom numpy.random import default_rng\nrng = default_rng(5003)",
+  "question_stem_html": "<p>In Python, the following commands can be used to initialise the random number generator. Assess if the following statement is true or false.</p><p><strong>Statement:</strong> Random variables cannot be generated in Python without explicitly setting the seed.</p><pre><code>from numpy.random import default_rng\nrng = default_rng(5003)</code></pre>",
+  "version": 1,
+  "update_timestamp": "2025-10-06T19:15:00+08:00",
+  "question_media": [],
+  "items": [
+    {
+      "type": "mcq",
+      "subtype": "single-choice",
+      "choices": [
+        {
+          "choice_id": "A",
+          "text": "True",
+          "is_correct": false,
+          "explanation": "The statement is incorrect. We can always jump straight into generation without setting the seed; Python will use a function of the timestamp to set the seed."
+        },
+        {
+          "choice_id": "B",
+          "text": "False",
+          "is_correct": true,
+          "explanation": "Well done! The statement is indeed false. We can always begin generating without setting the seed."
+        }
+      ],
+      "items_media": [],
+      "shuffle_choices": false,
+      "solution": "False",
+      "solution_html": "<p><strong>False.</strong> We can always jump straight into generation without setting the seed; Python will use a function of the timestamp to set the seed.</p>",
+      "scoring": { "points": 1.0 },
+      "difficulty_level": 1.0,
+      "concept_tags": ["simulation", "seed", "random-number-generation"]
+    }
+  ]
+}
