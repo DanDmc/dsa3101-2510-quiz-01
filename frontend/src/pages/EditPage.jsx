@@ -19,7 +19,7 @@ const mockQuestions = [
   { id: 3, text: 'How many 8-digit numbers can be formed using 2, 3, 4, 4, 5, 5, 5, 5?', type: 'Open-ended', answer: 'Some combinatorial math calculation.' },
 ];
 
-function EditPage() {
+function EditPage({ goToHomePage }) { // 👈 Receive goToHomePage as prop
   const [activeQuestionId, setActiveQuestionId] = useState(mockQuestions[0].id); // Start with the first question selected
   const [questions, setQuestions] = useState(mockQuestions); // State to hold the questions being edited
 
@@ -35,9 +35,10 @@ function EditPage() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f4f7fa' }}>
       <CssBaseline />
-      
-      <Header /> 
-      
+
+      {/* Header with clickable title and home icon */}
+      <Header goToHomePage={goToHomePage} />
+
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
         <Box mb={2}>
           <Typography variant="h5" component="h1" fontWeight="bold">
@@ -45,28 +46,27 @@ function EditPage() {
           </Typography>
           <Divider sx={{ my: 1 }} />
         </Box>
-        
+
         <Grid container spacing={3}>
-          
+
           {/* LEFT SIDEBAR (QUESTION STEPPER) */}
           <Grid item xs={12} md={3}>
             <QuestionStepper 
               questions={questions}
               activeQuestion={activeQuestionId}
-              setActiveQuestion={setActiveQuestionId} // Pass setter to allow changing active question
+              setActiveQuestion={setActiveQuestionId}
             />
             <Box sx={{ p: 2, textAlign: 'center' }}>
-                <Typography variant="button" sx={{ color: '#007bff' }}>
-                    Upload file
-                </Typography>
+              <Typography variant="button" sx={{ color: '#007bff' }}>
+                Upload file
+              </Typography>
             </Box>
           </Grid>
-          
-          {/* MAIN FORM AREA (RIGHT SIDE) - Displays all questions for mass editing */}
+
+          {/* MAIN FORM AREA (RIGHT SIDE) */}
           <Grid item xs={12} md={9}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <CreateToolbar /> {/* Re-using this toolbar as it matches */}
-
+              <CreateToolbar />
               {questions.map((question, index) => (
                 <EditQuestionForm 
                   key={question.id}
@@ -77,10 +77,10 @@ function EditPage() {
               ))}
             </Box>
           </Grid>
-          
+
         </Grid>
       </Container>
-      
+
       <Footer />
     </Box>
   );

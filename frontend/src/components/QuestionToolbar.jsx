@@ -8,7 +8,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import ViewListIcon from '@mui/icons-material/ViewList'; // For the orange button
 
-function QuestionToolbar({ numSelected }) {
+// 👈 ACCEPT navigation handlers and selected IDs as props
+function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPage }) { 
+  
+  // Handlers for button clicks
+  const handleCreateClick = () => {
+    goToCreatePage(); // Call the function passed from main.jsx
+  };
+
+  const handleEditClick = () => {
+    // Pass the currently selected question IDs to the edit function
+    goToEditPage(selectedIds); 
+  };
+  
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
       {/* Left side: Action Buttons */}
@@ -17,6 +29,7 @@ function QuestionToolbar({ numSelected }) {
           variant="contained" 
           startIcon={<CreateIcon />}
           sx={{ backgroundColor: '#4caf50', '&:hover': { backgroundColor: '#388e3c' } }}
+          onClick={handleCreateClick} // 👈 ATTACH HANDLER
         >
           Create
         </Button>
@@ -33,12 +46,13 @@ function QuestionToolbar({ numSelected }) {
           startIcon={<EditIcon />} 
           color="primary"
           disabled={numSelected === 0}
+          onClick={handleEditClick} // 👈 ATTACH HANDLER
         >
           Edit
         </Button>
       </Box>
 
-      {/* Right side: Search and View */}
+      {/* Right side: Search and View (Kept the same) */}
       <Box sx={{ display: 'flex', gap: 1 }}>
         <TextField
           variant="outlined"

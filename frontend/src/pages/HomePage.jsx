@@ -10,7 +10,7 @@ import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// Mock data for the example
+// Mock data for the example (Kept the same)
 const mockQuestions = [
   { id: 1, text: 'Convert 1110010101 from binary to text', type: 'Open ended' },
   { id: 2, text: 'If a route function returns the string "Hello world!", the HTTP status...', type: 'Open ended' },
@@ -23,7 +23,8 @@ const mockQuestions = [
 
 const mockGroups = ['DSA3102', 'DSA3101', 'DSA2102', 'ST3131', 'ST2132', 'ST2131'];
 
-function HomePage() {
+// 👈 ACCEPT navigation handlers as props
+function HomePage({ goToCreatePage, goToEditPage }) { 
   const [questions] = useState(mockQuestions);
   const [selected, setSelected] = useState([]); // For checkboxes
 
@@ -39,23 +40,20 @@ function HomePage() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f4f7fa' }}>
       <CssBaseline />
-      
-      {/* 1. Header component (Requires internal fix to align content, see previous step) */}
       <Header /> 
       
-      {/* 2. MAIN CONTENT CONTAINER: 
-         - Reverted to standard maxWidth="xl" to center and constrain the content.
-         - Removed the inner <Box> wrapper and applied margins (mt, mb) directly here.
-      */}
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
-        
-        {/* The Grid container now works normally inside the centered Container */}
         <Grid container spacing={3}>
           
-          {/* Main Content Area (9 columns) */}
           <Grid item xs={12} md={9}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <QuestionToolbar numSelected={selected.length} />
+              {/* 👈 PASS the navigation functions and the selected IDs down */}
+              <QuestionToolbar 
+                numSelected={selected.length} 
+                selectedIds={selected} 
+                goToCreatePage={goToCreatePage} 
+                goToEditPage={goToEditPage}
+              />
               <QuestionTable 
                 questions={questions}
                 selected={selected}
@@ -65,7 +63,6 @@ function HomePage() {
             </Box>
           </Grid>
           
-          {/* Sidebar Area (3 columns) */}
           <Grid item xs={12} md={3}>
             <QuestionGroups groups={mockGroups} />
           </Grid>
@@ -73,7 +70,7 @@ function HomePage() {
         </Grid>
       </Container>
       
-      <Footer /> {/* Your bottom footer bar */}
+      <Footer /> 
     </Box>
   );
 }

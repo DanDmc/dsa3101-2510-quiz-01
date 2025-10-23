@@ -12,7 +12,7 @@ import QuestionStepper from '../components/QuestionStepper';
 import QuestionForm from '../components/QuestionForm';
 import CreateToolbar from '../components/CreateToolbar';
 
-function CreateQuestionPage() {
+function CreateQuestionPage({ goToHomePage }) {
   const [activeQuestion, setActiveQuestion] = useState(1);
   const [questions, setQuestions] = useState([
     { id: 1, type: 'Multiple choice', text: 'Fill in question text...' }
@@ -21,7 +21,7 @@ function CreateQuestionPage() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f4f7fa' }}>
       <CssBaseline />
-      <Header /> 
+      <Header goToHomePage={goToHomePage} /> 
       
       {/* 🛠️ FIX 1: Set maxWidth="xl" to expand content width, matching HomePage */}
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
