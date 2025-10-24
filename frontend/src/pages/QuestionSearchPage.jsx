@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Box, Container, CssBaseline, Grid, Typography, Divider,
   Stack, TextField, InputAdornment, IconButton, Button,
@@ -8,6 +8,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import SortIcon from "@mui/icons-material/Sort";
+
 
 import st2137 from "../../data/json_output/ST2137_questions.json";
 
@@ -19,7 +20,7 @@ function normalizeOneArrayFile(arr, source = "ST2137") {
   }));
 }
 
-export default function QuestionSearchPage() {
+export default function QuestionSearchPage({ initialQuery = "" }) {
   const allQuestions = useMemo(() => normalizeOneArrayFile(st2137, "ST2137"), []);
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState(allQuestions);
@@ -28,6 +29,28 @@ export default function QuestionSearchPage() {
   const [typeSort, setTypeSort] = useState("none"); 
   const [sortDirection, setSortDirection] = useState("none"); 
 
+  useEffect(() => {
+    if (initialQuery) {
+      const kw = initialQuery.trim().toLowerCase();
+      const keywords = kw ? kw.split(/[\s,]+/).filter(Boolean) : [];
+      let list = [...allQuestions];
+
+      if (keywords.length) {
+        list = list.filter((q) => {
+          const hay = `${(q.question_stem || "").toLowerCase()} ${(q.question_type || "").toLowerCase()} ${(q.concept_tags || []).join(" ").toLowerCase()}`;
+          return keywords.some((k) => hay.includes(k));
+        });
+      }
+
+      setQuery(initialQuery);
+      setRows(list);
+      setSelected([]);
+  } else {
+    // if no query, show all questions
+    setRows(allQuestions);
+  }
+}, [initialQuery, allQuestions]);
+  
 const normType = (t) => (t || "").toString().trim().toLowerCase();
 
 const handleSearch = (e) => {
@@ -82,7 +105,6 @@ const handleSearch = (e) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", bgcolor: "#f4f7fa" }}>
       <CssBaseline />
-      <Header />
 
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
         {/* Toolbar */}
@@ -229,7 +251,6 @@ const handleSearch = (e) => {
         </Paper>
       </Container>
 
-      <Footer />
     </Box>
   );
 }

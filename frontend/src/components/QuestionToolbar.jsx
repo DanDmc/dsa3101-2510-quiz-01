@@ -1,6 +1,6 @@
 // src/components/QuestionToolbar.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,8 +9,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import ViewListIcon from '@mui/icons-material/ViewList'; // For the orange button
 
 // 👈 ACCEPT navigation handlers and selected IDs as props
-function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPage }) { 
-  
+function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPage, goToSearchPage }) { 
+  const [query, setQuery] = useState("");
   // Handlers for button clicks
   const handleCreateClick = () => {
     goToCreatePage(); // Call the function passed from main.jsx
@@ -20,7 +20,12 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
     // Pass the currently selected question IDs to the edit function
     goToEditPage(selectedIds); 
   };
-  
+
+  const handleSearchOrBrowse = (e) => {
+    e?.preventDefault();
+    goToSearchPage?.(query.trim());
+  };
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3}}>
       {/* Left side: Action Buttons */}
@@ -52,22 +57,41 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
         </Button>
       </Box>
 
-      {/* Right side: Search and View (Kept the same) */}
+      {/* Right side search & browse */}
       <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-        <TextField
-          sx={{ width: 400 }}
-          variant="outlined"
-          size="small"
-          placeholder="Search for..."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
+        {/* Pressing Enter or clicking search triggers navigation */}
+        <form onSubmit={handleSearchOrBrowse}>
+          <TextField
+            sx={{ width: 400 }}
+            variant="outlined"
+            size="small"
+            placeholder="Search for..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <IconButton type="submit" aria-label="search">
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </form>
+
+        {/* Orange Browse button also triggers same navigation */}
+        <IconButton
+          onClick={handleSearchOrBrowse}
+          sx={{
+            backgroundColor: '#f57c00',
+            color: 'white',
+            borderRadius: '8px',
+            '&:hover': { backgroundColor: '#e65100' },
+            ml: 2,
           }}
-        />
-        <IconButton sx={{ backgroundColor: '#f57c00', color: 'white', borderRadius: '8px', '&:hover': { backgroundColor: '#e65100' }, ml: 2}}>
+          title="Browse / Search"
+        >
           <ViewListIcon />
         </IconButton>
       </Box>

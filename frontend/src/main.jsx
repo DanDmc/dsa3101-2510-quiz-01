@@ -12,22 +12,29 @@ import Container from '@mui/material/Container'; // Import the Container
 import HomePage from './pages/HomePage.jsx';
 import CreateQuestionPage from './pages/CreateQuestionPage.jsx';
 import EditPage from './pages/EditPage.jsx'; 
+import QuestionSearchPage from './pages/QuestionSearchPage.jsx';
 
 // Define page constants for clarity
 const PAGES = {
   HOME: 'home',
   CREATE: 'create',
   EDIT: 'edit',
+  SEARCH: "search"
 };
 
 function App() {
   const [currentPage, setCurrentPage] = useState(PAGES.HOME);
   const [selectedQuestions, setSelectedQuestions] = useState([]); 
+  const [initialQuery, setInitialQuery] = useState("");
 
   // Navigation handlers
   const goToHomePage = () => setCurrentPage(PAGES.HOME);
   const goToCreatePage = () => setCurrentPage(PAGES.CREATE);
-  
+  const goToSearchPage = (q = "") => {
+    setInitialQuery(q);
+    setCurrentPage(PAGES.SEARCH);
+  };
+
   const goToEditPage = (selectedIds) => {
     if (selectedIds && selectedIds.length > 0) {
         setSelectedQuestions(selectedIds);
@@ -43,13 +50,16 @@ function App() {
         return <CreateQuestionPage goToHomePage={goToHomePage} />;
       case PAGES.EDIT:
         return <EditPage selectedQuestionIds={selectedQuestions} goToHomePage={goToHomePage} />;
-      case PAGES.HOME:
+      case PAGES.SEARCH:
+        return <QuestionSearchPage initialQuery={initialQuery} />;
+        case PAGES.HOME:
       default:
         return (
           <HomePage 
             goToCreatePage={goToCreatePage}
             goToEditPage={goToEditPage} 
             goToHomePage={goToHomePage}
+            goToSearchPage={goToSearchPage}
           />
         );
     }

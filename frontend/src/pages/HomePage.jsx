@@ -22,7 +22,7 @@ const mockQuestions = [
 const mockGroups = ['DSA3102', 'DSA3101', 'DSA2102', 'ST3131', 'ST2132', 'ST2131'];
 
 // 👈 ACCEPT navigation handlers as props
-function HomePage({ goToCreatePage, goToEditPage }) { 
+function HomePage({ goToCreatePage, goToEditPage, goToSearchPage }) {
   const [questions] = useState(mockQuestions);
   const [selected, setSelected] = useState([]); // For checkboxes
 
@@ -50,6 +50,7 @@ function HomePage({ goToCreatePage, goToEditPage }) {
             selectedIds={selected} 
             goToCreatePage={goToCreatePage} 
             goToEditPage={goToEditPage}
+            goToSearchPage={goToSearchPage}
           />
           <QuestionTable 
             questions={questions}
