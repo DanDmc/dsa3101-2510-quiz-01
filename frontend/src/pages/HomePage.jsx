@@ -8,30 +8,39 @@ import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// Mock data for the example (Kept the same)
-const mockQuestions = [
-  { id: 1, text: 'Convert 1110010101 from binary to text', type: 'Open ended' },
-  { id: 2, text: 'If a route function returns the string "Hello world!", the HTTP status...', type: 'Open ended' },
-  { id: 3, text: 'How many 8-digit numbers can be formed using 2, 3, 4, 4, 5, 5, 5, 5?', type: 'Open ended' },
-  { id: 4, text: 'In a simple regression, the RMSE of the regression line is equal to 0.6...', type: 'MCQ' },
-  { id: 5, text: 'In an SQL database, a record with ID = 1 already exists. Another record...', type: 'MCQ' },
-  { id: 6, text: 'Which of the following statement(s) is/are correct about primary keys...', type: 'MRQ' },
-  { id: 7, text: 'You are testing a Flask API endpoint that checks book orders. The...', type: 'MRQ' },
-];
-
 const mockGroups = ['DSA3102', 'DSA3101', 'DSA2102', 'ST3131', 'ST2132', 'ST2131'];
 
-// 👈 ACCEPT navigation handlers as props
-function HomePage({ goToCreatePage, goToEditPage, goToSearchPage }) {
-  const [questions] = useState(mockQuestions);
+// 1. ACCEPT THE 'questions' PROP HERE
+function HomePage({ questions, goToCreatePage, goToEditPage, goToSearchPage, goToHomePage, handleDeleteQuestions}) {
+  
+  // 2. REMOVED THIS LINE: const [questions] = useState(mockQuestions);
+  // We will use the 'questions' prop directly.
+  
   const [selected, setSelected] = useState([]); // For checkboxes
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
+      // 3. This now correctly uses the 'questions' prop
       const newSelecteds = questions.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
+    setSelected([]);
+  };
+
+  const handleEditClick = () => {
+    // 1. Filter to get the *objects* using the 'questions' prop
+    const questionsToEdit = questions.filter(q => selected.includes(q.id));
+    // 2. Pass the array of OBJECTS to the function from main.jsx
+    goToEditPage(questionsToEdit); 
+  };
+
+  const handleDeleteClick = () => {
+    // Pass the selected IDs up to the App component (main.jsx)
+    // The App component will be responsible for filtering the master list
+    handleDeleteQuestions(selected);
+    
+    // Clear the local selection state
     setSelected([]);
   };
 
@@ -44,13 +53,13 @@ function HomePage({ goToCreatePage, goToEditPage, goToSearchPage }) {
       
       <Grid item xs={12} md={9}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {/* 👈 PASS the navigation functions and the selected IDs down */}
+          {/* 4. REMOVED 'selectedIds={selected}' - it's not needed by the toolbar */}
           <QuestionToolbar 
             numSelected={selected.length} 
-            selectedIds={selected} 
             goToCreatePage={goToCreatePage} 
-            goToEditPage={goToEditPage}
+            goToEditPage={handleEditClick}
             goToSearchPage={goToSearchPage}
+            handleDeleteClick={handleDeleteClick}
           />
           <QuestionTable 
             questions={questions}
@@ -70,3 +79,4 @@ function HomePage({ goToCreatePage, goToEditPage, goToSearchPage }) {
 }
 
 export default HomePage;
+

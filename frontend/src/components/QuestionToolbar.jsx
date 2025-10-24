@@ -1,5 +1,3 @@
-// src/components/QuestionToolbar.jsx
-
 import React, { useState } from 'react';
 import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
@@ -9,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ViewListIcon from '@mui/icons-material/ViewList'; // For the orange button
 
 // 👈 ACCEPT navigation handlers and selected IDs as props
-function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPage, goToSearchPage }) { 
+function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPage, goToSearchPage, handleDeleteClick }) { 
   const [query, setQuery] = useState("");
   // Handlers for button clicks
   const handleCreateClick = () => {
@@ -43,6 +41,7 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
           startIcon={<DeleteIcon />} 
           color="error"
           disabled={numSelected === 0}
+          onClick={handleDeleteClick} // <-- THIS IS THE FIX
         >
           Delete
         </Button>
@@ -100,3 +99,4 @@ function QuestionToolbar({ numSelected, selectedIds, goToCreatePage, goToEditPag
 }
 
 export default QuestionToolbar;
+
