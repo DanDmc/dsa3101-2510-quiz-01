@@ -483,3 +483,103 @@ def upload_file():
         "file": {"file_id": file_id, "original_name": original_name, "stored_path": str(dest_path)},
         "pipeline": logs
     }), 201
+
+## EDITING QUESTIONS
+allowed_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual"}
+
+# for the 
+def normalize_concept_tags(val):
+    # standardise the format of the concept_tags field
+    if val is None:
+        return None
+    if isinstance(val, (list, tuple)):
+        return json.dumps(list(val), ensure_ascii=False)
+    if isinstance(val, str):
+        try:
+            parsed = json.loads(val)
+            if isinstance(parsed, (list, tuple)):
+                return json.dumps(list(parsed), ensure_ascii=False)
+        except Exception:
+            pass
+        return val  # plain string (e.g., "regression metrics")
+    return json.dumps(val, ensure_ascii=False)
+
+@app.route("/api/questions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
+def update_question(q_id):
+    # the requested edit attribute
+    payload = request.get_json(silent=True) or {}
+    if not payload:
+        return jsonify({"error": "empty_body"}), 400
+
+    # Filter to allowed fields only
+    updates = {}
+    for k in allowed_fields_for_edit:
+        if k in payload:
+            updates[k] = payload[k]
+
+    if not updates:
+        return jsonify({"error": "no_allowed_fields",
+                        "allowed": list(allowed_fields_for_edit)}), 400
+
+    # Allowing for edits in difficulty_rating_manual, edits only accept a FLOAT
+    if "difficulty_rating_manual" in updates:
+        try:
+            if updates["difficulty_rating_manual"] is None:
+                pass
+            else:
+                updates["difficulty_rating_manual"] = float(updates["difficulty_rating_manual"])
+        except Exception:
+            return jsonify({"error": "invalid_type",
+                            "field": "difficulty_rating_manual",
+                            "expected": "float|null"}), 400
+
+    # Allowing for edits in concept_tags, edits only accept a LIST
+    if "concept_tags" in updates:
+        updates["concept_tags"] = normalize_concept_tags(updates["concept_tags"])
+
+    # Build UPDATE statement
+    set_clauses = []
+    args = []
+    for col, val in updates.items():
+        set_clauses.append(f"{col} = %s")
+        args.append(val)
+
+    set_sql = ", ".join(set_clauses)
+    args.append(q_id)
+
+    sql = f"""
+        UPDATE questions
+           SET {set_sql}
+         WHERE id = %s
+        LIMIT 1
+    """
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, tuple(args))
+        conn.commit()
+
+        # if no rows updated then id doesn't exist
+        if cur.rowcount == 0:
+            return jsonify({"error": "not_found_or_deleted", "id": q_id}), 404
+
+        # Return the updated record
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""
+            SELECT id, question_base_id, file_id,
+                   question_type, question_stem, concept_tags,
+                   difficulty_rating_manual, difficulty_rating_model,
+                   created_at, updated_at
+              FROM questions
+             WHERE id = %s
+        """, (q_id,))
+        row = cur.fetchone()
+
+    # convert concept_tags back from JSON string to Python List for readibility
+    if row and row.get("concept_tags"):
+        try:
+            row["concept_tags"] = json.loads(row["concept_tags"])
+        except Exception:
+            pass
+
+    return jsonify(row), 200
