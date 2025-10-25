@@ -16,4 +16,4 @@ pdfplumber
 pillow
 google-generativeai
 gunicorn
-
+flask-cors

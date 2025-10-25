@@ -1,3 +1,5 @@
+## llm_parser.py by the backend
+
 import os
 import google.generativeai as genai
 # --- injected filter: process a single base if TARGET_BASE is set ---

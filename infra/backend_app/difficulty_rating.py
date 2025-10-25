@@ -1,3 +1,5 @@
+## difficulty_rating.py by the backend
+
 import os
 import json
 from contextlib import closing

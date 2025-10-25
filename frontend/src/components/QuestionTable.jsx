@@ -1,4 +1,4 @@
-// src/components/QuestionTable.jsx (MODIFIED to add vertical borders to empty rows)
+// src/components/QuestionTable.jsx (FIXED: Added TABLE_MAX_WIDTH to control overall table size, and fixed the question text/button gap.)
 
 import React, { useState } from 'react';
 import { 
@@ -16,20 +16,26 @@ const ROWS_PER_PAGE = 10; // Fixed rows per page for height limit
 const BORDER_COLOR = '#CACACA';
 const BORDER_STYLE = `1px solid ${BORDER_COLOR}`;
 const ICON_COLOR = '#202020'; 
-const QUESTION_COLUMN_MAX_WIDTH = '400px'; 
-const MAX_QUESTION_TEXT_WIDTH = '350px'; 
+
+// 🌟 NEW CONSTANT: Controls the maximum width of the entire table component
+const TABLE_MAX_WIDTH = '875px'; 
+
+const QUESTION_COLUMN_MAX_WIDTH = '450px'; 
+const MAX_QUESTION_TEXT_WIDTH = '400px'; 
 const TIGHT_PADDING_X = '4px'; 
 const TEXT_ICON_GAP = '2px'; 
 const QUESTION_TEXT_COLOR = '#F57F17'; 
 const GREY_BACKGROUND = '#f5f5f5';
 
 // NEW CONSTANTS FOR TIGHTER PADDING
-// Standard MUI TableCell usually has 16px vertical padding, which leads to tall rows.
 const TIGHT_PADDING_Y = '8px'; // Reduced vertical padding
 const CHECKBOX_PADDING = '4px'; // Minimal padding for checkbox column
 
 // Helper to style the "chips" (UNCHANGED)
 const getChipColor = (type) => {
+  // NOTE: This switch statement relies on the *original* casing for logic, 
+  // so we'll pass the original type here, and apply toUpperCase() only 
+  // at the point of display.
   switch (type) {
     case 'MCQ':
       return { bgcolor: '#F48828', color: '#FFFFFF' }; 
@@ -103,10 +109,6 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
     wordBreak: 'break-word',
     fontWeight: 'bold',
   };
-  const tightCellStyle = {
-    paddingLeft: TIGHT_PADDING_X,
-    paddingRight: TIGHT_PADDING_X,
-  };
 
   // NEW STYLE: Reduced vertical padding for content columns
   const reducedVerticalPaddingStyle = { 
@@ -129,10 +131,15 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
     overflow: 'hidden',
   };
   
-  // Helper function to render data or '-' if null (UNCHANGED)
-  const renderDifficulty = (value) => (
-      value === null ? '-' : value.toFixed(1)
-  );
+  /**
+   * Helper function to render number data or '-' if null OR undefined.
+   */
+  const renderDifficulty = (value) => {
+    if (value == null) {
+      return '-';
+    }
+    return Number(value).toFixed(1);
+  };
 
   // Row selection logic remains unchanged
   const handleClick = (event, id) => {
@@ -158,8 +165,10 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
 
 
   return (
+    // 🌟 FIX: Applied TABLE_MAX_WIDTH here to fix the overall width of the component
     <Card sx={{ 
-      width: '100%', 
+      width: TABLE_MAX_WIDTH, 
+      maxWidth: TABLE_MAX_WIDTH, // Ensure it respects the max width
       border: BORDER_STYLE, 
       boxShadow: 'none',
       borderRadius: 0,
@@ -213,6 +222,8 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
               const isEvenRow = index % 2 === 0;
               const rowBackgroundColor = isEvenRow ? GREY_BACKGROUND : 'white';
               
+              const questionType = row.question_type || ''; // Ensure question_type is a string for .toUpperCase()
+
               return (
                 <TableRow
                   key={row.id}
@@ -232,7 +243,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                     <Checkbox color="primary" checked={isItemSelected} />
                   </TableCell>
                   
-                  {/* Column 2: Question - MODIFIED INNER PADDING */}
+                  {/* Column 2: Question - FIX for the gap is here */}
                   <TableCell 
                     component="th" 
                     scope="row" 
@@ -250,16 +261,18 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                     <Typography 
                         variant="body2" 
                         sx={{ 
-                            flexGrow: 0, 
+                            // 🌟 FIX: Change flexGrow: 0 to flexGrow: 1 to eliminate the huge gap
+                            flexGrow: 1, 
                             marginRight: TEXT_ICON_GAP, 
                             color: QUESTION_TEXT_COLOR,
+                            // Keep maxWidth and overflow/ellipsis for truncation
                             maxWidth: MAX_QUESTION_TEXT_WIDTH, 
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             whiteSpace: 'nowrap', 
                         }}
                     >
-                        {row.text}
+                        {row.question_stem}
                     </Typography>
                     
                     {/* IconButton is already size="small", reducing the cell padding fixes the height */}
@@ -270,7 +283,12 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                   
                   {/* Column 3: Question Type - APPLYING TIGHT VERTICAL PADDING */}
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>
-                    <Chip label={row.type} size="small" sx={getChipColor(row.type)} />
+                    {/* 🌟 FIX: Apply .toUpperCase() to the label. Use the original questionType for getChipColor */}
+                    <Chip 
+                      label={questionType.toUpperCase()} 
+                      size="small" 
+                      sx={getChipColor(questionType)} 
+                    />
                   </TableCell>
                   
                   {/* Column 4: Difficulty Rating (Manual) - APPLYING TIGHT VERTICAL PADDING */}

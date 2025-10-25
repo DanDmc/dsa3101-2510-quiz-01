@@ -16,11 +16,11 @@ function HomePage({
   goToEditPage, 
   goToSearchPage, 
   goToHomePage, 
-  handleDeleteQuestions
+  handleDeleteQuestions,
+  // 🌟 ISSUE 1 FIX: Receive the new props from App (main.jsx)
+  isSafeDeletionEnabled,
+  setIsSafeDeletionEnabled 
 }) { 
-  // ❌ REMOVED: const [questions] = useState(propQuestions); 
-  // Now we rely entirely on the 'propQuestions' argument for the question list.
-
   // KEPT: Local state for selected rows (needed for table interactivity)
   const [selected, setSelected] = useState([]);
   
@@ -54,7 +54,7 @@ function HomePage({
   // UPDATED: handleSelectAllClick now uses 'propQuestions'
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      setSelected(propQuestions.map((n) => n.id)); // 💡 FIX APPLIED
+      setSelected(propQuestions.map((n) => n.id)); 
       return;
     }
     setSelected([]);
@@ -63,7 +63,7 @@ function HomePage({
   // UPDATED: handleEditClick now uses 'propQuestions'
   const handleEditClick = () => {
     // 1. Filter to get the *objects* using the 'propQuestions' prop
-    const questionsToEdit = propQuestions.filter(q => selected.includes(q.id)); // 💡 FIX APPLIED
+    const questionsToEdit = propQuestions.filter(q => selected.includes(q.id)); 
     // 2. Pass the array of OBJECTS to the function from main.jsx
     goToEditPage(questionsToEdit); 
   };
@@ -74,6 +74,11 @@ function HomePage({
     
     // Clear the local selection state
     setSelected([]);
+  };
+
+  // 🌟 NEW HANDLER: For the safe deletion toggle
+  const handleSafeDeletionToggle = (event) => {
+      setIsSafeDeletionEnabled(event.target.checked);
   };
 
   // --- START OF JSX RENDER ---
@@ -92,6 +97,9 @@ function HomePage({
           goToEditPage={handleEditClick} 
           goToSearchPage={goToSearchPage}
           handleDeleteClick={handleDeleteClick}
+          // 🌟 ISSUE 1 FIX: Pass the new props to QuestionToolbar for display
+          isSafeDeletionEnabled={isSafeDeletionEnabled}
+          handleSafeDeletionToggle={handleSafeDeletionToggle}
         />
       </Grid>
 
@@ -99,7 +107,7 @@ function HomePage({
       <Grid item>
         <Grid
           container
-          columnSpacing={13} 
+          columnSpacing={16} 
         >
           
           {/* LEFT COLUMN: TEXT + TABLE */}
@@ -110,7 +118,7 @@ function HomePage({
               </Typography>
 
               <QuestionTable 
-                questions={propQuestions} // 💡 FIX APPLIED: Use prop directly
+                questions={propQuestions} // Use prop directly
                 selected={selected}
                 setSelected={setSelected}
                 onSelectAllClick={handleSelectAllClick}

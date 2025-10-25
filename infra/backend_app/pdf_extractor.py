@@ -1,3 +1,5 @@
+## pdf_extractor.py by the backend
+
 import os
 import pdfplumber
 

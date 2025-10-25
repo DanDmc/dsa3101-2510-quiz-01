@@ -1,3 +1,5 @@
+## app.py by the backend
+
 from flask import Flask, request, jsonify, send_file, abort, render_template_string
 import os
 import MySQLdb
@@ -13,8 +15,14 @@ import joblib
 from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+# -----------------------------------------------------
+# 💡 FIX: CORS is set to the correct Vite port 5173
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+# -----------------------------------------------------
 
 # ---- Upload / pipeline config ----
 app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
@@ -95,7 +103,9 @@ def get_question():
     if order_by_arg == "created_at":
         order_by_sql = "q.created_at"
     elif order_by_arg == "difficulty":
-        order_by_sql = "q.difficulty_level"
+        # Check if a combined difficulty column exists, else default.
+        # For now, we will sort by the generated rating as a proxy.
+        order_by_sql = "q.difficulty_rating_model"
     else:
         order_by_sql = "q.updated_at"
     sort_sql = "ASC" if sort_arg == "asc" else "DESC"
@@ -105,6 +115,8 @@ def get_question():
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
         "q.question_type", "q.question_stem", "q.question_stem_html",
         "q.concept_tags", "q.question_media", "q.last_used", "q.created_at", "q.updated_at",
+        # ADDED DIFFICULTY FIELDS 
+        "q.difficulty_rating_manual", "q.difficulty_rating_model",
         "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
 
@@ -164,6 +176,8 @@ def get_question():
             q_id, q_base_id, q_version_id, file_id, q_no,
             q_type, stem, stem_html,
             concept_json, media_json, last_used, created_at, updated_at,
+            # UPDATED UNPACKING
+            difficulty_manual, difficulty_model,
             f_course, f_year, f_semester, f_assessment, f_name, f_path
         ) = row
 
@@ -181,6 +195,13 @@ def get_question():
         def ts(v):
             # jsonify can't handle datetime directly; convert to ISO strings
             return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
+        
+        # Determine the difficulty to use for a single field mapping (if required by frontend)
+        # Assuming frontend is looking for `difficulty_level` which is now missing.
+        # We'll use the manual rating if available, otherwise the model rating.
+        # This is a common pattern for displaying a single value.
+        difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
+
 
         items.append({
             "id": q_id,
@@ -197,6 +218,11 @@ def get_question():
             "created_at": ts(created_at),
             "updated_at": ts(updated_at),
 
+            # ADDED DIFFICULTY MAPPING
+            "difficulty_manual": difficulty_manual,
+            "difficulty_model": difficulty_model,
+            "difficulty_level": difficulty_level, # Mapped to prevent frontend crash
+            
             # Helpful file metadata in the payload
             "course": f_course,
             "year": f_year,
@@ -438,14 +464,6 @@ def upload_file():
     except Exception as e:
         return jsonify({"saved": True, "file_id": file_id, "error": f"could not stage PDF: {e}"}), 500
 
-    logs = {}
-
-    # 1) Extract text (filter to this PDF via TARGET_PDF)
-    code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": original_name})
-    logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
-    if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
-
     base = Path(original_name).stem
 
     # 2) LLM parse (filter via TARGET_BASE) -- requires GEMINI_API_KEY env
@@ -465,4 +483,3 @@ def upload_file():
         "file": {"file_id": file_id, "original_name": original_name, "stored_path": str(dest_path)},
         "pipeline": logs
     }), 201
-

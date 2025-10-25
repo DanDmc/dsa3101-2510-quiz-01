@@ -3,6 +3,7 @@
 -- Host: localhost    Database: quizbank
 -- ------------------------------------------------------
 -- Server version	8.0.43
+USE quizbank;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -165,3 +166,9 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-10-19  8:16:54
+
+SHOW databases;
+
+CREATE USER IF NOT EXISTS 'quizbank_user'@'localhost' IDENTIFIED BY 'quizbank_pass';
+GRANT ALL PRIVILEGES ON quizbank.* TO 'quizbank_user'@'localhost';
+FLUSH PRIVILEGES;
