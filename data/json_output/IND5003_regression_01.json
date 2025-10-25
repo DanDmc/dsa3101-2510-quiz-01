@@ -1,26 +1,40 @@
 [
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "1",
-<<<<<<< HEAD
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:\nY = β₀ + β₁ ln(X₁) + e\nwhere X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:\n\n```\n## OLS Regression Results\n## ==============================================================================\n## Dep. Variable: price R-squared: 0.539\n## Model: OLS Adj. R-squared: 0.538\n## Method: Least Squares F-statistic: 482.2\n## Date: Mon, 08 Sep 2025 Prob (F-statistic): 2.52e-71\n## Time: 16:28:40 Log-Likelihood: -1507.3\n## No. Observations: 414 AIC: 3019.\n## Df Residuals: 412 BIC: 3027.\n## Df Model: 1\n## Covariance Type: nonrobust\n## ==============================================================================\n## coef std err t P>|t| [0.025 0.975]\n## ------------------------------------------------------------------------------\n## Intercept 95.0169 2.637 36.034 0.000 89.833 100.200\n## ldist -8.9235 0.406 -21.959 0.000 -9.722 -8.125\n## ==============================================================================\n## Omnibus: 178.772 Durbin-Watson: 2.109\n## Prob(Omnibus): 0.000 Jarque-Bera (JB): 1764.720\n## Skew: 1.566 Prob(JB): 0.00\n## Kurtosis: 12.617 Cond. No. 38.5\n## ==============================================================================\n##\n## Notes:\n## [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n```\n\nWhat is the null hypothesis corresponding to the t-statistic with value -21.959?",
-=======
-    "question_type": "open-ended",
-    "difficulty_level": null,
-    "question_stem": "Suppose that the following simple linear regression model has been fitted to the Taiwan real estate data from topic 05:\nY = β₀ + β₁ ln(X₁) + e\nwhere X₁ corresponds to distance to the nearest MRT. The following output was obtained from Python:\n\nOLS Regression Results\n==============================================================================\nDep. Variable: price R-squared: 0.539\nModel: OLS Adj. R-squared: 0.538\nMethod: Least Squares F-statistic: 482.2\nDate: Mon, 08 Sep 2025 Prob (F-statistic): 2.52e-71\nTime: 16:28:40 Log-Likelihood: -1507.3\nNo. Observations: 414 AIC: 3019.\nDf Residuals: 412 BIC: 3027.\nDf Model: 1\nCovariance Type: nonrobust\n==============================================================================\ncoef std err t P>|t| [0.025 0.975]\n------------------------------------------------------------------------------\nIntercept 95.0169 2.637 36.034 0.000 89.833 100.200\nldist -8.9235 0.406 -21.959 0.000 -9.722 -8.125\n==============================================================================\nOmnibus: 178.772 Durbin-Watson: 2.109\nProb(Omnibus): 0.000 Jarque-Bera (JB): 1764.720\nSkew: 1.566 Prob(JB): 0.00\nKurtosis: 12.617 Cond. No. 38.5\n==============================================================================\n\nNotes:\n[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n\nWhat is the null hypothesis corresponding to the t-statistic with value -21.959?",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": [
-      "simple linear regression",
-      "hypothesis testing",
-      "OLS interpretation"
+    "question_stem": "SupposethatthefollowingsimplelinearregressionmodelhasbeenfittedtotheTaiwanrealestatedatafrom\ntopic 05:\nY =β +β ln(X )+e\n0 1 1\nwhere X corresponds to distance to the nearest MRT. The following output was obtained from Python:\n1\n## OLS Regression Results\n## ==============================================================================\n## Dep. Variable: price R-squared: 0.539\n## Model: OLS Adj. R-squared: 0.538\n## Method: Least Squares F-statistic: 482.2\n## Date: Mon, 08 Sep 2025 Prob (F-statistic): 2.52e-71\n## Time: 16:28:40 Log-Likelihood: -1507.3\n## No. Observations: 414 AIC: 3019.\n## Df Residuals: 412 BIC: 3027.\n## Df Model: 1\n## Covariance Type: nonrobust\n## ==============================================================================\n## coef std err t P>|t| [0.025 0.975]\n## ------------------------------------------------------------------------------\n## Intercept 95.0169 2.637 36.034 0.000 89.833 100.200\n## ldist -8.9235 0.406 -21.959 0.000 -9.722 -8.125\n## ==============================================================================\n## Omnibus: 178.772 Durbin-Watson: 2.109\n## Prob(Omnibus): 0.000 Jarque-Bera (JB): 1764.720\n## Skew: 1.566 Prob(JB): 0.00\n## Kurtosis: 12.617 Cond. No. 38.5\n## ==============================================================================\n##\n## Notes:\n## [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\nWhat is the null hypothesis corresponding to the t-statistic with value -21.959?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "H : β =0\n0 1"
+      },
+      {
+        "label": "B",
+        "text": "H : β =0\n0 0"
+      },
+      {
+        "label": "C",
+        "text": "H : β ˆ =0\n0 1"
+      },
+      {
+        "label": "D",
+        "text": "H : β ˆ =0\n0 0"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. H : β =0\n0 1\nExplanation: This is correct.",
+    "page_numbers": [
+      1,
+      2
+    ],
+    "concept_tags": [
+      "regression",
+      "inference",
+      "taiwan"
+    ],
+    "page_image_paths": [
+      "data/question_media/IND5003_regression_01_page2.png",
+      "data/question_media/IND5003_regression_01_page1.png"
+    ]
   }
 ]

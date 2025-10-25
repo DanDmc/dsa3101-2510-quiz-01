@@ -19,7 +19,7 @@ services:
 
       # ✅ Initialize schema + seed data only on first run
       - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
-      - ./seed_data.sql:/docker-entrypoint-initdb.d/2-seed.sql
+      - ./seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
 
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
@@ -50,6 +50,7 @@ services:
     volumes:
       - ../data:/app/data
       - ./models:/app/models  
+      - ../backend:/app/backend
     environment:
       - PYTHONUNBUFFERED=1
       - MYSQL_HOST=db

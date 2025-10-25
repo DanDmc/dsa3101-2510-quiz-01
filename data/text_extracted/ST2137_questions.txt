@@ -5,6 +5,10 @@ test2 - Confidential
 Course Name: -
 Notices:
 This exam has no notices
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page1.png] [PAGE_NUMBER: 1]
+
+=== PAGE BREAK ===
+
 Question #: 1
 This question is to be answered using Python.
 Consider the stud_perf dataset once again. There were three measures
@@ -34,11 +38,19 @@ values for η0? Which values correspond to higher agreement?
 5. A less stringent measure of agreement is given by η1=∑|i−j|≤1pij
 Compute η1 separately for the five groups defined by Medu and
 summarise what you observe.
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page2.png] [PAGE_NUMBER: 2]
+
+=== PAGE BREAK ===
+
 Item Weight: 8.0
 Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.41 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page3.png] [PAGE_NUMBER: 3]
+
+=== PAGE BREAK ===
+
 Question #: 2
 In 1935, Sir R A Fisher described an experiment involving a British
 woman. The woman claimed that if she was presented with a cup of
@@ -62,6 +74,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.23 - - - - 0.22
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page4.png] [PAGE_NUMBER: 4]
+
+=== PAGE BREAK ===
+
 Question #: 3
 Consider the following two histograms (created with Python) from the
 liverpool dataset used in Tutorial 2:
@@ -75,6 +91,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.97 - - - - 0.17
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page5.png] [PAGE_NUMBER: 5]
+
+=== PAGE BREAK ===
+
 Question #: 4
 The data in phones.csv contains information on phone calls made in
 Belgium from 1950 until 1973. Let Y be the number of calls, and X be
@@ -93,6 +113,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.44 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page6.png] [PAGE_NUMBER: 6]
+
+=== PAGE BREAK ===
+
 Question #: 5
 Suppose that the data in liverpool_2223_season.csv has been read into
 Python as liverpool. The following code tabulates the goal counts for
@@ -106,9 +130,17 @@ counts against into the second column of goal_counts. Then create the
 following bar chart, which compares the GF and GA:
 Item Weight: 4.0
 Item Psychometrics:
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page7.png] [PAGE_NUMBER: 7]
+
+=== PAGE BREAK ===
+
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.71 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page8.png] [PAGE_NUMBER: 8]
+
+=== PAGE BREAK ===
+
 Question #: 6
 What is the most likely solution to the error below?
 A. The function to read the file is read.csv, not read_csv.
@@ -120,6 +152,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.99 - - - - 0.14
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page9.png] [PAGE_NUMBER: 9]
+
+=== PAGE BREAK ===
+
 Question #: 7
 The heifers dataset was introduced on in the topic on ANOVA. An
 analyst used SAS to run the ANOVA procedure and estimate the
@@ -134,6 +170,10 @@ estimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;
 run;
 The essential output for this particular contrast can be seen in the
 following figures:
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page10.png] [PAGE_NUMBER: 10]
+
+=== PAGE BREAK ===
+
 Use Python to recreate
 1. the point estimate of the contrast, and
 2. the confidence interval for the contrast.
@@ -142,6 +182,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.42 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page11.png] [PAGE_NUMBER: 11]
+
+=== PAGE BREAK ===
+
 Question #: 8
 This question is to be answered using Python.
 In Tutorial 6, we considered the notion of a sensitivity curve for
@@ -169,9 +213,17 @@ Note that your code does not have to handle the general case of
 estimator. It only has to work for the above dataset.
 Item Weight: 6.0
 Item Psychometrics:
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page12.png] [PAGE_NUMBER: 12]
+
+=== PAGE BREAK ===
+
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.52 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page13.png] [PAGE_NUMBER: 13]
+
+=== PAGE BREAK ===
+
 Question #: 9
 What is the length of the resulting output in this Python code?
 my_list =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
@@ -186,6 +238,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.99 - - - - -0.01
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page14.png] [PAGE_NUMBER: 14]
+
+=== PAGE BREAK ===
+
 Question #: 10
 In the topic of categorical data analysis, we encountered the following
 plot for visualising how a binary variable varies with a continuous one.
@@ -209,11 +265,19 @@ DEATH_EVENT in the second column:
 ## 10 (90, 95] 1.000000
 2. Now create this plot using the pandas dataframe, using
 kind='scatter'.
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page15.png] [PAGE_NUMBER: 15]
+
+=== PAGE BREAK ===
+
 Item Weight: 4.0
 Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.32 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page16.png] [PAGE_NUMBER: 16]
+
+=== PAGE BREAK ===
+
 Question #: 11
 Suppose that x is a numpy array with shape (2,2) and y is a numpy
 array with shape (2,1). What is the name of the numpy function for
@@ -227,6 +291,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.92 - - - - 0.15
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page17.png] [PAGE_NUMBER: 17]
+
+=== PAGE BREAK ===
+
 Question #: 12
 In many manufacturing processes, the term work-in-progress is often
 abbreviated to WIP. In a book manufacturing plant, WIP represents the
@@ -253,6 +321,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.34 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page18.png] [PAGE_NUMBER: 18]
+
+=== PAGE BREAK ===
+
 Question #: 13
 Consider the following two histograms (created with R) from the
 liverpool dataset used in Tutorial 2:
@@ -266,6 +338,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.84 - - - - 0.23
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page19.png] [PAGE_NUMBER: 19]
+
+=== PAGE BREAK ===
+
 Question #: 14
 Using the student-mat.csv dataset from our lectures, create a
 contingency table from the variables address and guardian. Store it as
@@ -281,6 +357,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.64 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page20.png] [PAGE_NUMBER: 20]
+
+=== PAGE BREAK ===
+
 Question #: 15
 What is the length of the resulting output in this R code?
 vec1 <- c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j')
@@ -295,6 +375,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 1.0 - - - - 0.00
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page21.png] [PAGE_NUMBER: 21]
+
+=== PAGE BREAK ===
+
 Question #: 16
 This question is to be answered using R.
 Suppose that daily demand for newspaper is approximately gamma
@@ -320,6 +404,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.7 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page22.png] [PAGE_NUMBER: 22]
+
+=== PAGE BREAK ===
+
 Question #: 17
 Assuming the appropriate package(s) have been installed on the
 computer, what command needs to be run in order to resolve the
@@ -333,6 +421,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.95 - - - - 0.24
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page23.png] [PAGE_NUMBER: 23]
+
+=== PAGE BREAK ===
+
 Question #: 18
 After working with R, Python and SAS with one semester, you must
 have realised some of the strengths/limitations of these software. For
@@ -345,6 +437,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.83 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page24.png] [PAGE_NUMBER: 24]
+
+=== PAGE BREAK ===
+
 Question #: 19
 The Γ(1.5,1) pdf is given by
 f(y)=1Γ(1.5)y1/2e−y,y>0 where Γ(z)=∫0∞tz−1e−tdt is the gamma
@@ -376,10 +472,18 @@ variables, and you were told they were from a gamma distribution.
 Assuming you can use qgamma, explain how you can create a plot to
 assess if this claim is true. Hint: Think about modifying the qq-plots the
 we learnt about for normality.
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page25.png] [PAGE_NUMBER: 25]
+
+=== PAGE BREAK ===
+
 Item Weight: 12.0
 Item Psychometrics:
 No item psychometrics are available at this time, this item has yet to be scored in any
 assessment.
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page26.png] [PAGE_NUMBER: 26]
+
+=== PAGE BREAK ===
+
 Question #: 20
 A sequence is generated using the following recursive relation:
 xn=2xn−1−xn−2,n≥3
@@ -389,6 +493,10 @@ Item Weight: 3.0
 Item Psychometrics:
 No item psychometrics are available at this time, this item has yet to be scored in any
 assessment.
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page27.png] [PAGE_NUMBER: 27]
+
+=== PAGE BREAK ===
+
 Question #: 21
 This question is to be answered using R.
 The dataset in taiwan_outlier_removed.csv contains information on
@@ -417,6 +525,10 @@ there is anything unusual.
 2175m.
 2. When the number of stores is 2 and the distance to MRT is 965m.
 5. Identify the most influential point (in absolute value) with regard
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page28.png] [PAGE_NUMBER: 28]
+
+=== PAGE BREAK ===
+
 to the beta coefficient for the number of stores. You can state the ID
 number of this point.
 6. One of the columns in the influence matrix corresponds to dffit.
@@ -432,6 +544,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.51 - - - - -
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page29.png] [PAGE_NUMBER: 29]
+
+=== PAGE BREAK ===
+
 Question #: 22
 A clinical trial is conducted to compare the efficacy of drug A and drug B
 on lowering blood pressure. Participants are randomly divided into two
@@ -448,6 +564,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.92 - - - - 0.09
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page30.png] [PAGE_NUMBER: 30]
+
+=== PAGE BREAK ===
+
 Question #: 23
 Which of the following techniques cannot be used to assess the
 Normality of a given dataset?
@@ -460,6 +580,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.97 - - - - 0.19
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page31.png] [PAGE_NUMBER: 31]
+
+=== PAGE BREAK ===
+
 Question #: 24
 In the One-Way ANOVA, we assume the following model:
 Yij=μ+αi+eij,i=1,…,k,j=1,…,ni
@@ -473,6 +597,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.78 - - - - 0.44
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page32.png] [PAGE_NUMBER: 32]
+
+=== PAGE BREAK ===
+
 Question #: 25
 In the topic on One-Way ANOVA, we worked with the heifers dataset.
 The following is the SAS output.
@@ -485,6 +613,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.91 - - - - 0.25
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page33.png] [PAGE_NUMBER: 33]
+
+=== PAGE BREAK ===
+
 Question #: 26
 In the topic on regression, we fitted the following simple linear
 regression model to the concrete data:
@@ -500,9 +632,17 @@ A. True
 ✓B. False
 Item Weight: 1.0
 Item Psychometrics:
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page34.png] [PAGE_NUMBER: 34]
+
+=== PAGE BREAK ===
+
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.77 - - - - 0.15
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page35.png] [PAGE_NUMBER: 35]
+
+=== PAGE BREAK ===
+
 Question #: 27
 When assessing robustness of an estimator, one of the properties we
 consider is the breakdown point.
@@ -516,6 +656,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.78 - - - - 0.41
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page36.png] [PAGE_NUMBER: 36]
+
+=== PAGE BREAK ===
+
 Question #: 28
 Consider the following SAS program:
 DATA ex_1;
@@ -533,6 +677,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.86 - - - - 0.25
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page37.png] [PAGE_NUMBER: 37]
+
+=== PAGE BREAK ===
+
 Question #: 29
 Simulation can be used to estimate expected values of the form
 E[g(X)]=∑x=0∞g(x)p(x). The reason we can assume Normality when
@@ -545,6 +693,10 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.64 - - - - 0.08
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page38.png] [PAGE_NUMBER: 38]
+
+=== PAGE BREAK ===
+
 Question #: 30
 Suppose that X∼N(μ=0,σ2=4). Which of the following R commands will
 return P(X>2) ?
@@ -557,3 +709,4 @@ Item Psychometrics:
 Difficulty Upper 27% Lower 27% Discrimination Index Point Point Biserial(Rev)
 Level/P-value Biserial(Question)
 0.96 - - - - 0.21
+[PAGE_IMAGE_SAVED: data/question_media/ST2137_questions_page39.png] [PAGE_NUMBER: 39]

@@ -1,1211 +1,1477 @@
 [
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "1",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
     "question_stem": "From a collection of nine paintings, four are to be selected to hang side-by-side on a gallery wall in positions 1, 2, 3 and 4. In how many ways can this be done?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "combinatorics",
-      "permutations"
+    "question_options": [
+      {
+        "label": "A",
+        "text": "3024"
+      },
+      {
+        "label": "B",
+        "text": "6561"
+      },
+      {
+        "label": "C",
+        "text": "24"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 3024",
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "permutations",
+      "combinatorics"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page2.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "2",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
     "question_stem": "A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?",
-    "question_stem_html": null,
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
+    ],
+    "question_answer": "A.",
+    "page_numbers": [
+      3
+    ],
     "concept_tags": [
       "combinations",
-      "group assignment"
+      "combinatorics"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page3.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "3",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.93,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is p, where p > 0.5. We flip the coin twice, and define the following events: A1 : we observe head followed by a tail. A2 : we observe a tail followed by a head. What is P(A1 | A1 U A2)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is p, where p >0.5. We flip the coin twice, and define the following events: A1: we observe head followed by a tail A2: we observe a tail followed by a head. What is P(A1 | A1 U A2)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "probability of events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is p, where p >0.5. We flip the coin twice, and define the following events:\nA : we observe head followed by a tail\n1\nA : we observe a tail followed by a head.\n2\nWhat is P(A | A U A )?\n1 1 2",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1/2"
+      },
+      {
+        "label": "B",
+        "text": "p"
+      },
+      {
+        "label": "C",
+        "text": "1-p"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 1/2",
+    "page_numbers": [
+      4
+    ],
+    "concept_tags": [
+      "probability",
+      "conditional probability",
+      "events"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page4.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "4",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
     "question_stem": "If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "combinations",
-<<<<<<< HEAD
-      "combinatorics"
-=======
-      "stars and bars"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. False",
+    "page_numbers": [
+      5
+    ],
+    "concept_tags": [
+      "combinatorics",
+      "stars and bars"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page5.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "5",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.94,
-    "difficulty_rating_model": null,
     "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "combinatorics",
-      "permutations"
-=======
-      "permutations",
-      "group assignment"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A.",
+    "page_numbers": [
+      6
+    ],
+    "concept_tags": [
+      "combinatorics",
+      "distributions"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page6.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "6",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
     "question_stem": "Which of the following is not a cumulative distribution function?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "cumulative distribution function",
-      "discrete random variables",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "Which of the following is not a cumulative distribution function? [Missing formula options for comparison]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "cumulative distribution function"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "C.",
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "probability",
+      "cumulative distribution function"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page7.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "7",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.83,
-    "difficulty_rating_model": null,
-=======
-    "difficulty_level": null,
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define Ei to be the event that head appears first on the i-th toss. What is P(A wins)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "geometric distribution",
-<<<<<<< HEAD
-      "independence of events",
-      "probability"
-=======
-      "probability of events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define to be the event that head appears first on the i-th\nE\ni\ntoss. What is P(A wins)?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A.",
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "probability",
+      "geometric distribution",
+      "infinite series"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page8.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "8",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.94,
-    "difficulty_rating_model": null,
-    "question_stem": "A fair coin is tossed independently 10 times. Define the following events: Ak : the k-th toss is heads. S: the total number of heads observed in the 10 tosses is even. (Note that 0 is an even number). What is P(S | A1 A2 A3 ... A10)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "independence of events",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "A fair coin is tossed independently 10 times. Define the following events: Ak: the k-th toss is heads S10: the total number of heads observed in the 10 tosses is even. (Note that 0 is an even number). What is P(S10 | A1 A2 A3 ... A10)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "independence",
-      "coin flips"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "A fair coin is tossed independently 10 times. Define the following events:\nA : the k-th toss is heads\nk\nS: the total number of heads observed in the 10 tosses is even. (Note that 0 is an\neven number).\nWhat is P(S | A A A ... A )?\n1 2 3 10",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1"
+      },
+      {
+        "label": "B",
+        "text": "0"
+      },
+      {
+        "label": "C",
+        "text": "(0.5)10"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 1",
+    "page_numbers": [
+      9
+    ],
+    "concept_tags": [
+      "probability",
+      "conditional probability",
+      "coin toss"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page9.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "9",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define Ei to be the event that head appears first on the i-th toss. Which of the following statements is true about the sequence of events Ei?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence of events",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define Ei to be the event that head appears first on the i-th toss. Which of the following statements is true about the sequence of events Ei?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability of events",
-      "sequence of events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E to be the event that\ni\nhead appears first on the i-th toss. Which of the following statements is true about\nthe sequence of events E?\ni",
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": "Neither of the above statements are true."
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "C. Neither of the above statements are true.",
+    "page_numbers": [
+      10
+    ],
+    "concept_tags": [
+      "probability",
+      "events",
+      "sequences"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page10.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "10",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.83,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that p(x) and q(x) are two distinct pmfs. Then for any b such that 0 < b < 1, r(x) = bp(x) + (1-b)q(x) is also a pmf.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability",
-      "probability mass function"
-=======
-    "difficulty_level": null,
     "question_stem": "Suppose that p(x) and q(x) are two distinct pmfs. Then for any b such that 0 <b <1, r(x) = bp(x) + (1-b)q(x) is also a pmf.",
-    "question_stem_html": null,
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
+    ],
+    "question_answer": "A. True",
+    "page_numbers": [
+      11
+    ],
     "concept_tags": [
       "probability mass function",
-      "mixtures"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+      "convex combination"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page11.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "11",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.86,
-    "difficulty_rating_model": null,
-    "question_stem": "Consider the following pmf, for i in {1, 2, 3, 4, 5, ...}. [PMF formula missing in text]. What is the value of c?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "discrete random variables",
-      "probability",
-      "probability mass function"
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider the following pmf [Missing formula/expression], for i = {1, 2, 3, 4, 5, ...}. What is the value of c?",
-    "question_stem_html": null,
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n(Image - Refer to question paper)\nWhat is the value of c?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "(Image - Refer to question paper)"
+      },
+      {
+        "label": "B",
+        "text": "(Image - Refer to question paper)"
+      },
+      {
+        "label": "C",
+        "text": "(Image - Refer to question paper)"
+      }
+    ],
+    "question_answer": "A. (Image - Refer to question paper)",
+    "page_numbers": [
+      12
+    ],
     "concept_tags": [
       "probability mass function",
-      "constants"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+      "normalization constant"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page12.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "12",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
     "question_stem": "Two fair six-sided dice are rolled. Let X be the product of the two dice. What is P(X >= 33)?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "discrete random variables",
-      "probability"
-=======
-      "dice probability",
-      "probability of events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1/36"
+      },
+      {
+        "label": "B",
+        "text": "33/36"
+      },
+      {
+        "label": "C",
+        "text": "3/36"
+      }
     ],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "13",
-    "question_type": "mcq",
-<<<<<<< HEAD
-    "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that P(A) > 0, P(B) > 0 and P(AB) > 0. Then the following equality holds: [equation missing in text]. True/False.",
-    "question_stem_html": null,
+    "question_answer": "A. 1/36",
+    "page_numbers": [
+      13
+    ],
     "concept_tags": [
       "probability",
-=======
-    "difficulty_level": null,
-    "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds: [Missing equality]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability rules",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-      "set theory"
+      "dice",
+      "random variable"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page13.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
+    "question_no": "13",
+    "question_type": "mcq",
+    "difficulty_rating_manual": 1.0,
+    "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:\n(Image - Refer to question paper)",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
+    ],
+    "question_answer": "A. True",
+    "page_numbers": [
+      14
+    ],
+    "concept_tags": [
+      "probability",
+      "conditional probability",
+      "Bayes' theorem"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page14.png"
+    ]
+  },
+  {
     "question_no": "14",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.94,
-    "difficulty_rating_model": null,
-    "question_stem": "Consider the following pmf, for i in {1, 2, 3, 4, 5, ...}. [PMF formula missing in text]. Find P(X = 1 | {X=1} U {X=2}).",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider the following pmf [Missing formula/expression], for i = {1, 2, 3, 4, 5, ...}. Find P(X = 1 | {X=1} U {X=2})",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "discrete random variables",
-      "probability mass function"
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n(Image - Refer to question paper)\nFind P(X = 1 | {X=1} U {X=2})",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "0.8"
+      },
+      {
+        "label": "B",
+        "text": "0.608"
+      },
+      {
+        "label": "C",
+        "text": "0.760"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 0.8",
+    "page_numbers": [
+      15
+    ],
+    "concept_tags": [
+      "probability mass function",
+      "conditional probability"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page15.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "15",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
     "question_stem": "A deck of playing cards has 52 cards. Four of these cards are Aces. Suppose that a well-shuffled deck of cards is dealt out. What is the probability that the 14th card dealt out is an Ace?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "probability",
-=======
-      "card probability",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-      "sampling without replacement"
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1/13"
+      },
+      {
+        "label": "B",
+        "text": "1/4"
+      },
+      {
+        "label": "C",
+        "text": "1/52"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 1/13",
+    "page_numbers": [
+      16
+    ],
+    "concept_tags": [
+      "probability",
+      "card games",
+      "symmetry"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page16.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "16",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "The cdf of X is given by the following function, for i in {1, 2, 3, 4, 5, 6, ... } : [CDF function missing in text]. What is the support of X?",
-=======
-    "difficulty_level": null,
-    "question_stem": "The cdf of X is given by the following function [Missing formula/expression], for i in {1,2,3,4,5,6, ... }: What is the support of X?",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
+    "question_stem": "The cdf of X is given by the following function, for i in {1,2,3,4,5,6, ... } :\n(Image - Refer to question paper)\nWhat is the support of X?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "{1, 2, 3, 4, 5,...}"
+      },
+      {
+        "label": "B",
+        "text": "{0, 1, 2, 3, 4, 5,...}"
+      },
+      {
+        "label": "C",
+        "text": "{0,1}"
+      }
+    ],
+    "question_answer": "A. {1, 2, 3, 4, 5,...}",
+    "page_numbers": [
+      17
+    ],
     "concept_tags": [
       "cumulative distribution function",
-      "discrete random variables",
-      "probability"
+      "support",
+      "discrete random variable"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page17.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "17",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.98,
-    "difficulty_rating_model": null,
-    "question_stem": "The cdf of X is given by the following function, for i = 1, 2, 3, 4, 5,... : [CDF function missing in text]. What is P(X < 2)?",
-=======
-    "difficulty_level": null,
-    "question_stem": "The cdf of X is given by the following function [Missing formula/expression], for i = 1, 2, 3, 4, 5,.... : What is P(X <2)?",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
+    "question_stem": "The cdf of X is given by the following function, for i = 1, 2, 3, 4, 5,.... :\n(Image - Refer to question paper)\nWhat is P(X <2)?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1/2"
+      },
+      {
+        "label": "B",
+        "text": "2/3"
+      },
+      {
+        "label": "C",
+        "text": "1/3"
+      }
+    ],
+    "question_answer": "A. 1/2",
+    "page_numbers": [
+      18
+    ],
     "concept_tags": [
       "cumulative distribution function",
-      "discrete random variables",
-      "probability"
+      "probability",
+      "discrete random variable"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page18.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "18",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.91,
-    "difficulty_rating_model": null,
-    "question_stem": "The cdf of X is given by the following function, for i >= 1: [CDF function missing in text]. What is the pmf of X?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "cumulative distribution function",
-      "discrete random variables",
-=======
-    "difficulty_level": null,
-    "question_stem": "The cdf of X is given by the following function [Missing formula/expression], for i >= 1: What is the pmf of X? [Missing formula options for comparison]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "cumulative distribution function",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-      "probability mass function"
+    "question_stem": "The cdf of X is given by the following function, for i >= 1:\n(Image - Refer to question paper)\nWhat is the pmf of X?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "P(X=i) = 1/[i(i+1)] for i = 1, 2, 3, 4, 5, 6, ..."
+      },
+      {
+        "label": "B",
+        "text": "P(X=i) = 1 - 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ..."
+      },
+      {
+        "label": "C",
+        "text": "P(X=i) = 1/(i+1) for i = 1, 2, 3, 4, 5, 6, ..."
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. P(X=i) = 1/[i(i+1)] for i = 1, 2, 3, 4, 5, 6, ...",
+    "page_numbers": [
+      19
+    ],
+    "concept_tags": [
+      "cumulative distribution function",
+      "probability mass function",
+      "discrete random variable"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page19.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "19",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.9,
-    "difficulty_rating_model": null,
-    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by: p(1)=0.1, p(2)=0.25, p(3)=0.35, p(4)=0.3. A child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen. Find P(X=1 | E).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "discrete random variables",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1) p(2) p(3) p(4) 0.1 0.25 0.35 0.3 A child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen. Find P(X=1 | E).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "random variables"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by\np(1) p(2) p(3) p(4)\n0.1 0.25 0.35 0.3\nA child from this family is chosen at random (i.e. all children within a family are equally likely to be selected). Let E be the event that the eldest child is chosen.\nFind P(X=1 | E).",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "0.42"
+      },
+      {
+        "label": "B",
+        "text": "0.1"
+      },
+      {
+        "label": "C",
+        "text": "0.24"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "C. 0.24",
+    "page_numbers": [
+      20
+    ],
+    "concept_tags": [
+      "conditional probability",
+      "probability mass function",
+      "random variables"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page20.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "20",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.73,
-    "difficulty_rating_model": null,
     "question_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. Which of the following events is equivalent to {X = r}, where r is an integer in the support of X?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "discrete random variables",
-      "probability",
-      "urn problems"
-=======
-      "hypergeometric distribution",
-      "sampling without replacement",
-      "event definition"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "There are k - 1 white balls in the first r-1 draws, and the r-th draw is a white ball."
+      },
+      {
+        "label": "B",
+        "text": "There are r balls drawn."
+      },
+      {
+        "label": "C",
+        "text": "There are k white balls in the first r draws."
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. There are k - 1 white balls in the first r-1 draws, and the r-th draw is a white ball.",
+    "page_numbers": [
+      21
+    ],
+    "concept_tags": [
+      "probability",
+      "random variables",
+      "urn problem"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page21.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "21",
-<<<<<<< HEAD
     "question_type": "others",
     "difficulty_rating_manual": 0.98,
-    "difficulty_rating_model": null,
-    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E, F and G below. There is only one matching description for each event. Descriptions: 1. E occurs. 2. At least two of the events occur. 3. Exactly two events occur. 4. The empty set occurs. 5. None of the three events occur. 6. Only E occurs. Match the events: (E U F U G)^c, (E intersect F) U (E intersect G) U (F intersect G).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability",
-      "set theory"
-=======
-    "question_type": "open-ended",
-    "difficulty_level": null,
-    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E, F and G below. There is only one matching description for each event. 1. E occurs. 2. At least two of the events occur. 3. Exactly two events occur. 4. The empty set occurs. 5. None of the three events occur. 6. Only E occurs. _____________ 1 (E U F U G)^c _____________ 2 (E & F) U (E & G) U (F & G)",
-    "question_stem_html": null,
-    "concept_tags": [
-      "set operations",
-      "event calculus"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E, F and G below. There is only one matching description for each event.\n1. E occurs. 2. At least two of the events occur.\n3. Exactly two events occur. 4. The empty set occurs.\n5. None of the three events occur. 6. Only E occurs.\n_____________ 1 (E U F U G)c\n_____________ 2 EF U EG U FG",
+    "question_options": [],
+    "question_answer": "1. 5\n2. 2",
+    "page_numbers": [
+      22
     ],
-    "question_media": [],
-    "last_used": null
+    "concept_tags": [
+      "set theory",
+      "probability",
+      "events"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page22.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "22",
-<<<<<<< HEAD
     "question_type": "others",
     "difficulty_rating_manual": 0.91,
-    "difficulty_rating_model": null,
-    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event. Descriptions: 1. E occurs. 2. At least two of the events occur. 3. Exactly two events occur. 4. Exactly one of the events occurs. 5. Only E occurs. 6. At least one of the events occurs. Match the events: E U F U G, E intersect F^c intersect G^c.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability",
-      "set theory"
-=======
-    "question_type": "open-ended",
-    "difficulty_level": null,
-    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event. 1. E occurs. 2. At least two of the events occur. 3. Exactly two events occur. 4. Exactly one of the events occurs. 5. Only E occurs. 6. At least one of the events occurs. _____________ 1 E U F U G _____________ 2 E & F^c & G^c",
-    "question_stem_html": null,
-    "concept_tags": [
-      "set operations",
-      "event calculus"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event.\n1. E occurs. 2. At least two of the events occur.\n3. Exactly two events occur. 4. Exactly one of the events occurs.\n5. Only E occurs. 6. At least one of the events occurs.\n_____________ 1 E U F U G\n_____________ 2 E Fc Gc",
+    "question_options": [],
+    "question_answer": "1. 6\n2. 5",
+    "page_numbers": [
+      23
     ],
-    "question_media": [],
-    "last_used": null
+    "concept_tags": [
+      "set theory",
+      "probability",
+      "events"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page23.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "23",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events: Ak : the k-th toss is heads. Sn : the total number of heads observed in the n tosses is even. (Note that 0 is an even number). Is the collection of events A1, A2, A3, ... An, Sn independent? Hint: Consider P(Sn | A1 A2 A3 ... An).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "independence of events",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events: Ak: the k-th toss is heads Sn: the total number of heads observed in the n tosses is even. (Note that 0 is an even number). Is the collection of events A1, A2, A3, ..., An, Sn independent? Hint: Consider P(Sn | A1 A2 A3 ... An)",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence",
-      "coin flips",
-      "conditional probability"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events:\nA : the k-th toss is heads.\nk\nS : the total number of heads observed in the n tosses is even. (Note that 0 is an\nn\neven number).\nIs the collection of events A , A , A , ... A , S independent?\n1 2 3 n n\nHint: Consider P(S | A A A ... A )",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. False",
+    "page_numbers": [
+      24
+    ],
+    "concept_tags": [
+      "probability",
+      "independence",
+      "coin toss"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page24.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "24",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
     "question_stem": "Suppose that A and B are independent events such that the probability that neither occurs is a, and the probability that B occurs is b. Find P(A).",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "independence of events",
-      "probability",
-      "set theory"
-=======
-      "independence",
-      "probability formulas"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "a/(1-b)"
+      },
+      {
+        "label": "B",
+        "text": "(1-b-a)/(1-b)"
+      },
+      {
+        "label": "C",
+        "text": "ab"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. (1-b-a)/(1-b)",
+    "page_numbers": [
+      25
+    ],
+    "concept_tags": [
+      "probability",
+      "independence",
+      "conditional probability"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page25.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "25",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.96,
-    "difficulty_rating_model": null,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events: Ak : the k-th toss is heads. What is P(A1 A2 A3 A4 ... An)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence of events",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events: Ak: the k-th toss is heads. What is P(A1 A2 A3 A4 ... An)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence",
-      "coin flips",
-      "joint probability"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events:\nA : the k-th toss is heads.\nk\nWhat is P(A A A A ... A )?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1/2"
+      },
+      {
+        "label": "B",
+        "text": "(1/2)^n"
+      },
+      {
+        "label": "C",
+        "text": "k! / n!"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. (1/2)^n",
+    "page_numbers": [
+      26
+    ],
+    "concept_tags": [
+      "probability",
+      "independence",
+      "coin toss"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page26.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "26",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.88,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that E1, E2, ... En are independent events. Which of the following statements is true for any such collection of events? [Statement/equation for options A, B, C missing in text].",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence of events",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "Suppose that E1, E2, ..., En are independent events. Which of the following statements is true for any such collection of events? [Missing statements for comparison]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence",
-      "probability theorems"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Suppose that E , E , ... .E are independent events. Which of the following\n1 2 n\nstatements is true for any such collection of events?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A.",
+    "page_numbers": [
+      27
+    ],
+    "concept_tags": [
+      "probability",
+      "independence",
+      "events"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page27.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "27",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.35,
-    "difficulty_rating_model": null,
-    "question_stem": "Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define En to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. What does the event (union of En from n=1 to infinity) correspond to?",
-    "question_stem_html": null,
+    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12.\nWe define E to be the event that no 5 or 7 appears on the first n-1 trials and a 5\nn\nappears on the n-th trial. What does the event\ncorrespond to?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "A 5 never appears."
+      },
+      {
+        "label": "B",
+        "text": "A 7 never appears."
+      },
+      {
+        "label": "C",
+        "text": "A 5 appears before a 7."
+      }
+    ],
+    "question_answer": "C. A 5 appears before a 7.",
+    "page_numbers": [
+      28
+    ],
     "concept_tags": [
       "probability",
-      "sequences of events",
-      "set theory"
-=======
-    "difficulty_level": null,
-    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define En to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. What does the event correspond to?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "sequential probability",
-      "dice rolls"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+      "dice roll",
+      "sequential events"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page28.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "28",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.82,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that X is a discrete random variable with support on the set {1,2,3,4}. We define the sequence of events En to be [definition missing]. What is [expression involving En missing]?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "discrete random variables",
-      "probability",
-      "sequences of events"
-=======
-    "difficulty_level": null,
-    "question_stem": "Suppose that X is a discrete random variable with support on the set {1,2,3,4}. We define the sequence of events En to be [Missing definition of En]. What is [Missing expression to evaluate]?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "limit of events",
-      "probability of events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Suppose that X is a discrete random variable with support on the set {1,2,3,4}. We define the sequence of events E to be\nn\nWhat is\n?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "P(X=1)"
+      },
+      {
+        "label": "B",
+        "text": "P(1 <X <2)"
+      },
+      {
+        "label": "C",
+        "text": "0"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. P(X=1)",
+    "page_numbers": [
+      29
+    ],
+    "concept_tags": [
+      "probability",
+      "discrete random variable",
+      "events"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page29.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "29",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.86,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that A and B are mutually exclusive, and P(A) > 0 and P(B) > 0. Which of the following statements is false?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "independence of events",
-      "mutually exclusive events"
-=======
-    "difficulty_level": null,
     "question_stem": "Suppose that A and B are mutually exclusive, and P(A) >0 and P(B) >0. Which of the following statements is false?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "mutually exclusive events",
-      "independence"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "P(A|B)=0"
+      },
+      {
+        "label": "B",
+        "text": "A and B are independent."
+      },
+      {
+        "label": "C",
+        "text": "A and B are dependent."
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. A and B are independent.",
+    "page_numbers": [
+      30
+    ],
+    "concept_tags": [
+      "probability",
+      "mutually exclusive",
+      "independence"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page30.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "30",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
     "question_stem": "Suppose that A and B are events with positive probability. Determine if the following statement is true or false: If A and B are not mutually exclusive, then they are independent.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "independence of events",
-      "mutually exclusive events",
-<<<<<<< HEAD
-      "probability"
-=======
-      "independence"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. False",
+    "page_numbers": [
+      31
+    ],
+    "concept_tags": [
+      "probability",
+      "events",
+      "independence"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page31.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "31",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.75,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that A and B form a partition of the sample space, and P(A) > 0 and P(B) > 0. Which of the following statements is false?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "independence of events",
-      "probability"
-=======
-    "difficulty_level": null,
     "question_stem": "Suppose that A and B form a partition of the sample space, and P(A) >0 and P(B) >0. Which of the following statements is false?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "partition of sample space",
-      "independence",
-      "mutually exclusive events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "P(A | Bc) = 1"
+      },
+      {
+        "label": "B",
+        "text": "A and B are independent."
+      },
+      {
+        "label": "C",
+        "text": "A and B are dependent."
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. A and B are independent.",
+    "page_numbers": [
+      32
+    ],
+    "concept_tags": [
+      "probability",
+      "events",
+      "conditional probability"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page32.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "32",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.98,
-    "difficulty_rating_model": null,
     "question_stem": "A mobile phone manufacturing company has two factories X and Y. Factories X and Y produce 30% and 70% of all mobile phones respectively. 9% of the phones produced by factory X are defective, and 1% of the phones produced by factory Y are defective. If a phone bought from the company is found to be defective, what is the probability that it was produced by factory X?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "bayes' theorem",
-      "conditional probability",
-      "probability"
-=======
-      "Bayes' theorem",
-      "conditional probability"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "0.79"
+      },
+      {
+        "label": "B",
+        "text": "0.027"
+      },
+      {
+        "label": "C",
+        "text": "0.30"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 0.79",
+    "page_numbers": [
+      33
+    ],
+    "concept_tags": [
+      "conditional probability",
+      "Bayes' theorem"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page33.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "33",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "Which of the following is not a probability mass function? [PMF functions for options A, B, C missing in text].",
-    "question_stem_html": null,
-    "concept_tags": [
-      "discrete random variables",
-      "probability",
-      "probability mass function"
-=======
-    "difficulty_level": null,
-    "question_stem": "Which of the following is not a probability mass function? [Missing pmf options for comparison]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability mass function",
-      "properties of pmf"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "Which of the following is not a probability mass function?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "(Image - Refer to question paper)"
+      },
+      {
+        "label": "B",
+        "text": "(Image - Refer to question paper)"
+      },
+      {
+        "label": "C",
+        "text": "(Image - Refer to question paper)"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. (Image - Refer to question paper)",
+    "page_numbers": [
+      34
+    ],
+    "concept_tags": [
+      "probability distributions",
+      "pmf"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page34.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "34",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.99,
-    "difficulty_rating_model": null,
-    "question_stem": "Consider the following pmf, for i in {1, 2, 3, 4, 5, ...}. [PMF formula missing in text]. Evaluate the cdf at i=2.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "cumulative distribution function",
-      "discrete random variables",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider the following pmf [Missing formula/expression], for i = {1, 2, 3, 4, 5, ...}. Evaluate the cdf at i=2.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "cumulative distribution function",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-      "probability mass function"
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...} Evaluate the cdf at i=2.",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "0.760"
+      },
+      {
+        "label": "B",
+        "text": "0.608"
+      },
+      {
+        "label": "C",
+        "text": "0.152"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 0.760",
+    "page_numbers": [
+      35
+    ],
+    "concept_tags": [
+      "probability distributions",
+      "cdf"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page35.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "35",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
     "question_stem": "A and B are mutually exclusive events. Further, P(A) = 0.3 and P(B) = 0.2. What is the probability that both events occur?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "mutually exclusive events",
-      "probability",
-      "set theory"
+    "question_options": [
+      {
+        "label": "A",
+        "text": "There is insufficient information to compute this probability."
+      },
+      {
+        "label": "B",
+        "text": "0.06"
+      },
+      {
+        "label": "C",
+        "text": "0"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "C. 0",
+    "page_numbers": [
+      36
+    ],
+    "concept_tags": [
+      "probability",
+      "events",
+      "mutually exclusive"
+    ],
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page36.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "36",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.96,
-    "difficulty_rating_model": null,
-    "question_stem": "How many ways can we arrange the letters in the word 'VISITING' such that no two 'I's are adjacent? Hint: Experiment 1: Permute the non-I letters. Experiment 2: Choose where to put the I's.",
-    "question_stem_html": null,
+    "question_stem": "How many ways can we arrange the letters in the word \"VISITING\" such that no two \"I\"s are adjacent? Hint: Experiment 1: Permute the non-I letters. Experiment 2: Choose where to put the I's.",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "6720"
+      },
+      {
+        "label": "B",
+        "text": "2400"
+      },
+      {
+        "label": "C",
+        "text": "480"
+      }
+    ],
+    "question_answer": "B. 2400",
+    "page_numbers": [
+      37
+    ],
     "concept_tags": [
       "combinatorics",
       "permutations"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page37.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "37",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "How many ways can we arrange the letters in the word 'VISITING'?",
-    "question_stem_html": null,
+    "question_stem": "How many ways can we arrange the letters in the word \"VISITING\"?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "6720"
+      },
+      {
+        "label": "B",
+        "text": "2400"
+      },
+      {
+        "label": "C",
+        "text": "480"
+      }
+    ],
+    "question_answer": "A. 6720",
+    "page_numbers": [
+      38
+    ],
     "concept_tags": [
-<<<<<<< HEAD
       "combinatorics",
       "permutations"
-=======
-      "permutations",
-      "combinatorics"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page38.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "38",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.57,
-    "difficulty_rating_model": null,
-    "question_stem": "Independent trials are performed indefinitely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define En to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. Is En an increasing or decreasing sequence?",
-    "question_stem_html": null,
+    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define E to be the event that no 5 or 7 appears on the first n-1 trials and a 5 n appears on the n-th trial. Is E an increasing or decreasing sequence? n",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "An increasing sequence."
+      },
+      {
+        "label": "B",
+        "text": "A decreasing sequence."
+      },
+      {
+        "label": "C",
+        "text": "It is neither increasing or decreasing."
+      }
+    ],
+    "question_answer": "C. It is neither increasing or decreasing.",
+    "page_numbers": [
+      39
+    ],
     "concept_tags": [
       "probability",
-      "sequences of events"
-=======
-    "difficulty_level": null,
-    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define En to be the event that no 5 or 7 appears on the first n-1 trials and a 5 appears on the n-th trial. Is En an increasing or decreasing sequence?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "sequence of events",
-      "probability theory"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+      "sequences",
+      "independent trials"
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page39.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "39",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C? [Statements for options A, B, C missing in text].",
-    "question_stem_html": null,
+    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "(Image - Refer to question paper)"
+      },
+      {
+        "label": "B",
+        "text": "(Image - Refer to question paper)"
+      },
+      {
+        "label": "C",
+        "text": "(Image - Refer to question paper)"
+      }
+    ],
+    "question_answer": "C. (Image - Refer to question paper)",
+    "page_numbers": [
+      40
+    ],
     "concept_tags": [
       "probability",
       "set theory"
-=======
-    "difficulty_level": null,
-    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C? [Missing statements for comparison]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "set operations",
-      "event calculus"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
     ],
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page40.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "40",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the probability that there will be no complete pair? [Options A, B, C containing formulas/values missing in text].",
-    "question_stem_html": null,
-    "concept_tags": [
-      "combinations",
-      "combinatorics",
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the probability that there will be no complete pair? [Missing formula options for calculation]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "combinations",
-      "probability",
-      "derangements"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "A closet contains 10 pairs of shoes. If 8 shoes are randomly selected, what is the probability that there will be no complete pair?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A.",
+    "page_numbers": [
+      "41"
+    ],
+    "concept_tags": [
+      "probability",
+      "combinations",
+      "counting"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "41",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
     "question_stem": "There are n socks in a drawer, 3 of which are red. What is the value of n if, when 2 of the socks are chosen randomly, the probability that they are both red is 1/2?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "combinations",
-      "probability"
-=======
-      "hypergeometric distribution",
-      "probability",
-      "solving equations"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "n=4"
+      },
+      {
+        "label": "B",
+        "text": "n=6"
+      },
+      {
+        "label": "C",
+        "text": "n=5"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. n=4",
+    "page_numbers": [
+      "42"
+    ],
+    "concept_tags": [
+      "probability",
+      "combinations"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "42",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.99,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1). If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is P(Y = -5)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "discrete random variables",
-      "probability mass function",
-      "transformation of random variables"
-=======
-    "difficulty_level": null,
     "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1) If we let Y = 2 - X, what is the pmf of Y evaluated at -5? In other words, what is P(Y = -5)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "random variables",
-      "transformation of random variables",
-      "probability mass function"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1/56"
+      },
+      {
+        "label": "B",
+        "text": "1/20"
+      },
+      {
+        "label": "C",
+        "text": "-1/5"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 1/56",
+    "page_numbers": [
+      "43"
+    ],
+    "concept_tags": [
+      "probability mass function",
+      "random variables",
+      "transformations"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "43",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.95,
-    "difficulty_rating_model": null,
-    "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1). If we let Y = 1 if X <= 2 and 0 otherwise, what is P(Y = 0)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "discrete random variables",
-      "probability mass function",
-      "transformation of random variables"
-=======
-    "difficulty_level": null,
     "question_stem": "Suppose that the random variable X has support {1, 2, 3, 4, 5, .... }. For i in this set, the pmf is given by P(X = i) = 1/i - 1/(i+1) If we let Y = 1 if X <= 2 and 0 otherwise, what is P(Y = 0)?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "random variables",
-      "transformation of random variables",
-      "probability mass function"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "1"
+      },
+      {
+        "label": "B",
+        "text": "1/2"
+      },
+      {
+        "label": "C",
+        "text": "1/3"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "C. 1/3",
+    "page_numbers": [
+      "44"
+    ],
+    "concept_tags": [
+      "probability mass function",
+      "random variables",
+      "events"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "44",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "There are 4 TV repairmen and 8 TV repair jobs. If it is possible for a single repairman to do multiple jobs, how many possible assignments of repairmen to jobs are there? [Options A, B, C containing formulas/values missing in text].",
-    "question_stem_html": null,
-    "concept_tags": [
-      "combinatorics",
-      "permutations"
-=======
-    "difficulty_level": null,
-    "question_stem": "There are 4 TV repairmen and 8 TV repair jobs. If it is possible for a single repairman to do multiple jobs, how many possible assignments of repairmen to jobs are there? [Missing formula options for calculation]",
-    "question_stem_html": null,
-    "concept_tags": [
-      "counting principle",
-      "assignments"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "There are 4 TV repairmen and 8 TV repair jobs. If it is possible for a single repairman to do multiple jobs, how many possible assignments of repairmen to jobs are there?",
+    "question_options": [
+      {
+        "label": "A",
+        "text": ""
+      },
+      {
+        "label": "B",
+        "text": ""
+      },
+      {
+        "label": "C",
+        "text": ""
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B.",
+    "page_numbers": [
+      "45"
+    ],
+    "concept_tags": [
+      "counting",
+      "assignments"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "45",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.64,
-    "difficulty_rating_model": null,
-    "question_stem": "If P(A) = 1/4 and P(B) = 1/3, then [equation/inequality missing in text]. True/False.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability"
-=======
-    "difficulty_level": null,
-    "question_stem": "If P(A) = 1/4 and P(B) = 1/3, then [Missing inequality/equation].",
-    "question_stem_html": null,
-    "concept_tags": [
-      "probability bounds",
-      "set theory"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "If P(A) = 1/4 and P(B) = 1/3, then .",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. True",
+    "page_numbers": [
+      "46"
+    ],
+    "concept_tags": [
+      "probability",
+      "events"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "46",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 0.91,
-    "difficulty_rating_model": null,
-    "question_stem": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "mutually exclusive events",
-      "probability",
-      "set theory"
-=======
-    "difficulty_level": null,
-    "question_stem": "If P(A)=1/3 and P(B^c)=1/4 then it is still possible for A and B to be disjoint.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "disjoint events",
-      "probability of complement"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_stem": "If P(A)=1/3 and P(Bc)=1/4 then it is still possible for A and B to be disjoint.",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "True"
+      },
+      {
+        "label": "B",
+        "text": "False"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. False",
+    "page_numbers": [
+      "47"
+    ],
+    "concept_tags": [
+      "probability",
+      "disjoint events",
+      "complementary events"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "47",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.94,
-    "difficulty_rating_model": null,
     "question_stem": "A company has two factories X and Y. Factories X and Y produce 40% and 60% of all watches respectively. 2% of the watches produced by factory X are defective, and 3% of the watches produced by factory Y are defective. If a watch bought from the company is found to be defective, what is the probability that it was produced by factory Y?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "bayes' theorem",
-      "conditional probability",
-      "probability"
-=======
-      "Bayes' theorem",
-      "conditional probability"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "0.69"
+      },
+      {
+        "label": "B",
+        "text": "0.018"
+      },
+      {
+        "label": "C",
+        "text": "0.026"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 0.69",
+    "page_numbers": [
+      "48"
+    ],
+    "concept_tags": [
+      "conditional probability",
+      "Bayes' theorem"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "48",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.98,
-    "difficulty_rating_model": null,
     "question_stem": "An urn has n white and m black balls. Balls are randomly withdrawn without replacement, one at a time, until a total of k white balls have been withdrawn, where k <= n. The random variable X is the total number of balls that have been withdrawn. What is the support of X?",
-    "question_stem_html": null,
-    "concept_tags": [
-<<<<<<< HEAD
-      "discrete random variables",
-      "probability",
-      "urn problems"
-=======
-      "hypergeometric distribution",
-      "support of random variable"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "{1, 2, 3, ... , n+m}"
+      },
+      {
+        "label": "B",
+        "text": "{k, k+1, ... , n+m}"
+      },
+      {
+        "label": "C",
+        "text": "{1, 2, 3, ..., k}"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "B. {k, k+1, ... , n+m}",
+    "page_numbers": [
+      "49"
+    ],
+    "concept_tags": [
+      "random variables",
+      "support",
+      "sampling without replacement"
+    ],
+    "page_image_paths": []
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
     "question_no": "49",
     "question_type": "mcq",
-<<<<<<< HEAD
     "difficulty_rating_manual": 1.0,
-    "difficulty_rating_model": null,
-    "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by: p(1)=0.3, p(2)=0.25, p(3)=0.35, p(4)=0.1. A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "discrete random variables",
-      "probability"
-=======
-    "difficulty_level": null,
     "question_stem": "Let X be a random variable denoting the number of children in a family. X has support {1,2,3,4}, and pmf given by p(1) p(2) p(3) p(4) 0.3 0.25 0.35 0.1 A child from this family is chosen at random (i.e. all children are equally likely to be selected). Let E be the event that the youngest child is chosen. Find P(E).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "conditional probability",
-      "random variables",
-      "probability of events"
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
+    "question_options": [
+      {
+        "label": "A",
+        "text": "0.42"
+      },
+      {
+        "label": "B",
+        "text": "0.1"
+      },
+      {
+        "label": "C",
+        "text": "0.52"
+      }
     ],
-    "question_media": [],
-    "last_used": null
+    "question_answer": "A. 0.42",
+    "page_numbers": [
+      "50"
+    ],
+    "concept_tags": [
+      "probability mass function",
+      "conditional probability"
+    ],
+    "page_image_paths": []
   }
 ]
