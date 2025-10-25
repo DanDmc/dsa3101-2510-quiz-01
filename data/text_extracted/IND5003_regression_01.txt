@@ -45,9 +45,14 @@ Solution
 Answerlist
 • This is correct.
 1
+[PAGE_IMAGE_SAVED: data/question_media/IND5003_regression_01_page1.png] [PAGE_NUMBER: 1]
+
+=== PAGE BREAK ===
+
 • This corresponds to the test for the intercept in the model, not the coefficient for ldist.
 • Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol.
 • Hypothesis tests are for population parameters, not estimates, which are denoted with a hat symbol.
 Meta-information
 exname: regression, inference, taiwan extype: schoice exsolution: 1000 exshuffle: 4
 2
+[PAGE_IMAGE_SAVED: data/question_media/IND5003_regression_01_page2.png] [PAGE_NUMBER: 2]
