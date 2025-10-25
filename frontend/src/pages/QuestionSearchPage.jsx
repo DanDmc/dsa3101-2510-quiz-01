@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Box, Container, CssBaseline, Grid, Typography, Divider,
   Stack, TextField, InputAdornment, IconButton, Button,
@@ -8,6 +8,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import SortIcon from "@mui/icons-material/Sort";
+
 
 import st2137 from "../../data/json_output/ST2137_questions.json";
 
@@ -19,7 +20,8 @@ function normalizeOneArrayFile(arr, source = "ST2137") {
   }));
 }
 
-export default function QuestionSearchPage() {
+// 1. ADD: goToHomePage prop for navigation
+export default function QuestionSearchPage({ initialQuery = "", goToHomePage, goToCreatePage, goToEditPage, handleDeleteQuestions }) {
   const allQuestions = useMemo(() => normalizeOneArrayFile(st2137, "ST2137"), []);
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState(allQuestions);
@@ -28,6 +30,28 @@ export default function QuestionSearchPage() {
   const [typeSort, setTypeSort] = useState("none"); 
   const [sortDirection, setSortDirection] = useState("none"); 
 
+  useEffect(() => {
+    if (initialQuery) {
+      const kw = initialQuery.trim().toLowerCase();
+      const keywords = kw ? kw.split(/[\s,]+/).filter(Boolean) : [];
+      let list = [...allQuestions];
+
+      if (keywords.length) {
+        list = list.filter((q) => {
+          const hay = `${(q.question_stem || "").toLowerCase()} ${(q.question_type || "").toLowerCase()} ${(q.concept_tags || []).join(" ").toLowerCase()}`;
+          return keywords.some((k) => hay.includes(k));
+        });
+      }
+
+      setQuery(initialQuery);
+      setRows(list);
+      setSelected([]);
+  } else {
+    // if no query, show all questions
+    setRows(allQuestions);
+  }
+}, [initialQuery, allQuestions]);
+  
 const normType = (t) => (t || "").toString().trim().toLowerCase();
 
 const handleSearch = (e) => {
@@ -70,6 +94,22 @@ const handleSearch = (e) => {
   setSelected([]);
 };
 
+// 2. ADD: New handlers for button clicks (mirrored from HomePage logic)
+const handleCreateClick = () => goToCreatePage();
+
+const handleEditClick = () => {
+  // Get the actual question objects that are selected
+  const questionsToEdit = rows.filter(q => selected.includes(q._id));
+  goToEditPage(questionsToEdit); 
+};
+
+const handleDeleteClick = () => {
+  // Pass the selected IDs up to the App component (main.jsx)
+  handleDeleteQuestions(selected);
+  // Clear the local selection state
+  setSelected([]);
+};
+
 
   const toggleAll = (e) => {
     if (e.target.checked) setSelected(rows.map((r) => r._id));
@@ -82,16 +122,36 @@ const handleSearch = (e) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", bgcolor: "#f4f7fa" }}>
       <CssBaseline />
-      <Header />
 
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
         {/* Toolbar */}
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={8}>
             <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
-              <Button variant="outlined" size="small">+ CREATE</Button>
-              <Button variant="outlined" size="small">DELETE</Button>
-              <Button variant="outlined" size="small">EDIT</Button>
+              {/* 3. CONNECT: Toolbar buttons to the new handlers */}
+              <Button 
+                variant="outlined" 
+                size="small"
+                onClick={handleCreateClick}
+              >
+                + CREATE
+              </Button>
+              <Button 
+                variant="outlined" 
+                size="small"
+                disabled={selected.length === 0}
+                onClick={handleDeleteClick}
+              >
+                DELETE
+              </Button>
+              <Button 
+                variant="outlined" 
+                size="small"
+                disabled={selected.length === 0}
+                onClick={handleEditClick}
+              >
+                EDIT
+              </Button>
 
               {/* ── Question Type FILTER ── */}
               <FormControl size="small" sx={{ minWidth: 180, ml: { xs: 0, md: 2 } }}>
@@ -229,7 +289,6 @@ const handleSearch = (e) => {
         </Paper>
       </Container>
 
-      <Footer />
     </Box>
   );
 }
@@ -241,4 +300,3 @@ function prettyType(t){
   const m = { mcq: "MCQ", "open-ended": "Open Ended", coding: "Coding" };
   return m[t.toLowerCase()] || t;
 }
-

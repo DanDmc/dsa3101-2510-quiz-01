@@ -7,27 +7,25 @@ import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-const mockQuestions = [
-  { id: 1, text: 'Convert 1110010101 from binary to text', type: 'Open ended', difficultyManual: 0.5, difficultyGenerated: null },
-  { id: 2, text: 'If a route function returns the string "Hello world!", the HTTP status...', type: 'Open ended', difficultyManual: 0.8, difficultyGenerated: null },
-  { id: 3, text: 'How many 8-digit numbers can be formed using 2, 3, 4, 4, 5, 5, 5, 5?', type: 'Open ended', difficultyManual: 0.2, difficultyGenerated: null },
-  { id: 4, text: 'In a simple regression, the RMSE of the regression line is equal to 0.6...', type: 'MCQ', difficultyManual: 0.6, difficultyGenerated: null },
-  { id: 5, text: 'In an SQL database, a record with ID = 1 already exists. Another record...', type: 'MCQ', difficultyManual: 0.9, difficultyGenerated: null },
-  { id: 6, text: 'Which of the following statement(s) is/are correct about primary keys...', type: 'MRQ', difficultyManual: 0.3, difficultyGenerated: null },
-  { id: 7, text: 'You are testing a Flask API endpoint that checks book orders. The...', type: 'MRQ', difficultyManual: 0.7, difficultyGenerated: null },
-  { id: 8, text: 'Correctly order the following steps using the Karush-Kuhn-Tucker (KKT)...', type: 'Ordering', difficultyManual: 0.44, difficultyGenerated: null },
-  { id: 9, text: 'Order the typical stages of finding the Maximum Likelihood Estimator...', type: 'Ordering', difficultyManual: 0.32, difficultyGenerated: null },
-  { id: 10, text: 'Match the term in the Karush-Kuhn-Tucker (KKT) necessary conditions...', type: 'Matching', difficultyManual: 0.25, difficultyGenerated: null },
-  { id: 11, text: 'Match the following matrix or vector components from the Multiple...', type: 'Matching', difficultyManual: 0.41, difficultyGenerated: null },
-  { id: 12, text: 'Match the estimator criterion to the correct principle or context it represents', type: 'Matching', difficultyManual: 0.12, difficultyGenerated: null },
-];
+// Unified and comprehensive list of mock groups
+const mockGroups = ['DSA4288M', 'DSA4288S', 'DSA4288', 'DSA3102', 'DSA3101', 'DSA2102', 'DSA2101', 'DSA1101','ST4248', 'ST3236', 'ST3131', 'ST2132', 'ST2131'];
 
-const initialGroups = ['DSA4288M', 'DSA4288S', 'DSA4288', 'DSA3102', 'DSA3101', 'DSA2102', 'DSA2101', 'DSA1101','ST4248', 'ST3236', 'ST3131', 'ST2132', 'ST2131'];
+function HomePage({ 
+  questions: propQuestions, // Use propQuestions to refer to the data array prop
+  goToCreatePage, 
+  goToEditPage, 
+  goToSearchPage, 
+  goToHomePage, 
+  handleDeleteQuestions
+}) { 
+  // ❌ REMOVED: const [questions] = useState(propQuestions); 
+  // Now we rely entirely on the 'propQuestions' argument for the question list.
 
-function HomePage({ goToCreatePage, goToEditPage }) { 
-  const [questions] = useState(mockQuestions);
+  // KEPT: Local state for selected rows (needed for table interactivity)
   const [selected, setSelected] = useState([]);
-  const [groups, setGroups] = useState(initialGroups);
+  
+  // KEPT: Local state for group management
+  const [groups, setGroups] = useState(mockGroups); 
 
   // --- Group Management Handlers (UNCHANGED) ---
 
@@ -53,14 +51,32 @@ function HomePage({ goToCreatePage, goToEditPage }) {
   
   // --- End Group Management Handlers ---
 
+  // UPDATED: handleSelectAllClick now uses 'propQuestions'
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      setSelected(questions.map((n) => n.id));
+      setSelected(propQuestions.map((n) => n.id)); // 💡 FIX APPLIED
       return;
     }
     setSelected([]);
   };
 
+  // UPDATED: handleEditClick now uses 'propQuestions'
+  const handleEditClick = () => {
+    // 1. Filter to get the *objects* using the 'propQuestions' prop
+    const questionsToEdit = propQuestions.filter(q => selected.includes(q.id)); // 💡 FIX APPLIED
+    // 2. Pass the array of OBJECTS to the function from main.jsx
+    goToEditPage(questionsToEdit); 
+  };
+
+  const handleDeleteClick = () => {
+    // Pass the selected IDs up to the App component (main.jsx)
+    handleDeleteQuestions(selected);
+    
+    // Clear the local selection state
+    setSelected([]);
+  };
+
+  // --- START OF JSX RENDER ---
   return (
     <Grid
       container
@@ -72,9 +88,10 @@ function HomePage({ goToCreatePage, goToEditPage }) {
       <Grid item xs={12}>
         <QuestionToolbar 
           numSelected={selected.length} 
-          selectedIds={selected} 
           goToCreatePage={goToCreatePage} 
-          goToEditPage={goToEditPage}
+          goToEditPage={handleEditClick} 
+          goToSearchPage={goToSearchPage}
+          handleDeleteClick={handleDeleteClick}
         />
       </Grid>
 
@@ -85,7 +102,7 @@ function HomePage({ goToCreatePage, goToEditPage }) {
           columnSpacing={13} 
         >
           
-          {/* LEFT COLUMN: TEXT + TABLE (The starting point) */}
+          {/* LEFT COLUMN: TEXT + TABLE */}
           <Grid item xs={12} md={9}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
@@ -93,7 +110,7 @@ function HomePage({ goToCreatePage, goToEditPage }) {
               </Typography>
 
               <QuestionTable 
-                questions={questions}
+                questions={propQuestions} // 💡 FIX APPLIED: Use prop directly
                 selected={selected}
                 setSelected={setSelected}
                 onSelectAllClick={handleSelectAllClick}
@@ -101,7 +118,7 @@ function HomePage({ goToCreatePage, goToEditPage }) {
             </Box>
           </Grid>
 
-          {/* RIGHT COLUMN: GROUPS PANEL (Removed the misaligning margin) */}
+          {/* RIGHT COLUMN: GROUPS PANEL */}
           <Grid item xs={12} md={3} /* Removed sx={{ marginTop: 10 }} */> 
             <QuestionGroups 
               groups={groups} 
