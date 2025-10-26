@@ -428,77 +428,117 @@ def upload_file():
     assessment_type = request.form.get("assessment_type")
 
     if "file" not in request.files:
-        return jsonify({"error":"No file part"}), 400
+        return jsonify({"error": "No file part"}), 400
     f = request.files["file"]
     if not f or f.filename == "":
-        return jsonify({"error":"No selected file"}), 400
+        return jsonify({"error": "No selected file"}), 400
     if not _allowed_pdf(f.filename):
-        return jsonify({"error":"Only .pdf allowed"}), 400
+        return jsonify({"error": "Only .pdf allowed"}), 400
 
+    # Basic PDF magic header check
     head = f.stream.read(5)
     f.stream.seek(0)
     if head != b"%PDF-":
-        return jsonify({"error":"Invalid PDF header"}), 400
+        return jsonify({"error": "Invalid PDF header"}), 400
 
-    # Save to uploads
+    # Where downloads look for files
+    base_dir = Path(os.getenv("file_base_directory", "/data/source_files"))
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    # Secure the original name; we prefer to keep it for nicer downloads/UX
     original_name = secure_filename(f.filename)
+
+    # Stream to a temp file while hashing
     h = hashlib.sha256()
     tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
     with open(tmp_path, "wb") as w:
         while True:
-            chunk = f.stream.read(1024*1024)
-            if not chunk: break
-            h.update(chunk); w.write(chunk)
-    file_hash = h.hexdigest()
-    dest_dir = _ensure_dirs(course, year, semester, assessment_type)
-    dest_path = dest_dir / f"{file_hash}.pdf"
-    if not dest_path.exists():
-        shutil.move(str(tmp_path), dest_path)
-    else:
-        try: os.unlink(tmp_path)
-        except Exception: pass
+            chunk = f.stream.read(1024 * 1024)
+            if not chunk:
+                break
+            h.update(chunk)
+            w.write(chunk)
+    short_hash = h.hexdigest()[:8]
 
-    # Insert into files
+    # Choose final filename inside file_base_directory
+    # If a same-named file already exists, append a short hash before the extension.
+    stem = Path(original_name).stem
+    suffix = Path(original_name).suffix or ".pdf"
+    candidate_name = original_name
+    dest_path = base_dir / candidate_name
+    if dest_path.exists():
+        candidate_name = f"{stem}_{short_hash}{suffix}"
+        dest_path = base_dir / candidate_name
+
+    # Move temp file into the canonical storage directory
+    shutil.move(str(tmp_path), dest_path)
+
+    # Insert into DB — IMPORTANT: download uses file_name to resolve under file_base_directory
     file_id = None
     try:
         with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
             cur.execute(
                 """INSERT INTO files (course, year, semester, assessment_type, file_name, file_path)
-                     VALUES (%s,%s,%s,%s,%s,%s)""",
-                (course, year, semester, assessment_type, original_name, str(dest_path))
+                   VALUES (%s,%s,%s,%s,%s,%s)""",
+                (course, year, semester, assessment_type, candidate_name, str(dest_path))
             )
             conn.commit()
             file_id = cur.lastrowid
     except Exception as e:
-        return jsonify({"saved": True, "message":"PDF saved but DB insert failed", "db_error": str(e), "path": str(dest_path)}), 201
+        return jsonify({
+            "saved": True,
+            "message": "PDF saved but DB insert failed",
+            "db_error": str(e),
+            "path": str(dest_path)
+        }), 201
 
-    # Stage the original filename into data/source_files for pipeline
-    src_pdf = SRC_DIR / original_name
+    # Ensure the parser can find the file.
+    # By default, SRC_DIR == BASE_DIR/"data/source_files".
+    # If the env var points elsewhere, mirror a copy into SRC_DIR for your existing pipeline.
     try:
-        if not src_pdf.exists():
-            shutil.copyfile(str(dest_path), src_pdf)
+        if Path(file_base_directory) != SRC_DIR:
+            SRC_DIR.mkdir(parents=True, exist_ok=True)
+            mirror_path = SRC_DIR / candidate_name
+            if not mirror_path.exists():
+                shutil.copyfile(dest_path, mirror_path)
     except Exception as e:
-        return jsonify({"saved": True, "file_id": file_id, "error": f"could not stage PDF: {e}"}), 500
+        # Not fatal to the upload; pipeline might still work if it reads from file_base_directory.
+        app.logger.warning(f"Mirror to SRC_DIR failed: {e}")
 
-    base = Path(original_name).stem
-    # 💡 CRITICAL FIX: Initialize logs dictionary before first use
-    logs = {} 
+    # Use the ACTUAL saved filename as TARGET_BASE for the pipeline
+    base = Path(candidate_name).stem
+    logs = {}
 
-    # 2) LLM parse (filter via TARGET_BASE) -- requires GEMINI_API_KEY env
+    # 2) LLM parse (filter via TARGET_BASE)
     code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
     logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"}), 500
+        return jsonify({
+            "saved": True,
+            "file_id": file_id,
+            "pipeline": logs,
+            "error": "llm_parser failed"
+        }), 500
 
     # 3) Insert questions (filter via TARGET_BASE)
     code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
     logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
+        return jsonify({
+            "saved": True,
+            "file_id": file_id,
+            "pipeline": logs,
+            "error": "insert_questions failed"
+        }), 500
 
     return jsonify({
         "saved": True,
-        "file": {"file_id": file_id, "original_name": original_name, "stored_path": str(dest_path)},
+        "file": {
+            "file_id": file_id,
+            "original_name": original_name,
+            "stored_filename": candidate_name,
+            "stored_path": str(dest_path)
+        },
         "pipeline": logs
     }), 201
 
