@@ -522,7 +522,7 @@ def normalize_concept_tags(val):
         return val  # plain string (e.g., "regression metrics")
     return json.dumps(val, ensure_ascii=False)
 
-@app.route("/api/questions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
+@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 def update_question(q_id):
     # the requested edit attribute
     payload = request.get_json(silent=True) or {}
@@ -601,3 +601,31 @@ def update_question(q_id):
             pass
 
     return jsonify(row), 200
+
+## HARD DELETE QUESTION
+@app.route("/api/harddeletequestions/<int:q_id>", methods=["DELETE"])
+def hard_delete_question(q_id):
+
+    # Confirm before hard delete
+    confirm = request.args.get("confirm", "").upper()
+    if confirm != "YES":
+        return jsonify({
+            "error": "confirmation_required",
+            "message": "Add ?confirm=YES to permanently delete the question."
+        }), 400
+
+    with closing(get_connection()) as conn:
+        try:
+            # SQL portion to delete
+            cur = conn.cursor()
+            cur.execute("DELETE FROM questions WHERE id = %s LIMIT 1", (q_id,))
+            conn.commit()
+            # if no row to delete
+            if cur.rowcount == 0:
+                return jsonify({"status": "not_found", "id": q_id}), 404
+
+            return jsonify({"status": "deleted_permanently", "id": q_id}), 200
+
+        except Exception as e:
+            conn.rollback()
+            return jsonify({"error": "delete_failed", "message": str(e)}), 500
