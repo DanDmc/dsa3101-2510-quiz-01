@@ -28,6 +28,10 @@ exam.
 10. Do not modify the code in your submission (cid:28)le. Any di(cid:27)erence found (except for
 indentation or alignment) between Examplify and Canvas submissions will be penal-
 ized.
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page1.png] [PAGE_NUMBER: 1]
+
+=== PAGE BREAK ===
+
 DSA1101
 1.
 (20 points)
@@ -64,6 +68,10 @@ C. type = (cid:16)class(cid:17)
 D. type = (cid:16)prob(cid:17)
 E. type = (cid:16)response(cid:17)
 2
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page2.png] [PAGE_NUMBER: 2]
+
+=== PAGE BREAK ===
+
 DSA1101
 (e) Using a (cid:28)tted logistic regression, named lr, the prediction of p for the test points is
 obtained by
@@ -92,6 +100,10 @@ minimization? Explain your answer.
 contagious disease, such as Covid-19, which type of error rate (Type I or Type II)
 should be prioritized for minimization? Explain your answer.
 3
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page3.png] [PAGE_NUMBER: 3]
+
+=== PAGE BREAK ===
+
 DSA1101
 2.
 (10 points) A data set on house selling price in the US was randomly collected. A
@@ -115,9 +127,17 @@ Report the coe(cid:30)cient of the variable garage in model M and interpret it.
 dicted price of this house.
 size = 1500 sqft, bedrooms = 3, garage = 1
 4
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page4.png] [PAGE_NUMBER: 4]
+
+=== PAGE BREAK ===
+
 DSA1101
 Figure 2: Summary output of model M
 5
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page5.png] [PAGE_NUMBER: 5]
+
+=== PAGE BREAK ===
+
 DSA1101
 3.
 (70 points) Consider a random sample of 1,000 people. Their health information is
@@ -153,6 +173,10 @@ All the decision tree models below are using Information Gain for branch split.
 Then, write code to randomly split data into two subsets, one set with 800 rows, to
 be named as train.set and other set with the rest of rows, to be named as test.set.
 6
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page6.png] [PAGE_NUMBER: 6]
+
+=== PAGE BREAK ===
+
 DSA1101
 5. Let m denote a vector of possible values for the argument minsplit which ranges
 from 40 up to 50 inclusively.
@@ -185,6 +209,10 @@ Question 13.
 a person that has hypertension and a person without hypertension, given that they
 both have the same values for the other features.
 7
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page7.png] [PAGE_NUMBER: 7]
+
+=== PAGE BREAK ===
+
 DSA1101
 16. With the proposed value of δ in Question 11, write code to calculate the accuracy of
 model LR when it is used to predict the diabetes status for test.set.
@@ -201,3 +229,4 @@ the 5-NN classi(cid:28)er above when it is used to predict the diabetes status f
 Report the accuracy.
 (cid:21)END OF PAPER(cid:21)
 8
+[PAGE_IMAGE_SAVED: data/question_media/DSA1101_Final_Sem2_2425_page8.png] [PAGE_NUMBER: 8]

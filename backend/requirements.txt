@@ -1,19 +1,33 @@
-# --- Core ---
-python-dotenv          # for reading .env variables (e.g. Gemini API key)
-requests               # if you use any direct HTTP calls
+# ══════════════════════════════════════════════════════════════════════════════
+# QuizBank Backend Requirements
+# ══════════════════════════════════════════════════════════════════════════════
+# Purpose: Python dependencies for PDF processing, LLM parsing, and DB insertion
+# Python version: 3.10+
+# ══════════════════════════════════════════════════════════════════════════════
+
+# --- Core Utilities ---
+python-dotenv>=1.0.0          # Environment variable management from .env files
+requests>=2.31.0              # HTTP requests (for API calls if needed)
 
 # --- Database ---
-mysql-connector-python # connects Python → MySQL (used in insert_to_db.py)
+mysql-connector-python>=8.0.0 # MySQL database driver for Python
 
-# --- PDF handling ---
-pdfplumber             # extract text from PDFs
-pillow                 # pdfplumber dependency for page images (optional but safe)
+# --- PDF & Image Processing ---
+pdfplumber>=0.10.0            # Extract text and render pages as images from PDF files
+Pillow>=10.0.0                # Image processing library (PIL)
+                              # Required by pdfplumber for page-to-image conversion
 
-# --- Google AI Studio / Gemini ---
-google-generativeai    # official Gemini API SDK
+# --- Google AI / Gemini ---
+google-generativeai>=0.3.0    # Official Gemini API SDK for LLM-based parsing
 
-# --- Flask (for future UI integration) ---
-flask                  # lightweight web server for upload/verify routes
+# --- Web Framework (for API service) ---
+flask>=3.0.0                  # Lightweight web framework for REST API
+flask-cors>=4.0.0             # Cross-Origin Resource Sharing support
 
-# --- Docker support (optional utilities) ---
-gunicorn               # production WSGI server if you ever deploy Flask in Docker
+# --- Production WSGI Server ---
+gunicorn>=21.0.0              # Production-grade WSGI server for Flask deployment
+
+# --- Optional: Data Processing ---
+# pandas>=2.0.0               # Uncomment if data analysis features are added
+# numpy>=1.24.0               # Uncomment if numerical operations are needed
+

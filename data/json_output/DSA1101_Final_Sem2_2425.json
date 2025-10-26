@@ -1,762 +1,720 @@
 [
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1a",
+    "question_no": "1(a)",
     "question_type": "open-ended",
-<<<<<<< HEAD
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "If we use a linear regression model with an intercept to predict a response y based on a regressor x given 100 observations, the average of the residuals, (1/100) Σ e_i (i=1 to 100), will always be zero. True or False?",
-=======
-    "difficulty_level": null,
-    "question_stem": "If we use a linear regression model with intercept to predict a response y based on a regressor x given 100 observations, the average of the residuals, (1/100) * sum(e_i) from i=1 to 100, will always be zero. True or False?",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "residuals"],
-    "question_media": [],
-    "last_used": null
+    "question_stem": "If we use linear regression model with intercept to predict a response y based on a regressor x given 100 observations, the average of the residuals, (1/100) Σ100 e , will i=1 i always be zero. True or False?",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "linear regression",
+      "residuals"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page2.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1b",
+    "question_no": "1(b)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
     "question_stem": "If I am using House Price and Household Monthly Income (both in Singapore dollars) as two features for the K-means algorithm to divide Singapore households into groups, I do not need to standardize them since they have the same units. True or False?",
-    "question_stem_html": null,
-<<<<<<< HEAD
-    "concept_tags": ["K-means clustering", "feature scaling", "standardization"],
-=======
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
     "concept_tags": [
       "K-means",
       "feature scaling",
-      "clustering"
+      "standardization"
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page2.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1c",
-<<<<<<< HEAD
+    "question_no": "1(c)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "A data set contains information on 100 patients and their cancer status. Let Column Y be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased and 0 = no-diseased. Let p denote P(Y = diseased). Using a fitted decision tree, named DT, the prediction of p for the test points is obtained by `pred.prob = predict(DT, new.data = test, ___)` where in the blank space, we add:",
-    "question_stem_html": null,
-    "concept_tags": ["decision trees", "prediction", "R programming"],
-=======
-    "question_type": "coding",
-    "difficulty_level": null,
-    "question_stem": "A data set contains information on 100 patients and their cancer status. Let Column Y be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased and 0 = no-diseased. Let p denote P(Y = diseased).\nUsing a fitted decision tree, named DT, the prediction of p for the test points is obtained by:\npred.prob = predict(DT, new.data = test, ___)\nwhere in the blank space, we add:",
-    "question_stem_html": null,
+    "question_stem": "Using a fitted decision tree, named DT, the prediction of p for the test points is obtained by pred.prob = predict(DT, new.data = test, ___) where in the blank space, we add",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "type = \"raw\""
+      },
+      {
+        "label": "B",
+        "text": "prob = TRUE"
+      },
+      {
+        "label": "C",
+        "text": "type = \"class\""
+      },
+      {
+        "label": "D",
+        "text": "type = \"prob\""
+      },
+      {
+        "label": "E",
+        "text": "type = \"response\""
+      }
+    ],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
     "concept_tags": [
-      "decision trees",
-      "R programming",
-      "prediction"
+      "decision tree",
+      "prediction",
+      "R programming"
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page2.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1d",
-<<<<<<< HEAD
+    "question_no": "1(d)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Using a fitted Naive Bayes classifier, named nb, the prediction of p for the test points is obtained by `pred.prob = predict(nb, new.data = test, ___)` where in the blank space, we add:",
-    "question_stem_html": null,
-    "concept_tags": ["naive bayes", "prediction", "R programming"],
-=======
-    "question_type": "coding",
-    "difficulty_level": null,
-    "question_stem": "A data set contains information on 100 patients and their cancer status. Let Column Y be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased and 0 = no-diseased. Let p denote P(Y = diseased).\nUsing a fitted Naive Bayes classifier, named nb, the prediction of p for the test points is obtained by:\npred.prob = predict(nb, new.data = test, ___)\nwhere in the blank space, we add:",
-    "question_stem_html": null,
+    "question_stem": "Using a fitted Naive Bayes classifier, named nb, the prediction of p for the test points is obtained by pred.prob = predict(nb, new.data = test, ___) where in the blank space, we add",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "type = \"raw\""
+      },
+      {
+        "label": "B",
+        "text": "prob = TRUE"
+      },
+      {
+        "label": "C",
+        "text": "type = \"class\""
+      },
+      {
+        "label": "D",
+        "text": "type = \"prob\""
+      },
+      {
+        "label": "E",
+        "text": "type = \"response\""
+      }
+    ],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
     "concept_tags": [
       "Naive Bayes",
-      "R programming",
-      "prediction"
+      "prediction",
+      "R programming"
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page2.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1e",
-<<<<<<< HEAD
+    "question_no": "1(e)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Using a fitted logistic regression, named lr, the prediction of p for the test points is obtained by `pred.prob = predict(lr, new.data = test, ___)` where in the blank space, we add:",
-    "question_stem_html": null,
-    "concept_tags": ["logistic regression", "prediction", "R programming"],
-=======
-    "question_type": "coding",
-    "difficulty_level": null,
-    "question_stem": "A data set contains information on 100 patients and their cancer status. Let Column Y be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased and 0 = no-diseased. Let p denote P(Y = diseased).\nUsing a fitted logistic regression, named lr, the prediction of p for the test points is obtained by:\npred.prob = predict(lr, new.data = test, ___)\nwhere in the blank space, we add:",
-    "question_stem_html": null,
+    "question_stem": "Using a fitted logistic regression, named lr, the prediction of p for the test points is obtained by pred.prob = predict(lr, new.data = test, ___) where in the blank space, we add",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "type = \"raw\""
+      },
+      {
+        "label": "B",
+        "text": "prob = TRUE"
+      },
+      {
+        "label": "C",
+        "text": "type = \"class\""
+      },
+      {
+        "label": "D",
+        "text": "type = \"prob\""
+      },
+      {
+        "label": "E",
+        "text": "type = \"response\""
+      }
+    ],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
     "concept_tags": [
       "logistic regression",
-      "R programming",
-      "prediction"
+      "prediction",
+      "R programming"
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page3.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1f",
-<<<<<<< HEAD
+    "question_no": "1(f)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "In order to obtain the prediction of p for the test points using a fitted 9-NN classifier, the R code is of the form `pred.prob = knn(train, test, cl, k = 9,___)` where in the blank space, we add:",
-    "question_stem_html": null,
-    "concept_tags": ["KNN classifier", "prediction", "R programming"],
-=======
-    "question_type": "coding",
-    "difficulty_level": null,
-    "question_stem": "A data set contains information on 100 patients and their cancer status. Let Column Y be the response variable (cancer status) with two categories, 0 and 1, where 1 = diseased and 0 = no-diseased. Let p denote P(Y = diseased).\nIn order to obtain the prediction of p for the test points using a fitted 9-NN classifier, the R code is of the form:\npred.prob = knn(train, test, cl, k = 9,___)\nwhere in the blank space, we add:",
-    "question_stem_html": null,
-    "concept_tags": [
-      "KNN",
-      "R programming",
-      "prediction"
+    "question_stem": "In order to obtain the prediction of p for the test points using a fitted 9-NN classifier, the R code is of the form pred.prob = knn(train, test, cl, k = 9,___) where in the blank space, we add",
+    "question_options": [
+      {
+        "label": "A",
+        "text": "type = \"raw\""
+      },
+      {
+        "label": "B",
+        "text": "prob = TRUE"
+      },
+      {
+        "label": "C",
+        "text": "type = \"class\""
+      },
+      {
+        "label": "D",
+        "text": "type = \"prob\""
+      },
+      {
+        "label": "E",
+        "text": "type = \"response\""
+      }
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1g",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "When constructing a classification model that helps to predict if a person has a disease, which is genetically transmitted and has costly treatment with significant side effects, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
-    "question_stem_html": null,
-<<<<<<< HEAD
-    "concept_tags": ["classification models", "type I error", "type II error"],
-=======
-    "concept_tags": [
-      "classification",
-      "Type I error",
-      "Type II error",
-      "model evaluation"
+    "question_answer": null,
+    "page_numbers": [
+      3
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "1h",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "When constructing a classification model that helps to predict if a person has a highly contagious disease, such as Covid-19, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
-    "question_stem_html": null,
-<<<<<<< HEAD
-    "concept_tags": ["classification models", "type I error", "type II error"],
-=======
-    "concept_tags": [
-      "classification",
-      "Type I error",
-      "Type II error",
-      "model evaluation"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "2a",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "A data set on house selling price in the US was randomly collected. A model that helps to predict the selling price of a house using other variables is to be fitted. The description of variables in the data set is given below: price (house’s price in thousand US dollars), size (house’s size in square feet (sqft)), bedrooms (number of bedrooms), garage (1 = with garage; 0 = no garage). A histogram of the house’s price and a scatter plot of the house’s price against house’s size are given in Figure 1. Comment if it is suitable to fit a linear regression model for price?",
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "data visualization", "model suitability"],
-=======
-    "difficulty_level": null,
-    "question_stem": "A data set on house selling price in the US was randomly collected. A model that helps to predict the selling price of a house using other variables is to be fitted. The description of variables in the data set is given below:\n- price: house’s price in thousand US dollars\n- size: house’s size in square feet (sqft)\n- bedrooms: number of bedrooms\n- garage: 1 = with garage; 0 = no garage\nA histogram of the house’s price and a scatter plot of the house’s price against house’s size are given in Figure 1. Comment if it is suitable to fit a linear regression model for price?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "linear regression",
-      "exploratory data analysis",
-      "model assumptions"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "2b",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "A linear model, called M, is fitted. The summary output of model M is given in Figure 2. Write down the fitted equation of model M. Report the coefficient of the variable `garage` in model M and interpret it.",
-=======
-    "difficulty_level": null,
-    "question_stem": "A data set on house selling price in the US was randomly collected. A model that helps to predict the selling price of a house using other variables is to be fitted. The description of variables in the data set is given below:\n- price: house’s price in thousand US dollars\n- size: house’s size in square feet (sqft)\n- bedrooms: number of bedrooms\n- garage: 1 = with garage; 0 = no garage\nA linear model, called M, is fitted. The summary output of model M is given in Figure 2. Write down the fitted equation of model M. Report the coefficient of the variable 'garage' in model M and interpret it.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "model interpretation", "coefficients"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "2c",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Comment on the goodness of fit of model M (from Figure 2).",
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "goodness of fit"],
-=======
-    "difficulty_level": null,
-    "question_stem": "A data set on house selling price in the US was randomly collected. A model that helps to predict the selling price of a house using other variables is to be fitted. The description of variables in the data set is given below:\n- price: house’s price in thousand US dollars\n- size: house’s size in square feet (sqft)\n- bedrooms: number of bedrooms\n- garage: 1 = with garage; 0 = no garage\nComment on the goodness of fit of model M (from Question 2b).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "linear regression",
-      "goodness of fit",
-      "model evaluation"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "2d",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "The information of a new house is given below. Using model M (from Figure 2), calculate the predicted price of this house. Details: size = 1500 sqft, bedrooms = 3, garage = 1.",
-=======
-    "difficulty_level": null,
-    "question_stem": "A data set on house selling price in the US was randomly collected. A model that helps to predict the selling price of a house using other variables is to be fitted. The description of variables in the data set is given below:\n- price: house’s price in thousand US dollars\n- size: house’s size in square feet (sqft)\n- bedrooms: number of bedrooms\n- garage: 1 = with garage; 0 = no garage\nThe information of a new house is given below. Using model M (from Question 2b), calculate the predicted price of this house.\nsize = 1500 sqft, bedrooms = 3, garage = 1",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "prediction", "model application"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.1",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Part I: Linear Model (8 points) For this part, there is no need to split the data set given into a train set and a test set. Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file `diabetes-dataset-1k.csv`. The table below gives the description for some variables in this study: age (person’s age in years), hypertension (0 = No, 1 = Yes), heart_disease (0 = No, 1 = Yes), bmi (the Body Mass Index), HbA1c_level (Hemoglobin A1c level (%)), blood_glucose_level (blood glucose level (mg/dL)), diabetes (0 = No, 1 = Yes). For the questions below, load the data set into R and name it as `data`. Report the final numerical answer to three significant figures if its absolute value is smaller than one (e.g. 0.0123) and to three decimal places if its absolute value is larger than one (e.g. -2.345). Write code to fit a linear regression model using all the input features, to be named as LM, for predicting the probability of having diabetes. Is there any insignificant variable in model LM?",
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "R programming", "model fitting", "p-value"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nFor this part, there is no need to split the data set given into a train set and a test set. Write code to fit a linear regression model using all the input features, to be named as LM, for predicting the probability of having diabetes. Is there any insignificant variable in model LM?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "linear regression",
-      "R programming",
-      "p-value",
-      "feature significance"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.2",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Comment on the goodness of fit of model LM (from Question 3.1).",
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "goodness of fit"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nComment on the goodness of fit of model LM (from Question 3.1).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "linear regression",
-      "goodness of fit",
-      "model evaluation"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.3",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "State at least two disadvantages of fitting a linear model for a binary response.",
-=======
-    "difficulty_level": null,
-    "question_stem": "State at least two disadvantages of fitting a linear model for a binary response (like the 'diabetes' variable).",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["linear regression", "binary classification", "model limitations"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.4",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Part II: Decision Trees (16 points) All the decision tree models below are using Information Gain for branch split. Run the command `set.seed(2904)`. Then, write code to randomly split `data` (from Question 3.1) into two subsets, one set with 800 rows, to be named as `train.set` and the other set with the rest of rows, to be named as `test.set`.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nRun the command set.seed(2904). Then, write code to randomly split data into two subsets, one set with 800 rows, to be named as train.set and the other set with the rest of the rows, to be named as test.set.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["data splitting", "R programming", "random seed"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.5",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Let `m` denote a vector of possible values for the argument `minsplit` which ranges from 40 up to 50 inclusively. For each value in `m`, write code to (i) fit a decision tree using `train.set` (from Question 3.4); (ii) use the fitted tree to predict the diabetes status of people in `test.set` (from Question 3.4); (iii) derive the precision and the Type I error rate for the prediction in (ii).",
-    "question_stem_html": null,
-    "concept_tags": ["decision trees", "hyperparameter tuning", "precision", "type I error", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nLet m denote a vector of possible values for the argument 'minsplit' which ranges from 40 up to 50 inclusively. For each value in m, write code to (i) fit a decision tree using train.set; (ii) use the fitted tree to predict the diabetes status of people in test.set; (iii) derive the precision and the Type I error rate for the prediction in (ii).",
-    "question_stem_html": null,
-    "concept_tags": [
-      "decision trees",
-      "hyperparameter tuning",
-      "model evaluation",
-      "precision",
-      "Type I error"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.6",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Consider `minsplit = 50`, write code to fit a decision tree, to be named as DT, using `train.set` (from Question 3.4). Report the name of the most important variable in that tree.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nConsider minsplit = 50, write code to fit a decision tree, to be named as DT. Report the name of the most important variable in that tree.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["decision trees", "feature importance", "R programming"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.7",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Write code to plot the ROC curve of the tree DT (from Question 3.6) in black color based on its prediction for `test.set` (from Question 3.4). Derive and report the value of AUC.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to plot the ROC curve of the tree DT (from Question 3.6) in black color based on its prediction for test.set. Derive and report the value of AUC.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["ROC curve", "AUC", "decision trees", "R programming"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.8",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Part III: Naive Bayes Classifier (18 points) We now fit a naive Bayes classifier using `train.set` (from Question 3.4). Write code to fit the classifier, to be named as NB.",
-    "question_stem_html": null,
-    "concept_tags": ["naive bayes", "model fitting", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWe now fit a Naive Bayes classifier using train.set. Write code to fit the classifier, to be named as NB.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "Naive Bayes",
-      "R programming",
-      "classification"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.9",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Write code to plot the ROC curve of the classifier NB (from Question 3.8) in blue color based on its prediction for `test.set` (from Question 3.4). Derive and report the value of AUC.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to plot the ROC curve of the classifier NB (from Question 3.8) in blue color based on its prediction for test.set. Derive and report the value of AUC.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["ROC curve", "AUC", "naive bayes", "R programming"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.10",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Let δ denote the threshold used for the ROC curve in Question 3.9. Write code to plot a figure that shows how the TPR and the FPR change when the threshold δ changes.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nLet δ denote the threshold used for the ROC curve in Question 3.9. Write code to plot a figure that shows how the TPR and the FPR change when the threshold δ changes.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["ROC curve", "threshold", "TPR", "FPR", "R programming"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.11",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Propose a value of the threshold δ such that the classifier NB (from Question 3.8) can attain a TPR of at least 0.9 while the FPR is as low as possible.",
-    "question_stem_html": null,
-    "concept_tags": ["threshold selection", "TPR", "FPR", "classification metrics"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nPropose a value of the threshold δ such that the classifier NB (from Question 3.8) can attain a TPR of at least 0.9 while the FPR is as low as possible.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "thresholding",
-      "TPR",
-      "FPR",
-      "model evaluation"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.12",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "With the proposed value of δ in Question 3.11, write code to calculate the accuracy of the classifier NB (from Question 3.8) when it is used to predict the diabetes status for `test.set` (from Question 3.4).",
-    "question_stem_html": null,
-    "concept_tags": ["accuracy", "classification metrics", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWith the proposed value of δ in Question 3.11, write code to calculate the accuracy of the classifier NB (from Question 3.8) when it is used to predict the diabetes status for test.set.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "accuracy",
-      "classification",
-      "model evaluation",
-      "R programming"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.13",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Part III: Logistic Regression Model (16 points) Write code to fit a logistic regression model using `train.set` (from Question 3.4) by including all the given input features. What is the most insignificant feature in that fitted model?",
-    "question_stem_html": null,
-    "concept_tags": ["logistic regression", "model fitting", "p-value", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to fit a logistic regression model using train.set by including all the given input features. What is the most insignificant feature in that fitted model?",
-    "question_stem_html": null,
-    "concept_tags": [
-      "logistic regression",
-      "feature selection",
-      "p-value",
-      "R programming"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.14",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Write code to fit a logistic regression model using `train.set` (from Question 3.4), to be named as LR, by including all the given input features except the most insignificant feature found in Question 3.13.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to fit a logistic regression model using train.set, to be named as LR, by including all the given input features except the most insignificant feature found in Question 3.13.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["logistic regression", "feature selection", "R programming"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.15",
-    "question_type": "open-ended",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Using the model LR (from Question 3.14), compute and report the odds ratio of having diabetes between a person that has hypertension and a person without hypertension, given that they both have the same values for the other features.",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nUsing the model LR (from Question 3.14), compute and report the odds ratio of having diabetes between a person that has hypertension and a person without hypertension, given that they both have the same values for the other features.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["logistic regression", "odds ratio", "model interpretation"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.16",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "With the proposed value of δ in Question 3.11, write code to calculate the accuracy of model LR (from Question 3.14) when it is used to predict the diabetes status for `test.set` (from Question 3.4).",
-    "question_stem_html": null,
-    "concept_tags": ["accuracy", "classification metrics", "logistic regression", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWith the proposed value of δ in Question 3.11, write code to calculate the accuracy of model LR (from Question 3.14) when it is used to predict the diabetes status for test.set.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "accuracy",
-      "logistic regression",
-      "model evaluation",
-      "R programming"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.17",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Write code to plot the ROC curve of the model LR (from Question 3.14) in red color based on its prediction for `test.set` (from Question 3.4). Derive and report the value of AUC.",
-    "question_stem_html": null,
-    "concept_tags": ["ROC curve", "AUC", "logistic regression", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to plot the ROC curve of the model LR (from Question 3.14) in red color based on its prediction for test.set. Derive and report the value of AUC.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "ROC curve",
-      "AUC",
-      "logistic regression",
-      "R programming"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.18",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Part IV: KNN classifier (12 points) Standardize all the quantitative input features in `train.set` (from Question 3.4) and `test.set` (from Question 3.4).",
-    "question_stem_html": null,
-    "concept_tags": ["KNN classifier", "feature scaling", "standardization", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nStandardize all the quantitative input features in train.set and test.set.",
-    "question_stem_html": null,
-    "concept_tags": [
-      "feature scaling",
-      "standardization",
-      "data preprocessing",
-      "R programming"
-    ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.19",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Write code to fit a KNN classifier with `k = 5` using `train.set` (from Question 3.4) to predict the winning probabilities for `test.set` (from Question 3.4).",
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to fit a KNN classifier with k = 5 using train.set to predict the winning probabilities for test.set.",
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_stem_html": null,
-    "concept_tags": ["KNN classifier", "model fitting", "R programming"],
-    "question_media": [],
-    "last_used": null
-  },
-  {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.20",
-    "question_type": "coding",
-<<<<<<< HEAD
-    "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "Write code to find the predicted probability of having diabetes for each person in `test.set` (from Question 3.4) using the 5-NN classifier from Question 3.19.",
-    "question_stem_html": null,
-    "concept_tags": ["KNN classifier", "prediction", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWrite code to find the predicted probability of having diabetes for each person in test.set using the 5-NN classifier (from Question 3.19).",
-    "question_stem_html": null,
     "concept_tags": [
       "KNN",
       "prediction",
       "R programming"
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page3.png"
+    ]
   },
   {
-    "question_id": null,
-    "version_id": 1,
-    "file_id": null,
-    "question_no": "3.21",
-    "question_type": "coding",
-<<<<<<< HEAD
+    "question_no": "1(g)",
+    "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "difficulty_rating_model": null,
-    "question_stem": "With the proposed value of δ in Question 3.11, write code to calculate the accuracy of the 5-NN classifier (from Question 3.19) when it is used to predict the diabetes status for `test.set` (from Question 3.4). Report the accuracy.",
-    "question_stem_html": null,
-    "concept_tags": ["accuracy", "classification metrics", "KNN classifier", "R programming"],
-=======
-    "difficulty_level": null,
-    "question_stem": "Consider a random sample of 1,000 people. Their health information is recorded for a study about factors that may affect the diabetes status of people. The data set is given in the file diabetes-dataset-1k.csv. The table below gives the description for some variables in this study:\n- age: person’s age (in years)\n- hypertension: 0 = No, 1 = Yes\n- heart_disease: 0 = No, 1 = Yes\n- bmi: the Body Mass Index\n- HbA1c_level: Hemoglobin A1c level (%)\n- blood_glucose_level: blood glucose level (mg/dL)\n- diabetes: 0 = No, 1 = Yes\n\nWith the proposed value of δ in Question 3.11, write code to calculate the accuracy of the 5-NN classifier (from Question 3.19) when it is used to predict the diabetes status for test.set. Report the accuracy.",
-    "question_stem_html": null,
+    "question_stem": "When constructing a classification model that helps to predict if a person has a disease, which is genetically transmitted and has costly treatment with significant side effects, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
     "concept_tags": [
-      "KNN",
-      "accuracy",
+      "classification",
+      "Type I error",
+      "Type II error",
+      "cost-sensitive learning"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page3.png"
+    ]
+  },
+  {
+    "question_no": "1(h)",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "When constructing a classification model that helps to predict if a person has a highly contagious disease, such as Covid-19, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "classification",
+      "Type I error",
+      "Type II error",
+      "cost-sensitive learning"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page3.png"
+    ]
+  },
+  {
+    "question_no": "2(a)",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "A histogram of the house’s price and a scatter plot of the house’s price against house’s size are given in Figure 1. Comment if it is suitable to fit a linear regression model for price?",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4
+    ],
+    "concept_tags": [
+      "linear regression",
+      "data visualization",
+      "model suitability"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page4.png"
+    ]
+  },
+  {
+    "question_no": "2(b)",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "A linear model, called M, is fitted. The summary output of model M is given in Figure 2 (next page). Write down the fitted equation of model M. Report the coefficient of the variable garage in model M and interpret it.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4,
+      5
+    ],
+    "concept_tags": [
+      "linear regression",
+      "model equation",
+      "coefficient interpretation"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page4.png",
+      "data/question_media/DSA1101_Final_Sem2_2425_page5.png"
+    ]
+  },
+  {
+    "question_no": "2(c)",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "Comment on the goodness of fit of model M.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4,
+      5
+    ],
+    "concept_tags": [
+      "linear regression",
+      "goodness of fit",
+      "R-squared"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page4.png",
+      "data/question_media/DSA1101_Final_Sem2_2425_page5.png"
+    ]
+  },
+  {
+    "question_no": "2(d)",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "The information of a new house is given below. Using model M, calculate the predicted price of this house. size = 1500 sqft, bedrooms = 3, garage = 1",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4,
+      5
+    ],
+    "concept_tags": [
+      "linear regression",
+      "prediction"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page4.png",
+      "data/question_media/DSA1101_Final_Sem2_2425_page5.png"
+    ]
+  },
+  {
+    "question_no": "1",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to fit a linear regression model using all the input features, to be named as LM, for predicting the probability of having diabetes. Is there any insignificant variable in model LM?",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      6
+    ],
+    "concept_tags": [
+      "linear regression",
+      "model fitting",
+      "variable significance"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page6.png"
+    ]
+  },
+  {
+    "question_no": "2",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "Comment on the goodness of fit of model LM.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      6
+    ],
+    "concept_tags": [
+      "linear regression",
       "model evaluation",
+      "goodness of fit"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page6.png"
+    ]
+  },
+  {
+    "question_no": "3",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "State at least two disadvantages of fitting a linear model for a binary response.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      6
+    ],
+    "concept_tags": [
+      "linear regression",
+      "binary response",
+      "model limitations"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page6.png"
+    ]
+  },
+  {
+    "question_no": "4",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Run the command set.seed(2904). Then, write code to randomly split data into two subsets, one set with 800 rows, to be named as train.set and other set with the rest of rows, to be named as test.set.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      6
+    ],
+    "concept_tags": [
+      "data splitting",
+      "reproducibility",
       "R programming"
     ],
->>>>>>> f0554ed61dde6556f35571ed6bdd90f5430c7805
-    "question_media": [],
-    "last_used": null
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page6.png"
+    ]
+  },
+  {
+    "question_no": "5",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Let m denote a vector of possible values for the argument minsplit which ranges from 40 up to 50 inclusively. For each value in m, write code to (i) fit a decision tree using train.set; (ii) use the fitted tree to predict the diabetes status of people in test.set; (iii) derive the precision and the Type I error rate for the prediction in (ii).",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "decision trees",
+      "hyperparameter tuning",
+      "model evaluation"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "6",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Consider minsplit = 50, write code to fit a decision tree, to be named as DT. Report the name of the most important variable in that tree.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "decision trees",
+      "feature importance",
+      "model fitting"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "7",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to plot the ROC curve of the tree DT in black color based on its prediction for test.set. Derive and report the value of AUC.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "ROC curve",
+      "AUC",
+      "decision trees"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "8",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "We now fit a naive Bayes classifier using train.set. Write code to fit the classifier, to be named as NB.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "Naive Bayes",
+      "model fitting",
+      "classification"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "9",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to plot the ROC curve of the classifier NB in blue color based on its prediction for test.set. Derive and report the value of AUC.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "ROC curve",
+      "AUC",
+      "Naive Bayes"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "10",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Let δ denote the threshold used for the ROC curve in Question 9. Write code to plot a figure that shows how the TPR and the FPR change when the threshold δ changes.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "ROC curve",
+      "threshold",
+      "TPR",
+      "FPR"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "11",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "Propose a value of the threshold δ such that the classifier NB can attain a TPR of at least 0.9 while the FPR is as low as possible.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "threshold optimization",
+      "TPR",
+      "FPR"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "12",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of the classifier NB when it is used to predict the diabetes status for test.set.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "accuracy",
+      "threshold",
+      "Naive Bayes"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "13",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to fit a logistic regression model using train.set by including all the given input features. What is the most insignificant feature in that fitted model?",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "logistic regression",
+      "model fitting",
+      "feature significance"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "14",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to fit a logistic regression model using train.set, to be named as LR, by including all the given input features except the most insignificant feature found in Question 13.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "logistic regression",
+      "feature selection",
+      "model fitting"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "15",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Using the model LR, compute and report the odds ratio of having diabetes between a person that has hypertension and a person without hypertension, given that they both have the same values for the other features.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      7
+    ],
+    "concept_tags": [
+      "logistic regression",
+      "odds ratio",
+      "interpretation"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
+    ]
+  },
+  {
+    "question_no": "16",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of model LR when it is used to predict the diabetes status for test.set.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "accuracy",
+      "threshold",
+      "logistic regression"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
+    ]
+  },
+  {
+    "question_no": "17",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to plot the ROC curve of the model LR in red color based on its prediction for test.set. Derive and report the value of AUC.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "ROC curve",
+      "AUC",
+      "logistic regression"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
+    ]
+  },
+  {
+    "question_no": "18",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Standardize all the quantitative input features in train.set and test.set.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "data preprocessing",
+      "standardization",
+      "feature scaling"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
+    ]
+  },
+  {
+    "question_no": "19",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to fit a KNN classifier with k = 5 using train.set to predict the winning probabilities for test.set.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "KNN classifier",
+      "model fitting",
+      "prediction"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
+    ]
+  },
+  {
+    "question_no": "20",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write code to find the predicted probability of having diabetes for each person in test.set.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "KNN classifier",
+      "prediction",
+      "probabilities"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
+    ]
+  },
+  {
+    "question_no": "21",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "With the proposed value of δ in Question 11, write code to calculate the accuracy of the 5-NN classifier above when it is used to predict the diabetes status for test.set. Report the accuracy.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      8
+    ],
+    "concept_tags": [
+      "accuracy",
+      "threshold",
+      "KNN classifier"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
+    ]
   }
 ]
