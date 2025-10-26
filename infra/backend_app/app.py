@@ -509,6 +509,12 @@ def upload_file():
     base = Path(candidate_name).stem
     logs = {}
 
+    # 1) Extract text (filter to this PDF via TARGET_PDF)
+    code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": candidate_name})
+    logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
+    if code != 0:
+        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
+
     # 2) LLM parse (filter via TARGET_BASE)
     code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
     logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
