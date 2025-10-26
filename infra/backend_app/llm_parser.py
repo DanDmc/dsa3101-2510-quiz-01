@@ -68,7 +68,6 @@ Each object must strictly follow this schema:
   "question_stem": "<cleaned, coherent text of the question only – no answers, no explanations>",
   "question_stem_html": null,
   "concept_tags": ["tag1", "tag2"],
-  "question_media": [],
   "last_used": null
 }}
 

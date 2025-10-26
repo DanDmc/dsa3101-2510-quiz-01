@@ -37,10 +37,10 @@ def insert_question(cursor, q, file_id):
             question_base_id, version_id, file_id,
             question_no, question_type, difficulty_rating_manual, difficulty_rating_model,
             question_stem, question_stem_html,
-            concept_tags, question_media,
+            concept_tags,
             last_used, created_at, updated_at
         )
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
     """
     
     # For initial import, question_base_id = id (will be set after insert)
