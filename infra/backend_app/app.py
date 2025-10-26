@@ -1,5 +1,3 @@
-## app.py by the backend
-
 from flask import Flask, request, jsonify, send_file, abort, render_template_string
 import os
 import MySQLdb
@@ -114,7 +112,14 @@ def get_question():
     select_cols = [
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
         "q.question_type", "q.question_stem", "q.question_stem_html",
-        "q.concept_tags", "q.question_media", "q.last_used", "q.created_at", "q.updated_at",
+        "q.concept_tags", 
+        # 💡 CRITICAL FIX: Changed from q.question_media to q.page_image_paths 
+        "q.page_image_paths", 
+        "q.last_used", "q.created_at", "q.updated_at",
+        # 🌟 NEW: Add question_options column
+        "q.question_options", 
+        # 🎯 NEW: Add question_answer column
+        "q.question_answer", 
         # ADDED DIFFICULTY FIELDS 
         "q.difficulty_rating_manual", "q.difficulty_rating_model",
         "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
@@ -176,30 +181,36 @@ def get_question():
             q_id, q_base_id, q_version_id, file_id, q_no,
             q_type, stem, stem_html,
             concept_json, media_json, last_used, created_at, updated_at,
+            # 🌟 NEW: Unpack question_options
+            options_json,
+            # 🎯 NEW: Unpack question_answer
+            answer_json,
             # UPDATED UNPACKING
             difficulty_manual, difficulty_model,
             f_course, f_year, f_semester, f_assessment, f_name, f_path
         ) = row
 
+        # Helper function to safely parse JSON field
+        def parse_json_field(field_json):
+            if not field_json: return None # Use None for single text field, or [] for array field
+            try:
+                return json.loads(field_json)
+            except Exception:
+                return field_json  # fallback raw if not valid JSON
+        
         # Convert JSON text to Python objects if present
-        try:
-            concept_list = json.loads(concept_json) if concept_json else []
-        except Exception:
-            concept_list = concept_json  # fallback raw
+        concept_list = parse_json_field(concept_json)
+        media_list = parse_json_field(media_json)
+        options_list = parse_json_field(options_json)
+        # 🎯 NEW: Parse question answer. Assuming it might be a JSON structure or simple text.
+        answer_data = parse_json_field(answer_json)
 
-        try:
-            media_list = json.loads(media_json) if media_json else []
-        except Exception:
-            media_list = media_json  # fallback raw
 
         def ts(v):
             # jsonify can't handle datetime directly; convert to ISO strings
             return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
         
         # Determine the difficulty to use for a single field mapping (if required by frontend)
-        # Assuming frontend is looking for `difficulty_level` which is now missing.
-        # We'll use the manual rating if available, otherwise the model rating.
-        # This is a common pattern for displaying a single value.
         difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
 
 
@@ -213,7 +224,12 @@ def get_question():
             "question_stem": stem,
             "question_stem_html": stem_html,
             "concept_tags": concept_list,
-            "question_media": media_list,
+            # CRITICAL FIX: Map the content of page_image_paths back to 'question_media' for frontend
+            "question_media": media_list, 
+            # 🌟 NEW: Map parsed question options
+            "question_options": options_list,
+            # 🎯 NEW: Map parsed question answer
+            "question_answer": answer_data,
             "last_used": ts(last_used),
             "created_at": ts(created_at),
             "updated_at": ts(updated_at),
@@ -465,6 +481,8 @@ def upload_file():
         return jsonify({"saved": True, "file_id": file_id, "error": f"could not stage PDF: {e}"}), 500
 
     base = Path(original_name).stem
+    # 💡 CRITICAL FIX: Initialize logs dictionary before first use
+    logs = {} 
 
     # 2) LLM parse (filter via TARGET_BASE) -- requires GEMINI_API_KEY env
     code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
