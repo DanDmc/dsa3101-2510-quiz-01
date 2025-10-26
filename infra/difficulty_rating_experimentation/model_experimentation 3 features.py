@@ -1,6 +1,5 @@
 import os
 import json
-import re
 from contextlib import closing
 from datetime import datetime
 from pathlib import Path
@@ -9,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler, FunctionTransformer
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import Ridge, Lasso, ElasticNet
@@ -52,48 +51,6 @@ def parse_tags(val):
     except Exception:
         return str(val)
 
-# ---------- Numeric feature helpers: readability only ----------
-def _syllable_count(word: str) -> int:
-    word = word.lower()
-    vowels = "aeiouy"
-    count, prev_is_vowel = 0, False
-    for ch in word:
-        is_vowel = ch in vowels
-        if is_vowel and not prev_is_vowel:
-            count += 1
-        prev_is_vowel = is_vowel
-    if word.endswith("e") and count > 1:
-        count -= 1
-    return max(count, 1)
-
-_SENT_SPLIT = re.compile(r"[.!?]+")
-
-def _compute_readability_features(texts):
-    """
-    texts: iterable of question stems (strings)
-    returns: np.ndarray shape (n, 2) with:
-        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
-    """
-    rows = []
-    for t in texts:
-        t = t if isinstance(t, str) else ""
-        tokens = re.findall(r"\b\w+\b", t)
-        n_w = len(tokens) if tokens else 1
-        n_sents = max(1, len([s for s in _SENT_SPLIT.split(t) if s.strip()]))
-        n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
-
-        # Flesch Reading Ease (higher = easier)
-        fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
-        # Flesch-Kincaid Grade Level (higher = harder)
-        fkgl = 0.39 * (n_w / n_sents) + 11.8 * (n_syll / n_w) - 15.59
-
-        rows.append([fre, fkgl])
-    return np.array(rows, dtype=float)
-
-def _numeric_feats_from_df(X):
-    stems = X["question_stem"].fillna("").to_numpy()
-    return _compute_readability_features(stems)
-
 def build_preprocessor() -> ColumnTransformer:
     stem_branch = Pipeline(steps=[
         ("tfidf_stem", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=20000)),
@@ -104,18 +61,12 @@ def build_preprocessor() -> ColumnTransformer:
     cat_branch = Pipeline(steps=[
         ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=True)),
     ])
-    # NEW: readability only
-    num_branch = Pipeline(steps=[
-        ("num_feats", FunctionTransformer(_numeric_feats_from_df, validate=False)),
-        ("scale", StandardScaler(with_mean=False))
-    ])
 
     prep = ColumnTransformer(
         transformers=[
             ("stem", stem_branch, "question_stem"),
             ("tags", tags_branch, "tags_text"),
             ("cat",  cat_branch,  ["question_type"]),
-            ("num",  num_branch,  ["question_stem"]),  # readability only
         ],
         remainder="drop",
         sparse_threshold=1.0,
@@ -136,6 +87,7 @@ def evaluate_all(y_true, y_pred):
     mae = float(mean_absolute_error(y_true, y_pred))
     rmse = float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
     r2 = float(r2_score(y_true, y_pred))
+    # Spearman: handle constant vectors safely
     try:
         rho, _ = spearmanr(y_true, y_pred)
         rho = float(0.0 if np.isnan(rho) else rho)
@@ -156,6 +108,10 @@ def load_or_make_split(df: pd.DataFrame, split_path: Path, test_size: float = 0.
     return np.array(train_idx), np.array(test_idx)
 
 def make_strat_labels_safe(y: np.ndarray, qtype: pd.Series, n_bins: int, n_splits: int):
+    """
+    Try to create stratification labels (question_type + y-quantile-bin) such that
+    every class has at least n_splits members. Reduce bins if needed; if impossible, return None.
+    """
     qtype_s = qtype.fillna("NA").astype(str).to_numpy()
     unique_y = np.unique(y)
     max_bins = max(2, min(n_bins, unique_y.size))
@@ -177,6 +133,7 @@ def build_cv(ytr: np.ndarray, Xtr_qtype: pd.Series, n_splits: int, random_state:
         return cv, None, "KFold"
 
 def main():
+    # ---------- Load labeled data ----------
     sql = """
         SELECT question_stem, question_type, concept_tags, difficulty_rating_manual
         FROM questions
@@ -189,9 +146,11 @@ def main():
         print("[difficulty] No labeled rows found in questions.difficulty_rating_manual")
         return
 
+    # Target in [0,1]
     y = pd.to_numeric(df["difficulty_rating_manual"], errors="coerce").clip(0.0, 1.0)
     df = df.assign(y=y).dropna(subset=["y"])
 
+    # Features
     df["tags_text"] = df["concept_tags"].apply(parse_tags)
     X = df[["question_stem", "tags_text", "question_type"]].copy()
     y = df["y"].astype(float).to_numpy()
@@ -203,19 +162,23 @@ def main():
     Xtr, Xte = X.iloc[train_idx], X.iloc[test_idx]
     ytr, yte = y[train_idx], y[test_idx]
 
+    # CV setup (robust)
     default_splits = int(os.getenv("CV_N_SPLITS", "5"))
-    cv_n_splits = min(default_splits, max(2, len(Xtr)))
+    cv_n_splits = min(default_splits, max(2, len(Xtr)))  # guard tiny datasets
     cv, labels, cv_name = build_cv(ytr, Xtr["question_type"], n_splits=cv_n_splits, random_state=42)
 
+    # Experiment folder
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / timestamp)
 
+    # Save config + strata counts if available
     cfg = {"cv_n_splits": cv_n_splits, "cv_strategy": cv_name, "random_state": 42}
     with open(exp_root / "config.json", "w") as f:
         json.dump(cfg, f, indent=2)
     if labels is not None:
         pd.Series(labels, name="stratum").value_counts().to_csv(exp_root / "strata_counts.csv")
 
+    # Shared preprocessor
     preproc = build_preprocessor()
 
     leaderboard = []
@@ -226,6 +189,7 @@ def main():
         fold_metrics = []
         cv_preds_records = []
 
+        # Iterate folds
         splitter = (cv.split(Xtr, labels) if labels is not None else cv.split(Xtr))
         for fold, (cv_tr_idx, cv_va_idx) in enumerate(splitter, start=1):
             pipe = Pipeline(steps=[("prep", preproc), ("reg", clone(model))])
@@ -251,11 +215,13 @@ def main():
         cv_metrics_df = pd.DataFrame(fold_metrics)
         cv_preds_df = pd.concat(cv_preds_records, ignore_index=True)
 
+        # Final train on full TRAIN partition, evaluate on frozen TEST
         final_pipe = Pipeline(steps=[("prep", preproc), ("reg", clone(model))])
         final_pipe.fit(Xtr, ytr)
         test_pred = np.clip(final_pipe.predict(Xte), 0.0, 1.0)
         test_metrics = evaluate_all(yte, test_pred)
 
+        # Persist artifacts
         run_dir = ensure_dir(exp_root / name)
         joblib.dump(final_pipe, run_dir / f"model_{name}.pkl")
         cv_metrics_df.to_csv(run_dir / "cv_metrics.csv", index=False)
@@ -266,6 +232,7 @@ def main():
         with open(run_dir / "metrics_test.json", "w") as f:
             json.dump(test_metrics, f, indent=2)
 
+        # Summaries for comparison
         summary = {
             "model": name,
             "cv_MAE_mean": float(cv_metrics_df["MAE"].mean()),

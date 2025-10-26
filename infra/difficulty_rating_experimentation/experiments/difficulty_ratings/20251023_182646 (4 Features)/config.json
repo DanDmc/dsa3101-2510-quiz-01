@@ -1,0 +1,5 @@
+{
+  "cv_n_splits": 5,
+  "cv_strategy": "KFold",
+  "random_state": 42
+}
