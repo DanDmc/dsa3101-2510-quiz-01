@@ -64,7 +64,7 @@ services:
     env_file:
       - ../.env
     ports:
-      - "5001:5000"
+      - "5000:5000"
     environment:
       - file_base_directory=/app/data/source_files
       - diff_model_path=/app/models/difficulty_v1.pkl
