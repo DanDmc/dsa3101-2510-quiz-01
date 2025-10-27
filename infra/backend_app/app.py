@@ -549,7 +549,8 @@ def upload_file():
     }), 201
 
 ## EDITING QUESTIONS
-allowed_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual"}
+allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
 
 # for the 
 def normalize_concept_tags(val):
@@ -576,66 +577,65 @@ def update_question(q_id):
         return jsonify({"error": "empty_body"}), 400
 
     # Filter to allowed fields only
-    updates = {}
-    for k in allowed_fields_for_edit:
-        if k in payload:
-            updates[k] = payload[k]
+    question_updates = {}
+    file_updates = {}
+    for k,v in payload.items():
+        if k in allowed_question_fields_for_edit:
+            question_updates[k] = v
+        elif k in allowed_file_fields_for_edit:
+            file_updates[k] = v
 
-    if not updates:
-        return jsonify({"error": "no_allowed_fields",
-                        "allowed": list(allowed_fields_for_edit)}), 400
+    if not question_updates and not file_updates:
+        return jsonify({"error": "no_allowed_fields"}), 400
 
     # Allowing for edits in difficulty_rating_manual, edits only accept a FLOAT
-    if "difficulty_rating_manual" in updates:
+    if "difficulty_rating_manual" in question_updates:
         try:
-            if updates["difficulty_rating_manual"] is None:
+            if question_updates["difficulty_rating_manual"] is None:
                 pass
             else:
-                updates["difficulty_rating_manual"] = float(updates["difficulty_rating_manual"])
+                question_updates["difficulty_rating_manual"] = float(question_updates["difficulty_rating_manual"])
         except Exception:
             return jsonify({"error": "invalid_type",
-                            "field": "difficulty_rating_manual",
-                            "expected": "float|null"}), 400
+                            "field": "difficulty_rating_manual"}), 400
 
     # Allowing for edits in concept_tags, edits only accept a LIST
-    if "concept_tags" in updates:
-        updates["concept_tags"] = normalize_concept_tags(updates["concept_tags"])
-
-    # Build UPDATE statement
-    set_clauses = []
-    args = []
-    for col, val in updates.items():
-        set_clauses.append(f"{col} = %s")
-        args.append(val)
-
-    set_sql = ", ".join(set_clauses)
-    args.append(q_id)
-
-    sql = f"""
-        UPDATE questions
-           SET {set_sql}
-         WHERE id = %s
-        LIMIT 1
-    """
+    if "concept_tags" in question_updates:
+        question_updates["concept_tags"] = normalize_concept_tags(question_updates["concept_tags"])
 
     with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, tuple(args))
-        conn.commit()
-
-        # if no rows updated then id doesn't exist
-        if cur.rowcount == 0:
-            return jsonify({"error": "not_found_or_deleted", "id": q_id}), 404
-
-        # Return the updated record
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
+
+        # for questions table edits
+        if question_updates:
+            set_sql = ", ".join(f"{k}=%s" for k in question_updates)
+            cur.execute(f"UPDATE questions SET {set_sql} WHERE id=%s LIMIT 1",
+                        (*question_updates.values(), q_id))
+            conn.commit()
+
+        # for files table edits
+        if file_updates:
+            # first get the file_id
+            cur.execute("SELECT file_id FROM questions WHERE id=%s", (q_id,))
+            row = cur.fetchone()
+            # if not row then file don't exist
+            if not row:
+                return jsonify({"error": "not_found_or_deleted", "id": q_id}), 404
+            file_id = row["file_id"]
+            set_sql = ", ".join(f"{k}=%s" for k in file_updates)
+            cur.execute(f"UPDATE files SET {set_sql} WHERE id=%s LIMIT 1",
+                        (*file_updates.values(), file_id))
+            conn.commit()
+        # Return the updated record, combined files and questions
         cur.execute("""
-            SELECT id, question_base_id, file_id,
-                   question_type, question_stem, concept_tags,
-                   difficulty_rating_manual, difficulty_rating_model,
-                   created_at, updated_at
-              FROM questions
-             WHERE id = %s
+            SELECT q.id, q.question_base_id, q.file_id,
+                   q.question_type, q.question_stem, q.concept_tags,
+                   q.difficulty_rating_manual, q.difficulty_rating_model,
+                   f.assessment_type, f.course, f.year, f.semester,
+                   q.created_at, q.updated_at
+              FROM questions q
+              JOIN files f ON q.file_id = f.id
+             WHERE q.id = %s
         """, (q_id,))
         row = cur.fetchone()
 
