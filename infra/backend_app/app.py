@@ -676,8 +676,49 @@ def hard_delete_question(q_id):
             conn.rollback()
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
         
+# Helper function for getting file_id based on file details
+def _normalize_semester(sem: str) -> str:
+    """
+    Normalize various semester inputs to a compact canonical form.
+    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
+    """
+    if sem is None:
+        return ""
+    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
+    # remove duplicate spaces
+    s = " ".join(s.split())
 
-def get_file_id(course, year, semester, assessment_type):
+    # common mappings
+    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
+        return "S1"
+    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
+        return "S2"
+    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
+        return "ST1"
+    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
+        return "ST2"
+    return s.upper()
+
+
+def _normalize_assessment_type(t: str) -> str:
+    if t is None:
+        return ""
+    s = str(t).strip().lower().replace("-", " ")
+    s = " ".join(s.split())
+    return s.lower()
+
+
+def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
+    if not course:
+        raise ValueError("course is required")
+    try:
+        year_int = int(str(year).strip())
+    except Exception:
+        raise ValueError("year must be an integer-like value")
+
+    course_norm = str(course).strip().upper()
+    sem_norm = _normalize_semester(semester)
+    atype_norm = _normalize_assessment_type(assessment_type)
 
     sql = """
         SELECT id
@@ -688,8 +729,15 @@ def get_file_id(course, year, semester, assessment_type):
           AND UPPER(assessment_type) = %s
         {order_clause}
         LIMIT 1
-    """.format(order_clause="ORDER BY updated_at DESC, created_at DESC, id DESC" if latest else "")
+    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
 
+    params = (course_norm, year_int, sem_norm, atype_norm)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
     params = (course, year, semester, assessment_type)
 
     with closing(get_connection()) as conn:
