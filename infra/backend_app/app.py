@@ -675,3 +675,158 @@ def hard_delete_question(q_id):
         except Exception as e:
             conn.rollback()
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
+        
+
+def get_file_id(course, year, semester, assessment_type):
+
+    sql = """
+        SELECT id
+        FROM files
+        WHERE UPPER(course) = %s
+          AND year = %s
+          AND UPPER(semester) = %s
+          AND UPPER(assessment_type) = %s
+        {order_clause}
+        LIMIT 1
+    """.format(order_clause="ORDER BY updated_at DESC, created_at DESC, id DESC" if latest else "")
+
+    params = (course, year, semester, assessment_type)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    return
+
+# Endpoint for adding question to the database
+@app.route("/addquestion", methods=["POST"])
+def addquestion():
+    payload = request.get_json(silent=True) or {}
+
+    # Required fields
+    file_id = payload.get("file_id")
+    if not (file_id and isinstance(file_id, int)):
+        course = payload.get("course")
+        year = payload.get("year")
+        semester = payload.get("semester")
+        assessment_type = payload.get("assessment_type")
+
+        if not course:
+            return jsonify({"error": "missing_field", "field": "course"}), 400
+        if not year:
+            return jsonify({"error": "missing_field", "field": "year"}), 400
+        if not semester:
+            return jsonify({"error": "missing_field", "field": "semester"}), 400
+        if not assessment_type:
+            return jsonify({"error": "missing_field", "field": "assessment_type"}), 400
+
+        file_id = get_file_id(course, year, semester, assessment_type)
+
+    question_type  = (payload.get("question_type") or "").strip()
+    question_stem  = (payload.get("question_stem") or "").strip()
+    
+    if not question_type:
+        return jsonify({"error": "missing_field", "field": "question_type"}), 400
+    if not question_stem:
+        return jsonify({"error": "missing_field", "field": "question_stem"}), 400
+
+    file_row = _get_file_row(file_id)
+    if not file_row:
+        return jsonify({"error": "file_not_found", "file_id": file_id}), 404
+
+    # Optional fields
+    concept_tags_raw = payload.get("concept_tags")
+    concept_tags = normalize_concept_tags(concept_tags_raw)
+
+    options_raw = payload.get("question_options")
+    if isinstance(options_raw, str):
+        try:
+            options_val = json.loads(options_raw)
+        except Exception:
+            return jsonify({"error": "invalid_json", "field": "question_options"}), 400
+    else:
+        options_val = options_raw if options_raw is not None else []
+
+    answer_raw = payload.get("question_answer")
+    if isinstance(answer_raw, (dict, list)):
+        answer_val = json.dumps(answer_raw, ensure_ascii=False)
+    else:
+        # leave as scalar string/number/None
+        answer_val = answer_raw
+
+    # ---- Insert ----
+    insert_sql = """
+        INSERT INTO questions (
+            question_base_id, version_id, file_id,
+            question_no, page_numbers, question_type,
+            difficulty_rating_manual, difficulty_rating_model,
+            question_stem, question_stem_html,
+            question_options, question_answer,
+            page_image_paths, concept_tags,
+            last_used, created_at, updated_at
+        ) VALUES (
+            %s,%s,%s,
+            %s,%s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,%s
+        )
+    """
+
+    now = datetime.datetime.now()
+
+    data = (
+        0,
+        1,
+        file_id,
+        None,
+        json.dumps([]),
+        question_type,
+        None,
+        None,
+        question_stem,
+        None,
+        json.dumps(options_val if options_val is not None else []),
+        answer_val,
+        json.dumps([]),
+        json.dumps(concept_tags if concept_tags is not None else []),
+        None,
+        now,
+        now
+    )
+
+    with closing(get_connection()) as conn:
+        try:
+            cur = conn.cursor()
+            cur.execute(insert_sql, data)
+            new_id = cur.lastrowid
+
+            cur.execute(
+                "UPDATE questions SET question_base_id = %s WHERE id = %s",
+                (new_id, new_id)
+            )
+            conn.commit()
+
+            return jsonify({
+                "status": "created",
+                "question_id": new_id,
+                "file": {
+                    "id": file_row["id"],
+                    "file_name": file_row.get("file_name"),
+                    "file_path": file_row.get("file_path"),
+                },
+                "data": {
+                    "question_type": question_type,
+                    "question_stem": question_stem,
+                    "question_options": options_val or [],
+                    "question_answer": answer_val,
+                    "concept_tags": concept_tags or []
+                }
+            }), 201
+
+        except Exception as e:
+            conn.rollback()
+            return jsonify({"error": "insert_failed", "message": str(e)}), 500
