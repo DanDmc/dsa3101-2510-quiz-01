@@ -14,6 +14,13 @@ import EditPage from './pages/EditPage.jsx';
 import QuestionSearchPage from './pages/QuestionSearchPage.jsx';
 
 
+// --- DEFINE LAYOUT CONSTRAINTS BASED ON CODE INSPECTION (NEW) ---
+// Header Height: Standard MUI AppBar (64px) is the reliable minimum.
+const HEADER_HEIGHT_PX = 64; 
+// Footer Height: Based on py:2 padding, 1px border, and two lines of caption text (approx 50px for safety).
+const FOOTER_HEIGHT_PX = 50;
+
+
 // Mock data for the example - FIXED HEADERS to match SQL/Table column names
 const mockQuestions = [
     { id: 1, question_stem: 'Convert 1110010101 from binary to text', question_type: 'Open ended', difficultyManual: 0.5, difficultyGenerated: null },
@@ -124,8 +131,17 @@ function App() {
         switch (currentPage) {
             case PAGES.CREATE:
                 return <CreateQuestionPage goToHomePage={goToHomePage} />;
+                
             case PAGES.EDIT:
-                return <EditPage selectedQuestions={selectedQuestions} goToHomePage={goToHomePage} />;
+                // 🎯 MODIFICATION: Pass the calculated header and footer heights to EditPage
+                return (
+                    <EditPage 
+                        selectedQuestions={selectedQuestions} 
+                        goToHomePage={goToHomePage} 
+                        headerHeight={HEADER_HEIGHT_PX} // NEW PROP
+                        footerHeight={FOOTER_HEIGHT_PX} // NEW PROP
+                    />
+                );
 
             case PAGES.SEARCH:
                 return (

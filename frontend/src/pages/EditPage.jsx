@@ -1,164 +1,238 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; 
 import { 
     Box, 
     Container, 
-    CssBaseline, // 🌟 NEW: Added back CssBaseline
+    CssBaseline, 
     Grid, 
-    Typography, 
-    Divider, 
     Button, 
-    Toolbar, 
-    Paper, 
-    TextField 
+    Divider, 
+    Typography 
 } from '@mui/material';
-
-// Imports for this specific page's components
 import QuestionStepper from '../components/QuestionStepper'; 
-import CreateToolbar from '../components/CreateToolbar';   
+import CreateToolbar from '../components/CreateToolbar'; 
+import CreateFilterToolbar from '../components/CreateFilterToolbar'; 
 import EditQuestionForm from '../components/EditQuestionForm'; 
-
-function EditPage({ selectedQuestions, goToHomePage }) {
-    
-    // Define the desired width of the sidebar (e.g., 300px)
+import DownloadIcon from '@mui/icons-material/Download'; 
+function EditPage({ selectedQuestions, goToHomePage, headerHeight, footerHeight }) {
+    // --- Constants ---
     const SIDEBAR_WIDTH_MD = 300; 
+    const ORANGE_COLOR = '#F57F17'; 
+    const WHITE_COLOR = '#FFFFFF'; 
+    const TOOLBAR_GRID_WIDTH = '1200px'; 
+    
+    // FIX 2: Increased width for EditQuestionForm to prevent cutoff
+    const FORM_GRID_WIDTH = '1100px'; 
+    
+    // 🎯 NEW CONSTANT: Controllable space on the left/right of the EditQuestionForm content
+    const FORM_HORIZONTAL_MARGIN = 6; // MUI spacing unit (6*8=48px)
+    
+    // 🎯 NEW CONSTANT: Fixed 5px padding for top/bottom/left when active
+    const FORM_ACTIVE_PADDING_TB_L = '5px'; 
+    
+    // 🎯 NEW CONSTANT: Fixed 10px padding for right when active
+    const FORM_ACTIVE_PADDING_R = '10px'; 
+    // 🎯 NEW CONSTANT: Fixed 10px width increase for the active form box
+    const ACTIVE_FORM_WIDTH_INCREASE = '10px';
+    const DIVIDER_LEFT_PADDING = '48px';
+    const DIVIDER_WIDTH_PERCENT = '100%';  
+    const MAIN_CONTAINER_BOTTOM_MARGIN_PX = 32; 
+    const SIDEBAR_HEIGHT_CALC = `calc(100vh - ${headerHeight}px - ${footerHeight}px - ${MAIN_CONTAINER_BOTTOM_MARGIN_PX}px)`;
+    
+    // --- Layout Adjustments for Scrolling ---
+    const TOOLBAR_AREA_HEIGHT_PX = 200; 
+    const SCROLLABLE_FORMS_HEIGHT = `calc(${SIDEBAR_HEIGHT_CALC} - ${TOOLBAR_AREA_HEIGHT_PX}px)`;
+    
+    // Negative margin fix (left as is from previous iteration)
+    const HORIZONTAL_GAP_FIX = 24; 
 
-    const [questions, setQuestions] = useState(selectedQuestions);
+    // --- State ---
+    const [questions, setQuestions] = useState([]);
     const [activeQuestionId, setActiveQuestionId] = useState(null);
+    const [activeFilters, setActiveFilters] = useState([]); 
+    // --- Refs ---
+    const questionRefs = useRef({}); 
+    const formsScrollContainerRef = useRef(null);
 
-    // When the component loads, highlight the first question in the stepper
+    // --- Effects ---
+    // Initialization from prop
     useEffect(() => {
-        if (questions && questions.length > 0) {
-            setActiveQuestionId(questions[0].id);
+        if (selectedQuestions && selectedQuestions.length > 0) {
+            setQuestions(selectedQuestions);
+            setActiveQuestionId(selectedQuestions[0].id);
         } else {
+            setQuestions([]);
             setActiveQuestionId(null);
         }
-    }, [questions]); 
-
-    // Update this handler to accept an ID from QuestionStepper
-    const handleQuestionChange = (updatedQuestion) => {
-        setQuestions(prevQuestions =>
-            prevQuestions.map(q =>
-                q.id === updatedQuestion.id ? updatedQuestion : q
-            )
+    }, [selectedQuestions]);
+    // Scroll to active question
+    useEffect(() => {
+        if (activeQuestionId && questionRefs.current[activeQuestionId]) {
+            const el = questionRefs.current[activeQuestionId];
+            
+            el.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        }
+    }, [activeQuestionId]);
+    // --- Handlers & Logic (unchanged) ---
+    const handleQuestionChange = (id, key, value) => {
+        setQuestions(prev =>
+            prev.map(q => q.id === id ? { ...q, [key]: value } : q)
         );
     };
-
-    // Handler for saving changes (you would expand this)
-    const handleSaveAll = () => {
-        console.log('Saving all changes to:', questions);
-        alert('All changes saved (check console)!');
+    const handleFilterToggle = (filterValue) => {
+        setActiveFilters(prevFilters => {
+            if (prevFilters.includes(filterValue)) {
+                return prevFilters.filter(filter => filter !== filterValue);
+            } else {
+                return [...prevFilters, filterValue];
+            }
+        });
     };
-    
-    // 11. REMOVED the old 'handleTextChange' handler.
-
+    const getFilteredQuestions = () => {
+        if (activeFilters.length === 0) {
+            return questions;
+        }
+        return questions.filter(question => activeFilters.includes(question.type));
+    };
+    const filteredQuestions = getFilteredQuestions();
+    useEffect(() => {
+        if (activeQuestionId && !filteredQuestions.some(q => q.id === activeQuestionId)) {
+            setActiveQuestionId(filteredQuestions.length > 0 ? filteredQuestions[0].id : null);
+        }
+    }, [activeFilters, activeQuestionId, filteredQuestions]);
+    const handleSaveAll = () => { alert('All changes saved'); };
+    const handleDownload = () => { alert('Download triggered'); };
+    const handleFileUpload = e => console.log("File:", e.target.files?.[0]?.name);
     return (
         <>
-            {/* 🌟 1. Added CssBaseline for consistent styling */}
-            <CssBaseline /> 
-            <Container 
-                maxWidth={false} 
-                sx={{ 
-                    flexGrow: 1, 
-                    p: 0, // Reset padding for the absolute layout
-                    mt: 0, 
-                    mb: 0,
-                    position: 'relative', // Necessary for absolute positioning of the sidebar
-                }}
-            >
-                
-                {/* The main content wrapper. */}
-                <Grid 
-                    container 
-                    spacing={0}
-                    sx={{ flexGrow: 1 }} 
-                >
-                    
-                    {/* 🌟 2. LEFT SIDEBAR (QUESTION STEPPER) - ABSOLUTELY POSITIONED */}
-                    <Box
-                        sx={{
-                            // Positioning
-                            position: 'absolute',
-                            top: -32,
-                            left: -24,
-                            zIndex: 100, 
-                            
-                            // Styles for the sidebar
-                            backgroundColor: '#F5F5F5',
-                            width: SIDEBAR_WIDTH_MD, 
-                            minHeight: '112.5vh', // Ensure it covers the height of the view
-                            p: 2, 
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 2,
-                            
-                            // Border
-                            border: '1px solid #9E9E9E', 
-                        }}
-                    >
-                        {/* Question Stepper component */}
-                        <Box sx={{ width: '100%' }}>
+            <CssBaseline />
+            <Container maxWidth={false} sx={{ p:0, m:0, position:'relative' }}>
+                <Grid container>
+                    {/* === Sidebar === */}
+                    <Box sx={{ 
+                        position:'absolute', top:-32, left:-24, zIndex:100,
+                        width:SIDEBAR_WIDTH_MD, height:SIDEBAR_HEIGHT_CALC, 
+                        bgcolor:'#F5F5F5', border:'1px solid #9E9E9E', 
+                        overflowY:'auto', p:2, display:'flex', flexDirection:'column', gap:2 
+                    }}>
+                        <Box sx={{ flexGrow:1 }}>
                             <QuestionStepper 
-                                questions={questions}
+                                questions={filteredQuestions}
                                 activeQuestion={activeQuestionId}
-                                setActiveQuestion={setActiveQuestionId} 
+                                setActiveQuestion={setActiveQuestionId}
                             />
                         </Box>
-                        
-                        {/* Upload file link at the bottom (Use flexGrow: 1 to push it down) */}
-                        <Box sx={{ flexGrow: 1 }} />
-                        <Box sx={{ p: 1, textAlign: 'center' }}>
-                            <Button variant="text" component="label" sx={{ color: '#007bff' }}>
-                                Upload file
-                                {/* <input type="file" hidden /> */}
+                        <Box sx={{ textAlign:'center' }}>
+                            <Button variant="contained" component="label"
+                                onClick={() => document.getElementById('file-upload-input').click()}
+                                sx={{ backgroundColor:ORANGE_COLOR, color:WHITE_COLOR }}>
+                                Upload File
+                                <input id="file-upload-input" type="file" hidden onChange={handleFileUpload}/>
                             </Button>
                         </Box>
                     </Box>
-                    
-                    {/* 🌟 3. MAIN FORM AREA (RIGHT SIDE) - OFFSET BY MARGIN */}
+                    {/* === Main content (right side) === */}
                     <Grid 
                         item 
                         xs={12} 
-                        // Set margin-left to push the content past the width of the absolute sidebar
-                        sx={{ ml: `${SIDEBAR_WIDTH_MD}px` }} 
+                        sx={{ 
+                            ml:`calc(${SIDEBAR_WIDTH_MD}px - ${HORIZONTAL_GAP_FIX}px)`, 
+                            px:3, 
+                            maxHeight: SIDEBAR_HEIGHT_CALC, 
+                        }}
                     >
-                        {/* Title/Divider Section - ADD PADDING back to the content area ONLY */}
-                        <Box mb={2} sx={{ p: 3 }}>
-                            <Typography variant="h5" component="h1" fontWeight="bold">
-                                Question mass edit ({questions.length})
-                            </Typography>
-                            <Divider sx={{ my: 1 }} />
-                        </Box>
-
-                        {/* Content below the title and divider (Toolbar, Form, etc.) */}
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, px: 3, pb: 3 }}>
-                            <CreateToolbar 
-                                onSave={handleSaveAll}
-                                onCancel={goToHomePage}
-                            />
-                            {/* Render the active question form only */}
-                            {questions
-                                .filter(q => q.id === activeQuestionId)
-                                .map((question, index) => (
-                                    <EditQuestionForm 
-                                        key={question.id}
-                                        // Use the index of the question in the original 'questions' array for numbering
-                                        questionNumber={questions.findIndex(q => q.id === question.id) + 1} 
-                                        question={question}
-                                        onQuestionChange={handleQuestionChange}
-                                    />
-                                ))
-                            }
-                            {/* Note: I've changed the mapping logic to only show the ACTIVE question's form, 
-                                as typically in an edit page with a sidebar, only one form is visible at a time.
-                                If you intended to show ALL forms, let me know, and I'll revert that inner mapping.
-                            */}
-                        </Box>
+                        <Grid container direction="column" rowSpacing={0}>
+                            {/* --- ROW 1: TOOLBAR (CreateToolbar) --- */}
+                            {/* 🎯 CHANGE 1: Reduced padding-top and padding-bottom for smaller vertical gap */}
+                            <Grid item sx={{ 
+                                pt:0.5, // Reduced from 1
+                                maxWidth:FORM_GRID_WIDTH,
+                                pb: 0.5, // Reduced from 1
+                            }}>
+                                <CreateToolbar onSave={handleSaveAll} onCancel={goToHomePage} onDownload={handleDownload}/>
+                            </Grid>
+                            {/* --- DIVIDER --- */}
+                            <Grid item sx={{ maxWidth:FORM_GRID_WIDTH }}>
+                                <Box sx={{ mt:0, mb:1, pl:DIVIDER_LEFT_PADDING }}>
+                                    <Divider sx={{ width:DIVIDER_WIDTH_PERCENT, borderColor:'#B8B8B8' }}/>
+                                </Box>
+                            </Grid>
+                            {/* --- ROW 2: FILTER TOOLBAR (CreateFilterToolbar) --- */}
+                            {/* 🎯 CHANGE 2: Reduced margin-bottom (mb) for smaller vertical gap with forms */}
+                            <Grid item sx={{ maxWidth:FORM_GRID_WIDTH, mb: 0.5 }}> {/* Reduced from mb: 2 */}
+                                <CreateFilterToolbar 
+                                    allQuestions={questions}
+                                    activeFilters={activeFilters}
+                                    onFilterToggle={handleFilterToggle}
+                                />
+                            </Grid>
+                            {/* --- ROW 3: EDIT QUESTION FORMS CONTAINER (SCROLLABLE) --- */}
+                            <Grid item sx={{ maxWidth:FORM_GRID_WIDTH }}>
+                                <Box
+                                    ref={formsScrollContainerRef}
+                                    sx={{
+                                        maxHeight: SCROLLABLE_FORMS_HEIGHT,
+                                        overflowY: 'auto',
+                                        pr: 10, // Space for the scrollbar inside the container
+                                        ml: FORM_HORIZONTAL_MARGIN, // Controllable left gap
+                                        mr: 0, // Controllable right gap
+                                    }}
+                                >
+                                    {/* 🎯 CHANGE 3: Removed top padding from the forms container Box (pt: 1 removed) */}
+                                    <Box sx={{ display:'flex', flexDirection:'column' }}> 
+                                        {/* 🎯 Render ALL filtered questions inside the scrollable container */}
+                                        {filteredQuestions.map(q => (
+                                            <Box
+                                                ref={el => { questionRefs.current[q.id] = el; }}
+                                                key={q.id}
+                                                sx={{ 
+                                                    // 🎯 Width increase (10px wider for active)
+                                                    maxWidth: q.id === activeQuestionId 
+                                                        ? `calc(${FORM_GRID_WIDTH} + ${ACTIVE_FORM_WIDTH_INCREASE})` 
+                                                        : FORM_GRID_WIDTH,
+                                                    
+                                                    border: q.id === activeQuestionId ? '2px solid #F57F17' : 'none',
+                                                    borderRadius: '8px',
+                                                    
+                                                    // 🎯 Custom padding: 5px top/bottom/left, 10px right
+                                                    p: q.id === activeQuestionId 
+                                                        ? `${FORM_ACTIVE_PADDING_TB_L} ${FORM_ACTIVE_PADDING_R} ${FORM_ACTIVE_PADDING_TB_L} ${FORM_ACTIVE_PADDING_TB_L}`
+                                                        : 0, // Use 0 padding when inactive
+                                                        
+                                                    mb: 3, 
+                                                    boxShadow: q.id === activeQuestionId ? '0px 0px 5px rgba(0, 0, 0, 0.2)' : '0px 2px 4px rgba(0, 0, 0, 0.05)',
+                                                    backgroundColor: q.id === activeQuestionId ? '#FFF3E0' : WHITE_COLOR, 
+                                                }}
+                                            >
+                                                <EditQuestionForm
+                                                    questionNumber={questions.findIndex(x => x.id === q.id) + 1}
+                                                    question={q}
+                                                    onQuestionChange={handleQuestionChange}
+                                                />
+                                            </Box>
+                                        ))}
+                                        {/* 🌟 Empty State Messages */}
+                                        {questions.length > 0 && filteredQuestions.length === 0 && (
+                                            <Typography variant="h6" color="text.secondary" sx={{ p: 2 }}>
+                                                No questions match the current filter selection.
+                                            </Typography>
+                                        )}
+                                        {questions.length === 0 && (
+                                            <Typography variant="h6" color="text.secondary" sx={{ p: 2 }}>
+                                                No questions have been selected for editing.
+                                            </Typography>
+                                        )}
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                    
                 </Grid>
             </Container>
         </>
     );
 }
-
 export default EditPage;
