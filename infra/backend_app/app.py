@@ -14,6 +14,7 @@ from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+import re
 
 app = Flask(__name__)
 
@@ -313,7 +314,57 @@ def download_file(file_id: int):
         download_name=file_row.get("file_name") or os.path.basename(full_path),
         conditional=True,
     )
+    
+_SENT_SPLIT = re.compile(r'[.!?]')
+def _syllable_count(w): return 1
+def _compute_readability_features(texts):
 
+    """
+
+    texts: iterable of question stems (strings)
+
+    returns: np.ndarray shape (n, 2) with:
+
+        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
+
+    """
+
+    rows = []
+
+    for t in texts:
+
+        t = t if isinstance(t, str) else ""
+
+        tokens = re.findall(r"\b\w+\b", t)
+
+        n_w = len(tokens) if tokens else 1
+
+        n_sents = max(1, len([s for s in _SENT_SPLIT.split(t) if s.strip()]))
+
+        n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
+
+
+
+        # Flesch Reading Ease (higher = easier)
+
+        fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
+
+        # Flesch-Kincaid Grade Level (higher = harder)
+
+        fkgl = 0.39 * (n_w / n_sents) + 11.8 * (n_syll / n_w) - 15.59
+
+
+
+        rows.append([fre, fkgl])
+
+    return np.array(rows, dtype=float)
+
+def numeric_feats_from_df(X):
+
+    stems = X["question_stem"].fillna("").to_numpy()
+
+    return _compute_readability_features(stems)
+_numeric_feats_from_df = numeric_feats_from_df
 # DIFFICULTY RATING MODEL
 # load the difficulty rating model
 MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
@@ -878,3 +929,7 @@ def addquestion():
         except Exception as e:
             conn.rollback()
             return jsonify({"error": "insert_failed", "message": str(e)}), 500
+        
+if __name__ == "__main__":
+    # Run the Flask app directly
+    app.run(host="0.0.0.0", port=5000, debug=True)

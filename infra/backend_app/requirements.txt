@@ -7,7 +7,7 @@ plotly
 matplotlib
 pymysql
 numpy
-scikit-learn
+scikit-learn==1.7.1
 joblib
 python-dotenv
 requests
