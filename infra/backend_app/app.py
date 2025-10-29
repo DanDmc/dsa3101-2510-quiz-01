@@ -599,7 +599,8 @@ def update_question(q_id):
     # Filter to allowed fields only
     question_updates = {}
     file_updates = {}
-    for k, v in payload.items():
+
+    for k,v in payload.items():
         if k in allowed_question_fields_for_edit:
             question_updates[k] = v
         elif k in allowed_file_fields_for_edit:
@@ -695,7 +696,6 @@ def hard_delete_question(q_id):
         except Exception as e:
             conn.rollback()
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
-
 
 # Helper function for getting file_id based on file details
 def _normalize_semester(sem: str) -> str:
@@ -793,9 +793,10 @@ def addquestion():
 
         file_id = get_file_id(course, year, semester, assessment_type)
 
-    question_type = (payload.get("question_type") or "").strip()
-    question_stem = (payload.get("question_stem") or "").strip()
 
+    question_type  = (payload.get("question_type") or "").strip()
+    question_stem  = (payload.get("question_stem") or "").strip()
+    
     if not question_type:
         return jsonify({"error": "missing_field", "field": "question_type"}), 400
     if not question_stem:
