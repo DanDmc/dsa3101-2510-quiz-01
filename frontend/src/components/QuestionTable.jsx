@@ -1,12 +1,10 @@
-
-
 // src/components/QuestionTable.jsx
 
 import React, { useState } from 'react';
 import { 
   Box, Card, Table, TableBody, TableCell, TableContainer, 
   TableHead, TableRow, Checkbox, IconButton, Chip, 
-  TablePagination, Typography, useTheme 
+  TablePagination, Typography, useTheme, Dialog, DialogTitle, DialogContent, DialogActions, Button 
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -27,6 +25,8 @@ const QUESTION_TEXT_COLOR = '#F57F17';
 const GREY_BACKGROUND = '#f5f5f5';
 const TIGHT_PADDING_Y = '8px'; 
 const CHECKBOX_PADDING = '4px'; 
+
+const API_BASE = import.meta.env.VITE_APP_API_URL; // ensure correct url for download
 
 const getChipColor = (type) => {
   switch (type) {
@@ -64,6 +64,10 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
   const [page, setPage] = useState(0);
   const totalQuestions = questions.length;
 
+  // State for Concept Tags Dialog
+  const [openConcepts, setOpenConcepts] = useState(false);
+  const [currentConcepts, setCurrentConcepts] = useState([]);
+
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const visibleQuestions = questions.slice(
@@ -97,54 +101,55 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  // --- NEW: Download Selected Handler ---
-  const handleDownloadSelected = async () => {
-    if (selected.length === 0) return;
-    try {
-      const res = await fetch('http://localhost:5000/download_questions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question_ids: selected }),
-      });
+  // --- Download Selected Questions ---
+  const handleDownloadSelected = () => {
+  if (selected.length === 0) return;
 
-      if (!res.ok) throw new Error('Download failed');
+  // from selected -> get their file_ids
+  const fileIds = selected
+    .map((qid) => {
+      const q = questions.find((x) => x.id === qid);
+      return q ? q.file_id : null;
+    })
+    .filter((fid) => fid != null);
 
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'questions.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error(err);
-      alert('Failed to download questions');
-    }
+  if (fileIds.length === 0) {
+    alert('No downloadable files found for selected questions.');
+    return;
+  }
+
+  const uniqueFileIds = Array.from(new Set(fileIds));
+
+  const missingCount = selected.length - fileIds.length;
+  if (missingCount > 0) {
+    console.warn(`${missingCount} selected question(s) had no associated file and will be skipped.`);
+  }
+
+  uniqueFileIds.forEach((fileId) => {
+    const url = `${API_BASE}/files/${fileId}/download`;
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+};
+
+  //Functions to handle Concept Tags Dialog
+  const openConceptDialog = (concepts) => {
+    setCurrentConcepts(concepts || []);
+    setOpenConcepts(true);
+  };
+
+  const closeConceptDialog = () => {
+    setOpenConcepts(false);
+    setCurrentConcepts([]);
   };
 
   return (
     <Card sx={{ width: TABLE_MAX_WIDTH, maxWidth: TABLE_MAX_WIDTH, border: BORDER_STYLE, boxShadow: 'none', borderRadius: 0, overflowX: 'auto' }}>
-      
-      {/* --- DOWNLOAD SELECTED BUTTON --- */}
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1, mr: 2 }}>
-        <button
-          onClick={handleDownloadSelected}
-          disabled={selected.length === 0}
-          style={{
-            backgroundColor: '#F57F17',
-            color: 'white',
-            border: 'none',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            cursor: selected.length === 0 ? 'not-allowed' : 'pointer'
-          }}
-        >
-          Download Selected
-        </button>
-      </Box>
-
       <TableContainer>
         <Table>
           <TableHead sx={{ backgroundColor: '#FFFFFF' }}> 
@@ -193,13 +198,8 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                       sx={{ color: ICON_COLOR, flexShrink: 0, alignSelf: 'center' }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        const downloadUrl = `http://localhost:5000/files/${row.file_id}/download`;
-                        const link = document.createElement('a');
-                        link.href = downloadUrl;
-                        link.setAttribute('download', '');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                        const downloadUrl = `${API_BASE}/files/${row.file_id}/download`;
+                        window.open(downloadUrl, '_blank'); 
                       }}
                     >
                       <DownloadIcon />
@@ -211,7 +211,17 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficultyManual)}</TableCell>
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficultyGenerated)}</TableCell>
                   <TableCell sx={{ ...centeredText, ...reducedVerticalPaddingStyle }}>
-                    <IconButton size="small" sx={{ color: ICON_COLOR }}><SettingsIcon /></IconButton>
+                    {/*  Open Concept Tags Dialog */}
+                    <IconButton 
+                      size="small" 
+                      sx={{ color: ICON_COLOR }}
+                      onClick={(e) => { 
+                        e.stopPropagation(); 
+                        openConceptDialog(row.concept_tags);
+                      }}
+                    >
+                      <SettingsIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );
@@ -248,6 +258,24 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count}`}
         ActionsComponent={TablePaginationActions} 
       />
+
+      {/*  Concept Tags Dialog */}
+      <Dialog open={openConcepts} onClose={closeConceptDialog}>
+        <DialogTitle>Concept Tags</DialogTitle>
+        <DialogContent>
+          {currentConcepts.length > 0 ? (
+            <ul>
+              {currentConcepts.map((tag, idx) => <li key={idx}>{tag}</li>)}
+            </ul>
+          ) : (
+            <Typography>No concept tags available.</Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeConceptDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
     </Card>
   );
 }

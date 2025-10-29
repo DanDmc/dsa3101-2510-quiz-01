@@ -1,150 +1,156 @@
 // src/pages/HomePage.jsx
 
 import React, { useState } from 'react';
-// 🌟 MODIFIED: Import CssBaseline
-import { Grid, Box, Typography, CssBaseline } from '@mui/material'; 
+import { Grid, Box, Typography, CssBaseline } from '@mui/material';
 
 import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// Unified and comprehensive list of mock groups
-const mockGroups = ['DSA4288M', 'DSA4288S', 'DSA4288', 'DSA3102', 'DSA3101', 'DSA2102', 'DSA2101', 'DSA1101','ST4248', 'ST3236', 'ST3131', 'ST2132', 'ST2131'];
+// 🌟 NEW: API_BASE for download
+const API_BASE = import.meta.env.VITE_APP_API_URL;
+
+const mockGroups = [
+  'DSA4288M', 'DSA4288S', 'DSA4288', 'DSA3102', 'DSA3101', 
+  'DSA2102', 'DSA2101', 'DSA1101', 'ST4248', 'ST3236', 
+  'ST3131', 'ST2132', 'ST2131'
+];
 
 function HomePage({ 
-    questions: propQuestions, // Use propQuestions to refer to the data array prop
-    goToCreatePage, 
-    goToEditPage, 
-    goToSearchPage, 
-    goToHomePage, 
-    handleDeleteQuestions,
-    // 🌟 ISSUE 1 FIX: Receive the new props from App (main.jsx)
-    isSafeDeletionEnabled,
-    setIsSafeDeletionEnabled 
+  questions: propQuestions,
+  goToCreatePage, 
+  goToEditPage, 
+  goToSearchPage, 
+  goToHomePage, 
+  handleDeleteQuestions,
+  isSafeDeletionEnabled,
+  setIsSafeDeletionEnabled 
 }) { 
-    // KEPT: Local state for selected rows (needed for table interactivity)
-    const [selected, setSelected] = useState([]);
-    
-    // KEPT: Local state for group management
-    const [groups, setGroups] = useState(mockGroups); 
+  const [selected, setSelected] = useState([]);
+  const [groups, setGroups] = useState(mockGroups);
 
-    // --- Group Management Handlers (UNCHANGED) ---
+  // --- Group Management Handlers ---
+  const handleRenameGroup = (oldName, newName) => {
+    if (!newName || (groups.includes(newName) && newName !== oldName)) {
+      console.error("Invalid rename: New name is empty or already exists.");
+      return;
+    }
+    setGroups(prevGroups => prevGroups.map(group => (group === oldName ? newName : group)));
+  };
+  
+  const handleDeleteGroup = (groupName) => {
+    setGroups(prevGroups => prevGroups.filter(group => group !== groupName));
+  };
 
-    // Handler function to rename a group
-    const handleRenameGroup = (oldName, newName) => {
-        if (!newName || (groups.includes(newName) && newName !== oldName)) {
-            console.error("Invalid rename: New name is empty or already exists.");
-            return;
-        }
+  // --- Table selection handlers ---
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      setSelected(propQuestions.map((n) => n.id));
+      return;
+    }
+    setSelected([]);
+  };
 
-        setGroups(prevGroups => 
-            prevGroups.map(group => (group === oldName ? newName : group))
-        );
-    };
-    
-    // Handler function to delete a group
-    const handleDeleteGroup = (groupName) => {
-        setGroups(prevGroups => 
-            // Filter out the group name to be deleted
-            prevGroups.filter(group => group !== groupName)
-        );
-    };
-    
-    // --- End Group Management Handlers ---
+  const handleEditClick = () => {
+    const questionsToEdit = propQuestions.filter(q => selected.includes(q.id));
+    goToEditPage(questionsToEdit);
+  };
 
-    // UPDATED: handleSelectAllClick now uses 'propQuestions'
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            setSelected(propQuestions.map((n) => n.id)); 
-            return;
-        }
-        setSelected([]);
-    };
+  const handleDeleteClick = () => {
+    handleDeleteQuestions(selected);
+    setSelected([]);
+  };
 
-    // UPDATED: handleEditClick now uses 'propQuestions'
-    const handleEditClick = () => {
-        // 1. Filter to get the *objects* using the 'propQuestions' prop
-        const questionsToEdit = propQuestions.filter(q => selected.includes(q.id)); 
-        // 2. Pass the array of OBJECTS to the function from main.jsx
-        goToEditPage(questionsToEdit); 
-    };
+  const handleSafeDeletionToggle = (event) => {
+    setIsSafeDeletionEnabled(event.target.checked);
+  };
 
-    const handleDeleteClick = () => {
-        // Pass the selected IDs up to the App component (main.jsx)
-        handleDeleteQuestions(selected);
+  // 🌟 NEW: Download Selected Questions (like individual download)
+  const handleDownloadSelected = () => {
+    if (selected.length === 0) return;
+
+    selected.forEach((id) => {
+      const question = propQuestions.find(q => q.id === id);
+      if (question && question.file_id) {
+        const downloadUrl = `${API_BASE}/files/${question.file_id}/download`;
+        window.open(downloadUrl, '_blank');
+      }
+    });
+  };
+
+  return (
+    <>
+      <CssBaseline />
+      <Grid container direction="column" rowSpacing={0}>
         
-        // Clear the local selection state
-        setSelected([]);
-    };
+        {/* Toolbar */}
+        <Grid item xs={12}>
+          <QuestionToolbar 
+            numSelected={selected.length} 
+            goToCreatePage={goToCreatePage} 
+            goToEditPage={handleEditClick} 
+            goToSearchPage={goToSearchPage}
+            handleDeleteClick={handleDeleteClick}
+            isSafeDeletionEnabled={isSafeDeletionEnabled}
+            handleSafeDeletionToggle={handleSafeDeletionToggle}
+          />
+        </Grid>
 
-    // 🌟 NEW HANDLER: For the safe deletion toggle
-    const handleSafeDeletionToggle = (event) => {
-        setIsSafeDeletionEnabled(event.target.checked);
-    };
-
-    // --- START OF JSX RENDER ---
-    return (
-        <>
-            {/* 🌟 NEW: Include CssBaseline here to reset browser default styles */}
-            <CssBaseline /> 
-            <Grid
-                container
-                direction="column"
-                rowSpacing={0} 
-            >
+        {/* Main content */}
+        <Grid item>
+          <Grid container columnSpacing={16}>
+            
+            {/* Left column: Questions */}
+            <Grid item xs={12} md={9}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 
-                {/* --- FULL WIDTH TOOLBAR (row 1) --- */}
-                <Grid item xs={12}>
-                    <QuestionToolbar 
-                        numSelected={selected.length} 
-                        goToCreatePage={goToCreatePage} 
-                        goToEditPage={handleEditClick} 
-                        goToSearchPage={goToSearchPage}
-                        handleDeleteClick={handleDeleteClick}
-                        // 🌟 ISSUE 1 FIX: Pass the new props to QuestionToolbar for display
-                        isSafeDeletionEnabled={isSafeDeletionEnabled}
-                        handleSafeDeletionToggle={handleSafeDeletionToggle}
-                    />
-                </Grid>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
+                    Questions in Group
+                  </Typography>
 
-                {/* --- ROW 2: COLUMNS WITH HORIZONTAL SPACING --- */}
-                <Grid item>
-                    <Grid
-                        container
-                        columnSpacing={16} 
-                    >
-                        
-                        {/* LEFT COLUMN: TEXT + TABLE */}
-                        <Grid item xs={12} md={9}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                                <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
-                                    Questions in Group
-                                </Typography>
+                  {/* Download Selected Button */}
+                  <button
+                    variant="contained"
+                    onClick={handleDownloadSelected}
+                    disabled={selected.length === 0}
+                    style={{
+                      backgroundColor: '#388E3C',
+                      color: 'white',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '4px',
+                      cursor: selected.length === 0 ? 'not-allowed' : 'pointer'
+                    }}
+                  >
+                    Download Selected
+                  </button>
+                </Box>
 
-                                <QuestionTable 
-                                    questions={propQuestions} // Use prop directly
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    onSelectAllClick={handleSelectAllClick}
-                                />
-                            </Box>
-                        </Grid>
-
-                        {/* RIGHT COLUMN: GROUPS PANEL */}
-                        <Grid item xs={12} md={3} /* Removed sx={{ marginTop: 10 }} */> 
-                            <QuestionGroups 
-                                groups={groups} 
-                                onRenameGroup={handleRenameGroup} 
-                                onDeleteGroup={handleDeleteGroup} 
-                            />
-                        </Grid>
-
-                    </Grid>
-                </Grid>
-
+                <QuestionTable 
+                  questions={propQuestions}
+                  selected={selected}
+                  setSelected={setSelected}
+                  onSelectAllClick={handleSelectAllClick}
+                />
+            </Box>
             </Grid>
-        </>
-    );
+
+            {/* Right column: Groups */}
+            <Grid item xs={12} md={3}>
+              <QuestionGroups 
+                groups={groups} 
+                onRenameGroup={handleRenameGroup} 
+                onDeleteGroup={handleDeleteGroup} 
+              />
+            </Grid>
+
+          </Grid>
+        </Grid>
+
+      </Grid>
+    </>
+  );
 }
 
 export default HomePage;
