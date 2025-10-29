@@ -208,6 +208,74 @@ def get_question():
 
     return jsonify({"total": len(items), "items": items})
 
+# Helper to convert a single row to the same JSON format as get_question
+def _map_question_row(row):
+    (
+        q_id, q_base_id, q_version_id, file_id, q_no,
+        q_type, stem, stem_html,
+        concept_json, media_json, last_used, created_at, updated_at,
+        options_json, answer_json,
+        difficulty_manual, difficulty_model,
+        f_course, f_year, f_semester, f_assessment, f_name, f_path
+    ) = row
+
+    def parse_json_field(field_json):
+        if not field_json: return None
+        try: return json.loads(field_json)
+        except Exception: return field_json
+
+    concept_list = parse_json_field(concept_json)
+    media_list = parse_json_field(media_json)
+    options_list = parse_json_field(options_json)
+    answer_data = parse_json_field(answer_json)
+    
+    def ts(v):
+        return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
+    
+    difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
+    
+    return {
+        "id": q_id, "question_base_id": q_base_id, "version_id": q_version_id,
+        "file_id": file_id, "question_no": q_no, "question_type": q_type,
+        "question_stem": stem, "question_stem_html": stem_html,
+        "concept_tags": concept_list, 
+        "question_media": media_list, # This uses the 'media_list' from page_image_paths
+        "question_options": options_list, "question_answer": answer_data,
+        "last_used": ts(last_used), "created_at": ts(created_at), "updated_at": ts(updated_at),
+        "difficulty_manual": difficulty_manual, "difficulty_model": difficulty_model,
+        "difficulty_level": difficulty_level, "course": f_course, "year": f_year,
+        "semester": f_semester, "assessment_type": f_assessment,
+        "file_name": f_name, "file_path": f_path,
+    }
+
+# ❗️ NEW API ROUTE
+@app.route("/question/<int:q_id>", methods=["GET"])
+def get_single_question(q_id):
+    select_cols = [
+        "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
+        "q.question_type", "q.question_stem", "q.question_stem_html",
+        "q.concept_tags", "q.page_image_paths", "q.last_used", "q.created_at", "q.updated_at",
+        "q.question_options", "q.question_answer", "q.difficulty_rating_manual", 
+        "q.difficulty_rating_model", "f.course", "f.year", "f.semester", 
+        "f.assessment_type", "f.file_name", "f.file_path"
+    ]
+    
+    sql = f"""
+        SELECT {", ".join(select_cols)}
+        FROM questions q
+        JOIN files f ON f.id = q.file_id
+        WHERE q.id = %s
+    """
+    
+    with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
+        cur.execute(sql, (q_id,))
+        row = cur.fetchone()
+        
+    if not row:
+        abort(404, description="Question not found")
+        
+    return jsonify(_map_question_row(row))
+
 # DOWNLOAD
 # Directory for files in the container
 file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")

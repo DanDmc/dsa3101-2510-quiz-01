@@ -2,7 +2,10 @@ import { StrictMode, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 //import './index.css';
 
-// --- ADD THESE IMPORTS ---
+// --- ADD THIS IMPORT ---
+import { BrowserRouter } from 'react-router-dom';
+
+// --- Component Imports ---
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Container from '@mui/material/Container'; 
@@ -168,5 +171,9 @@ function App() {
     );
 }
 
-// This part stays the same
-createRoot(document.getElementById('root')).render(<App />);
+// --- THIS IS THE MODIFIED LINE ---
+createRoot(document.getElementById('root')).render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+);

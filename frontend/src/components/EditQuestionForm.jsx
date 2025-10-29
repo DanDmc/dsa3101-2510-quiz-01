@@ -20,14 +20,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
  */
 function EditQuestionForm({ questionNumber, question, onQuestionChange }) {
 
-  // Handle changes to the question text field
+  // --- FIXED: This handler now passes the *entire updated question object* ---
   const handleTextChange = (event) => {
-    onQuestionChange(question.id, 'text', event.target.value);
+    const updatedQuestion = { ...question, question_stem: event.target.value };
+    onQuestionChange(updatedQuestion);
   };
 
-  // Handle changes to the answer text field
+  // --- FIXED: This handler now passes the *entire updated question object* ---
   const handleAnswerChange = (event) => {
-    onQuestionChange(question.id, 'answer', event.target.value);
+    const updatedQuestion = { ...question, answer: event.target.value };
+    onQuestionChange(updatedQuestion);
+  };
+
+  // --- FIXED: This handler now passes the *entire updated question object* ---
+  const handleTypeChange = (event) => {
+    const updatedQuestion = { ...question, question_type: event.target.value };
+    onQuestionChange(updatedQuestion);
   };
 
   return (
@@ -37,15 +45,18 @@ function EditQuestionForm({ questionNumber, question, onQuestionChange }) {
         <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 3, gap: 2, width: '800px' }}>
           
           <FormControl variant="outlined" size="small" sx={{ minWidth: 150 }}>
-            <InputLabel>Open-ended</InputLabel>
+            <InputLabel>Type</InputLabel>
             <Select 
-              label="Open-ended" 
-              value={question.type} // Controlled by question.type
-              onChange={(e) => onQuestionChange(question.id, 'type', e.target.value)}
+              label="Type" 
+              // --- FIXED: Use 'question_type' and provide a fallback ---
+              value={question.question_type || 'Open-ended'} 
+              onChange={handleTypeChange}
             >
               <MenuItem value="Open-ended">Open-ended</MenuItem>
-              <MenuItem value="Multiple choice">Multiple choice</MenuItem>
+              <MenuItem value="MCQ">MCQ</MenuItem>
               <MenuItem value="MRQ">MRQ</MenuItem>
+              <MenuItem value="Ordering">Ordering</MenuItem>
+              <MenuItem value="Matching">Matching</MenuItem>
             </Select>
           </FormControl>
 
@@ -68,16 +79,17 @@ function EditQuestionForm({ questionNumber, question, onQuestionChange }) {
         </Box>
 
         {/* Question Input Area */}
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
           <Grid item xs={12}> 
             <Typography variant="body1" fontWeight="bold" gutterBottom>Question {questionNumber}*</Typography>
             <TextField
               fullWidth
               multiline
-              rows={4}
+              rows={6}
               placeholder="Enter your question here."
               variant="outlined"
-              value={question.text} // Controlled by question.text
+              // --- FIXED: Use 'question_stem' instead of 'text' ---
+              value={question.question_stem || ''} 
               onChange={handleTextChange}
               sx={{ backgroundColor: '#f9f9f9' }}
             />
@@ -98,7 +110,7 @@ function EditQuestionForm({ questionNumber, question, onQuestionChange }) {
               variant="outlined"
               size="small"
               placeholder="Enter answer here"
-              value={question.answer || ''} // Controlled by question.answer
+              value={question.answer || ''} // This assumes an 'answer' property
               onChange={handleAnswerChange}
               sx={{ mr: 1 }}
             />

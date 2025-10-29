@@ -12,6 +12,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import SettingsIcon from '@mui/icons-material/Settings';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Tooltip from '@mui/material/Tooltip';
 
 // --- CONSTANTS ---
 const ROWS_PER_PAGE = 10;
@@ -60,7 +61,7 @@ function TablePaginationActions(props) {
 }
 
 // Main Component
-function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
+function QuestionTable({ questions, selected, setSelected, onSelectAllClick, goToEditPage}) {
   const [page, setPage] = useState(0);
   const totalQuestions = questions.length;
 
@@ -179,6 +180,11 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                 <TableRow
                   key={row.id}
                   hover
+                  onDoubleClick={() => {
+                    // This will navigate to a page like "/edit/123"
+                    // Make sure your React Router is set up for this path!
+                    goToEditPage([row]);
+                  }}
                   onClick={(event) => handleClick(event, row.id)}
                   role="checkbox"
                   aria-checked={isItemSelected}
@@ -188,9 +194,22 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                 >
                   <TableCell sx={checkboxCellStyle}><Checkbox color="primary" checked={isItemSelected} /></TableCell>
                   <TableCell component="th" scope="row" sx={{ ...borderedCellStyle, ...questionColumnStyle, display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingY: TIGHT_PADDING_Y, paddingX: '16px' }}>
-                    <Typography variant="body2" sx={{ flexGrow: 1, marginRight: TEXT_ICON_GAP, color: QUESTION_TEXT_COLOR, maxWidth: MAX_QUESTION_TEXT_WIDTH, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {row.question_stem}
-                    </Typography>
+                  <Tooltip title={row.question_stem} placement="bottom-start" arrow>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          flexGrow: 1, 
+                          marginRight: TEXT_ICON_GAP, 
+                          color: QUESTION_TEXT_COLOR, 
+                          maxWidth: MAX_QUESTION_TEXT_WIDTH, 
+                          overflow: 'hidden', 
+                          textOverflow: 'ellipsis', 
+                          whiteSpace: 'nowrap' 
+                        }}
+                      >
+                        {row.question_stem}
+                      </Typography>
+                    </Tooltip>
                     <IconButton
                       size="small"
                       sx={{ color: ICON_COLOR, flexShrink: 0, alignSelf: 'center' }}

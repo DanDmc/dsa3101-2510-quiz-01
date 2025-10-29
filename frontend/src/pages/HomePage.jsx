@@ -126,6 +126,7 @@ function HomePage({
                                     selected={selected}
                                     setSelected={setSelected}
                                     onSelectAllClick={handleSelectAllClick}
+                                    goToEditPage={goToEditPage} 
                                 />
                             </Box>
                         </Grid>
