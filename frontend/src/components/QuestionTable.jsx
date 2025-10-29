@@ -101,14 +101,17 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
   const handleDownloadSelected = async () => {
     if (selected.length === 0) return;
     try {
-      const res = await fetch('http://localhost:5000/download_questions', {
+      const res = await fetch('http://localhost:5001/download_questions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json'
+          // NO Authorization header
+        },
         body: JSON.stringify({ question_ids: selected }),
       });
 
       if (!res.ok) throw new Error('Download failed');
-
+      
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -120,7 +123,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
-      alert('Failed to download questions');
+      alert('Failed to download questions. (Note: This route may not exist on the server yet)');
     }
   };
 
@@ -191,15 +194,49 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                     <IconButton
                       size="small"
                       sx={{ color: ICON_COLOR, flexShrink: 0, alignSelf: 'center' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const downloadUrl = `http://localhost:5000/files/${row.file_id}/download`;
-                        const link = document.createElement('a');
-                        link.href = downloadUrl;
-                        link.setAttribute('download', '');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                      onClick={async (e) => {
+                        e.stopPropagation(); 
+                        try {
+                          // ❗️ CHANGED: Fetch from the new endpoint using the question's ID (row.id)
+                          const res = await fetch(`http://localhost:5001/question/${row.id}/download_image`, {
+                            method: 'GET'
+                            // NO headers
+                          });
+
+                          if (!res.ok) {
+                            // Provide a more specific error
+                            if (res.status === 404) {
+                              alert('Download failed: No image was found for this question.');
+                            } else {
+                              throw new Error(`Download failed: Server responded with ${res.status}`);
+                            }
+                            return; // Stop execution
+                          }
+
+                          // This logic for getting the filename from the header is still correct
+                          const disposition = res.headers.get('content-disposition');
+                          let filename = `question_${row.id}_image.png`; // A better fallback name
+                          if (disposition && disposition.includes('attachment')) {
+                            const filenameMatch = /filename="?([^"]+)"?/.exec(disposition);
+                            if (filenameMatch && filenameMatch[1]) {
+                              filename = filenameMatch[1];
+                            }
+                          }
+
+                          const blob = await res.blob();
+                          const url = window.URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = filename;
+                          document.body.appendChild(a);
+                          a.click();
+                          a.remove();
+                          window.URL.revokeObjectURL(url);
+
+                        } catch (err) {
+                          console.error(err);
+                          alert('Failed to download file.');
+                        }
                       }}
                     >
                       <DownloadIcon />

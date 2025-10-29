@@ -255,6 +255,33 @@ def get_question():
 # Directory for files in the container
 file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
 
+question_media_base_directory = os.getenv("question_media_base_directory", "/app/data/question_media")
+
+def _safe_join_media(base_dir: str, file_path: str) -> str:
+    """Safely join a base directory with a media file path."""
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+    
+    # Clean the path: remove leading slashes and "data/question_media/" prefix
+    cleaned_path = file_path.strip().lstrip('/')
+    if cleaned_path.startswith('data/question_media/'):
+        cleaned_path = cleaned_path[len('data/question_media/'):]
+        
+    candidate = os.path.normpath(os.path.join(base_dir, cleaned_path))
+    base_dir_norm = os.path.normpath(base_dir)
+    
+    # Security check to prevent path traversal
+    if not candidate.startswith(base_dir_norm + os.sep):
+        raise FileNotFoundError("Invalid media path")
+    return candidate
+
+def _get_question_row(question_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        # Fetch the page_image_paths column
+        cur.execute("SELECT id, page_image_paths FROM questions WHERE id=%s", (question_id,))
+        return cur.fetchone()
+
 def _strip_known_prefixes(p: str) -> str:
     # file_base_directory set as /app/data/source_files, so want to remove this part from the file_path
     prefixes = ("data/", "source_files/")
@@ -312,6 +339,52 @@ def download_file(file_id: int):
         mimetype=guessed or "application/octet-stream",
         as_attachment=True,
         download_name=file_row.get("file_name") or os.path.basename(full_path),
+        conditional=True,
+    )
+    
+@app.route("/question/<int:question_id>/download_image", methods=["GET"])
+def download_question_image(question_id: int):
+    question_row = _get_question_row(question_id)
+    if not question_row:
+        abort(404, description="Invalid question ID")
+
+    image_paths_json = question_row.get("page_image_paths")
+    if not image_paths_json:
+        abort(404, description="No images found for this question")
+
+    try:
+        image_paths = json.loads(image_paths_json)
+    except Exception:
+        abort(500, description="Failed to parse image paths")
+
+    if not image_paths or not isinstance(image_paths, list) or len(image_paths) == 0:
+        abort(404, description="No image path in list")
+
+    # --- Download only the FIRST image for simplicity ---
+    first_image_path = image_paths[0]
+
+    try:
+        # Use the new safe join function and base directory
+        full_path = _safe_join_media(question_media_base_directory, first_image_path)
+    except FileNotFoundError as e:
+        abort(404, description=str(e))
+
+    if not os.path.exists(full_path):
+        app.logger.error("Image file not in folder: %s", full_path)
+        abort(404, description="Image file not in folder")
+
+    # Get mimetype and download name
+    guessed, _ = mimetypes.guess_type(full_path)
+    download_name = os.path.basename(full_path)
+
+    app.logger.info("DOWNLOAD_IMAGE full_path=%s base=%s dbpath=%s",
+                    full_path, question_media_base_directory, first_image_path)
+
+    return send_file(
+        full_path,
+        mimetype=guessed or "image/png", # Default to image/png
+        as_attachment=True,
+        download_name=download_name,
         conditional=True,
     )
     
