@@ -43,7 +43,7 @@ const PAGES = {
     SEARCH: 'search',
 };
 
-// 💡 FIX 1: Define the base URL using the environment variable
+// 庁 FIX 1: Define the base URL using the environment variable
 const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api'; 
 console.log(`API Target: ${BASE_API_URL}`);
 
@@ -51,11 +51,14 @@ console.log(`API Target: ${BASE_API_URL}`);
 function App() {
     const [currentPage, setCurrentPage] = useState(PAGES.HOME);
     const [selectedQuestions, setSelectedQuestions] = useState([]);
+    
+    // --- State for search filters (from previous step) ---
+    const [searchParams, setSearchParams] = useState(null);
 
     // Initialize 'questions' state as empty array 
     const [questions, setQuestions] = useState([]); 
 
-    // 🌟 ISSUE 1 FIX: State for the safe deletion toggle. Default to true (safe).
+    // 検 ISSUE 1 FIX: State for the safe deletion toggle. Default to true (safe).
     const [isSafeDeletionEnabled, setIsSafeDeletionEnabled] = useState(true);
 
     // --- MODIFIED: Function to fetch data from the backend API with fallback ---
@@ -74,7 +77,7 @@ function App() {
 
         } catch (error) {
             console.error("Could not fetch questions from the API. Falling back to mock data.", error);
-            // 💡 FIX 2: Fallback to mock data on ANY API failure (connection, timeout, server error)
+            // 庁 FIX 2: Fallback to mock data on ANY API failure (connection, timeout, server error)
             setQuestions(mockQuestions); // Uses the now-corrected mockQuestions
         }
     };
@@ -92,7 +95,13 @@ function App() {
     };
     
     const goToCreatePage = () => setCurrentPage(PAGES.CREATE);
-    const goToSearchPage = () => setCurrentPage(PAGES.SEARCH);
+    
+    // --- UPDATED: This function accepts the 'params' object (from previous step) ---
+    const goToSearchPage = (params) => {
+        console.log("Search params received in main.jsx:", params);
+        setSearchParams(params); // Store the search/filter data
+        setCurrentPage(PAGES.SEARCH); // Change to the search page
+    };
     
     const goToEditPage = (questionsToEdit) => {
         if (questionsToEdit && questionsToEdit.length > 0) {
@@ -103,7 +112,7 @@ function App() {
         }
     };
 
-    // 🌟 ISSUE 1 FIX: Modified handler to check the safe deletion toggle state
+    // 検 ISSUE 1 FIX: Modified handler to check the safe deletion toggle state
     const handleDeleteQuestions = (idsToDelete) => {
         if (window.confirm(`Are you sure you want to delete ${idsToDelete.length} question(s)?`)) {
             
@@ -133,9 +142,17 @@ function App() {
 
             case PAGES.SEARCH:
                 return (
+                    // --- UPDATED: Pass all necessary props ---
                     <QuestionSearchPage 
                         goToCreatePage={goToCreatePage}
                         goToEditPage={goToEditPage}
+                        searchParams={searchParams}
+                        questions={questions} 
+                        handleDeleteQuestions={handleDeleteQuestions}
+                        // --- 1. ADDED: Pass the search function and toggle state ---
+                        goToSearchPage={goToSearchPage}
+                        isSafeDeletionEnabled={isSafeDeletionEnabled}
+                        setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
                     />
                 );
             
@@ -149,7 +166,7 @@ function App() {
                         goToSearchPage={goToSearchPage} 
                         goToHomePage={goToHomePage}
                         handleDeleteQuestions={handleDeleteQuestions}
-                        // 🌟 ISSUE 1 FIX: Pass the state and setter to HomePage
+                        // 検 ISSUE 1 FIX: Pass the state and setter to HomePage
                         isSafeDeletionEnabled={isSafeDeletionEnabled}
                         setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
                     />
@@ -177,3 +194,4 @@ createRoot(document.getElementById('root')).render(
         <App />
     </BrowserRouter>
 );
+
