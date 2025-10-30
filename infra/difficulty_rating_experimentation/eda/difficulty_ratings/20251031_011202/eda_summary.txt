@@ -1,0 +1,77 @@
+SIMPLE EDA SUMMARY
+======================================================================
+
+Total questions: 108
+
+TARGET: difficulty_rating_manual (1=easy, 0=hard)
+  Mean: 0.781
+  Median: 0.860
+  Std: 0.219
+  Range: [0.230, 1.000]
+
+======================================================================
+3-FEATURE MODEL (Base)
+======================================================================
+
+FEATURE 1: question_type (categorical -> One-Hot)
+mcq           68
+coding        20
+open-ended    16
+others         4
+Name: question_type, dtype: int64
+
+FEATURE 2: question_stem (text -> TF-IDF)
+  Avg tokens: 56.6
+  Min tokens: 10
+  Max tokens: 258
+  Correlation with difficulty: -0.470
+
+FEATURE 3: concept_tags (text -> TF-IDF)
+  Questions with tags: 108 (100.0%)
+  Questions without tags: 0 (0.0%)
+  Mean difficulty (with tags): 0.781
+  Mean difficulty (no tags): nan
+
+======================================================================
+4-FEATURE MODEL (+ Readability)
+======================================================================
+
+FEATURE 4a: Flesch Reading Ease (higher = easier text)
+  Mean: 70.52
+  Std: 16.28
+  Range: [34.45, 111.07]
+  Correlation with difficulty: 0.112
+
+FEATURE 4b: Flesch-Kincaid Grade Level (higher = harder text)
+  Mean: 6.94
+  Std: 3.08
+  Range: [0.50, 13.67]
+  Correlation with difficulty: -0.092
+
+======================================================================
+5-FEATURE MODEL (+ Length Metrics)
+======================================================================
+
+FEATURE 5a: num_chars
+  Mean: 298.4
+  Correlation with difficulty: -0.484
+
+FEATURE 5b: num_tokens
+  Mean: 56.6
+  Correlation with difficulty: -0.470
+
+FEATURE 5c: num_sentences
+  Mean: 4.6
+  Correlation with difficulty: -0.386
+
+FEATURE 5d: num_syllables
+  Mean: 81.1
+  Correlation with difficulty: -0.469
+
+KEY INSIGHTS
+----------------------------------------------------------------------
+
+Strongest correlations with difficulty (by absolute value):
+  1. num_chars: -0.484
+  2. num_tokens: -0.470
+  3. num_syllables: -0.469
