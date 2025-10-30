@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
     Box, Button, TextField, InputAdornment, IconButton, 
-    Switch, FormControlLabel, Typography 
+    Typography 
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -19,15 +19,13 @@ const LARGE_BUTTON_SX = {
     fontWeight: 'bold',
 };
 
-// 🌟 ISSUE 1 FIX: ADOPT the new prop signature for the toggle
+// ✅ MODIFICATION: Removed isSafeDeletionEnabled and handleSafeDeletionToggle props.
 function QuestionToolbar({ 
     numSelected, 
     goToCreatePage, 
     goToEditPage, 
     goToSearchPage, 
-    handleDeleteClick,
-    isSafeDeletionEnabled, // 🌟 NEW PROP: Current state of the toggle
-    handleSafeDeletionToggle // 🌟 NEW PROP: Handler to update the state
+    handleDeleteClick, // This is now the universal hard delete handler
 }) { 
     
     // ADOPT: State for the search query
@@ -67,35 +65,16 @@ function QuestionToolbar({
                     Create / Upload
                 </Button>
 
-                {/* 🌟 ISSUE 1 FIX: ADD SAFE DELETION TOGGLE NEXT TO DELETE BUTTON */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mr: 1 }}>
-                    <FormControlLabel
-                        control={
-                            <Switch 
-                                checked={isSafeDeletionEnabled} 
-                                onChange={handleSafeDeletionToggle} 
-                                color="primary"
-                            />
-                        }
-                        label={
-                            <Typography variant="caption" sx={{ whiteSpace: 'nowrap' }}>
-                                Safe Delete
-                            </Typography>
-                        }
-                        labelPlacement="start" // Place label to the left of the switch
-                        sx={{ m: 0 }} // Remove default margin
-                    />
-                </Box>
-                {/* END OF SAFE DELETION TOGGLE */}
-
+                {/* ❌ REMOVED: SAFE DELETION TOGGLE BLOCK IS GONE */}
+                
                 <Button
                     variant="outlined"
                     startIcon={<DeleteIcon />}
                     color="error"
                     disabled={numSelected === 0}
-                    // --- RESOLUTION FOR BLOCK 2 (Delete Button) ---
-                    onClick={handleDeleteClick} // ADOPTED: New handler prop from origin/main
-                    sx={LARGE_BUTTON_SX} // KEPT: Your style 
+                    // ✅ MODIFICATION: handleDeleteClick now performs HARD DELETE unconditionally.
+                    onClick={handleDeleteClick} 
+                    sx={LARGE_BUTTON_SX} 
                 >
                     Delete
                 </Button>
@@ -114,19 +93,17 @@ function QuestionToolbar({
 
             {/* --- RESOLUTION FOR BLOCK 3 (Search Bar UI and Functionality) --- */}
             <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, ml: 3 }}>
-                {/* ADOPTED: Form wrapper and new TextField props (value, onChange) */}
                 <form onSubmit={handleSearchOrBrowse} style={{ width: '100%' }}>
                     <TextField
-                        sx={{ width: '100%' }} // KEPT: Your full-width stretch style
+                        sx={{ width: '100%' }} 
                         variant="outlined"
                         size="small"
                         placeholder="Search for..."
-                        value={query} // ADOPTED: Bind state
-                        onChange={(e) => setQuery(e.target.value)} // ADOPTED: Update state
+                        value={query} 
+                        onChange={(e) => setQuery(e.target.value)} 
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    {/* ADOPTED: Search icon button now has type="submit" */}
                                     <IconButton type="submit" aria-label="search">
                                         <SearchIcon />
                                     </IconButton>
@@ -135,10 +112,9 @@ function QuestionToolbar({
                         }}
                     />
                 </form>
-                {/* ADOPTED: Browse button uses the new handleSearchOrBrowse handler */}
                 <IconButton
                     onClick={handleSearchOrBrowse}
-                    title="Browse / Search" // ADOPTED: Title for clarity
+                    title="Browse / Search" 
                     sx={{
                         backgroundColor: '#f57c00',
                         color: 'white',

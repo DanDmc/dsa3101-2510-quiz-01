@@ -18,6 +18,8 @@ Key Features:
 """
 
 import os
+import sys
+import io
 import json
 import re
 import time
@@ -45,13 +47,8 @@ model = genai.GenerativeModel(
 
 # === Utility Functions ===
 def build_page_to_image_map(full_text):
-    """
-    Build a dictionary mapping page numbers to image paths.
-    Example: {2: "data/question_media/DSA1101_page2.png"}
-    """
     page_map = {}
     pages = full_text.split("=== PAGE BREAK ===")
-
     for page_text in pages:
         page_nums = re.findall(r'\[PAGE_NUMBER:\s*(\d+)\]', page_text)
         img_paths = re.findall(r'\[PAGE_IMAGE_SAVED:\s*([^\]]+)\]', page_text)
@@ -62,7 +59,6 @@ def build_page_to_image_map(full_text):
 
 
 def build_prompt(text):
-    """Build concise LLM prompt for parsing questions."""
     return f"""
 Extract all exam questions as a JSON array.
 
@@ -85,7 +81,6 @@ Text:
 
 
 def sanitize_output(text):
-    """Remove markdown code fences and trim output."""
     text = text.strip()
     if text.startswith("```"):
         parts = text.split("```")
@@ -97,10 +92,6 @@ def sanitize_output(text):
 
 
 def map_pages_to_images(questions, page_to_image_map):
-    """
-    Add image paths to questions based on their page numbers.
-    Each question gets only the image paths corresponding to its page_numbers.
-    """
     for q in questions:
         page_numbers = q.get("page_numbers", [])
         image_paths = []
@@ -113,24 +104,20 @@ def map_pages_to_images(questions, page_to_image_map):
 
 # === Core Processing ===
 def parse_file(txt_file):
-    """
-    Parse a single exam text file using adaptive chunking.
-    """
     input_path = os.path.join(TEXT_DIR, txt_file)
 
     with open(input_path, "r", encoding="utf-8") as f:
         full_text = f.read()
 
-    print(f"   📖 Building page-to-image mapping...")
+    print(f" Building page-to-image mapping...")
     page_to_image_map = build_page_to_image_map(full_text)
-    print(f"      Found {len(page_to_image_map)} pages with images")
+    print(f" Found {len(page_to_image_map)} pages with images")
 
     pages = full_text.split("=== PAGE BREAK ===")
     if not pages:
-        print("   ⚠️  No pages found in file!")
+        print(" No pages found in file!")
         return None
 
-    # Adaptive chunk size based on average page length
     avg_page_length = sum(len(p) for p in pages) / len(pages)
     if avg_page_length < 500:
         adaptive_chunk_size, reason = 10, "sparse content"
@@ -144,55 +131,67 @@ def parse_file(txt_file):
         chunk_text = "\n=== PAGE BREAK ===\n".join(pages[i:i + adaptive_chunk_size])
         chunks.append(chunk_text)
 
-    print(f"   📄 {len(pages)} pages → {len(chunks)} chunk(s) "
+    print(f" {len(pages)} pages → {len(chunks)} chunk(s) "
           f"({adaptive_chunk_size} pages/chunk, {reason})")
 
     all_questions = []
 
     for idx, chunk_text in enumerate(chunks, 1):
-        print(f"   🚀 Chunk {idx}/{len(chunks)}...", end=" ", flush=True)
+        print(f" Chunk {idx}/{len(chunks)}...", end=" ", flush=True)
         start = time.time()
 
         try:
             prompt = build_prompt(chunk_text)
+            
+            # === DEBUG: Show what is sent to LLM (first 500 chars only) ===
+            print("\n=== PROMPT (truncated) ===")
+            print(prompt[:500] + "...\n====================")
+            
             response = model.generate_content(prompt)
+            
+            # === DEBUG: Show raw output from LLM ===
+            print("\n=== RAW LLM OUTPUT ===")
+            print(response.text[:1000] + "...\n====================")
+
             output = sanitize_output(response.text)
-            parsed = json.loads(output)
+
+            # Attempt to clean up stray characters if JSON fails
+            output_clean = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', output)
+            parsed = json.loads(output_clean)
 
             if not isinstance(parsed, list):
                 parsed = [parsed]
 
             elapsed = time.time() - start
-            print(f"✅ {len(parsed)} question(s) ({elapsed:.1f}s)")
+            print(f" {len(parsed)} question(s) ({elapsed:.1f}s)")
             all_questions.extend(parsed)
 
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
             elapsed = time.time() - start
-            print(f"⚠️  Invalid JSON ({elapsed:.1f}s)")
+            print(f" Invalid JSON ({elapsed:.1f}s) — {e}")
         except Exception as e:
             elapsed = time.time() - start
-            print(f"❌ Error: {e} ({elapsed:.1f}s)")
+            print(f" Error: {e} ({elapsed:.1f}s)")
 
     if not all_questions:
-        print("   ⚠️  No questions parsed.")
+        print(" No questions parsed.")
         return None
 
-    print(f"   🔗 Mapping page numbers to image paths...")
+    print(f" Mapping page numbers to image paths...")
     all_questions = map_pages_to_images(all_questions, page_to_image_map)
 
     return all_questions
 
 
 def parse_exam_papers():
-    """Main entry: process all .txt files sequentially."""
     txt_files = [f for f in os.listdir(TEXT_DIR) if f.lower().endswith(".txt")]
 
     if not txt_files:
-        print("⚠️  No text files found in text_extracted/")
+        print(" No text files found in text_extracted/")
         return
 
     print(f"\n{'='*60}")
-    print(f"📚 QuizBank LLM Parser — Adaptive Chunking Edition")
+    print("QuizBank LLM Parser — Adaptive Chunking Edition")
     print(f"{'='*60}")
     print(f"Found {len(txt_files)} file(s)\n")
 
@@ -213,17 +212,20 @@ def parse_exam_papers():
             with_imgs = sum(1 for q in questions if q.get("page_image_paths"))
             with_pages = sum(1 for q in questions if q.get("page_numbers"))
 
-            print(f"\n   ✅ {len(questions)} questions saved")
-            print(f"   📊 {with_pages} with page numbers, {with_imgs} with images")
-            print(f"   ⏱️  {elapsed:.1f}s ({elapsed/60:.1f} min)")
+            print(f"\n {len(questions)} questions saved")
+            print(f" {with_pages} with page numbers, {with_imgs} with images")
+            print(f" {elapsed:.1f}s ({elapsed/60:.1f} min)")
         else:
-            print(f"   ⚠️  No questions found")
+            print(f" No questions found")
 
     total_elapsed = time.time() - total_start
     print(f"\n{'='*60}")
-    print(f"✅ Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
+    print(f" Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
     print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":
+    # ===== Option 2: Ensure stdout supports UTF-8 (cross-platform) =====
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
     parse_exam_papers()

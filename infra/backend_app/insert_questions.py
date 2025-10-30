@@ -62,18 +62,18 @@ def connect_to_database(max_retries=5, retry_delay=3):
     """
     for attempt in range(max_retries):
         try:
-            print(f"📡 Attempting to connect to database (attempt {attempt + 1}/{max_retries})...")
+            print(f" Attempting to connect to database (attempt {attempt + 1}/{max_retries})...")
             conn = mysql.connector.connect(**DB_CONFIG)
             cursor = conn.cursor()
-            print("✅ Successfully connected to database!")
+            print(" Successfully connected to database!")
             return conn, cursor
         except mysql.connector.Error as e:
             if attempt < max_retries - 1:
-                print(f"⚠️ Connection failed: {e}")
-                print(f"⏳ Retrying in {retry_delay} seconds...")
+                print(f" Connection failed: {e}")
+                print(f" Retrying in {retry_delay} seconds...")
                 time.sleep(retry_delay)
             else:
-                print(f"❌ Failed to connect after {max_retries} attempts")
+                print(f" Failed to connect after {max_retries} attempts")
                 raise
 
 
@@ -103,7 +103,7 @@ def get_file_id(cursor, file_name):
     if result:
         return result[0]
     else:
-        raise ValueError(f"❌ No matching file record for {file_name}")
+        raise ValueError(f" No matching file record for {file_name}")
 
 
 def insert_question(cursor, q, file_id):
@@ -210,6 +210,16 @@ def process_json_files():
     - Commits successfully processed files individually
     - Supports multi-page questions with multiple images
     """
+    
+    # === NEW BLOCK: Check for pipeline-provided FILE_ID ===
+    target_file_id_env = os.getenv("FILE_ID")
+    pipeline_mode_file_id = None
+
+    if target_file_id_env and target_file_id_env.isdigit():
+        pipeline_mode_file_id = int(target_file_id_env)
+        print(f" Detected pipeline mode. Prioritizing FILE_ID from environment: {pipeline_mode_file_id}")
+    # =======================================================
+    
     # Connect to database
     conn, cursor = connect_to_database()
     
@@ -217,35 +227,45 @@ def process_json_files():
     json_files = [f for f in os.listdir(JSON_DIR) if f.lower().endswith(".json")]
 
     if not json_files:
-        print("⚠️ No JSON files found in json_output directory")
-        print("💡 Make sure llm_parser.py has run successfully first")
+        print(" No JSON files found in json_output directory")
+        print(" Make sure llm_parser.py has run successfully first")
         cursor.close()
         conn.close()
         return
     
-    print(f"\n🔍 Found {len(json_files)} JSON file(s) to process\n")
+    print(f"\n Found {len(json_files)} JSON file(s) to process\n")
 
     for json_file in json_files:
         json_path = os.path.join(JSON_DIR, json_file)
         pdf_name = os.path.splitext(json_file)[0] + ".pdf"
-        print(f"📄 Inserting questions for {pdf_name}")
+        print(f" Inserting questions for {pdf_name}")
 
         # Read and validate JSON file
         with open(json_path, "r", encoding="utf-8-sig") as f:
             content = f.read().strip()
 
         if not content:
-            print(f"⚠️ Skipping {json_file} (empty file)\n")
+            print(f" Skipping {json_file} (empty file)\n")
             continue
 
         try:
             questions = json.loads(content)
         except json.JSONDecodeError as e:
-            print(f"⚠️ Skipping {json_file}: Invalid JSON ({e})\n")
+            print(f" Skipping {json_file}: Invalid JSON ({e})\n")
             continue
 
         try:
-            file_id = get_file_id(cursor, pdf_name)
+            # 🛑 CRITICAL LOGIC CHANGE: Determine the correct file_id to use
+            if pipeline_mode_file_id:
+                # Use the ID passed from the Flask pipeline
+                file_id = pipeline_mode_file_id
+                print(f" Using pipeline file_id: {file_id}")
+            else:
+                # Fallback to the original logic (database lookup by file name)
+                file_id = get_file_id(cursor, pdf_name)
+                print(f" Using DB lookup file_id: {file_id}")
+
+            # --------------------------------------------------------
 
             success_count = 0
             for q in questions:
@@ -278,19 +298,19 @@ def process_json_files():
                         info_parts.append(f"{len(page_image_paths)} page images")
                 
                 extra = f" ({', '.join(info_parts)})" if info_parts else ""
-                print(f"🆔 Inserted id={question_id} for question_no={q.get('question_no')}{extra}")
+                print(f" Inserted id={question_id} for question_no={q.get('question_no')}{extra}")
                 success_count += 1
 
             conn.commit()
-            print(f"✅ Inserted {success_count} / {len(questions)} questions for {pdf_name}\n")
+            print(f" Inserted {success_count} / {len(questions)} questions for {pdf_name}\n")
 
         except Exception as e:
             conn.rollback()
-            print(f"❌ Failed for {json_file}: {e}\n")
+            print(f" Failed for {json_file}: {e}\n")
 
     cursor.close()
     conn.close()
-    print("🎯 Done inserting all questions!")
+    print(" Done inserting all questions!")
 
 
 if __name__ == "__main__":
