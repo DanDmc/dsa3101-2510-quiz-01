@@ -17,6 +17,7 @@ Key Features:
 - Schema-compatible output for insert_questions.py
 """
 
+from pathlib import Path
 import os
 import json
 import re
@@ -28,9 +29,9 @@ import google.generativeai as genai
 API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = "gemini-2.5-flash"
 
-TEXT_DIR = os.path.join("data", "text_extracted")
-OUTPUT_DIR = os.path.join("data", "json_output")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+TEXT_DIR = Path("data/text_extracted")
+JSON_DIR = Path("data/json_output")
+os.makedirs(JSON_DIR, exist_ok=True)
 
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel(
@@ -185,27 +186,20 @@ def parse_file(txt_file):
 
 def parse_exam_papers():
     """Main entry: process all .txt files sequentially."""
-    txt_files = [f for f in os.listdir(TEXT_DIR) if f.lower().endswith(".txt")]
+    target_base = os.environ.get("TARGET_BASE")
+    if target_base:
+        txt_file = f"{target_base}.txt"
 
-    if not txt_files:
-        print("⚠️  No text files found in text_extracted/")
-        return
-
-    print(f"\n{'='*60}")
-    print(f"📚 QuizBank LLM Parser — Adaptive Chunking Edition")
-    print(f"{'='*60}")
-    print(f"Found {len(txt_files)} file(s)\n")
-
-    total_start = time.time()
-
-    for idx, txt_file in enumerate(txt_files, 1):
-        print(f"\n[{idx}/{len(txt_files)}] {txt_file}")
+        print(f"\n{'='*60}")
+        print(f"📄 Parsing single text file (TARGET_BASE): {target_base}.txt")
+        print(f"{'='*60}")
+        
         file_start = time.time()
 
         questions = parse_file(txt_file)
 
         if questions:
-            output_path = os.path.join(OUTPUT_DIR, os.path.splitext(txt_file)[0] + ".json")
+            output_path = os.path.join(JSON_DIR, os.path.splitext(txt_file)[0] + ".json")
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(questions, f, indent=2, ensure_ascii=False)
 
@@ -219,7 +213,7 @@ def parse_exam_papers():
         else:
             print(f"   ⚠️  No questions found")
 
-    total_elapsed = time.time() - total_start
+    total_elapsed = time.time() - file_start
     print(f"\n{'='*60}")
     print(f"✅ Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
     print(f"{'='*60}\n")

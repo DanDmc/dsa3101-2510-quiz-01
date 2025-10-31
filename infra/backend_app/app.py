@@ -1,26 +1,88 @@
-from flask import Flask, request, jsonify, send_file, abort, render_template_string
-import os
-import MySQLdb
 import pandas as pd
-from sqlalchemy import func, or_
-from contextlib import closing
-import mimetypes
-import json
-import datetime
 import numpy as np
-import pandas as pd
-import joblib
-from pathlib import Path
-import tempfile, shutil, hashlib, subprocess, shlex
-from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify, send_file, abort, render_template_string
 from flask_cors import CORS
+# from sqlalchemy import func, or_
+from contextlib import closing
+from werkzeug.utils import secure_filename
+from pathlib import Path
+import os, MySQLdb, mimetypes, json, datetime, joblib, tempfile, shutil, hashlib, subprocess, shlex
 
 app = Flask(__name__)
 
-# -----------------------------------------------------
-# 💡 FIX: CORS is set to the correct Vite port 5173
+# ---- Set CORS to Vite port 5173 ----
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
-# -----------------------------------------------------
+
+# Utility Helper Functions
+def parse_json_field(field_json):
+    """
+    Requires Docstring
+    """
+    if not field_json:
+        return None
+    try:
+        return json.loads(field_json)
+    except Exception:
+        return field_json
+    
+def ts(v):
+    """
+    Requires Docstring
+    """
+    if not v:
+        return None
+    if hasattr(v, "isoformat"):
+        return v.isoformat()
+    else:
+        return str(v)
+    
+def _strip_known_prefixes(p: str) -> str:
+    """
+    Requires Docstring
+    """
+    prefixes = ("data/", "source_files/")
+    for pref in prefixes:
+        if p.startswith(pref):
+            return p[len(pref):]
+    return p
+
+def _safe_join_file(base_dir: str, file_path: str) -> str:
+    """
+    Requires Docstring
+    """
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+    if os.path.isabs(file_path):
+        candidate = os.path.normpath(file_path)
+    else:
+        cleaned = _strip_known_prefixes(file_path.strip())
+        candidate = os.path.normpath(os.path.join(base_dir, cleaned))
+    base_dir_norm = os.path.normpath(base_dir)
+    if not (candidate == base_dir_norm or candidate.startswith(base_dir_norm + os.sep)):
+        raise FileNotFoundError("Invalid file path")
+    return candidate
+
+def _get_file_row(file_id: int):
+    """
+    Fetch file metadata from files table using its primary key
+
+    Args:
+        file_id (int): file_id of the desired file for download
+
+    Returns:
+        dict: {
+            "id": int,
+            "file_name": str,
+            "file_path" str, 
+            "uploaded_at": datetime.datetime
+        }
+
+        None if not found
+    """
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
+        return cur.fetchone()
 
 # ---- Upload / pipeline config ----
 app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
@@ -69,14 +131,21 @@ def has_column(conn, table: str, col: str) -> bool:
         """, (table, col))
         return c.fetchone()[0] == 1
 
-# HEALTH
+# ---- Health Route ----
 @app.route("/health", methods=["GET"])
-def health(): return {"ok": True}
+def health():
+    """
+    Requires Docstring
+    """
+    return {"ok": True}
 
-# GET QUESTIONS
+# ---- Main Query Route ----
 @app.route("/getquestion", methods=["GET"])
 def get_question():
-    # Query params
+    """
+    Requires Docstring
+    """
+    # Allowed Query Parameters
     course = request.args.get("course")
     year = request.args.get("year")
     semester = request.args.get("semester")
@@ -85,42 +154,38 @@ def get_question():
     question_type = request.args.get("question_type")
     question_no = request.args.get("question_no")
 
-    # concept_tags can be ?concept_tags=probability&concept_tags=bayes or ?concept_tags=probability,bayes
+    # Concept Tags supports both:
+        # ?concept_tags=a&concept_tags=b
+        # ?concept_tags=a,b
+    # Normalize into one list
     raw_tags = request.args.getlist("concept_tags")
     concept_tags = []
     for t in raw_tags:
         concept_tags.extend([s.strip() for s in t.split(",") if s.strip()])
 
-    # pagination / sorting
+    # Default Pagination and Sorting
     limit = int(request.args.get("limit", 50))
     offset = int(request.args.get("offset", 0))
     order_by_arg = (request.args.get("order_by") or "").lower()
     sort_arg = (request.args.get("sort") or "desc").lower()
 
     # Whitelist order_by to prevent SQL injection
+    # Future Improvement: Flexibility of order_by_args
     if order_by_arg == "created_at":
         order_by_sql = "q.created_at"
     elif order_by_arg == "difficulty":
-        # Check if a combined difficulty column exists, else default.
-        # For now, we will sort by the generated rating as a proxy.
         order_by_sql = "q.difficulty_rating_model"
     else:
         order_by_sql = "q.updated_at"
     sort_sql = "ASC" if sort_arg == "asc" else "DESC"
 
-    # SELECT columns (include some file metadata for convenience)
+    # SELECT columns 
     select_cols = [
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
         "q.question_type", "q.question_stem", "q.question_stem_html",
-        "q.concept_tags", 
-        # 💡 CRITICAL FIX: Changed from q.question_media to q.page_image_paths 
-        "q.page_image_paths", 
+        "q.concept_tags", "q.page_image_paths", 
         "q.last_used", "q.created_at", "q.updated_at",
-        # 🌟 NEW: Add question_options column
-        "q.question_options", 
-        # 🎯 NEW: Add question_answer column
-        "q.question_answer", 
-        # ADDED DIFFICULTY FIELDS 
+        "q.question_options", "q.question_answer",
         "q.difficulty_rating_manual", "q.difficulty_rating_model",
         "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
@@ -129,7 +194,7 @@ def get_question():
     where_clauses = []
     params = []
 
-    # ---- File-level filters (JOIN target) ----
+    # File table filters
     if course:
         where_clauses.append("f.course = %s")
         params.append(course)
@@ -143,7 +208,7 @@ def get_question():
         where_clauses.append("f.assessment_type = %s")
         params.append(assessment_type)
 
-    # ---- Question-level filters ----
+    # Question table filters
     if question_type:
         where_clauses.append("q.question_type = %s")
         params.append(question_type)
@@ -152,8 +217,6 @@ def get_question():
         params.append(question_no)
 
     if concept_tags:
-        # AND logic: require ALL provided tags to be present in q.concept_tags (a JSON array)
-        # MySQL will return true only if every element in the candidate array exists in the target array.
         where_clauses.append("JSON_CONTAINS(q.concept_tags, CAST(%s AS JSON))")
         params.append(json.dumps(concept_tags))
 
@@ -169,7 +232,7 @@ def get_question():
     """
     params.extend([limit, offset])
 
-    # Execute
+    # Execute Query
     with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
         cur.execute(sql, params)
         rows = cur.fetchall()
@@ -181,38 +244,18 @@ def get_question():
             q_id, q_base_id, q_version_id, file_id, q_no,
             q_type, stem, stem_html,
             concept_json, media_json, last_used, created_at, updated_at,
-            # 🌟 NEW: Unpack question_options
-            options_json,
-            # 🎯 NEW: Unpack question_answer
-            answer_json,
-            # UPDATED UNPACKING
+            options_json, answer_json,
             difficulty_manual, difficulty_model,
             f_course, f_year, f_semester, f_assessment, f_name, f_path
         ) = row
-
-        # Helper function to safely parse JSON field
-        def parse_json_field(field_json):
-            if not field_json: return None # Use None for single text field, or [] for array field
-            try:
-                return json.loads(field_json)
-            except Exception:
-                return field_json  # fallback raw if not valid JSON
         
-        # Convert JSON text to Python objects if present
+        # Normalize JSON fields
         concept_list = parse_json_field(concept_json)
         media_list = parse_json_field(media_json)
         options_list = parse_json_field(options_json)
-        # 🎯 NEW: Parse question answer. Assuming it might be a JSON structure or simple text.
         answer_data = parse_json_field(answer_json)
 
-
-        def ts(v):
-            # jsonify can't handle datetime directly; convert to ISO strings
-            return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
-        
-        # Determine the difficulty to use for a single field mapping (if required by frontend)
         difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
-
 
         items.append({
             "id": q_id,
@@ -224,22 +267,17 @@ def get_question():
             "question_stem": stem,
             "question_stem_html": stem_html,
             "concept_tags": concept_list,
-            # CRITICAL FIX: Map the content of page_image_paths back to 'question_media' for frontend
-            "question_media": media_list, 
-            # 🌟 NEW: Map parsed question options
+            "question_media": media_list,
             "question_options": options_list,
-            # 🎯 NEW: Map parsed question answer
             "question_answer": answer_data,
             "last_used": ts(last_used),
             "created_at": ts(created_at),
             "updated_at": ts(updated_at),
 
-            # ADDED DIFFICULTY MAPPING
             "difficulty_manual": difficulty_manual,
             "difficulty_model": difficulty_model,
-            "difficulty_level": difficulty_level, # Mapped to prevent frontend crash
-            
-            # Helpful file metadata in the payload
+            "difficulty_level": difficulty_level,
+
             "course": f_course,
             "year": f_year,
             "semester": f_semester,
@@ -250,49 +288,14 @@ def get_question():
 
     return jsonify({"total": len(items), "items": items})
 
-# DOWNLOAD
-# Directory for files in the container
+# ---- Download Route ----
 file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
-
-def _strip_known_prefixes(p: str) -> str:
-    # file_base_directory set as /app/data/source_files, so want to remove this part from the file_path
-    prefixes = ("data/", "source_files/")
-    for pref in prefixes:
-        if p.startswith(pref):
-            return p[len(pref):]
-    return p
-
-def _safe_join_file(base_dir: str, file_path: str) -> str:
-    # ensure file path is consistent to be in the file_base_directory
-    if not file_path:
-        raise FileNotFoundError("Empty file path")
-
-    # if the path is already from to the file_base_directory
-    if os.path.isabs(file_path):
-        candidate = os.path.normpath(file_path)
-    else:
-    # strip and connect to file_base_directory to ensure consistency in connectedness
-        cleaned = _strip_known_prefixes(file_path.strip())
-        candidate = os.path.normpath(os.path.join(base_dir, cleaned))
-
-    base_dir_norm = os.path.normpath(base_dir)
-    # Ensure candidate stays inside base_dir (no traversal)
-    if not (candidate == base_dir_norm or candidate.startswith(base_dir_norm + os.sep)):
-        raise FileNotFoundError("Invalid file path")
-    return candidate
-
-def _get_file_row(file_id: int):
-    with closing(get_connection()) as conn:
-        cur = conn.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
-        return cur.fetchone()
 
 @app.route("/files/<int:file_id>/download", methods=["GET"])
 def download_file(file_id: int):
     file_row = _get_file_row(file_id)
     if not file_row:
-        abort(404, description="Invalid file")
-
+        abort(404, description = "Invalid file")
     try:
         path_in_db = (file_row.get("file_name") or "").strip()
         full_path = _safe_join_file(file_base_directory, path_in_db)
@@ -401,6 +404,7 @@ def predict_difficulty():
         "items": results[:100],
     })
 
+# ---- Temporary Endpoint for backend to test upload feature ---
 @app.get("/upload")
 def upload_page():
     return render_template_string("""
@@ -418,8 +422,7 @@ def upload_page():
 </body></html>
 """)
 
-
-
+# ---- Upload Route ----
 @app.post("/upload_file")
 def upload_file():
     course = request.form.get("course")
@@ -469,6 +472,7 @@ def upload_file():
     if dest_path.exists():
         candidate_name = f"{stem}_{short_hash}{suffix}"
         dest_path = base_dir / candidate_name
+    dest_path = dest_path.relative_to('/app')
 
     # Move temp file into the canonical storage directory
     shutil.move(str(tmp_path), dest_path)

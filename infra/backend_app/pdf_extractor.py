@@ -15,14 +15,15 @@ The extracted text and page image references are used by llm_parser.py to
 structure questions into the database.
 """
 
+from pathlib import Path
 import os
 import pdfplumber
 
 
 def extract_text_and_page_images(
-    source_dir="data/source_files", 
-    text_dir="data/text_extracted",
-    media_dir="data/question_media"
+    source_dir = Path("data/source_files"),
+    text_dir = Path("data/text_extracted"),
+    media_dir = Path("data/question_media")
 ):
     """
     Extract text from all PDF files and save ALL pages as images.
@@ -30,7 +31,7 @@ def extract_text_and_page_images(
     This function processes all PDFs in the source directory, extracting text
     and saving every single page as an image for visual reference.
     
-    Parameters
+    Args:
     ----------
     source_dir : str, default="data/source_files"
         Directory containing the PDF files to process.
@@ -39,7 +40,7 @@ def extract_text_and_page_images(
     media_dir : str, default="data/question_media"
         Directory where ALL page images will be stored.
         
-    Returns
+    Returns:
     -------
     None
         Files are written to disk. Progress is printed to console.
@@ -58,22 +59,17 @@ def extract_text_and_page_images(
     """
     os.makedirs(text_dir, exist_ok=True)
     os.makedirs(media_dir, exist_ok=True)
-    
-    pdf_files = [f for f in os.listdir(source_dir) if f.lower().endswith(".pdf")]
 
-    if not pdf_files:
-        print(f"⚠️  No PDF files found in {source_dir}")
-        return
-
-    print(f"\n🔍 Found {len(pdf_files)} PDF file(s) to process\n")
-
-    for pdf_file in pdf_files:
-        pdf_path = os.path.join(source_dir, pdf_file)
-        base_name = os.path.splitext(pdf_file)[0]
+    target_pdf = os.environ.get("TARGET_PDF")
+    if target_pdf:
+        pdf_path = os.path.join(source_dir, target_pdf)
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"TARGET_PDF = {target_pdf} not found in {source_dir}")
+        base_name = os.path.splitext(target_pdf)[0]
         txt_filename = base_name + ".txt"
         text_output_path = os.path.join(text_dir, txt_filename)
 
-        print(f"🧾 Extracting text and saving ALL page images from {pdf_file}...")
+        print(f"🧾 Extracting text and saving ALL page images from {target_pdf}...")
 
         try:
             with pdfplumber.open(pdf_path) as pdf:
@@ -105,12 +101,11 @@ def extract_text_and_page_images(
                 f.write(text)
 
             print(f"✅ Saved extracted text to {text_output_path}")
-            print(f"   🖼️  Saved {total_pages} page image(s)")
+            print(f"🖼️ Saved {total_pages} page image(s)")
             print()
 
         except Exception as e:
-            print(f"❌ Failed to process {pdf_file}: {e}\n")
-
+            print(f"❌ Failed to process {target_pdf}: {e}\n")
 
 if __name__ == "__main__":
     extract_text_and_page_images()
