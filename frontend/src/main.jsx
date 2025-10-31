@@ -147,9 +147,9 @@ function App() {
                         goToCreatePage={goToCreatePage}
                         goToEditPage={goToEditPage}
                         searchParams={searchParams}
-                        questions={questions} 
+                        // --- REMOVED: No longer passing the master list ---
+                        // questions={questions} 
                         handleDeleteQuestions={handleDeleteQuestions}
-                        // --- 1. ADDED: Pass the search function and toggle state ---
                         goToSearchPage={goToSearchPage}
                         isSafeDeletionEnabled={isSafeDeletionEnabled}
                         setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
@@ -194,4 +194,6 @@ createRoot(document.getElementById('root')).render(
         <App />
     </BrowserRouter>
 );
+
+
 

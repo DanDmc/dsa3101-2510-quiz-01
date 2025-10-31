@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import {
-    Box, Button, TextField, InputAdornment, IconButton,
-    Switch, FormControlLabel, Typography,
-    // --- NEW IMPORTS ---
-    Menu, MenuItem, FormControl, InputLabel, Select,
-    Checkbox, ListItemText, OutlinedInput
+import { 
+    Box, Button, TextField, InputAdornment, IconButton, 
+    Switch, FormControlLabel, Typography, Menu, MenuItem,
+    FormControl, InputLabel, Select, Chip, OutlinedInput
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import { useTheme } from '@mui/material/styles'; // Import useTheme
 
-// --- NEW MOCK DATA (You can replace this with props or API data) ---
-const MOCK_YEARS = [2024, 2023, 2022, 2021, 2020];
+// --- MOCK DATA FOR FILTERS ---
+// These should match your database tables
+const MOCK_QUESTION_TYPES = ["MCQ", "Open-ended", "MRQ", "Ordering", "Matching", "Coding"];
+const MOCK_ASSESSMENT_TYPES = ["quiz", "midterm", "final", "assessment", "project"]; // <-- NEW
+const MOCK_YEARS = [2024, 2023, 2022, 2021];
 const MOCK_SEMESTERS = ["Semester 1", "Semester 2", "Special Term 1", "Special Term 2"];
-const MOCK_ASSESSMENT_TYPES = ["Final Exam", "Midterm", "Quiz", "Assignment"];
-const MOCK_CONCEPT_TAGS = ["Regression", "Probability", "Data Structures", "Algorithms", "Calculus", "Databases"];
+const MOCK_TAGS = ["linear regression", "residuals", "data visualization", "model suitability", "model limitations", "binary response"];
 
-
+// --- Style constant ---
 const LARGE_BUTTON_SX = {
     py: 1.2,
     px: 2.5,
@@ -26,172 +27,110 @@ const LARGE_BUTTON_SX = {
     fontWeight: 'bold',
 };
 
-// --- NEW: For the Multi-Select Dropdown ---
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+// --- Chip styles for multi-select ---
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
-function QuestionToolbar({
-    numSelected,
-    goToCreatePage,
-    goToEditPage,
-    goToSearchPage,
+function QuestionToolbar({ 
+    numSelected, 
+    goToCreatePage, 
+    goToEditPage, 
+    goToSearchPage, 
     handleDeleteClick,
     isSafeDeletionEnabled,
     handleSafeDeletionToggle
-}) {
+}) { 
+    
+    const theme = useTheme(); // Hook for chip styles
+    
+    // --- State for the filter menu anchor ---
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
 
+    // --- State for all filter values ---
     const [query, setQuery] = useState("");
-
-    // --- NEW: State for the filter menu ---
-    const [filterAnchorEl, setFilterAnchorEl] = useState(null);
-    const filterMenuOpen = Boolean(filterAnchorEl);
-
-    // --- NEW: State for filter values ---
-    const [filterAssessment, setFilterAssessment] = useState('');
+    // --- 1. CHANGED: This is now a string, not an array ---
+    const [filterQuestionType, setFilterQuestionType] = useState(''); // <-- WAS: []
+    const [filterAssessmentType, setFilterAssessmentType] = useState(''); 
     const [filterYear, setFilterYear] = useState('');
     const [filterSemester, setFilterSemester] = useState('');
-    const [filterTags, setFilterTags] = useState([]); // For multi-select
+    const [filterTags, setFilterTags] = useState([]);
 
-    // --- NEW: Handlers for the filter menu ---
-    const handleFilterMenuClick = (event) => {
-        setFilterAnchorEl(event.currentTarget);
+    // --- Menu open/close handlers ---
+    const handleMenuClick = (event) => {
+      setAnchorEl(event.currentTarget);
     };
-    const handleFilterMenuClose = () => {
-        setFilterAnchorEl(null);
-    };
-
-    // --- NEW: Handler for multi-select tag filter ---
-    const handleTagFilterChange = (event) => {
-        const { target: { value } } = event;
-        setFilterTags(
-          // On autofill we get a stringified value.
-          typeof value === 'string' ? value.split(',') : value,
-        );
+    const handleMenuClose = () => {
+      setAnchorEl(null);
     };
 
-    // --- 1. REMOVED: handleApplyFilters and handleSearchOrBrowse ---
-
-    // --- 2. ADDED: One single function to trigger the search ---
-    /**
-     * Gathers all search/filter data and passes it to the parent.
-     * This is triggered by both the search bar and the "Apply" button.
-     */
+    // --- Single function to trigger search ---
     const handleSearchTrigger = (e) => {
-        e?.preventDefault(); // Prevents form submission from reloading the page
+        e?.preventDefault(); // Prevent form submission
         
+        // Bundle all filter states into one object
         const searchParams = {
-            query: query,
-            assessment_type: filterAssessment,
+            query: query.trim(),
+            question_type: filterQuestionType, // <-- This is now a string
+            assessment_type: filterAssessmentType, 
             year: filterYear,
             semester: filterSemester,
-            concept_tags: filterTags
+            tags: filterTags
         };
 
-        // Log the combined search parameters
-        console.log("Sending search parameters:", searchParams);
-
-        // Call the prop function from main.jsx
+        // Send the complete search object to main.jsx
+        console.log("Sending search parameters:", searchParams); // For debugging
         goToSearchPage(searchParams);
-
-        // Close the filter menu if it's open
-        handleFilterMenuClose();
+        handleMenuClose(); // Close the menu after search
     };
 
-    // --- NEW: Handler to clear all filters ---
+    // --- Handler to clear all filters ---
     const handleClearFilters = () => {
-        setFilterAssessment('');
+        setQuery("");
+        setFilterQuestionType(''); // <-- 2. CHANGED: Reset to empty string
+        setFilterAssessmentType('');
         setFilterYear('');
         setFilterSemester('');
         setFilterTags([]);
+        // We can optionally trigger a new search for "all"
+        // goToSearchPage({ query: "", question_type: [], assessment_type: '', year: '', semester: '', tags: [] });
     };
-
-
-    const handleCreateClick = () => {
-        goToCreatePage();
+    
+    // --- Multi-select change handlers ---
+    const handleTagChange = (event) => {
+        const { target: { value } } = event;
+        setFilterTags(typeof value === 'string' ? value.split(',') : value);
     };
-
-    const handleEditClick = () => {
-        goToEditPage();
-    };
-
-    const handleSearchOrBrowse = (e) => {
-        e?.preventDefault();
-        goToSearchPage?.(query.trim());
-    };
-
+    
+    // --- 3. REMOVED: handleQuestionTypeChange (no longer multi-select) ---
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
 
             {/* Left Buttons (Create/Delete/Edit) */}
             <Box sx={{ display: 'flex', gap: 0.5 }}>
-                <Button
-                    variant="contained"
-                    startIcon={<CreateIcon />}
-                    sx={{
-                        backgroundColor: '#4caf50',
-                        '&:hover': { backgroundColor: '#388e3c' },
-                        ...LARGE_BUTTON_SX,
-                    }}
-                    onClick={handleCreateClick}
-                >
+                <Button variant="contained" startIcon={<CreateIcon />} sx={{ backgroundColor: '#4caf50', '&:hover': { backgroundColor: '#388e3c' }, ...LARGE_BUTTON_SX, }} onClick={goToCreatePage} >
                     Create / Upload
                 </Button>
-
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mr: 1 }}>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={isSafeDeletionEnabled}
-                                onChange={handleSafeDeletionToggle}
-                                color="primary"
-                            />
-                        }
-                        label={
-                            <Typography variant="caption" sx={{ whiteSpace: 'nowrap' }}>
-                                Safe Delete
-                            </Typography>
-                        }
-                        labelPlacement="start"
-                        sx={{ m: 0 }}
-                    />
+                    <FormControlLabel control={ <Switch checked={isSafeDeletionEnabled} onChange={handleSafeDeletionToggle} color="primary" /> } label={ <Typography variant="caption" sx={{ whiteSpace: 'nowrap' }}> Safe Delete </Typography> } labelPlacement="start" sx={{ m: 0 }} />
                 </Box>
-
-                <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    color="error"
-                    disabled={numSelected === 0}
-                    onClick={handleDeleteClick}
-                    sx={LARGE_BUTTON_SX}
-                >
+                <Button variant="outlined" startIcon={<DeleteIcon />} color="error" disabled={numSelected === 0} onClick={handleDeleteClick} sx={LARGE_BUTTON_SX} >
                     Delete
                 </Button>
-
-                <Button
-                    variant="outlined"
-                    startIcon={<EditIcon />}
-                    color="primary"
-                    disabled={numSelected === 0}
-                    onClick={handleEditClick}
-                    sx={LARGE_BUTTON_SX}
-                >
+                <Button variant="outlined" startIcon={<EditIcon />} color="primary" disabled={numSelected === 0} onClick={goToEditPage} sx={LARGE_BUTTON_SX} >
                     Edit
                 </Button>
             </Box>
 
-            {/* Search Bar */}
+            {/* Right Search Bar & Filter Button */}
             <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, ml: 3 }}>
-                
-                {/* --- 3. UPDATED: Form now uses the new trigger --- */}
                 <form onSubmit={handleSearchTrigger} style={{ width: '100%' }}>
                     <TextField
                         sx={{ width: '100%' }}
@@ -211,15 +150,11 @@ function QuestionToolbar({
                         }}
                     />
                 </form>
-
-                {/* --- UPDATED: Orange Filter Menu Button --- */}
+                
+                {/* --- FILTER MENU BUTTON --- */}
                 <IconButton
-                    id="filter-menu-button"
-                    aria-controls={filterMenuOpen ? 'filter-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={filterMenuOpen ? 'true' : undefined}
-                    onClick={handleFilterMenuClick} // CHANGED: This now opens the menu
-                    title="Filters" // UPDATED: Title
+                    onClick={handleMenuClick}
+                    title="Filters"
                     sx={{
                         backgroundColor: '#f57c00',
                         color: 'white',
@@ -231,26 +166,41 @@ function QuestionToolbar({
                     <ViewListIcon />
                 </IconButton>
 
-                {/* --- NEW: Filter Menu --- */}
+                {/* --- FILTER MENU POPUP --- */}
                 <Menu
-                    id="filter-menu"
-                    anchorEl={filterAnchorEl}
-                    open={filterMenuOpen}
-                    onClose={handleFilterMenuClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'filter-menu-button',
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleMenuClose}
+                    PaperProps={{
+                      style: {
+                        width: 400, // Set a width for the menu
+                        padding: '16px',
+                      },
                     }}
-                    // Keep menu open when clicking inside
-                    PaperProps={{ sx: { p: 2, width: '350px' } }}
                 >
-                    <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>Filters</Typography>
+                    <Typography variant="h6" gutterBottom>Filters</Typography>
+                    
+                    {/* --- 4. CHANGED: Question Type (MCQ, etc.) is now a single-select --- */}
+                    <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
+                        <InputLabel>Question Type</InputLabel>
+                        <Select
+                            value={filterQuestionType}
+                            onChange={(e) => setFilterQuestionType(e.target.value)}
+                            label="Question Type"
+                        >
+                            <MenuItem value=""><em>All Types</em></MenuItem>
+                            {MOCK_QUESTION_TYPES.map((type) => (
+                                <MenuItem key={type} value={type}>{type}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-                    {/* Assessment Type Dropdown */}
+                    {/* --- 2. NEW: Assessment Type (Quiz, Midterm) --- */}
                     <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
                         <InputLabel>Assessment Type</InputLabel>
                         <Select
-                            value={filterAssessment}
-                            onChange={(e) => setFilterAssessment(e.target.value)}
+                            value={filterAssessmentType}
+                            onChange={(e) => setFilterAssessmentType(e.target.value)}
                             label="Assessment Type"
                         >
                             <MenuItem value=""><em>All Types</em></MenuItem>
@@ -259,8 +209,8 @@ function QuestionToolbar({
                             ))}
                         </Select>
                     </FormControl>
-
-                    {/* Year Dropdown */}
+                    
+                    {/* --- 3. Year Dropdown --- */}
                     <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
                         <InputLabel>Year</InputLabel>
                         <Select
@@ -274,8 +224,8 @@ function QuestionToolbar({
                             ))}
                         </Select>
                     </FormControl>
-
-                    {/* Semester Dropdown */}
+                    
+                    {/* --- 4. Semester Dropdown --- */}
                     <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
                         <InputLabel>Semester</InputLabel>
                         <Select
@@ -288,56 +238,43 @@ function QuestionToolbar({
                                 <MenuItem key={sem} value={sem}>{sem}</MenuItem>
                             ))}
                         </Select>
-                    {/* --- THIS IS THE FIX --- */}
-                    {/* I added the missing closing tag here */}
                     </FormControl>
                     
-                    {/* Concept Tags Multi-Select */}
+                    {/* --- 5. Concept Tags Multi-select --- */}
                     <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
                         <InputLabel>Concept Tags</InputLabel>
                         <Select
                             multiple
                             value={filterTags}
-                            onChange={handleTagFilterChange}
+                            onChange={handleTagChange}
                             input={<OutlinedInput label="Concept Tags" />}
-                            renderValue={(selected) => selected.join(', ')}
-                            MenuProps={MenuProps}
+                            renderValue={(selected) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} size="small" />
+                                    ))}
+                                </Box>
+                            )}
                         >
-                            {MOCK_CONCEPT_TAGS.map((tag) => (
-                                <MenuItem key={tag} value={tag}>
-                                    <Checkbox checked={filterTags.indexOf(tag) > -1} />
-                                    <ListItemText primary={tag} />
+                            {MOCK_TAGS.map((tag) => (
+                                <MenuItem key={tag} value={tag} style={getStyles(tag, filterTags, theme)}>
+                                    {tag}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-
-                    {/* Action Buttons */}
+                    
+                    {/* --- Action Buttons --- */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                        <Button
-                            onClick={handleClearFilters}
-                            variant="text"
-                            size="small"
-                        >
-                            Clear
-                        </Button>
-                        <Button
-                            // --- 4. UPDATED: "Apply" button now uses the new trigger ---
-                            onClick={handleSearchTrigger}
-                            variant="contained"
-                            size="small"
-                            sx={{ backgroundColor: '#f57c00', '&:hover': { backgroundColor: '#e65100' } }}
-                        >
-                            Apply
-                        </Button>
+                        <Button onClick={handleClearFilters} size="small">Clear</Button>
+                        <Button onClick={handleSearchTrigger} variant="contained" size="small">Apply</Button>
                     </Box>
                 </Menu>
-
             </Box>
-
         </Box>
     );
 }
 
 export default QuestionToolbar;
+
 

@@ -13,8 +13,11 @@ import joblib
 from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # ---- Upload / pipeline config ----
 app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
@@ -75,9 +78,9 @@ def get_question():
     year = request.args.get("year")
     semester = request.args.get("semester")
     assessment_type = request.args.get("assessment_type")
-
     question_type = request.args.get("question_type")
     question_no = request.args.get("question_no")
+    q = request.args.get("q")  # Search text
 
     # concept_tags can be ?concept_tags=probability&concept_tags=bayes or ?concept_tags=probability,bayes
     raw_tags = request.args.getlist("concept_tags")
@@ -105,6 +108,8 @@ def get_question():
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
         "q.question_type", "q.question_stem", "q.question_stem_html",
         "q.concept_tags", "q.question_media", "q.last_used", "q.created_at", "q.updated_at",
+        "q.page_image_paths", "q.question_options", "q.question_answer",
+        "q.difficulty_rating_manual", "q.difficulty_rating_model",
         "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
 
@@ -112,7 +117,12 @@ def get_question():
     where_clauses = []
     params = []
 
-    # ---- File-level filters (JOIN target) ----
+    # ---- Text search ----
+    if q:
+        where_clauses.append("q.question_stem LIKE %s")
+        params.append(f"%{q}%")
+
+    # ---- File-level filters ----
     if course:
         where_clauses.append("f.course = %s")
         params.append(course)
@@ -134,14 +144,15 @@ def get_question():
         where_clauses.append("q.question_no = %s")
         params.append(question_no)
 
+    # ---- Concept tags ----
     if concept_tags:
-        # AND logic: require ALL provided tags to be present in q.concept_tags (a JSON array)
-        # MySQL will return true only if every element in the candidate array exists in the target array.
         where_clauses.append("JSON_CONTAINS(q.concept_tags, CAST(%s AS JSON))")
         params.append(json.dumps(concept_tags))
 
+    # Combine WHERE
     where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
+    # Final SQL
     sql = f"""
         SELECT {", ".join(select_cols)}
         FROM questions q
@@ -164,22 +175,23 @@ def get_question():
             q_id, q_base_id, q_version_id, file_id, q_no,
             q_type, stem, stem_html,
             concept_json, media_json, last_used, created_at, updated_at,
+            page_image_paths, question_options, question_answer,
+            diff_manual, diff_model,
             f_course, f_year, f_semester, f_assessment, f_name, f_path
         ) = row
 
-        # Convert JSON text to Python objects if present
-        try:
-            concept_list = json.loads(concept_json) if concept_json else []
-        except Exception:
-            concept_list = concept_json  # fallback raw
+        # Convert JSON fields safely
+        def try_load_json(val):
+            try:
+                return json.loads(val) if val else []
+            except Exception:
+                return val
 
-        try:
-            media_list = json.loads(media_json) if media_json else []
-        except Exception:
-            media_list = media_json  # fallback raw
+        concept_list = try_load_json(concept_json)
+        media_list = try_load_json(media_json)
+        page_image_list = try_load_json(page_image_paths)
 
         def ts(v):
-            # jsonify can't handle datetime directly; convert to ISO strings
             return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
 
         items.append({
@@ -193,11 +205,14 @@ def get_question():
             "question_stem_html": stem_html,
             "concept_tags": concept_list,
             "question_media": media_list,
+            "page_image_paths": page_image_list,
+            "question_options": question_options,
+            "question_answer": question_answer,
+            "difficulty_rating_manual": diff_manual,
+            "difficulty_rating_model": diff_model,
             "last_used": ts(last_used),
             "created_at": ts(created_at),
             "updated_at": ts(updated_at),
-
-            # Helpful file metadata in the payload
             "course": f_course,
             "year": f_year,
             "semester": f_semester,

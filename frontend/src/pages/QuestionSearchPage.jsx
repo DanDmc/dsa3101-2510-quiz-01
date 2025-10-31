@@ -3,83 +3,92 @@ import {
   Box, Container, CssBaseline, Grid, Typography, Divider,
   Stack, Button,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Checkbox, Chip, Paper, IconButton
+  Checkbox, Chip, Paper, IconButton, CircularProgress
 } from "@mui/material";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import SortIcon from "@mui/icons-material/Sort";
-
-// --- 1. IMPORT THE TOOLBAR ---
 import QuestionToolbar from '../components/QuestionToolbar';
 
-// --- 2. UPDATED Prop signature ---
+// --- 1. Define the API base URL (same as main.jsx) ---
+const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api';
+
+const DEFAULT_PARAMS = { query: "", question_type: "", assessment_type: "", year: "", semester: "", tags: [] };
+
 export default function QuestionSearchPage({
   searchParams,
-  questions,
+  // questions prop is no longer needed
   goToHomePage,
   goToCreatePage,
   goToEditPage,
   handleDeleteQuestions,
-  // --- Props to pass down to the toolbar ---
   goToSearchPage,
   isSafeDeletionEnabled,
   setIsSafeDeletionEnabled
 }) {
 
-  const allQuestions = useMemo(() => questions, [questions]);
-  const [rows, setRows] = useState(allQuestions);
+  const [rows, setRows] = useState([]); 
+  const [loading, setLoading] = useState(false); // Loading state
   const [selected, setSelected] = useState([]);
   const [sortDirection, setSortDirection] = useState("none");
+  const [localParams, setLocalParams] = useState(searchParams || DEFAULT_PARAMS);
 
-  // --- 3. UPDATED: This effect filters the list based on searchParams ---
+  const handleLocalSearch = (params) => {
+    console.log("Setting local search params:", params);
+    setLocalParams(params);
+  };
+
+  // --- THIS IS THE FINAL VERSION OF THE API CALL ---
   useEffect(() => {
-    let filteredList = [...allQuestions];
-
-    if (searchParams) {
-      const { query, assessment_type, year, semester, tags } = searchParams;
+    const fetchFilteredQuestions = async () => {
+      setLoading(true);
       
-      const kw = query ? query.trim().toLowerCase() : "";
-      if (kw) {
-        const keywords = kw.split(/[\s,]+/).filter(Boolean);
-        filteredList = filteredList.filter((q) => {
-          const hay =
-            `${(q.question_stem || "").toLowerCase()} ` +
-            `${(q.question_type || "").toLowerCase()} ` +
-            `${(q.concept_tags || []).join(" ").toLowerCase()}`;
-          return keywords.some((k) => hay.includes(k));
-        });
+      const params = new URLSearchParams();
+      
+      // We use 'localParams' now, which is guaranteed to be up-to-date.
+      if (localParams.query) {
+        params.append('q', localParams.query); 
+      }
+      if (localParams.question_type) params.append('question_type', localParams.question_type);
+      if (localParams.assessment_type) params.append('assessment_type', localParams.assessment_type);
+      if (localParams.year) params.append('year', localParams.year);
+      if (localParams.semester) params.append('semester', localParams.semester);
+      if (localParams.tags && localParams.tags.length > 0) {
+        localParams.tags.forEach(tag => params.append('concept_tags', tag));
       }
 
-      if (assessment_type) {
-        filteredList = filteredList.filter(q => 
-          (q.question_type || "").toLowerCase() === assessment_type.toLowerCase()
-        );
-      }
-      if (year) { console.log("Filtering by Year (not implemented):", year); }
-      if (semester) { console.log("Filtering by Semester (not implemented):", semester); }
-      if (tags && tags.length > 0) {
-        filteredList = filteredList.filter(q => 
-          (q.concept_tags || []).some(tag => tags.includes(tag))
-        );
-      }
-    }
+      const queryString = params.toString();
+      const fetchUrl = `${BASE_API_URL}/getquestion?${queryString}`;
+      
+      console.log("Fetching from API:", fetchUrl); // For debugging
 
-    setRows(filteredList);
+      try {
+        const response = await fetch(fetchUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setRows(data.items || []);
+
+      } catch (error) {
+        console.error("Failed to fetch questions:", error);
+        setRows([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilteredQuestions();
     setSelected([]);
     
-  }, [searchParams, allQuestions]);
+  }, [localParams]); 
 
-  
-  // --- 4. Handlers to be passed to the Toolbar ---
-  // These handlers need to calculate which *full question objects*
-  // are selected before calling the functions from main.jsx.
-  
+  // Handlers to be passed to the Toolbar
   const handleEditClick = () => {
     const questionsToEdit = rows.filter(q => selected.includes(q.id));
     goToEditPage(questionsToEdit); 
   };
 
   const handleDeleteClick = () => {
-    // We confirm here *before* calling the main handler
     if (window.confirm(`Are you sure you want to delete ${selected.length} question(s)?`)) {
       handleDeleteQuestions(selected);
       setSelected([]);
@@ -90,7 +99,7 @@ export default function QuestionSearchPage({
     setIsSafeDeletionEnabled(event.target.checked);
   };
 
-  // --- 5. Table selection handlers (unchanged) ---
+  // Table selection handlers
   const toggleAll = (e) => {
     if (e.target.checked) setSelected(rows.map((r) => r.id));
     else setSelected([]);
@@ -105,19 +114,16 @@ export default function QuestionSearchPage({
 
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
         
-        {/* --- 6. RENDER THE TOOLBAR --- */}
-        {/* We pass all the functions and state from main.jsx down to it */}
+        {/* Render the unified toolbar */}
         <QuestionToolbar
           numSelected={selected.length}
           goToCreatePage={goToCreatePage}
-          goToEditPage={handleEditClick}      // <-- Uses local helper
-          goToSearchPage={goToSearchPage}     // <-- From props
-          handleDeleteClick={handleDeleteClick} // <-- Uses local helper
+          goToEditPage={handleEditClick}
+          goToSearchPage={handleLocalSearch} // <-- PASS THE LOCAL HANDLER
+          handleDeleteClick={handleDeleteClick}
           isSafeDeletionEnabled={isSafeDeletionEnabled}
           handleSafeDeletionToggle={handleSafeDeletionToggle}
         />
-
-        {/* --- 7. REMOVED the old button bar --- */}
 
         <Box mt={2} mb={1}>
           <Typography variant="h6" fontWeight="bold">
@@ -126,69 +132,67 @@ export default function QuestionSearchPage({
           <Divider sx={{ my: 1 }} />
         </Box>
 
-        {/* --- 8. The Table (Unchanged) --- */}
+        {/* The Table */}
         <Paper elevation={0}>
           <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      indeterminate={selected.length > 0 && selected.length < rows.length}
-                      checked={rows.length > 0 && selected.length === rows.length}
-                      onChange={toggleAll}
-                    />
-                  </TableCell>
-                  <TableCell>Question</TableCell>
-                  <TableCell width={160}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                      <Typography variant="body2" fontWeight="bold">
-                        Question Type
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        aria-label="sort by type"
-                        sx={{ transition: "transform 0.2s", transform: "rotate(90deg)" }}
-                      >
-                        <SortIcon fontSize="small" color={"disabled"} />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-                  <TableCell width={220}>Source (File ID)</TableCell>
-                  <TableCell width={56} align="right">
-                    <IconButton size="small"><ViewModuleIcon fontSize="small" /></IconButton>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((q) => (
-                  <TableRow key={q.id} hover>
+            {/* Added Loading Indicator */}
+            {loading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
                     <TableCell padding="checkbox">
-                      <Checkbox checked={selected.includes(q.id)} onChange={() => toggleOne(q.id)} />
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        {truncate(q.question_stem || "", 120)}
-                      </Typography>
-                      <Stack direction="row" spacing={1} sx={{ mt: 0.5, flexWrap: "wrap" }}>
-                        {(q.concept_tags || []).slice(0, 4).map((t, i) => (
-                          <Chip key={i} label={t} size="small" variant="outlined" />
-                        ))}
-                      </Stack>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        label={prettyType(q.question_type)}
-                        color={q.question_type?.toLowerCase() === "coding" ? "warning" : "default"}
-                        size="small" variant="outlined"
+                      <Checkbox
+                        indeterminate={selected.length > 0 && selected.length < rows.length}
+                        checked={rows.length > 0 && selected.length === rows.length}
+                        onChange={toggleAll}
                       />
                     </TableCell>
-                    <TableCell><Typography variant="body2">{q.file_id || 'N/A'}</Typography></TableCell>
-                    <TableCell align="right">{/* per-row actions */}</TableCell>
+                    <TableCell>Question</TableCell>
+                    <TableCell width={160}>Question Type</TableCell>
+                    <TableCell width={120}>Assessment</TableCell>
+                    <TableCell width={80}>Year</TableCell>
+                    <TableCell width={120}>Semester</TableCell>
+                    <TableCell width={56} align="right">
+                      <IconButton size="small"><ViewModuleIcon fontSize="small" /></IconButton>
+                    </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {rows.map((q) => (
+                    <TableRow key={q.id} hover>
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={selected.includes(q.id)} onChange={() => toggleOne(q.id)} />
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                          {truncate(q.question_stem || "", 120)}
+                        </Typography>
+                        <Stack direction="row" spacing={1} sx={{ mt: 0.5, flexWrap: "wrap" }}>
+                          {(q.concept_tags || []).slice(0, 4).map((t, i) => (
+                            <Chip key={i} label={t} size="small" variant="outlined" />
+                          ))}
+                        </Stack>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={prettyType(q.question_type)}
+                          color={q.question_type?.toLowerCase() === "coding" ? "warning" : "default"}
+                          size="small" variant="outlined"
+                        />
+                      </TableCell>
+                      <TableCell><Typography variant="body2">{q.assessment_type || 'N/A'}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{q.year || 'N/A'}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{q.semester || 'N/A'}</Typography></TableCell>
+                      <TableCell align="right">{/* per-row actions */}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </TableContainer>
 
           <Box sx={{ display: "flex", justifyContent: "space-between", p: 1.5, color: "text.secondary" }}>
@@ -197,12 +201,11 @@ export default function QuestionSearchPage({
           </Box>
         </Paper>
       </Container>
-
     </Box>
   );
 }
 
-
+// Helper functions
 function truncate(s, n) { return !s ? "" : (s.length > n ? s.slice(0, n - 1) + "…" : s); }
 function prettyType(t) {
   if (!t) return "Unknown";
@@ -212,7 +215,9 @@ function prettyType(t) {
     coding: "Coding",
     mrq: "MRQ",
     ordering: "Ordering",
-    matching: "Matching"
+    matching: "Matching",
+    "fill-in-the-blanks": "Fill-in-the-blanks",
+    others: "Others"
   };
   return m[t.toLowerCase()] || t;
 }
