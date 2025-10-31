@@ -1,199 +1,280 @@
-import { StrictMode, useState, useEffect } from 'react'; 
+// src/main.jsx
+import { StrictMode, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-//import './index.css';
-
-// --- ADD THIS IMPORT ---
 import { BrowserRouter } from 'react-router-dom';
 
-// --- Component Imports ---
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Container from '@mui/material/Container'; 
+import Container from '@mui/material/Container';
 
-// --- Your Page Imports ---
 import HomePage from './pages/HomePage.jsx';
 import CreateQuestionPage from './pages/CreateQuestionPage.jsx';
 import EditPage from './pages/EditPage.jsx';
 import QuestionSearchPage from './pages/QuestionSearchPage.jsx';
 
-
-// Mock data for the example - FIXED HEADERS to match SQL/Table column names
+// -------- Mock fallback data (unchanged) --------
 const mockQuestions = [
-    { id: 1, question_stem: 'Convert 1110010101 from binary to text', question_type: 'Open ended', difficultyManual: 0.5, difficultyGenerated: null, file_id: 101 },
-    { id: 2, question_stem: 'If a route function returns the string "Hello world!", the HTTP status...', question_type: 'Open ended', difficultyManual: 0.8, difficultyGenerated: null, file_id: 102 },
-    { id: 3, question_stem: 'How many 8-digit numbers can be formed using 2, 3, 4, 4, 5, 5, 5, 5?', question_type: 'Open ended', difficultyManual: 0.2, difficultyGenerated: null, file_id: 103 },
-    { id: 4, question_stem: 'In a simple regression, the RMSE of the regression line is equal to 0.6...', question_type: 'MCQ', difficultyManual: 0.6, difficultyGenerated: null, file_id: 104 },
-    { id: 5, question_stem: 'In an SQL database, a record with ID = 1 already exists. Another record...', question_type: 'MCQ', difficultyManual: 0.9, difficultyGenerated: null, file_id: 105 },
-    { id: 6, question_stem: 'Which of the following statement(s) is/are correct about primary keys...', question_type: 'MRQ', difficultyManual: 0.3, difficultyGenerated: null, file_id: 106 },
-    { id: 7, question_stem: 'You are testing a Flask API endpoint that checks book orders. The...', question_type: 'MRQ', difficultyManual: 0.7, difficultyGenerated: null, file_id: 107 },
-    { id: 8, question_stem: 'Correctly order the following steps using the Karush-Kuhn-Tucker (KKT)...', question_type: 'Ordering', difficultyManual: 0.44, difficultyGenerated: null, file_id: 108 },
-    { id: 9, question_stem: 'Order the typical stages of finding the Maximum Likelihood Estimator...', question_type: 'Ordering', difficultyManual: 0.32, difficultyGenerated: null, file_id: 109 },
-    { id: 10, question_stem: 'Match the term in the Karush-Kuhn-Tucker (KKT) necessary conditions...', question_type: 'Matching', difficultyManual: 0.25, difficultyGenerated: null, file_id: 110 },
-    { id: 11, question_stem: 'Match the following matrix or vector components from the Multiple...', question_type: 'Matching', difficultyManual: 0.41, difficultyGenerated: null, file_id: 111 },
-    { id: 12, question_stem: 'Match the estimator criterion to the correct principle or context it represents', question_type: 'Matching', difficultyManual: 0.12, difficultyGenerated: null, file_id: 112 },
+  { id: 1, question_stem: 'Convert 1110010101 from binary to text', question_type: 'Open ended', difficultyManual: 0.5, difficultyGenerated: null, file_id: 101 },
+  { id: 2, question_stem: 'If a route function returns the string "Hello world!", the HTTP status...', question_type: 'Open ended', difficultyManual: 0.8, difficultyGenerated: null, file_id: 102 },
+  { id: 3, question_stem: 'How many 8-digit numbers can be formed using 2, 3, 4, 4, 5, 5, 5, 5?', question_type: 'Open ended', difficultyManual: 0.2, difficultyGenerated: null, file_id: 103 },
+  { id: 4, question_stem: 'In a simple regression, the RMSE of the regression line is equal to 0.6...', question_type: 'MCQ', difficultyManual: 0.6, difficultyGenerated: null, file_id: 104 },
+  { id: 5, question_stem: 'In an SQL database, a record with ID = 1 already exists. Another record...', question_type: 'MCQ', difficultyManual: 0.9, difficultyGenerated: null, file_id: 105 },
+  { id: 6, question_stem: 'Which of the following statement(s) is/are correct about primary keys...', question_type: 'MRQ', difficultyManual: 0.3, difficultyGenerated: null, file_id: 106 },
+  { id: 7, question_stem: 'You are testing a Flask API endpoint that checks book orders. The...', question_type: 'MRQ', difficultyManual: 0.7, difficultyGenerated: null, file_id: 107 },
+  { id: 8, question_stem: 'Correctly order the following steps using the Karush-Kuhn-Tucker (KKT)...', question_type: 'Ordering', difficultyManual: 0.44, difficultyGenerated: null, file_id: 108 },
+  { id: 9, question_stem: 'Order the typical stages of finding the Maximum Likelihood Estimator...', question_type: 'Ordering', difficultyManual: 0.32, difficultyGenerated: null, file_id: 109 },
+  { id: 10, question_stem: 'Match the term in the Karush-Kuhn-Tucker (KKT) necessary conditions...', question_type: 'Matching', difficultyManual: 0.25, difficultyGenerated: null, file_id: 110 },
+  { id: 11, question_stem: 'Match the following matrix or vector components from the Multiple...', question_type: 'Matching', difficultyManual: 0.41, difficultyGenerated: null, file_id: 111 },
+  { id: 12, question_stem: 'Match the estimator criterion to the correct principle or context it represents', question_type: 'Matching', difficultyManual: 0.12, difficultyGenerated: null, file_id: 112 },
 ];
 
-
-
-// Define page constants for clarity
-const PAGES = {
-    HOME: 'home',
-    CREATE: 'create',
-    EDIT: 'edit',
-    SEARCH: 'search',
-};
-
-// 庁 FIX 1: Define the base URL using the environment variable
-const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api'; 
+// -------- App constants & helpers --------
+const PAGES = { HOME: 'home', CREATE: 'create', EDIT: 'edit', SEARCH: 'search' };
+const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api';
 console.log(`API Target: ${BASE_API_URL}`);
 
+const COURSE_UNKNOWN_KEY = 'UNKNOWN';
+const courseKey = (val) => {
+  const s = (val || '').trim();
+  if (!s) return COURSE_UNKNOWN_KEY;
+  return s.toUpperCase();
+};
+const courseLabel = (key) => {
+  if (!key || key === COURSE_UNKNOWN_KEY) return 'Unknown';
+  return key;
+};
+
+// Parse "2024/2025" → 2024
+const startYearFromAYLabel = (ay) => {
+  if (!ay || ay === 'All' || ay === 'Unknown') return '';
+  const m = String(ay).match(/^(\d{4})\//);
+  return m ? Number(m[1]) : '';
+};
 
 function App() {
-    const [currentPage, setCurrentPage] = useState(PAGES.HOME);
-    const [selectedQuestions, setSelectedQuestions] = useState([]);
-    
-    // --- State for search filters (from previous step) ---
-    const [searchParams, setSearchParams] = useState(null);
+  const [currentPage, setCurrentPage] = useState(PAGES.HOME);
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
 
-    // Initialize 'questions' state as empty array 
-    const [questions, setQuestions] = useState([]); 
+  // Search payload kept here and forwarded to QuestionSearchPage
+  const [searchParams, setSearchParams] = useState(null);
+  const [searchQ, setSearchQ] = useState('');
 
-    // 検 ISSUE 1 FIX: State for the safe deletion toggle. Default to true (safe).
-    const [isSafeDeletionEnabled, setIsSafeDeletionEnabled] = useState(true);
+  // Home table rows
+  const [questions, setQuestions] = useState([]);
 
-    // --- MODIFIED: Function to fetch data from the backend API with fallback ---
-    const fetchQuestions = async () => {
+  // Toolbar options (kept in main and injected into HomePage)
+  const [toolbarCourseOptions, setToolbarCourseOptions] = useState([
+    { key: 'All', label: 'All' },
+    { key: 'UNKNOWN', label: 'Unknown' },
+  ]);
+  const [toolbarConceptOptions, setToolbarConceptOptions] = useState(['All']);
+
+  // Safe delete toggle
+  const [isSafeDeletionEnabled, setIsSafeDeletionEnabled] = useState(true);
+
+  // Build toolbar options from a list of question items
+  const buildOptionsFromItems = (items) => {
+    const courseMap = new Map();
+    courseMap.set('All', 'All');
+    courseMap.set(COURSE_UNKNOWN_KEY, 'Unknown');
+
+    const concepts = new Set();
+
+    for (const q of items) {
+      const k = q?.course_key && String(q.course_key).trim()
+        ? String(q.course_key).toUpperCase()
+        : courseKey(q?.course);
+      const lbl = q?.course && String(q.course).trim()
+        ? String(q.course).trim()
+        : courseLabel(k);
+      courseMap.set(k, lbl);
+
+      const tags = Array.isArray(q?.concept_tags) ? q.concept_tags : [];
+      tags.forEach((t) => concepts.add(String(t)));
+    }
+
+    const courses = [...courseMap.entries()]
+      .map(([key, label]) => ({ key, label }))
+      .sort((a, b) => {
+        if (a.key === 'All') return -1;
+        if (b.key === 'All') return 1;
+        if (a.key === COURSE_UNKNOWN_KEY) return -1;
+        if (b.key === COURSE_UNKNOWN_KEY) return 1;
+        return a.key.localeCompare(b.key);
+      });
+
+    const conceptArr = ['All', ...[...concepts].sort((a, b) => a.localeCompare(b))];
+    return { courses, conceptArr };
+  };
+
+  // Fetch initial questions and prime toolbar options; enrich from /search if sparse
+  const fetchQuestions = async () => {
+    try {
+      const res = await fetch(`${BASE_API_URL}/getquestion`);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const data = await res.json();
+      const items = data.items || [];
+      setQuestions(items);
+
+      const { courses, conceptArr } = buildOptionsFromItems(items);
+      setToolbarCourseOptions(courses);
+      setToolbarConceptOptions(conceptArr);
+
+      // If options are sparse (e.g., no tags or only All/Unknown courses), try /search to enrich
+      const onlyAllUnknown = courses.length <= 2; // All + Unknown
+      const noConcepts = conceptArr.length <= 1;  // only 'All'
+      if (onlyAllUnknown || noConcepts) {
         try {
-            // Use the dynamic base URL
-            const response = await fetch(`${BASE_API_URL}/getquestion`); 
-            
-            if (!response.ok) {
-                // If the HTTP request is successful but the server returns an error code (e.g., 404, 500)
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            setQuestions(data.items || []); 
-
-        } catch (error) {
-            console.error("Could not fetch questions from the API. Falling back to mock data.", error);
-            // 庁 FIX 2: Fallback to mock data on ANY API failure (connection, timeout, server error)
-            setQuestions(mockQuestions); // Uses the now-corrected mockQuestions
+          const res2 = await fetch(`${BASE_API_URL}/search`);
+          const data2 = await res2.json();
+          const arr = Array.isArray(data2) ? data2 : data2?.items || [];
+          const enriched = buildOptionsFromItems(arr);
+          // Merge with what we already had (keeps All/Unknown)
+          setToolbarCourseOptions(enriched.courses);
+          setToolbarConceptOptions(enriched.conceptArr);
+        } catch (e2) {
+          console.warn('Optional /search enrichment failed:', e2);
         }
-    };
-    
-    // Use useEffect to fetch data when the component mounts
-    useEffect(() => {
-        fetchQuestions();
-    }, []); 
+      }
+    } catch (err) {
+      console.error('Could not fetch questions; falling back to mock data.', err);
+      setQuestions(mockQuestions);
 
-    // Navigation handlers
-    const goToHomePage = () => {
-        setCurrentPage(PAGES.HOME);
-        // Re-fetch questions when navigating back to home page
-        fetchQuestions(); 
-    };
-    
-    const goToCreatePage = () => setCurrentPage(PAGES.CREATE);
-    
-    // --- UPDATED: This function accepts the 'params' object (from previous step) ---
-    const goToSearchPage = (params) => {
-        console.log("Search params received in main.jsx:", params);
-        setSearchParams(params); // Store the search/filter data
-        setCurrentPage(PAGES.SEARCH); // Change to the search page
-    };
-    
-    const goToEditPage = (questionsToEdit) => {
-        if (questionsToEdit && questionsToEdit.length > 0) {
-            setSelectedQuestions(questionsToEdit);
-            setCurrentPage(PAGES.EDIT);
-        } else {
-            console.warn("Please select at least one question to edit."); 
-        }
-    };
+      const { courses, conceptArr } = buildOptionsFromItems(mockQuestions);
+      setToolbarCourseOptions(courses);
+      setToolbarConceptOptions(conceptArr);
+    }
+  };
 
-    // 検 ISSUE 1 FIX: Modified handler to check the safe deletion toggle state
-    const handleDeleteQuestions = (idsToDelete) => {
-        if (window.confirm(`Are you sure you want to delete ${idsToDelete.length} question(s)?`)) {
-            
-            if (isSafeDeletionEnabled) {
-                // Log/call safe deletion API endpoint
-                console.log(`[Safe Deletion Mode]: Initiating soft/transactional delete for IDs: ${idsToDelete.join(', ')}`);
-                // Placeholder for API call: await fetch(`${BASE_API_URL}/softdeletequestion`, { method: 'POST', body: JSON.stringify({ ids: idsToDelete }) });
-            } else {
-                // Log/call permanent deletion API endpoint
-                console.warn(`[PERMANENT DELETION MODE]: Permanently deleting IDs: ${idsToDelete.join(', ')}. No undo!`);
-                // Placeholder for API call: await fetch(`${BASE_API_URL}/permanentdeletequestion`, { method: 'POST', body: JSON.stringify({ ids: idsToDelete }) });
-            }
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
-            // Update UI state regardless of the deletion mode for demonstration
-            setQuestions(prevQuestions => 
-                prevQuestions.filter(q => !idsToDelete.includes(q.id))
-            );
-        }
-    };
+  // Navigation handlers
+  const goToHomePage = () => {
+    setCurrentPage(PAGES.HOME);
+    fetchQuestions();
+  };
+  const goToCreatePage = () => setCurrentPage(PAGES.CREATE);
 
-    const renderPage = () => {
-        switch (currentPage) {
-            case PAGES.CREATE:
-                return <CreateQuestionPage goToHomePage={goToHomePage} />;
-            case PAGES.EDIT:
-                return <EditPage selectedQuestions={selectedQuestions} goToHomePage={goToHomePage} />;
+  // Accept a string keyword OR a filter object from the toolbar/home
+  const goToSearchPage = (payload = '') => {
+    if (typeof payload === 'string') {
+      const text = payload.trim();
+      setSearchQ(text);
+      setSearchParams({ query: text });
+    } else if (payload && typeof payload === 'object') {
+      const {
+        query = '',
+        course = '',
+        question_type = '',
+        assessment_type = '',
+        academic_year = '',   // toolbar may send AY label
+        year = '',            // or direct year
+        semester = '',
+        tags = [],
+      } = payload;
 
-            case PAGES.SEARCH:
-                return (
-                    // --- UPDATED: Pass all necessary props ---
-                    <QuestionSearchPage 
-                        goToCreatePage={goToCreatePage}
-                        goToEditPage={goToEditPage}
-                        searchParams={searchParams}
-                        // --- REMOVED: No longer passing the master list ---
-                        // questions={questions} 
-                        handleDeleteQuestions={handleDeleteQuestions}
-                        goToSearchPage={goToSearchPage}
-                        isSafeDeletionEnabled={isSafeDeletionEnabled}
-                        setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
-                    />
-                );
-            
-            case PAGES.HOME:
-            default:
-                return (
-                    <HomePage 
-                        questions={questions} 
-                        goToCreatePage={goToCreatePage}
-                        goToEditPage={goToEditPage} 
-                        goToSearchPage={goToSearchPage} 
-                        goToHomePage={goToHomePage}
-                        handleDeleteQuestions={handleDeleteQuestions}
-                        // 検 ISSUE 1 FIX: Pass the state and setter to HomePage
-                        isSafeDeletionEnabled={isSafeDeletionEnabled}
-                        setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
-                    />
-                );
-        }
-    };
+      const resolvedYear =
+        year !== '' && year !== undefined
+          ? year
+          : startYearFromAYLabel(academic_year);
 
-    // --- THE RETURN BLOCK (UNCHANGED) ---
-    return (
-        <StrictMode>
-            <Header goToHomePage={goToHomePage} />
+      setSearchQ((query || '').trim());
+      setSearchParams({
+        query: (query || '').trim(),
+        course: String(course || '').trim(),
+        question_type: String(question_type || '').trim(),
+        assessment_type: String(assessment_type || '').trim(),
+        year: resolvedYear,
+        semester: String(semester || '').trim(),
+        tags: Array.isArray(tags) ? tags.map(String) : [],
+      });
+    } else {
+      setSearchQ('');
+      setSearchParams({ query: '' });
+    }
+    setCurrentPage(PAGES.SEARCH);
+  };
 
-            <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
-                {renderPage()}
-            </Container>
-            
-            <Footer />
-        </StrictMode>
-    );
+  const goToEditPage = (questionsToEdit) => {
+    if (questionsToEdit && questionsToEdit.length > 0) {
+      setSelectedQuestions(questionsToEdit);
+      setCurrentPage(PAGES.EDIT);
+    } else {
+      console.warn('Please select at least one question to edit.');
+    }
+  };
+
+  const handleDeleteQuestions = (idsToDelete) => {
+    if (window.confirm(`Are you sure you want to delete ${idsToDelete.length} question(s)?`)) {
+      if (isSafeDeletionEnabled) {
+        console.log(`[Safe Deletion Mode]: Soft-deleting IDs: ${idsToDelete.join(', ')}`);
+      } else {
+        console.warn(`[PERMANENT DELETION MODE]: Permanently deleting IDs: ${idsToDelete.join(', ')}`);
+      }
+      setQuestions((prev) => prev.filter((q) => !idsToDelete.includes(q.id)));
+    }
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case PAGES.CREATE:
+        return <CreateQuestionPage goToHomePage={goToHomePage} />;
+      case PAGES.EDIT:
+        return <EditPage selectedQuestions={selectedQuestions} goToHomePage={goToHomePage} />;
+      case PAGES.SEARCH:
+        return (
+          <QuestionSearchPage
+            initialQuery={searchQ}
+            goToCreatePage={goToCreatePage}
+            goToEditPage={goToEditPage}
+            searchParams={searchParams}
+            // Push fresh dropdowns back to main → then to Home toolbar
+            onOptionsChange={(courses, concepts) => {
+              if (Array.isArray(courses) && courses.length) setToolbarCourseOptions(courses);
+              if (Array.isArray(concepts) && concepts.length) setToolbarConceptOptions(concepts);
+            }}
+            handleDeleteQuestions={handleDeleteQuestions}
+            goToSearchPage={goToSearchPage}
+            isSafeDeletionEnabled={isSafeDeletionEnabled}
+            setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
+          />
+        );
+      case PAGES.HOME:
+      default:
+        return (
+          <HomePage
+            questions={questions}
+            goToCreatePage={goToCreatePage}
+            goToEditPage={goToEditPage}
+            goToSearchPage={goToSearchPage}
+            goToHomePage={goToHomePage}
+            handleDeleteQuestions={handleDeleteQuestions}
+            isSafeDeletionEnabled={isSafeDeletionEnabled}
+            setIsSafeDeletionEnabled={setIsSafeDeletionEnabled}
+            // Provide toolbar options immediately
+            courseOptions={toolbarCourseOptions}
+            conceptOptions={toolbarConceptOptions}
+          />
+        );
+    }
+  };
+
+  return (
+    <StrictMode>
+      <Header goToHomePage={goToHomePage} />
+      <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
+        {renderPage()}
+      </Container>
+      <Footer />
+    </StrictMode>
+  );
 }
 
-// --- THIS IS THE MODIFIED LINE ---
 createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );
-
-
-
