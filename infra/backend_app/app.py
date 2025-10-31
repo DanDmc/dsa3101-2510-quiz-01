@@ -123,7 +123,18 @@ difficulty_model = None
 featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
 
 def _load_training_helpers():
-    """Dynamically import the training script so that pickled helper functions can be resolved."""
+    """
+    Dynamically import the training script so that pickled helper functions can be resolved.
+    
+    Args: 
+        None
+
+    Returns:
+        None
+    
+    Raises:
+        Logs warnings only, does not raise to avoid crashes.
+    """
     if not os.path.exists(featurepath):
         app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
         return
@@ -138,7 +149,6 @@ def _load_training_helpers():
         app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
 
 _load_training_helpers()
-
 try:
     difficulty_model = joblib.load(MODEL_PATH)
     app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
@@ -146,6 +156,18 @@ except Exception as e:
     app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
 
 def parse_tags(val):
+    """
+    Converts the concept tags into JSON list format.
+
+    Args:
+        val (list/tuple/JSON): stored as JSON list
+
+    Return:
+        list: If val is not empty, else empty list []
+    
+    Raises:
+        None
+    """
     if not val:
         return []
     if isinstance(val, (list, tuple)):
@@ -156,6 +178,23 @@ def parse_tags(val):
         return []
 
 def predict_row(row: dict) -> float:
+    """
+    Predicts the difficulty rating using the Machine Learning model when taking the row as input
+
+    Args:
+        row (dict): {
+            "question_stem": stem,
+            "tags_text": tags_text,
+            "question_type": row.get("question_type") or "",
+            }
+    
+    Returns:
+        float: difficulty rating value predicted by the model used
+    
+    Raises:
+        None
+
+    """
     stem = (row.get("question_stem") or "").strip()
     tags_text = " ".join(parse_tags(row.get("concept_tags")))
     X = pd.DataFrame([{
@@ -525,8 +564,6 @@ def download_file(file_id: int):
 
 # DIFFICULTY RATING MODEL
 # load the difficulty rating model
-
-
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
     """
