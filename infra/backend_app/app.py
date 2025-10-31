@@ -138,7 +138,7 @@ def health():
     """
     Requires Docstring
     """
-    return {"ok": True}
+    return {"ok": True, "model_loaded": difficulty_model is not None}, 200
 
 # ---- Main Query Route ----
 @app.route("/getquestion", methods=["GET"])

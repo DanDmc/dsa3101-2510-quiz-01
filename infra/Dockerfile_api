@@ -7,7 +7,7 @@ WORKDIR /app
 
 # OS deps for mysqlclient, etc.
 RUN apt-get update && apt-get install -y --no-install-recommends \ 
-    default-libmysqlclient-dev build-essential pkg-config \ 
+    default-libmysqlclient-dev build-essential pkg-config curl \ 
     && rm -rf /var/lib/apt/lists/*
 
 # Copy app (must include requirements.txt inside backend_app/)
