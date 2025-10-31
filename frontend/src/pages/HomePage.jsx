@@ -104,6 +104,7 @@ function HomePage({
                         // 🌟 ISSUE 1 FIX: Pass the new props to QuestionToolbar for display
                         isSafeDeletionEnabled={isSafeDeletionEnabled}
                         handleSafeDeletionToggle={handleSafeDeletionToggle}
+                        onSearch={(q) => goToSearchPage(q)}
                     />
                 </Grid>
 

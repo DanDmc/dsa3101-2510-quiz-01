@@ -55,6 +55,9 @@ function App() {
     // Initialize 'questions' state as empty array 
     const [questions, setQuestions] = useState([]); 
 
+    // NEW: keep the homepage keyword to seed QuestionSearchPage
+    const [searchQ, setSearchQ] = useState("");
+
     // 🌟 ISSUE 1 FIX: State for the safe deletion toggle. Default to true (safe).
     const [isSafeDeletionEnabled, setIsSafeDeletionEnabled] = useState(true);
 
@@ -92,7 +95,11 @@ function App() {
     };
     
     const goToCreatePage = () => setCurrentPage(PAGES.CREATE);
-    const goToSearchPage = () => setCurrentPage(PAGES.SEARCH);
+    // CHANGED: accept keyword and store it
+    const goToSearchPage = (q = "") => {
+        setSearchQ(q || "");
+        setCurrentPage(PAGES.SEARCH);
+    };
     
     const goToEditPage = (questionsToEdit) => {
         if (questionsToEdit && questionsToEdit.length > 0) {
@@ -134,6 +141,7 @@ function App() {
             case PAGES.SEARCH:
                 return (
                     <QuestionSearchPage 
+                        initialQuery={searchQ}
                         goToCreatePage={goToCreatePage}
                         goToEditPage={goToEditPage}
                     />
