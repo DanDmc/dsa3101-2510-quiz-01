@@ -19,4 +19,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # If your Flask app exposes 'app = Flask(__name__)' in app.py, this is robust:
-CMD ["flask", "--app", "app:app", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
+# We use gunicorn instead of flask since it allows us to set the "--timeout" flag (stops flask timeouts for lengthy processes like upload_file) and "workers"
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "600", "--workers", "3", "app:app"]

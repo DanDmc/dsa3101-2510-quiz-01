@@ -26,6 +26,9 @@ const GREY_BACKGROUND = '#f5f5f5';
 const TIGHT_PADDING_Y = '8px'; 
 const CHECKBOX_PADDING = '4px'; 
 
+// ⭐ NEW CONSTANT: Defines the stem text to be excluded
+const PLACEHOLDER_STEM = '[Placeholder Question for Group Management]'; 
+
 const getChipColor = (type) => {
   switch (type) {
     case 'MCQ':
@@ -37,7 +40,7 @@ const getChipColor = (type) => {
   }
 };
 
-// Pagination Actions Component
+// Pagination Actions Component (UNCHANGED)
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, onPageChange } = props;
@@ -60,11 +63,16 @@ function TablePaginationActions(props) {
 // Main Component
 function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
   const [page, setPage] = useState(0);
-  const totalQuestions = questions.length;
+
+  // ⭐ MODIFICATION 1: Filter out placeholder questions immediately
+  const actualQuestions = questions.filter(q => q.question_stem !== PLACEHOLDER_STEM);
+
+  const totalQuestions = actualQuestions.length; // Use the filtered count
 
   const handleChangePage = (event, newPage) => setPage(newPage);
 
-  const visibleQuestions = questions.slice(
+  // ⭐ MODIFICATION 2: Base pagination on the filtered list
+  const visibleQuestions = actualQuestions.slice(
     page * ROWS_PER_PAGE,
     page * ROWS_PER_PAGE + ROWS_PER_PAGE,
   );
@@ -72,6 +80,8 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * ROWS_PER_PAGE - totalQuestions) : ROWS_PER_PAGE - visibleQuestions.length;
 
+  // ... (rest of constants and helpers are unchanged)
+  
   const borderedCellStyle = { borderRight: BORDER_STYLE };
   const centeredText = { textAlign: 'center' };
   const wrappingHeaderStyle = { whiteSpace: 'normal', wordBreak: 'break-word', fontWeight: 'bold' };
@@ -79,8 +89,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
   const checkboxCellStyle = { padding: CHECKBOX_PADDING, ...borderedCellStyle };
   const questionColumnStyle = { maxWidth: QUESTION_COLUMN_MAX_WIDTH, width: QUESTION_COLUMN_MAX_WIDTH, minWidth: '200px', boxSizing: 'border-box', overflow: 'hidden' };
 
-  // This function remains the same, but it will receive data under the new names
-  const renderDifficulty = (value) => (value == null ? '-' : Number(value).toFixed(2)); // Changed to toFixed(2) for better score display
+  const renderDifficulty = (value) => (value == null ? '-' : Number(value).toFixed(2));
 
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
@@ -151,6 +160,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
               <TableCell sx={checkboxCellStyle}>
                 <Checkbox
                   color="primary"
+                  // ⭐ MODIFICATION 3: Use totalQuestions for all/indeterminate check
                   indeterminate={selected.length > 0 && selected.length < totalQuestions}
                   checked={totalQuestions > 0 && selected.length === totalQuestions}
                   onChange={onSelectAllClick}
@@ -238,6 +248,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
       </TableContainer>
 
       <TablePagination
+        // ⭐ MODIFICATION 4: Use totalQuestions for count
         rowsPerPageOptions={[]} 
         component="div"
         count={totalQuestions} 

@@ -3,7 +3,7 @@
     "question_no": "1",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "From a collection of nine paintings, four are to be selected to hang side-by-side on a gallery wall in positions 1, 2, 3 and 4. In how many ways can this be done?",
+    "question_stem": "From a collection of nine paintings, four are to be selected to hang side-by-side on\na gallery wall in positions 1, 2, 3 and 4. In how many ways can this be done?",
     "question_options": [
       {
         "label": "A",
@@ -24,7 +24,8 @@
     ],
     "concept_tags": [
       "permutations",
-      "combinatorics"
+      "combinations",
+      "counting"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page2.png"
@@ -34,7 +35,7 @@
     "question_no": "2",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "A group of 60 freshmen are to be randomly assigned into two classes of 30 students each, one on the first floor and one on the second floor. In how many ways can this be done?",
+    "question_stem": "A group of 60 freshmen are to be randomly assigned into two classes of 30\nstudents each, one on the first floor and one on the second floor. In how many\nways can this be done?",
     "question_options": [
       {
         "label": "A",
@@ -49,13 +50,13 @@
         "text": ""
       }
     ],
-    "question_answer": "A.",
+    "question_answer": "A. ",
     "page_numbers": [
       3
     ],
     "concept_tags": [
       "combinations",
-      "combinatorics"
+      "counting"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page3.png"
@@ -65,7 +66,7 @@
     "question_no": "3",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.93,
-    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is p, where p >0.5. We flip the coin twice, and define the following events:\nA : we observe head followed by a tail\n1\nA : we observe a tail followed by a head.\n2\nWhat is P(A | A U A )?\n1 1 2",
+    "question_stem": "Suppose we have with us a biased coin. In other words, the probability of heads is\np, where p >0.5. We flip the coin twice, and define the following events:\nA : we observe head followed by a tail\n1\nA : we observe a tail followed by a head.\n2\nWhat is P(A | A U A )?\n1 1 2",
     "question_options": [
       {
         "label": "A",
@@ -85,8 +86,8 @@
       4
     ],
     "concept_tags": [
-      "probability",
       "conditional probability",
+      "probability",
       "events"
     ],
     "page_image_paths": [
@@ -97,7 +98,7 @@
     "question_no": "4",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "If 8 identical blackboards are to be divided among 4 schools, how many divisions are possible?",
+    "question_stem": "If 8 identical blackboards are to be divided among 4 schools, how many\ndivisions are possible?",
     "question_options": [
       {
         "label": "A",
@@ -113,8 +114,9 @@
       5
     ],
     "concept_tags": [
-      "combinatorics",
-      "stars and bars"
+      "combinations with repetition",
+      "stars and bars",
+      "counting"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page5.png"
@@ -124,7 +126,7 @@
     "question_no": "5",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.94,
-    "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many possible assignments are there?",
+    "question_stem": "If 8 distinct blackboards are to be divided equally among 4 schools, how many\npossible assignments are there?",
     "question_options": [
       {
         "label": "A",
@@ -139,13 +141,14 @@
         "text": ""
       }
     ],
-    "question_answer": "A.",
+    "question_answer": "A. ",
     "page_numbers": [
       6
     ],
     "concept_tags": [
-      "combinatorics",
-      "distributions"
+      "permutations",
+      "combinations",
+      "counting"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page6.png"
@@ -170,13 +173,14 @@
         "text": ""
       }
     ],
-    "question_answer": "C.",
+    "question_answer": "C. ",
     "page_numbers": [
       7
     ],
     "concept_tags": [
-      "probability",
-      "cumulative distribution function"
+      "probability distributions",
+      "cumulative distribution function",
+      "CDF"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page7.png"
@@ -186,7 +190,7 @@
     "question_no": "7",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.83,
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define to be the event that head appears first on the i-th\nE\ni\ntoss. What is P(A wins)?",
+    "question_stem": "Two players, A and B, alternately and independently flip a coin\nand the first player to obtain a head wins. Assume player A flips\nfirst. Define to be the event that head appears first on the i-th\nE\ni\ntoss. What is P(A wins)?",
     "question_options": [
       {
         "label": "A",
@@ -201,14 +205,14 @@
         "text": ""
       }
     ],
-    "question_answer": "A.",
+    "question_answer": "A. ",
     "page_numbers": [
       8
     ],
     "concept_tags": [
       "probability",
       "geometric distribution",
-      "infinite series"
+      "expected value"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page8.png"
@@ -238,9 +242,9 @@
       9
     ],
     "concept_tags": [
-      "probability",
       "conditional probability",
-      "coin toss"
+      "binomial distribution",
+      "probability"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page9.png"
@@ -250,7 +254,7 @@
     "question_no": "9",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player to obtain a head wins. Assume player A flips first. Define E to be the event that\ni\nhead appears first on the i-th toss. Which of the following statements is true about\nthe sequence of events E?\ni",
+    "question_stem": "Two players, A and B, alternately and independently flip a coin and the first player\nto obtain a head wins. Assume player A flips first. Define E to be the event that\ni\nhead appears first on the i-th toss. Which of the following statements is true about\nthe sequence of events E?\ni",
     "question_options": [
       {
         "label": "A",
@@ -299,7 +303,7 @@
     ],
     "concept_tags": [
       "probability mass function",
-      "convex combination"
+      "mixtures"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page11.png"
@@ -309,7 +313,7 @@
     "question_no": "11",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.86,
-    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n(Image - Refer to question paper)\nWhat is the value of c?",
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...} (Image - Refer to question paper)\nWhat is the value of c?",
     "question_options": [
       {
         "label": "A",
@@ -330,7 +334,7 @@
     ],
     "concept_tags": [
       "probability mass function",
-      "normalization constant"
+      "normalization"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page12.png"
@@ -361,8 +365,8 @@
     ],
     "concept_tags": [
       "probability",
-      "dice",
-      "random variable"
+      "dice rolls",
+      "events"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page13.png"
@@ -372,7 +376,7 @@
     "question_no": "13",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds:\n(Image - Refer to question paper)",
+    "question_stem": "Suppose that P(A) >0, P(B) >0 and P(AB) >0. Then the following equality holds: (Image - Refer to question paper)",
     "question_options": [
       {
         "label": "A",
@@ -390,7 +394,7 @@
     "concept_tags": [
       "probability",
       "conditional probability",
-      "Bayes' theorem"
+      "set theory"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page14.png"
@@ -400,7 +404,7 @@
     "question_no": "14",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.94,
-    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\n(Image - Refer to question paper)\nFind P(X = 1 | {X=1} U {X=2})",
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...} (Image - Refer to question paper)\nFind P(X = 1 | {X=1} U {X=2})",
     "question_options": [
       {
         "label": "A",
@@ -453,7 +457,7 @@
     "concept_tags": [
       "probability",
       "card games",
-      "symmetry"
+      "permutations"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page16.png"
@@ -463,7 +467,7 @@
     "question_no": "16",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "question_stem": "The cdf of X is given by the following function, for i in {1,2,3,4,5,6, ... } :\n(Image - Refer to question paper)\nWhat is the support of X?",
+    "question_stem": "The cdf of X is given by the following function, for i in {1,2,3,4,5,6, ... } : (Image - Refer to question paper)\nWhat is the support of X?",
     "question_options": [
       {
         "label": "A",
@@ -495,7 +499,7 @@
     "question_no": "17",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.98,
-    "question_stem": "The cdf of X is given by the following function, for i = 1, 2, 3, 4, 5,.... :\n(Image - Refer to question paper)\nWhat is P(X <2)?",
+    "question_stem": "The cdf of X is given by the following function, for i = 1, 2, 3, 4, 5,.... : (Image - Refer to question paper)\nWhat is P(X <2)?",
     "question_options": [
       {
         "label": "A",
@@ -527,7 +531,7 @@
     "question_no": "18",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.91,
-    "question_stem": "The cdf of X is given by the following function, for i >= 1:\n(Image - Refer to question paper)\nWhat is the pmf of X?",
+    "question_stem": "The cdf of X is given by the following function, for i >= 1: (Image - Refer to question paper)\nWhat is the pmf of X?",
     "question_options": [
       {
         "label": "A",
@@ -613,7 +617,7 @@
     "concept_tags": [
       "probability",
       "random variables",
-      "urn problem"
+      "urn problems"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page21.png"
@@ -621,7 +625,7 @@
   },
   {
     "question_no": "21",
-    "question_type": "others",
+    "question_type": "fill-in-the-blanks",
     "difficulty_rating_manual": 0.98,
     "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E, F and G below. There is only one matching description for each event.\n1. E occurs. 2. At least two of the events occur.\n3. Exactly two events occur. 4. The empty set occurs.\n5. None of the three events occur. 6. Only E occurs.\n_____________ 1 (E U F U G)c\n_____________ 2 EF U EG U FG",
     "question_options": [],
@@ -640,7 +644,7 @@
   },
   {
     "question_no": "22",
-    "question_type": "others",
+    "question_type": "fill-in-the-blanks",
     "difficulty_rating_manual": 0.91,
     "question_stem": "Let E, F and G be three events from a sample space. Match the following descriptions to the events regarding E,F and G below. There is only one matching description for each event.\n1. E occurs. 2. At least two of the events occur.\n3. Exactly two events occur. 4. Exactly one of the events occurs.\n5. Only E occurs. 6. At least one of the events occurs.\n_____________ 1 E U F U G\n_____________ 2 E Fc Gc",
     "question_options": [],
@@ -711,7 +715,7 @@
     "concept_tags": [
       "probability",
       "independence",
-      "conditional probability"
+      "set theory"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page25.png"
@@ -721,7 +725,7 @@
     "question_no": "25",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.96,
-    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events:\nA : the k-th toss is heads.\nk\nWhat is P(A A A A ... A )?",
+    "question_stem": "A fair coin is tossed independently n times, where n >= 2. Define the following events:\nA : the k-th toss is heads.\nk\nWhat is P(A A A A ... A )?\n1 2 3 4 n",
     "question_options": [
       {
         "label": "A",
@@ -806,8 +810,8 @@
     ],
     "concept_tags": [
       "probability",
-      "dice roll",
-      "sequential events"
+      "events",
+      "dice rolls"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page28.png"
@@ -838,8 +842,8 @@
     ],
     "concept_tags": [
       "probability",
-      "discrete random variable",
-      "events"
+      "random variables",
+      "discrete distributions"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page29.png"
@@ -881,7 +885,7 @@
     "question_no": "30",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "question_stem": "Suppose that A and B are events with positive probability. Determine if the following statement is true or false: If A and B are not mutually exclusive, then they are independent.",
+    "question_stem": "Suppose that A and B are events with positive probability. Determine if the\nfollowing statement is true or false:\nIf A and B are not mutually exclusive, then they are independent.",
     "question_options": [
       {
         "label": "A",
@@ -898,8 +902,8 @@
     ],
     "concept_tags": [
       "probability",
-      "events",
-      "independence"
+      "mutually exclusive events",
+      "independent events"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page31.png"
@@ -909,7 +913,7 @@
     "question_no": "31",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.75,
-    "question_stem": "Suppose that A and B form a partition of the sample space, and P(A) >0 and P(B) >0. Which of the following statements is false?",
+    "question_stem": "Suppose that A and B form a partition of the sample space, and P(A) >0 and P(B)\n>0. Which of the following statements is false?",
     "question_options": [
       {
         "label": "A",
@@ -930,7 +934,7 @@
     ],
     "concept_tags": [
       "probability",
-      "events",
+      "partitions",
       "conditional probability"
     ],
     "page_image_paths": [
@@ -941,7 +945,7 @@
     "question_no": "32",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.98,
-    "question_stem": "A mobile phone manufacturing company has two factories X and Y. Factories X and Y produce 30% and 70% of all mobile phones respectively. 9% of the phones produced by factory X are defective, and 1% of the phones produced by factory Y are defective. If a phone bought from the company is found to be defective, what is the probability that it was produced by factory X?",
+    "question_stem": "A mobile phone manufacturing company has two factories X and Y. Factories X\nand Y produce 30% and 70% of all mobile phones respectively. 9% of the phones\nproduced by factory X are defective, and 1% of the phones produced by factory Y\nare defective. If a phone bought from the company is found to be defective, what is\nthe probability that it was produced by factory X?",
     "question_options": [
       {
         "label": "A",
@@ -961,6 +965,7 @@
       33
     ],
     "concept_tags": [
+      "probability",
       "conditional probability",
       "Bayes' theorem"
     ],
@@ -992,8 +997,8 @@
       34
     ],
     "concept_tags": [
-      "probability distributions",
-      "pmf"
+      "probability mass function",
+      "discrete random variables"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page34.png"
@@ -1003,7 +1008,7 @@
     "question_no": "34",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.99,
-    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...} Evaluate the cdf at i=2.",
+    "question_stem": "Consider the following pmf, for i = {1, 2, 3, 4, 5, ...}\nEvaluate the cdf at i=2.",
     "question_options": [
       {
         "label": "A",
@@ -1023,8 +1028,9 @@
       35
     ],
     "concept_tags": [
-      "probability distributions",
-      "cdf"
+      "probability mass function",
+      "cumulative distribution function",
+      "discrete random variables"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page35.png"
@@ -1034,7 +1040,7 @@
     "question_no": "35",
     "question_type": "mcq",
     "difficulty_rating_manual": 1.0,
-    "question_stem": "A and B are mutually exclusive events. Further, P(A) = 0.3 and P(B) = 0.2. What is the probability that both events occur?",
+    "question_stem": "A and B are mutually exclusive events. Further, P(A) = 0.3 and P(B) = 0.2. What is\nthe probability that both events occur?",
     "question_options": [
       {
         "label": "A",
@@ -1055,8 +1061,7 @@
     ],
     "concept_tags": [
       "probability",
-      "events",
-      "mutually exclusive"
+      "mutually exclusive events"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page36.png"
@@ -1066,7 +1071,7 @@
     "question_no": "36",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.96,
-    "question_stem": "How many ways can we arrange the letters in the word \"VISITING\" such that no two \"I\"s are adjacent? Hint: Experiment 1: Permute the non-I letters. Experiment 2: Choose where to put the I's.",
+    "question_stem": "How many ways can we arrange the letters in the word \"VISITING\" such that no two \"I\"s are\nadjacent? Hint: Experiment 1: Permute the non-I letters. Experiment 2: Choose where\nto put the I's.",
     "question_options": [
       {
         "label": "A",
@@ -1087,7 +1092,8 @@
     ],
     "concept_tags": [
       "combinatorics",
-      "permutations"
+      "permutations",
+      "arrangements"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page37.png"
@@ -1118,7 +1124,8 @@
     ],
     "concept_tags": [
       "combinatorics",
-      "permutations"
+      "permutations",
+      "arrangements"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page38.png"
@@ -1128,7 +1135,7 @@
     "question_no": "38",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.57,
-    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a pair of fair six-sided dice, and then summing the values on the dice at each trial. Thus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes of the first three trials are recorded as 3, 7 and then 12. We define E to be the event that no 5 or 7 appears on the first n-1 trials and a 5 n appears on the n-th trial. Is E an increasing or decreasing sequence? n",
+    "question_stem": "Independent trials are performed indefintely, where each trial consists of rolling a\npair of fair six-sided dice, and then summing the values on the dice at each trial.\nThus, if we observe (1,2), (3,4) and (6,6) in the first three trials, then the outcomes\nof the first three trials are recorded as 3, 7 and then 12.\nWe define E to be the event that no 5 or 7 appears on the first n-1 trials and a 5\nn\nappears on the n-th trial. Is E an increasing or decreasing sequence?\nn",
     "question_options": [
       {
         "label": "A",
@@ -1149,8 +1156,8 @@
     ],
     "concept_tags": [
       "probability",
-      "sequences",
-      "independent trials"
+      "random processes",
+      "dice rolls"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page39.png"
@@ -1160,7 +1167,7 @@
     "question_no": "39",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following statements is not true for all possible choices of A, B and C?",
+    "question_stem": "Suppose that A, B and C are events from a sample space. Which of the following\nstatements is not true for all possible choices of A, B and C?",
     "question_options": [
       {
         "label": "A",
@@ -1181,7 +1188,8 @@
     ],
     "concept_tags": [
       "probability",
-      "set theory"
+      "set theory",
+      "events"
     ],
     "page_image_paths": [
       "data/question_media/ST2131_final_page40.png"
@@ -1206,16 +1214,17 @@
         "text": ""
       }
     ],
-    "question_answer": "A.",
+    "question_answer": "A",
     "page_numbers": [
-      "41"
+      41
     ],
     "concept_tags": [
       "probability",
-      "combinations",
-      "counting"
+      "combinatorics"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page41.png"
+    ]
   },
   {
     "question_no": "41",
@@ -1238,13 +1247,15 @@
     ],
     "question_answer": "A. n=4",
     "page_numbers": [
-      "42"
+      42
     ],
     "concept_tags": [
       "probability",
-      "combinations"
+      "combinatorics"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page42.png"
+    ]
   },
   {
     "question_no": "42",
@@ -1267,14 +1278,16 @@
     ],
     "question_answer": "A. 1/56",
     "page_numbers": [
-      "43"
+      43
     ],
     "concept_tags": [
-      "probability mass function",
       "random variables",
+      "pmf",
       "transformations"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page43.png"
+    ]
   },
   {
     "question_no": "43",
@@ -1297,14 +1310,16 @@
     ],
     "question_answer": "C. 1/3",
     "page_numbers": [
-      "44"
+      44
     ],
     "concept_tags": [
-      "probability mass function",
       "random variables",
+      "pmf",
       "events"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page44.png"
+    ]
   },
   {
     "question_no": "44",
@@ -1325,15 +1340,17 @@
         "text": ""
       }
     ],
-    "question_answer": "B.",
+    "question_answer": "B",
     "page_numbers": [
-      "45"
+      45
     ],
     "concept_tags": [
-      "counting",
-      "assignments"
+      "combinatorics",
+      "counting"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page45.png"
+    ]
   },
   {
     "question_no": "45",
@@ -1352,13 +1369,15 @@
     ],
     "question_answer": "A. True",
     "page_numbers": [
-      "46"
+      46
     ],
     "concept_tags": [
       "probability",
-      "events"
+      "set theory"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page46.png"
+    ]
   },
   {
     "question_no": "46",
@@ -1377,14 +1396,16 @@
     ],
     "question_answer": "B. False",
     "page_numbers": [
-      "47"
+      47
     ],
     "concept_tags": [
       "probability",
-      "disjoint events",
-      "complementary events"
+      "set theory",
+      "disjoint events"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page47.png"
+    ]
   },
   {
     "question_no": "47",
@@ -1407,13 +1428,15 @@
     ],
     "question_answer": "A. 0.69",
     "page_numbers": [
-      "48"
+      48
     ],
     "concept_tags": [
       "conditional probability",
       "Bayes' theorem"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page48.png"
+    ]
   },
   {
     "question_no": "48",
@@ -1436,14 +1459,16 @@
     ],
     "question_answer": "B. {k, k+1, ... , n+m}",
     "page_numbers": [
-      "49"
+      49
     ],
     "concept_tags": [
       "random variables",
       "support",
-      "sampling without replacement"
+      "hypergeometric distribution"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page49.png"
+    ]
   },
   {
     "question_no": "49",
@@ -1466,12 +1491,15 @@
     ],
     "question_answer": "A. 0.42",
     "page_numbers": [
-      "50"
+      50
     ],
     "concept_tags": [
-      "probability mass function",
-      "conditional probability"
+      "probability",
+      "random variables",
+      "expected value"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2131_final_page50.png"
+    ]
   }
 ]

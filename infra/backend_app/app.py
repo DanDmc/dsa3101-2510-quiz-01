@@ -21,7 +21,10 @@ app = Flask(__name__)
 
 # -----------------------------------------------------
 # 💡 FIX: CORS is set to the correct Vite port 5173
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app, 
+     origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
 # -----------------------------------------------------
 
 # ---- Upload / pipeline config ----
@@ -498,8 +501,8 @@ def upload_page():
 
 
 @app.post("/api/upload_file")
-@cross_origin(origin='localhost:5173')  # ⬅️ CORS fix remains
 def upload_file():
+    print("--- STARTING UPLOAD HANDLER ---") # <--- ADD THIS
     import time
     course = request.form.get("course")
     year = request.form.get("year")
@@ -583,7 +586,13 @@ def upload_file():
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"}), 500
     # 3) Insert questions
-    code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
+    code, out, err = _run(
+    "python insert_questions.py", 
+    env_extra={
+        "TARGET_BASE": base, 
+        "FILE_ID": str(file_id) # <-- Pass the integer ID as a string
+    }
+)
     logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500

@@ -3,7 +3,7 @@
     "question_no": "1(a)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "If we use linear regression model with intercept to predict a response y based on a regressor x given 100 observations, the average of the residuals, (1/100) Σ100 e , will i=1 i always be zero. True or False?",
+    "question_stem": "If we use linear regression model with intercept to predict a response y based on a regressor x given 100 observations, the average of the residuals, (1/100) 100 e , will i=1 i always be zero. True or False?",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -21,7 +21,7 @@
     "question_no": "1(b)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "If I am using House Price and Household Monthly Income (both in Singapore dollars) as two features for the K-means algorithm to divide Singapore households into groups, I do not need to standardize them since they have the same units. True or False?",
+    "question_stem": "If I am using House Price and Household Monthly Income (both in Singapore dollars) astwofeaturesfortheK-meansalgorithmtodivideSingaporehouseholdsintogroups, I do not need to standardize them since they have the same units. True or False?",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -29,8 +29,8 @@
     ],
     "concept_tags": [
       "K-means",
-      "feature scaling",
-      "standardization"
+      "standardization",
+      "feature scaling"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page2.png"
@@ -40,11 +40,11 @@
     "question_no": "1(c)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "Using a fitted decision tree, named DT, the prediction of p for the test points is obtained by pred.prob = predict(DT, new.data = test, ___) where in the blank space, we add",
+    "question_stem": "Using a tted decision tree, named DT, the prediction of p for the test points is obtained by pred.prob = predict(DT, new.data = test, ___) where in the blank space, we add",
     "question_options": [
       {
         "label": "A",
-        "text": "type = \"raw\""
+        "text": "type = raw"
       },
       {
         "label": "B",
@@ -52,15 +52,15 @@
       },
       {
         "label": "C",
-        "text": "type = \"class\""
+        "text": "type = class"
       },
       {
         "label": "D",
-        "text": "type = \"prob\""
+        "text": "type = prob"
       },
       {
         "label": "E",
-        "text": "type = \"response\""
+        "text": "type = response"
       }
     ],
     "question_answer": null,
@@ -80,11 +80,11 @@
     "question_no": "1(d)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "Using a fitted Naive Bayes classifier, named nb, the prediction of p for the test points is obtained by pred.prob = predict(nb, new.data = test, ___) where in the blank space, we add",
+    "question_stem": "Using a tted Naive Bayes classier, named nb, the prediction of p for the test points is obtained by pred.prob = predict(nb, new.data = test, ___) where in the blank space, we add",
     "question_options": [
       {
         "label": "A",
-        "text": "type = \"raw\""
+        "text": "type = raw"
       },
       {
         "label": "B",
@@ -92,15 +92,15 @@
       },
       {
         "label": "C",
-        "text": "type = \"class\""
+        "text": "type = class"
       },
       {
         "label": "D",
-        "text": "type = \"prob\""
+        "text": "type = prob"
       },
       {
         "label": "E",
-        "text": "type = \"response\""
+        "text": "type = response"
       }
     ],
     "question_answer": null,
@@ -120,11 +120,11 @@
     "question_no": "1(e)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "Using a fitted logistic regression, named lr, the prediction of p for the test points is obtained by pred.prob = predict(lr, new.data = test, ___) where in the blank space, we add",
+    "question_stem": "Using a tted logistic regression, named lr, the prediction of p for the test points is obtained by pred.prob = predict(lr, new.data = test, ___) where in the blank space, we add",
     "question_options": [
       {
         "label": "A",
-        "text": "type = \"raw\""
+        "text": "type = raw"
       },
       {
         "label": "B",
@@ -132,15 +132,15 @@
       },
       {
         "label": "C",
-        "text": "type = \"class\""
+        "text": "type = class"
       },
       {
         "label": "D",
-        "text": "type = \"prob\""
+        "text": "type = prob"
       },
       {
         "label": "E",
-        "text": "type = \"response\""
+        "text": "type = response"
       }
     ],
     "question_answer": null,
@@ -160,11 +160,11 @@
     "question_no": "1(f)",
     "question_type": "mcq",
     "difficulty_rating_manual": null,
-    "question_stem": "In order to obtain the prediction of p for the test points using a fitted 9-NN classifier, the R code is of the form pred.prob = knn(train, test, cl, k = 9,___) where in the blank space, we add",
+    "question_stem": "In order to obtain the prediction of p for the test points using a tted 9-NN classier, the R code is of the form pred.prob = knn(train, test, cl, k = 9,___) where in the blank space, we add",
     "question_options": [
       {
         "label": "A",
-        "text": "type = \"raw\""
+        "text": "type = raw"
       },
       {
         "label": "B",
@@ -172,15 +172,15 @@
       },
       {
         "label": "C",
-        "text": "type = \"class\""
+        "text": "type = class"
       },
       {
         "label": "D",
-        "text": "type = \"prob\""
+        "text": "type = prob"
       },
       {
         "label": "E",
-        "text": "type = \"response\""
+        "text": "type = response"
       }
     ],
     "question_answer": null,
@@ -188,7 +188,7 @@
       3
     ],
     "concept_tags": [
-      "KNN",
+      "k-NN",
       "prediction",
       "R programming"
     ],
@@ -200,7 +200,7 @@
     "question_no": "1(g)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "When constructing a classification model that helps to predict if a person has a disease, which is genetically transmitted and has costly treatment with significant side effects, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
+    "question_stem": "When constructing a classication model that helps to predict if a person has a disease, which is genetically transmitted and has costly treatment with signicant side eects, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -210,7 +210,7 @@
       "classification",
       "Type I error",
       "Type II error",
-      "cost-sensitive learning"
+      "model evaluation"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page3.png"
@@ -220,7 +220,7 @@
     "question_no": "1(h)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "When constructing a classification model that helps to predict if a person has a highly contagious disease, such as Covid-19, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
+    "question_stem": "When constructing a classication model that helps to predict if a person has a highly contagious disease, such as Covid-19, which type of error rate (Type I or Type II) should be prioritized for minimization? Explain your answer.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -230,7 +230,7 @@
       "classification",
       "Type I error",
       "Type II error",
-      "cost-sensitive learning"
+      "model evaluation"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page3.png"
@@ -240,26 +240,7 @@
     "question_no": "2(a)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "A histogram of the house’s price and a scatter plot of the house’s price against house’s size are given in Figure 1. Comment if it is suitable to fit a linear regression model for price?",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      4
-    ],
-    "concept_tags": [
-      "linear regression",
-      "data visualization",
-      "model suitability"
-    ],
-    "page_image_paths": [
-      "data/question_media/DSA1101_Final_Sem2_2425_page4.png"
-    ]
-  },
-  {
-    "question_no": "2(b)",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": null,
-    "question_stem": "A linear model, called M, is fitted. The summary output of model M is given in Figure 2 (next page). Write down the fitted equation of model M. Report the coefficient of the variable garage in model M and interpret it.",
+    "question_stem": "A histogram of the house’s price and a scatter plot of the house’s price against house’s size are given in Figure 1. Comment if it is suitable to t a linear regression model for price?",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -268,8 +249,29 @@
     ],
     "concept_tags": [
       "linear regression",
-      "model equation",
-      "coefficient interpretation"
+      "assumptions",
+      "data visualization"
+    ],
+    "page_image_paths": [
+      "data/question_media/DSA1101_Final_Sem2_2425_page4.png",
+      "data/question_media/DSA1101_Final_Sem2_2425_page5.png"
+    ]
+  },
+  {
+    "question_no": "2(b)",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": null,
+    "question_stem": "Write down the tted equation of model M. Report the coecient of the variable garage in model M and interpret it.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4,
+      5
+    ],
+    "concept_tags": [
+      "linear regression",
+      "model interpretation",
+      "coefficients"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page4.png",
@@ -280,7 +282,7 @@
     "question_no": "2(c)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "Comment on the goodness of fit of model M.",
+    "question_stem": "Comment on the goodness of t of model M.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -301,7 +303,7 @@
     "question_no": "2(d)",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "The information of a new house is given below. Using model M, calculate the predicted price of this house. size = 1500 sqft, bedrooms = 3, garage = 1",
+    "question_stem": "The information of a new house is given below. Using model M, calculate the pre-dicted price of this house. size = 1500 sqft, bedrooms = 3, garage = 1",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -310,7 +312,8 @@
     ],
     "concept_tags": [
       "linear regression",
-      "prediction"
+      "prediction",
+      "model application"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page4.png",
@@ -348,7 +351,6 @@
     ],
     "concept_tags": [
       "linear regression",
-      "model evaluation",
       "goodness of fit"
     ],
     "page_image_paths": [
@@ -378,7 +380,7 @@
     "question_no": "4",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Run the command set.seed(2904). Then, write code to randomly split data into two subsets, one set with 800 rows, to be named as train.set and other set with the rest of rows, to be named as test.set.",
+    "question_stem": "Run the command set.seed(2904).\nThen, write code to randomly split data into two subsets, one set with 800 rows, to be named as train.set and other set with the rest of rows, to be named as test.set.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -386,7 +388,7 @@
     ],
     "concept_tags": [
       "data splitting",
-      "reproducibility",
+      "random seed",
       "R programming"
     ],
     "page_image_paths": [
@@ -397,7 +399,7 @@
     "question_no": "5",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Let m denote a vector of possible values for the argument minsplit which ranges from 40 up to 50 inclusively. For each value in m, write code to (i) fit a decision tree using train.set; (ii) use the fitted tree to predict the diabetes status of people in test.set; (iii) derive the precision and the Type I error rate for the prediction in (ii).",
+    "question_stem": "Let m denote a vector of possible values for the argument minsplit which ranges from 40 up to 50 inclusively.\nFor each value in m, write code to\n(i) fit a decision tree using train.set;\n(ii) use the fitted tree to predict the diabetes status of people in test.set;\n(iii) derive the precision and the Type I error rate for the prediction in (ii).",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -406,7 +408,9 @@
     "concept_tags": [
       "decision trees",
       "hyperparameter tuning",
-      "model evaluation"
+      "model evaluation",
+      "precision",
+      "type I error"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -416,7 +420,7 @@
     "question_no": "6",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Consider minsplit = 50, write code to fit a decision tree, to be named as DT. Report the name of the most important variable in that tree.",
+    "question_stem": "Consider minsplit = 50, write code to fit a decision tree, to be named as DT.\nReport the name of the most important variable in that tree.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -444,7 +448,8 @@
     "concept_tags": [
       "ROC curve",
       "AUC",
-      "decision trees"
+      "decision trees",
+      "model evaluation"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -461,7 +466,7 @@
       7
     ],
     "concept_tags": [
-      "Naive Bayes",
+      "naive bayes",
       "model fitting",
       "classification"
     ],
@@ -482,7 +487,8 @@
     "concept_tags": [
       "ROC curve",
       "AUC",
-      "Naive Bayes"
+      "naive bayes",
+      "model evaluation"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -502,7 +508,8 @@
       "ROC curve",
       "threshold",
       "TPR",
-      "FPR"
+      "FPR",
+      "naive bayes"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -521,7 +528,8 @@
     "concept_tags": [
       "threshold optimization",
       "TPR",
-      "FPR"
+      "FPR",
+      "naive bayes"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -539,8 +547,9 @@
     ],
     "concept_tags": [
       "accuracy",
-      "threshold",
-      "Naive Bayes"
+      "model evaluation",
+      "naive bayes",
+      "threshold"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -577,8 +586,8 @@
     ],
     "concept_tags": [
       "logistic regression",
-      "feature selection",
-      "model fitting"
+      "model fitting",
+      "feature selection"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page7.png"
@@ -615,8 +624,9 @@
     ],
     "concept_tags": [
       "accuracy",
-      "threshold",
-      "logistic regression"
+      "model evaluation",
+      "logistic regression",
+      "threshold"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
@@ -635,7 +645,8 @@
     "concept_tags": [
       "ROC curve",
       "AUC",
-      "logistic regression"
+      "logistic regression",
+      "model evaluation"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
@@ -692,7 +703,7 @@
     "concept_tags": [
       "KNN classifier",
       "prediction",
-      "probabilities"
+      "probability"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
@@ -710,8 +721,9 @@
     ],
     "concept_tags": [
       "accuracy",
-      "threshold",
-      "KNN classifier"
+      "model evaluation",
+      "KNN classifier",
+      "threshold"
     ],
     "page_image_paths": [
       "data/question_media/DSA1101_Final_Sem2_2425_page8.png"
