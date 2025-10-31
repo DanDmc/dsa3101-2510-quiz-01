@@ -14,10 +14,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      # ✅ Persist database data so you don’t lose it between restarts
+      # Persist database data so you don’t lose it between restarts
       - mysql_data:/var/lib/mysql
 
-      # ✅ Initialize schema + seed data only on first run
+      # Initialize schema + seed data only on first run
       - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
 
@@ -78,7 +78,30 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    ## healthcheck before calling predict_difficulty
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://api:5000/health || exit 1"]
+      interval: 120s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
-# ✅ Declare the named volume for MySQL persistence
+  # service to call predict_difficulty API when dockerise
+  seed-difficulty:
+    image: curlimages/curl:8.7.1
+    depends_on:
+      api:
+        condition: service_healthy
+    command: >
+      sh -lc '
+        echo "[seed] API is healthy, calling /predict_difficulty...";
+        curl -sS -X POST "http://api:5000/predict_difficulty"
+             -H "Content-Type: application/json" -d "{}" ||
+        echo "[seed] failed to call API";
+        echo "[seed] done."
+      '
+    restart: "no"
+
+# Declare the named volume for MySQL persistence
 volumes:
   mysql_data:

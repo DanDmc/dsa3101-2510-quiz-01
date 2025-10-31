@@ -19,7 +19,7 @@ import sys, importlib.util
 app = Flask(__name__)
 
 # -----------------------------------------------------
-# 💡 FIX: CORS is set to the correct Vite port 5173
+# FIX: CORS is set to the correct Vite port 5173
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 # -----------------------------------------------------
 
@@ -72,7 +72,7 @@ def has_column(conn, table: str, col: str) -> bool:
 
 # HEALTH
 @app.route("/health", methods=["GET"])
-def health(): return {"ok": True}
+def health(): return {"ok": True, "model_loaded": difficulty_model is not None}, 200
 
 # GET QUESTIONS
 @app.route("/getquestion", methods=["GET"])
