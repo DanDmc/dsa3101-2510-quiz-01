@@ -4,7 +4,10 @@ import { StrictMode, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 //import './index.css';
 
-// --- ADD THESE IMPORTS ---
+// --- ADD THIS IMPORT ---
+import { BrowserRouter } from 'react-router-dom';
+
+// --- Component Imports ---
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Container from '@mui/material/Container'; 
@@ -54,7 +57,7 @@ const PAGES = {
     SEARCH: 'search',
 };
 
-// 💡 Define the base URL using the environment variable
+// Define the base URL using the environment variable
 const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api'; 
 console.log(`API Target: ${BASE_API_URL}`);
 
@@ -62,22 +65,27 @@ console.log(`API Target: ${BASE_API_URL}`);
 function App() {
     const [currentPage, setCurrentPage] = useState(PAGES.HOME);
     const [selectedQuestions, setSelectedQuestions] = useState([]); 
+    
+    // --- State for search filters (from previous step) ---
+    const [searchParams, setSearchParams] = useState(null); // ⬅️ KEEP: For advanced search
+    
+    // Initialize 'questions' state as empty array 
     const [questions, setQuestions] = useState([]); 
     
     // ⭐ NEW STATE 1: Stores the dynamically generated list of course groups
     const [courseGroups, setCourseGroups] = useState([]);
     
     // ⭐ NEW STATE 2: Tracks the currently selected filter/course in QuestionGroups
-    // MODIFICATION: Must initialize as an array to hold multiple selections
     const [activeFilter, setActiveFilter] = useState([ALL_QUESTIONS_KEY]); 
 
     // ⭐ NEW STATE 3: Tracks if a long-running group operation is active (ADD/RENAME/DELETE)
-    const [isProcessing, setIsProcessing] = useState(false); 
-
-
+    const [isProcessing, setIsProcessing] = useState(false); // ⬅️ KEEP: For loading feedback
+    
+    // ❌ REMOVED: isSafeDeletionEnabled state is intentionally removed
+    
     // --- Core Handlers (Must be defined before usage) ---
 
-    // --- MODIFIED: Function to fetch data from the backend API with fallback (needed by many handlers) ---
+    // --- Function to fetch data from the backend API with fallback (needed by many handlers) ---
     const fetchQuestions = async () => {
         try {
             const response = await fetch(`${BASE_API_URL}/getquestion`); 
@@ -99,7 +107,7 @@ function App() {
     const goToHomePage = () => {
         setCurrentPage(PAGES.HOME);
         // Reset filter when navigating back to home
-        setActiveFilter([ALL_QUESTIONS_KEY]); // MODIFICATION: Reset to array
+        setActiveFilter([ALL_QUESTIONS_KEY]); 
         fetchQuestions();
     };
     
@@ -107,7 +115,12 @@ function App() {
         setCurrentPage(PAGES.CREATE);
     };
     
-    const goToSearchPage = () => setCurrentPage(PAGES.SEARCH);
+    // ⬅️ UPDATED: goToSearchPage now accepts parameters for the new filter/search functionality
+    const goToSearchPage = (params) => {
+        console.log("Search params received in main.jsx:", params);
+        setSearchParams(params); // Store the search/filter data
+        setCurrentPage(PAGES.SEARCH); // Change to the search page
+    };
     
     const goToEditPage = (questionsToEdit) => {
         if (questionsToEdit && questionsToEdit.length > 0) {
@@ -126,8 +139,8 @@ function App() {
             console.warn("Cannot switch to Edit Page: No questions to transfer from Create Page.");
         }
     };
-
-    // 🐛 FIX: Moved to the top scope to be accessible by renderPage
+    
+    // ⬅️ KEEP HEAD LOGIC: Hard Delete (permanent delete) implementation
     const handleDeleteQuestions = async (idsToDelete) => {
         if (!window.confirm(`WARNING: Are you sure you want to PERMANENTLY delete ${idsToDelete.length} question(s)? This cannot be undone.`)) {
             return;
@@ -304,10 +317,7 @@ function App() {
                 );
 
                 // If the renamed group was the active filter, update the active filter state
-                if (activeFilter.includes(oldName)) { // MODIFICATION: Check if array includes oldName
-                    // Note: This logic is tricky with multi-select. If oldName was the only select, we set to newName. 
-                    // If multiple were selected, we rely on the upcoming fetchQuestions to restore the full list.
-                    // For simplicity, we just set the filter state to a new array containing the new name.
+                if (activeFilter.includes(oldName)) { 
                     setActiveFilter([trimmedNewName]); 
                 }
 
@@ -385,7 +395,7 @@ function App() {
                 setCourseGroups(prevGroups => prevGroups.filter(group => group !== groupName));
                 
                 // Switch filter to "Show All Questions" since the current group is gone
-                setActiveFilter([ALL_QUESTIONS_KEY]); // MODIFICATION: Set active filter to array
+                setActiveFilter([ALL_QUESTIONS_KEY]); 
                 
                 // Full refresh to update the question table and confirm group list state
                 fetchQuestions();
@@ -459,9 +469,16 @@ function App() {
 
             case PAGES.SEARCH:
                 return (
+                    // --- UPDATED: Pass all necessary props ---
                     <QuestionSearchPage 
                         goToCreatePage={goToCreatePage}
                         goToEditPage={goToEditPage}
+                        searchParams={searchParams}
+                        // --- REMOVED: No longer passing the master list ---
+                        // questions={questions} 
+                        handleDeleteQuestions={handleDeleteQuestions}
+                        goToSearchPage={goToSearchPage}
+                        // ❌ REMOVED: Safe Delete props are intentionally deleted
                     />
                 );
                 
@@ -477,6 +494,7 @@ function App() {
                         goToHomePage={goToHomePage}
                         handleDeleteQuestions={handleDeleteQuestions}
                         
+                        // ⬅️ KEEP Group Management Props
                         courseGroups={courseGroups} 
                         onAddGroup={handleAddGroup}
                         onRenameGroup={handleRenameGroup}
@@ -485,6 +503,7 @@ function App() {
                         
                         // ⭐ NEW PROP: Pass the processing state down
                         isProcessing={isProcessing} 
+                        // ❌ REMOVED: Safe Delete props are intentionally deleted
                     />
                 );
         }
@@ -505,5 +524,9 @@ function App() {
     );
 }
 
-// This part stays the same
-createRoot(document.getElementById('root')).render(<App />);
+// --- THIS IS THE MODIFIED LINE ---
+createRoot(document.getElementById('root')).render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+);

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { 
   Box, Card, Table, TableBody, TableCell, TableContainer, 
   TableHead, TableRow, Checkbox, IconButton, Chip, 
-  TablePagination, Typography, useTheme 
+  TablePagination, Typography, useTheme, Tooltip // ADDED Tooltip import for Feature 2
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -61,11 +61,11 @@ function TablePaginationActions(props) {
 }
 
 // Main Component
-function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
+function QuestionTable({ questions, selected, setSelected, onSelectAllClick, goToEditPage }) { // ⬅️ UPDATED: Added goToEditPage prop
   const [page, setPage] = useState(0);
 
-  // ⭐ MODIFICATION 1: Filter out placeholder questions immediately
-  const actualQuestions = questions.filter(q => q.question_stem !== PLACEHOLDER_STEM);
+  // ⭐ MODIFICATION 1: Filter out placeholder questions immediately
+  const actualQuestions = questions.filter(q => q.question_stem !== PLACEHOLDER_STEM);
 
   const totalQuestions = actualQuestions.length; // Use the filtered count
 
@@ -79,9 +79,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * ROWS_PER_PAGE - totalQuestions) : ROWS_PER_PAGE - visibleQuestions.length;
-
-  // ... (rest of constants and helpers are unchanged)
-  
+  
   const borderedCellStyle = { borderRight: BORDER_STYLE };
   const centeredText = { textAlign: 'center' };
   const wrappingHeaderStyle = { whiteSpace: 'normal', wordBreak: 'break-word', fontWeight: 'bold' };
@@ -100,23 +98,23 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
     else if (selectedIndex === selected.length - 1) newSelected = newSelected.concat(selected.slice(0, -1));
     else if (selectedIndex > 0) newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
 
-    setSelected(newSelected);
+setSelected(newSelected);
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  // --- NEW: Download Selected Handler (UNCHANGED) ---
+  // --- NEW: Download Selected Handler (Updated to Port 5001) ---
   const handleDownloadSelected = async () => {
     if (selected.length === 0) return;
     try {
-      const res = await fetch('http://localhost:5000/download_questions', {
+      const res = await fetch('http://localhost:5001/download_questions', { // ⬅️ UPDATED: Port 5001
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question_ids: selected }),
       });
 
       if (!res.ok) throw new Error('Download failed');
-
+      
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -128,7 +126,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
-      alert('Failed to download questions');
+      alert('Failed to download questions. (Note: This route may not exist on the server yet)'); // ⬅️ UPDATED: Better alert
     }
   };
 
@@ -160,7 +158,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
               <TableCell sx={checkboxCellStyle}>
                 <Checkbox
                   color="primary"
-                  // ⭐ MODIFICATION 3: Use totalQuestions for all/indeterminate check
+                  // ⭐ MODIFICATION 3: Use totalQuestions for all/indeterminate check
                   indeterminate={selected.length > 0 && selected.length < totalQuestions}
                   checked={totalQuestions > 0 && selected.length === totalQuestions}
                   onChange={onSelectAllClick}
@@ -173,7 +171,6 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
               <TableCell sx={{ fontWeight: 'bold', ...centeredText, ...reducedVerticalPaddingStyle }}>Modify</TableCell>
             </TableRow>
           </TableHead>
-
           <TableBody>
             {visibleQuestions.map((row, index) => {
               const isItemSelected = isSelected(row.id);
@@ -185,6 +182,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                 <TableRow
                   key={row.id}
                   hover
+                  onDoubleClick={() => goToEditPage(row.id)} // ⬅️ Integrated Feature 1
                   onClick={(event) => handleClick(event, row.id)}
                   role="checkbox"
                   aria-checked={isItemSelected}
@@ -194,21 +192,56 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                 >
                   <TableCell sx={checkboxCellStyle}><Checkbox color="primary" checked={isItemSelected} /></TableCell>
                   <TableCell component="th" scope="row" sx={{ ...borderedCellStyle, ...questionColumnStyle, display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingY: TIGHT_PADDING_Y, paddingX: '16px' }}>
-                    <Typography variant="body2" sx={{ flexGrow: 1, marginRight: TEXT_ICON_GAP, color: QUESTION_TEXT_COLOR, maxWidth: MAX_QUESTION_TEXT_WIDTH, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {row.question_stem}
-                    </Typography>
+                    {/* ⬅️ Integrated Feature 2: Tooltip */}
+                    <Tooltip title={row.question_stem} placement="bottom-start" arrow>
+                      <Typography variant="body2" sx={{ flexGrow: 1, marginRight: TEXT_ICON_GAP, color: QUESTION_TEXT_COLOR, maxWidth: MAX_QUESTION_TEXT_WIDTH, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {row.question_stem}
+                      </Typography>
+                    </Tooltip>
+                    {/* ⬅️ Integrated Feature 3: Advanced Image Download Logic (Port 5001) */}
                     <IconButton
                       size="small"
                       sx={{ color: ICON_COLOR, flexShrink: 0, alignSelf: 'center' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const downloadUrl = `http://localhost:5000/files/${row.file_id}/download`;
-                        const link = document.createElement('a');
-                        link.href = downloadUrl;
-                        link.setAttribute('download', '');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                      onClick={async (e) => {
+                        e.stopPropagation(); 
+                        try {
+                          // Correct API URL: 5001
+                          const res = await fetch(`http://localhost:5001/question/${row.id}/download_image`, {
+                            method: 'GET'
+                          });
+
+                          if (!res.ok) {
+                            if (res.status === 404) {
+                              alert('Download failed: No image was found for this question.');
+                            } else {
+                              throw new Error(`Download failed: Server responded with ${res.status}`);
+                            }
+                            return;
+                          }
+
+                          const disposition = res.headers.get('content-disposition');
+                          let filename = `question_${row.id}_image.png`; 
+                          if (disposition && disposition.includes('attachment')) {
+                            const filenameMatch = /filename="?([^"]+)"?/.exec(disposition);
+                            if (filenameMatch && filenameMatch[1]) {
+                              filename = filenameMatch[1];
+                            }
+                          }
+
+                          const blob = await res.blob();
+                          const url = window.URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = filename;
+                          document.body.appendChild(a);
+                          a.click();
+                          a.remove();
+                          window.URL.revokeObjectURL(url);
+
+                        } catch (err) {
+                          console.error(err);
+                          alert('Failed to download file.');
+                        }
                       }}
                     >
                       <DownloadIcon />
@@ -217,8 +250,8 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>
                     <Chip label={questionType.toUpperCase()} size="small" sx={getChipColor(questionType)} />
                   </TableCell>
-                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_rating_manual)}</TableCell>
-                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_rating_model)}</TableCell>
+                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficultyManual)}</TableCell>
+                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficultyGenerated)}</TableCell>
                   <TableCell sx={{ ...centeredText, ...reducedVerticalPaddingStyle }}>
                     <IconButton size="small" sx={{ color: ICON_COLOR }}><SettingsIcon /></IconButton>
                   </TableCell>
@@ -239,7 +272,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
                     <TableCell sx={{ ...borderedCellStyle, ...reducedVerticalPaddingStyle }} />
                     <TableCell sx={{ ...borderedCellStyle, ...reducedVerticalPaddingStyle }} />
                     <TableCell sx={reducedVerticalPaddingStyle} /> 
-                  </TableRow>
+                </TableRow>
                 );
               })
             )}
@@ -248,7 +281,7 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick }) {
       </TableContainer>
 
       <TablePagination
-        // ⭐ MODIFICATION 4: Use totalQuestions for count
+        // ⭐ MODIFICATION 4: Use totalQuestions for count
         rowsPerPageOptions={[]} 
         component="div"
         count={totalQuestions} 

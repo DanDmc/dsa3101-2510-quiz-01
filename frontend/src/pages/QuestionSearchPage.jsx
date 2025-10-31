@@ -1,118 +1,107 @@
 import React, { useMemo, useState, useEffect } from "react";
 import {
   Box, Container, CssBaseline, Grid, Typography, Divider,
-  Stack, TextField, InputAdornment, IconButton, Button,
+  Stack, Button,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Checkbox, Chip, Paper, FormControl, InputLabel, Select, MenuItem
-} from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search";
+  Checkbox, Chip, Paper, IconButton, CircularProgress
+} from "@mui/material";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import SortIcon from "@mui/icons-material/Sort";
+import QuestionToolbar from '../components/QuestionToolbar';
 
+// --- 1. Define the API base URL (same as main.jsx) ---
+const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api';
 
-import st2137 from "../../data/json_output/ST2137_questions.json";
+const DEFAULT_PARAMS = { query: "", question_type: "", assessment_type: "", year: "", semester: "", tags: [] };
 
-function normalizeOneArrayFile(arr, source = "ST2137") {
-  return (arr || []).map((q, idx) => ({
-    ...q,
-    _id: `${source}-${q.question_no ?? idx}`,
-    _source: source,
-  }));
-}
+export default function QuestionSearchPage({
+  searchParams,
+  // questions prop is no longer needed
+  goToHomePage,
+  goToCreatePage,
+  goToEditPage,
+  handleDeleteQuestions,
+  goToSearchPage,
+  isSafeDeletionEnabled,
+  setIsSafeDeletionEnabled
+}) {
 
-// 1. ADD: goToHomePage prop for navigation
-export default function QuestionSearchPage({ initialQuery = "", goToHomePage, goToCreatePage, goToEditPage, handleDeleteQuestions }) {
-  const allQuestions = useMemo(() => normalizeOneArrayFile(st2137, "ST2137"), []);
-  const [query, setQuery] = useState("");
-  const [rows, setRows] = useState(allQuestions);
+  const [rows, setRows] = useState([]); 
+  const [loading, setLoading] = useState(false); // Loading state
   const [selected, setSelected] = useState([]);
-  const [typeFilter, setTypeFilter] = useState("all")
-  const [typeSort, setTypeSort] = useState("none"); 
-  const [sortDirection, setSortDirection] = useState("none"); 
+  const [sortDirection, setSortDirection] = useState("none");
+  const [localParams, setLocalParams] = useState(searchParams || DEFAULT_PARAMS);
 
+  const handleLocalSearch = (params) => {
+    console.log("Setting local search params:", params);
+    setLocalParams(params);
+  };
+
+  // --- THIS IS THE FINAL VERSION OF THE API CALL ---
   useEffect(() => {
-    if (initialQuery) {
-      const kw = initialQuery.trim().toLowerCase();
-      const keywords = kw ? kw.split(/[\s,]+/).filter(Boolean) : [];
-      let list = [...allQuestions];
-
-      if (keywords.length) {
-        list = list.filter((q) => {
-          const hay = `${(q.question_stem || "").toLowerCase()} ${(q.question_type || "").toLowerCase()} ${(q.concept_tags || []).join(" ").toLowerCase()}`;
-          return keywords.some((k) => hay.includes(k));
-        });
+    const fetchFilteredQuestions = async () => {
+      setLoading(true);
+      
+      const params = new URLSearchParams();
+      
+      // We use 'localParams' now, which is guaranteed to be up-to-date.
+      if (localParams.query) {
+        params.append('q', localParams.query); 
+      }
+      if (localParams.question_type) params.append('question_type', localParams.question_type);
+      if (localParams.assessment_type) params.append('assessment_type', localParams.assessment_type);
+      if (localParams.year) params.append('year', localParams.year);
+      if (localParams.semester) params.append('semester', localParams.semester);
+      if (localParams.tags && localParams.tags.length > 0) {
+        localParams.tags.forEach(tag => params.append('concept_tags', tag));
       }
 
-      setQuery(initialQuery);
-      setRows(list);
+      const queryString = params.toString();
+      const fetchUrl = `${BASE_API_URL}/getquestion?${queryString}`;
+      
+      console.log("Fetching from API:", fetchUrl); // For debugging
+
+      try {
+        const response = await fetch(fetchUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setRows(data.items || []);
+
+      } catch (error) {
+        console.error("Failed to fetch questions:", error);
+        setRows([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilteredQuestions();
+    setSelected([]);
+    
+  }, [localParams]); 
+
+  // Handlers to be passed to the Toolbar
+  const handleEditClick = () => {
+    const questionsToEdit = rows.filter(q => selected.includes(q.id));
+    goToEditPage(questionsToEdit); 
+  };
+
+  const handleDeleteClick = () => {
+    if (window.confirm(`Are you sure you want to delete ${selected.length} question(s)?`)) {
+      handleDeleteQuestions(selected);
       setSelected([]);
-  } else {
-    // if no query, show all questions
-    setRows(allQuestions);
-  }
-}, [initialQuery, allQuestions]);
+    }
+  };
   
-const normType = (t) => (t || "").toString().trim().toLowerCase();
+  const handleSafeDeletionToggle = (event) => {
+    setIsSafeDeletionEnabled(event.target.checked);
+  };
 
-const handleSearch = (e) => {
-  e?.preventDefault();
-
-  const kw = query.trim().toLowerCase();
-  const keywords = kw ? kw.split(/[\s,]+/).filter(Boolean) : [];
-
-  // base set
-  let list = [...allQuestions];
-
-  // text search (ANY keyword)
-  if (keywords.length) {
-    list = list.filter((q) => {
-      const hay =
-        `${(q.question_stem || "").toLowerCase()} ` +
-        `${(q.question_type || "").toLowerCase()} ` +
-        `${(q.concept_tags || []).join(" ").toLowerCase()}`;
-      return keywords.some((k) => hay.includes(k));
-    });
-  }
-
-  // question type filter
-  if (typeFilter !== "all") {
-    list = list.filter((q) => normType(q.question_type) === typeFilter);
-  }
-
-   // sort by question type if needed
-  if (sortDirection !== "none") {
-    list.sort((a, b) => {
-      const A = (a.question_type || "").toLowerCase();
-      const B = (b.question_type || "").toLowerCase();
-      return sortDirection === "asc"
-        ? A.localeCompare(B)
-        : B.localeCompare(A);
-    });
-  }
-
-  setRows(list);
-  setSelected([]);
-};
-
-// 2. ADD: New handlers for button clicks (mirrored from HomePage logic)
-const handleCreateClick = () => goToCreatePage();
-
-const handleEditClick = () => {
-  // Get the actual question objects that are selected
-  const questionsToEdit = rows.filter(q => selected.includes(q._id));
-  goToEditPage(questionsToEdit); 
-};
-
-const handleDeleteClick = () => {
-  // Pass the selected IDs up to the App component (main.jsx)
-  handleDeleteQuestions(selected);
-  // Clear the local selection state
-  setSelected([]);
-};
-
-
+  // Table selection handlers
   const toggleAll = (e) => {
-    if (e.target.checked) setSelected(rows.map((r) => r._id));
+    if (e.target.checked) setSelected(rows.map((r) => r.id));
     else setSelected([]);
   };
   const toggleOne = (id) => {
@@ -124,179 +113,112 @@ const handleDeleteClick = () => {
       <CssBaseline />
 
       <Container maxWidth="xl" sx={{ flexGrow: 1, mt: 3, mb: 3 }}>
-        {/* Toolbar */}
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={8}>
-            <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
-              {/* 3. CONNECT: Toolbar buttons to the new handlers */}
-              <Button 
-                variant="outlined" 
-                size="small"
-                onClick={handleCreateClick}
-              >
-                + CREATE
-              </Button>
-              <Button 
-                variant="outlined" 
-                size="small"
-                disabled={selected.length === 0}
-                onClick={handleDeleteClick}
-              >
-                DELETE
-              </Button>
-              <Button 
-                variant="outlined" 
-                size="small"
-                disabled={selected.length === 0}
-                onClick={handleEditClick}
-              >
-                EDIT
-              </Button>
-
-              {/* ── Question Type FILTER ── */}
-              <FormControl size="small" sx={{ minWidth: 180, ml: { xs: 0, md: 2 } }}>
-                <InputLabel id="type-filter-label">Filter: Question Type</InputLabel>
-                <Select
-                  labelId="type-filter-label"
-                  label="Filter: Question Type"
-                   value={typeFilter}
-                   onChange={(e) => {
-                    setTypeFilter(e.target.value);
-                    // re-run search with current query and new filter
-                    handleSearch();
-                  }}
-                >
-                  <MenuItem value="all">All</MenuItem>
-                  <MenuItem value="mcq">MCQ</MenuItem>
-                  <MenuItem value="open-ended">Open Ended</MenuItem>
-                  <MenuItem value="coding">Coding</MenuItem>
-                </Select>
-              </FormControl>
-
-              
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <form onSubmit={handleSearch}>
-              <TextField
-                fullWidth size="small" placeholder="python"
-                value={query} onChange={(e) => setQuery(e.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton type="submit" aria-label="search"><SearchIcon/></IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </form>
-          </Grid>
-        </Grid>
+        
+        {/* Render the unified toolbar */}
+        <QuestionToolbar
+          numSelected={selected.length}
+          goToCreatePage={goToCreatePage}
+          goToEditPage={handleEditClick}
+          goToSearchPage={handleLocalSearch} // <-- PASS THE LOCAL HANDLER
+          handleDeleteClick={handleDeleteClick}
+          isSafeDeletionEnabled={isSafeDeletionEnabled}
+          handleSafeDeletionToggle={handleSafeDeletionToggle}
+        />
 
         <Box mt={2} mb={1}>
           <Typography variant="h6" fontWeight="bold">
-            Questions in Group &lt;Show all Questions&gt;
+            Search Results
           </Typography>
           <Divider sx={{ my: 1 }} />
         </Box>
 
-        {/* Table */}
+        {/* The Table */}
         <Paper elevation={0}>
           <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      indeterminate={selected.length>0 && selected.length<rows.length}
-                      checked={rows.length>0 && selected.length===rows.length}
-                      onChange={toggleAll}
-                    />
-                  </TableCell>
-                  <TableCell>Question</TableCell>
-
-                  <TableCell width={160}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                      <Typography variant="body2" fontWeight="bold">
-                        Question Type
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        aria-label="sort by type"
-                        onClick={() => {
-                          setSortDirection((prev) =>
-                            prev === "none" ? "asc" : prev === "asc" ? "desc" : "none"
-                          );
-                          handleSearch();
-                        }}
-                        sx={{
-                         transition: "transform 0.2s",
-                         transform:
-                          sortDirection === "asc"
-                            ? "rotate(180deg)"
-                            : sortDirection === "desc"
-                            ? "rotate(0deg)"
-                            : "rotate(90deg)",
-                        }}
-                      >
-                        <SortIcon fontSize="small" color={sortDirection === "none" ? "disabled" : "action"} />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-
-
-                  <TableCell width={220}>Source</TableCell>
-                  <TableCell width={56} align="right">
-                    <IconButton size="small"><ViewModuleIcon fontSize="small"/></IconButton>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((q) => (
-                  <TableRow key={q._id} hover>
+            {/* Added Loading Indicator */}
+            {loading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
                     <TableCell padding="checkbox">
-                      <Checkbox checked={selected.includes(q._id)} onChange={() => toggleOne(q._id)} />
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        {truncate(q.question_stem || "", 120)}
-                      </Typography>
-                      <Stack direction="row" spacing={1} sx={{ mt: 0.5, flexWrap: "wrap" }}>
-                        {(q.concept_tags || []).slice(0,4).map((t,i)=>(
-                          <Chip key={i} label={t} size="small" variant="outlined" />
-                        ))}
-                      </Stack>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        label={prettyType(q.question_type)}
-                        color={q.question_type?.toLowerCase()==="coding" ? "warning" : "default"}
-                        size="small" variant="outlined"
+                      <Checkbox
+                        indeterminate={selected.length > 0 && selected.length < rows.length}
+                        checked={rows.length > 0 && selected.length === rows.length}
+                        onChange={toggleAll}
                       />
                     </TableCell>
-                    <TableCell><Typography variant="body2">ST2137</Typography></TableCell>
-                    <TableCell align="right">{/* per-row actions */}</TableCell>
+                    <TableCell>Question</TableCell>
+                    <TableCell width={160}>Question Type</TableCell>
+                    <TableCell width={120}>Assessment</TableCell>
+                    <TableCell width={80}>Year</TableCell>
+                    <TableCell width={120}>Semester</TableCell>
+                    <TableCell width={56} align="right">
+                      <IconButton size="small"><ViewModuleIcon fontSize="small" /></IconButton>
+                    </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {rows.map((q) => (
+                    <TableRow key={q.id} hover>
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={selected.includes(q.id)} onChange={() => toggleOne(q.id)} />
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                          {truncate(q.question_stem || "", 120)}
+                        </Typography>
+                        <Stack direction="row" spacing={1} sx={{ mt: 0.5, flexWrap: "wrap" }}>
+                          {(q.concept_tags || []).slice(0, 4).map((t, i) => (
+                            <Chip key={i} label={t} size="small" variant="outlined" />
+                          ))}
+                        </Stack>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={prettyType(q.question_type)}
+                          color={q.question_type?.toLowerCase() === "coding" ? "warning" : "default"}
+                          size="small" variant="outlined"
+                        />
+                      </TableCell>
+                      <TableCell><Typography variant="body2">{q.assessment_type || 'N/A'}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{q.year || 'N/A'}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{q.semester || 'N/A'}</Typography></TableCell>
+                      <TableCell align="right">{/* per-row actions */}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </TableContainer>
 
-          <Box sx={{ display:"flex", justifyContent:"space-between", p:1.5, color:"text.secondary" }}>
-            <Typography variant="caption">Rows per page: 8</Typography>
-            <Typography variant="caption">Showing {rows.length} result{rows.length!==1?"s":""}</Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between", p: 1.5, color: "text.secondary" }}>
+            <Typography variant="caption">Rows per page: {rows.length}</Typography>
+            <Typography variant="caption">Showing {rows.length} result{rows.length !== 1 ? "s" : ""}</Typography>
           </Box>
         </Paper>
       </Container>
-
     </Box>
   );
 }
 
-
-function truncate(s, n){ return !s ? "" : (s.length>n ? s.slice(0,n-1)+"…" : s); }
-function prettyType(t){
+// Helper functions
+function truncate(s, n) { return !s ? "" : (s.length > n ? s.slice(0, n - 1) + "…" : s); }
+function prettyType(t) {
   if (!t) return "Unknown";
-  const m = { mcq: "MCQ", "open-ended": "Open Ended", coding: "Coding" };
+  const m = { 
+    mcq: "MCQ", 
+    "open-ended": "Open Ended", 
+    coding: "Coding",
+    mrq: "MRQ",
+    ordering: "Ordering",
+    matching: "Matching",
+    "fill-in-the-blanks": "Fill-in-the-blanks",
+    others: "Others"
+  };
   return m[t.toLowerCase()] || t;
 }
+

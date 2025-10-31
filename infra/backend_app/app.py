@@ -16,6 +16,7 @@ import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
 # app.py (New/Modified section)
 from flask_cors import CORS, cross_origin # ⬅️ ADD cross_origin here
+import re
 
 app = Flask(__name__)
 
@@ -339,6 +340,33 @@ def get_question():
 # Directory for files in the container
 file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
 
+question_media_base_directory = os.getenv("question_media_base_directory", "/app/data/question_media")
+
+def _safe_join_media(base_dir: str, file_path: str) -> str:
+    """Safely join a base directory with a media file path."""
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+    
+    # Clean the path: remove leading slashes and "data/question_media/" prefix
+    cleaned_path = file_path.strip().lstrip('/')
+    if cleaned_path.startswith('data/question_media/'):
+        cleaned_path = cleaned_path[len('data/question_media/'):]
+        
+    candidate = os.path.normpath(os.path.join(base_dir, cleaned_path))
+    base_dir_norm = os.path.normpath(base_dir)
+    
+    # Security check to prevent path traversal
+    if not candidate.startswith(base_dir_norm + os.sep):
+        raise FileNotFoundError("Invalid media path")
+    return candidate
+
+def _get_question_row(question_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        # Fetch the page_image_paths column
+        cur.execute("SELECT id, page_image_paths FROM questions WHERE id=%s", (question_id,))
+        return cur.fetchone()
+
 def _strip_known_prefixes(p: str) -> str:
     prefixes = ("data/", "source_files/")
     for pref in prefixes:
@@ -388,10 +416,107 @@ def download_file(file_id: int):
         download_name=file_row.get("file_name") or os.path.basename(full_path),
         conditional=True,
     )
+    
+@app.route("/question/<int:question_id>/download_image", methods=["GET"])
+def download_question_image(question_id: int):
+    question_row = _get_question_row(question_id)
+    if not question_row:
+        abort(404, description="Invalid question ID")
+
+    image_paths_json = question_row.get("page_image_paths")
+    if not image_paths_json:
+        abort(404, description="No images found for this question")
+
+    try:
+        image_paths = json.loads(image_paths_json)
+    except Exception:
+        abort(500, description="Failed to parse image paths")
+
+    if not image_paths or not isinstance(image_paths, list) or len(image_paths) == 0:
+        abort(404, description="No image path in list")
+
+    # --- Download only the FIRST image for simplicity ---
+    first_image_path = image_paths[0]
+
+    try:
+        # Use the new safe join function and base directory
+        full_path = _safe_join_media(question_media_base_directory, first_image_path)
+    except FileNotFoundError as e:
+        abort(404, description=str(e))
+
+    if not os.path.exists(full_path):
+        app.logger.error("Image file not in folder: %s", full_path)
+        abort(404, description="Image file not in folder")
+
+    # Get mimetype and download name
+    guessed, _ = mimetypes.guess_type(full_path)
+    download_name = os.path.basename(full_path)
+
+    app.logger.info("DOWNLOAD_IMAGE full_path=%s base=%s dbpath=%s",
+                    full_path, question_media_base_directory, first_image_path)
+
+    return send_file(
+        full_path,
+        mimetype=guessed or "image/png", # Default to image/png
+        as_attachment=True,
+        download_name=download_name,
+        conditional=True,
+    )
+    
+_SENT_SPLIT = re.compile(r'[.!?]')
+def _syllable_count(w): return 1
+def _compute_readability_features(texts):
+
+    """
+
+    texts: iterable of question stems (strings)
+
+    returns: np.ndarray shape (n, 2) with:
+
+        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
+
+    """
+
+    rows = []
+
+    for t in texts:
+
+        t = t if isinstance(t, str) else ""
+
+        tokens = re.findall(r"\b\w+\b", t)
+
+        n_w = len(tokens) if tokens else 1
+
+        n_sents = max(1, len([s for s in _SENT_SPLIT.split(t) if s.strip()]))
+
+        n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
+
+
+
+        # Flesch Reading Ease (higher = easier)
+
+        fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
+
+        # Flesch-Kincaid Grade Level (higher = harder)
+
+        fkgl = 0.39 * (n_w / n_sents) + 11.8 * (n_syll / n_w) - 15.59
+
+
+
+        rows.append([fre, fkgl])
+
+    return np.array(rows, dtype=float)
+
+def numeric_feats_from_df(X):
+
+    stems = X["question_stem"].fillna("").to_numpy()
+
+    return _compute_readability_features(stems)
+_numeric_feats_from_df = numeric_feats_from_df
+
 
 # -----------------------------------------------------
-## 🧠 Difficulty Rating Model
-
+## Difficulty Rating Model
 # load the difficulty rating model
 MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
 difficulty_model = None
@@ -991,7 +1116,7 @@ def addquestion():
         except Exception as e:
             conn.rollback()
             app.logger.error(f"Failed to insert new question: {e}")
-            return jsonify({"error": "insert_failed", "message": str(e)}), 500
+            return jsonify({"error": "insert_failed", "message": str(e)}), 500    
 
 # --# -----------------------------------------------------
 ## ➕ Question Creation (File-Independent)
@@ -1270,3 +1395,7 @@ def create_question():
             conn.rollback()
             app.logger.error(f"Failed to insert new question: {e}")
             return jsonify({"error": "insert_failed", "message": str(e)}), 500
+
+if __name__ == "__main__":
+    # Run the Flask app directly
+    app.run(host="0.0.0.0", port=5000, debug=True)

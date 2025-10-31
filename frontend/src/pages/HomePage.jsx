@@ -8,8 +8,6 @@ import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// REMOVED: The hardcoded mockGroups list is no longer needed
-
 function HomePage({ 
     questions: propQuestions, 
     goToCreatePage, 
@@ -17,8 +15,10 @@ function HomePage({
     goToSearchPage, 
     goToHomePage, 
     handleDeleteQuestions,
+    // NOTE: isSafeDeletionEnabled and setIsSafeDeletionEnabled are KEPT here 
+    // because the component still relies on them in the toolbar props and handlers.
     isSafeDeletionEnabled,
-    setIsSafeDeletionEnabled,
+    setIsSafeDeletionEnabled, 
     
     // ⭐ MODIFICATION 1: Receive ALL new dynamic props
     courseGroups, 
@@ -81,11 +81,13 @@ function HomePage({
                     <QuestionToolbar 
                         numSelected={selected.length} 
                         goToCreatePage={goToCreatePage} 
-                        goToEditPage={handleEditClick} 
+                        goToEditPage={handleEditClick} // Local handler passes selected questions
                         goToSearchPage={goToSearchPage}
                         // ⭐ MODIFICATION 3: Pass processing state to disable toolbar buttons
                         disabled={isProcessing} 
                         handleDeleteClick={handleDeleteClick}
+                        // Although safe delete logic was removed from inside QuestionToolbar, 
+                        // the component still expects these props, which the parent provides.
                         isSafeDeletionEnabled={isSafeDeletionEnabled}
                         handleSafeDeletionToggle={handleSafeDeletionToggle}
                     />
@@ -112,6 +114,8 @@ function HomePage({
                                     onSelectAllClick={handleSelectAllClick}
                                     // ⭐ MODIFICATION 4: Pass processing state to QuestionTable
                                     disabled={isProcessing}
+                                    // ⬅️ NEW: Pass goToEditPage to QuestionTable for double-click feature
+                                    goToEditPage={goToEditPage} 
                                 />
                             </Box>
                         </Grid>
