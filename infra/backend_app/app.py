@@ -14,6 +14,7 @@ from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+import sys, importlib.util
 
 app = Flask(__name__)
 
@@ -316,8 +317,28 @@ def download_file(file_id: int):
 
 # DIFFICULTY RATING MODEL
 # load the difficulty rating model
-MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_ridge.pkl")
 difficulty_model = None
+# added featurepath to link _numeric_feats_from_df from the original folder 
+featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
+
+def _load_training_helpers():
+    """Dynamically import the training script so that pickled helper functions can be resolved."""
+    if not os.path.exists(featurepath):
+        app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
+        return
+    try:
+        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)  # runs the file so _numeric_feats_from_df is defined
+        # register under __main__ so unpickler finds it
+        sys.modules["__main__"] = mod
+        app.logger.info("[difficulty] Registered _numeric_feats_from_df from training script.")
+    except Exception as e:
+        app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
+
+_load_training_helpers()
+
 try:
     difficulty_model = joblib.load(MODEL_PATH)
     app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")

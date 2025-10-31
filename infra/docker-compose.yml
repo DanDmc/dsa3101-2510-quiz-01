@@ -68,12 +68,13 @@ services:
       - "5001:5000"
     environment:
       - file_base_directory=/app/data/source_files
-      - diff_model_path=/app/models/difficulty_v1.pkl
+      - diff_model_path=/app/models/model_ridge.pkl
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
     volumes:
       - ../data:/app/data
       - ./models:/app/models
+      - ./difficulty_rating_experimentation:/app/difficulty_rating_experimentation
     depends_on:
       db:
         condition: service_healthy
