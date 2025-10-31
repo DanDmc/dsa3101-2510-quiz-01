@@ -85,6 +85,147 @@ def _get_file_row(file_id: int):
         cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
         return cur.fetchone()
 
+allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
+
+# for the 
+def normalize_concept_tags(val):
+    # standardise the format of the concept_tags field
+    if val is None:
+        return None
+    if isinstance(val, (list, tuple)):
+        return json.dumps(list(val), ensure_ascii=False)
+    if isinstance(val, str):
+        try:
+            parsed = json.loads(val)
+            if isinstance(parsed, (list, tuple)):
+                return json.dumps(list(parsed), ensure_ascii=False)
+        except Exception:
+            pass
+        return val  # plain string (e.g., "regression metrics")
+    return json.dumps(val, ensure_ascii=False)
+
+
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_ridge.pkl")
+difficulty_model = None
+# added featurepath to link _numeric_feats_from_df from the original folder 
+featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
+
+def _load_training_helpers():
+    """Dynamically import the training script so that pickled helper functions can be resolved."""
+    if not os.path.exists(featurepath):
+        app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
+        return
+    try:
+        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)  # runs the file so _numeric_feats_from_df is defined
+        # register under __main__ so unpickler finds it
+        sys.modules["__main__"] = mod
+        app.logger.info("[difficulty] Registered _numeric_feats_from_df from training script.")
+    except Exception as e:
+        app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
+
+_load_training_helpers()
+
+try:
+    difficulty_model = joblib.load(MODEL_PATH)
+    app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
+except Exception as e:
+    app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
+
+def parse_tags(val):
+    if not val:
+        return []
+    if isinstance(val, (list, tuple)):
+        return list(val)
+    try:
+        return json.loads(val) or []
+    except Exception:
+        return []
+
+def predict_row(row: dict) -> float:
+    stem = (row.get("question_stem") or "").strip()
+    tags_text = " ".join(parse_tags(row.get("concept_tags")))
+    X = pd.DataFrame([{
+        "question_stem": stem,
+        "tags_text": tags_text,
+        "question_type": row.get("question_type") or "",
+    }])
+    yhat = float(difficulty_model.predict(X)[0])
+    return float(np.clip(yhat, 0.0, 1.0))
+
+# Helper function for getting file_id based on file details
+def _normalize_semester(sem: str) -> str:
+    """
+    Normalize various semester inputs to a compact canonical form.
+    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
+    """
+    if sem is None:
+        return ""
+    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
+    # remove duplicate spaces
+    s = " ".join(s.split())
+
+    # common mappings
+    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
+        return "S1"
+    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
+        return "S2"
+    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
+        return "ST1"
+    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
+        return "ST2"
+    return s.upper()
+
+
+def _normalize_assessment_type(t: str) -> str:
+    if t is None:
+        return ""
+    s = str(t).strip().lower().replace("-", " ")
+    s = " ".join(s.split())
+    return s.lower()
+
+
+def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
+    if not course:
+        raise ValueError("course is required")
+    try:
+        year_int = int(str(year).strip())
+    except Exception:
+        raise ValueError("year must be an integer-like value")
+
+    course_norm = str(course).strip().upper()
+    sem_norm = _normalize_semester(semester)
+    atype_norm = _normalize_assessment_type(assessment_type)
+
+    sql = """
+        SELECT id
+        FROM files
+        WHERE UPPER(course) = %s
+          AND year = %s
+          AND UPPER(semester) = %s
+          AND UPPER(assessment_type) = %s
+        {order_clause}
+        LIMIT 1
+    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
+
+    params = (course_norm, year_int, sem_norm, atype_norm)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    params = (course, year, semester, assessment_type)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    return
+
 # ---- Upload / pipeline config ----
 app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
 app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
@@ -320,54 +461,7 @@ def download_file(file_id: int):
 
 # DIFFICULTY RATING MODEL
 # load the difficulty rating model
-MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_ridge.pkl")
-difficulty_model = None
-# added featurepath to link _numeric_feats_from_df from the original folder 
-featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
 
-def _load_training_helpers():
-    """Dynamically import the training script so that pickled helper functions can be resolved."""
-    if not os.path.exists(featurepath):
-        app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
-        return
-    try:
-        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)  # runs the file so _numeric_feats_from_df is defined
-        # register under __main__ so unpickler finds it
-        sys.modules["__main__"] = mod
-        app.logger.info("[difficulty] Registered _numeric_feats_from_df from training script.")
-    except Exception as e:
-        app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
-
-_load_training_helpers()
-
-try:
-    difficulty_model = joblib.load(MODEL_PATH)
-    app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
-except Exception as e:
-    app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
-
-def parse_tags(val):
-    if not val:
-        return []
-    if isinstance(val, (list, tuple)):
-        return list(val)
-    try:
-        return json.loads(val) or []
-    except Exception:
-        return []
-
-def predict_row(row: dict) -> float:
-    stem = (row.get("question_stem") or "").strip()
-    tags_text = " ".join(parse_tags(row.get("concept_tags")))
-    X = pd.DataFrame([{
-        "question_stem": stem,
-        "tags_text": tags_text,
-        "question_type": row.get("question_type") or "",
-    }])
-    yhat = float(difficulty_model.predict(X)[0])
-    return float(np.clip(yhat, 0.0, 1.0))
 
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
@@ -574,25 +668,6 @@ def upload_file():
     }), 201
 
 ## EDITING QUESTIONS
-allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
-allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
-
-# for the 
-def normalize_concept_tags(val):
-    # standardise the format of the concept_tags field
-    if val is None:
-        return None
-    if isinstance(val, (list, tuple)):
-        return json.dumps(list(val), ensure_ascii=False)
-    if isinstance(val, str):
-        try:
-            parsed = json.loads(val)
-            if isinstance(parsed, (list, tuple)):
-                return json.dumps(list(parsed), ensure_ascii=False)
-        except Exception:
-            pass
-        return val  # plain string (e.g., "regression metrics")
-    return json.dumps(val, ensure_ascii=False)
 
 @app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 def update_question(q_id):
@@ -701,76 +776,7 @@ def hard_delete_question(q_id):
             conn.rollback()
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
         
-# Helper function for getting file_id based on file details
-def _normalize_semester(sem: str) -> str:
-    """
-    Normalize various semester inputs to a compact canonical form.
-    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
-    """
-    if sem is None:
-        return ""
-    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
-    # remove duplicate spaces
-    s = " ".join(s.split())
 
-    # common mappings
-    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
-        return "S1"
-    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
-        return "S2"
-    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
-        return "ST1"
-    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
-        return "ST2"
-    return s.upper()
-
-
-def _normalize_assessment_type(t: str) -> str:
-    if t is None:
-        return ""
-    s = str(t).strip().lower().replace("-", " ")
-    s = " ".join(s.split())
-    return s.lower()
-
-
-def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
-    if not course:
-        raise ValueError("course is required")
-    try:
-        year_int = int(str(year).strip())
-    except Exception:
-        raise ValueError("year must be an integer-like value")
-
-    course_norm = str(course).strip().upper()
-    sem_norm = _normalize_semester(semester)
-    atype_norm = _normalize_assessment_type(assessment_type)
-
-    sql = """
-        SELECT id
-        FROM files
-        WHERE UPPER(course) = %s
-          AND year = %s
-          AND UPPER(semester) = %s
-          AND UPPER(assessment_type) = %s
-        {order_clause}
-        LIMIT 1
-    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
-
-    params = (course_norm, year_int, sem_norm, atype_norm)
-
-    with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        row = cur.fetchone()
-        return int(row[0]) if row else None
-    params = (course, year, semester, assessment_type)
-
-    with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        row = cur.fetchone()
-        return int(row[0]) if row else None
-    return
 
 # Endpoint for adding question to the database
 @app.route("/addquestion", methods=["POST"])
