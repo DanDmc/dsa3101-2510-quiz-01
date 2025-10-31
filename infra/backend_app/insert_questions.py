@@ -60,6 +60,8 @@ def connect_to_database(max_retries=5, retry_delay=3):
     ------
     mysql.connector.Error
         If connection fails after all retry attempts.
+
+    Review Docstring
     """
     for attempt in range(max_retries):
         try:
