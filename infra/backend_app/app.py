@@ -84,12 +84,23 @@ def _get_file_row(file_id: int):
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
         cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
         return cur.fetchone()
-
-allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
-allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
-
-# for the 
+    
+# to ensure concept_tags field normalised to JSON format
 def normalize_concept_tags(val):
+    """
+    Normalise the 'concept_tags' to JSON string for storing in the database.
+    Accepts lists/tuples/JSON/strings.
+
+    Args:
+        val (lists/tuples/JSON/strings): Concept tags provided by user
+    
+    Returns:
+        str: JSON string (e.g., '["regression","r-squared"]') or string if JSON array not valid.
+            None when input is None.
+    
+    Raises:
+        None if not found
+    """
     # standardise the format of the concept_tags field
     if val is None:
         return None
@@ -160,6 +171,15 @@ def _normalize_semester(sem: str) -> str:
     """
     Normalize various semester inputs to a compact canonical form.
     Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
+
+    Args:
+        sem (str): Semester label/value
+
+    Returns:
+        str: Semester Code
+
+    Raises:
+        None.
     """
     if sem is None:
         return ""
@@ -180,6 +200,18 @@ def _normalize_semester(sem: str) -> str:
 
 
 def _normalize_assessment_type(t: str) -> str:
+    """
+    Normalize assessment_type strings to lowercase and remove whitespaces.
+
+    Args:
+        t (str): Assessment type.
+
+    Returns:
+        str: Normalised assessment type lowercased with whitespaces trimmed.
+
+    Raises:
+        None.
+    """
     if t is None:
         return ""
     s = str(t).strip().lower().replace("-", " ")
@@ -188,6 +220,25 @@ def _normalize_assessment_type(t: str) -> str:
 
 
 def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
+    """
+    Search for 'file_id' by matching 'course', 'year', 'semester', 'assessment_type'.
+    If latest = 'True', look for the most recently uploaded file.
+
+    Args:
+        course (str): Course code, e.g. "ST2131".
+        year (int/str): Year (convert to int).
+        semester (str): Semester code, e.g. 2410.
+        assessment_type (str): e.g. "quiz", "midterm".
+        latest (bool): If True, choose the most recent match based on uploaded_at and id.
+
+    Returns:
+        int/None:
+            Matching files.id else None if no match.
+    
+    Raises:
+        ValueError: If missing course or year not integer-like.
+        MySQLError: If database cannot be established.
+    """
     if not course:
         raise ValueError("course is required")
     try:
@@ -254,6 +305,19 @@ def _run(cmd, env_extra=None, timeout=900):
     return p.returncode, p.stdout.strip(), p.stderr.strip()
 
 def get_connection():
+    """
+    Create a new MySQL connection using environment variables:
+    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
+
+    Args:
+        None.
+
+    Returns:
+        MYSQLdb.connection: Open a connection to the quizbank database.
+
+    Raises:
+        MySQLdb.Error: If connection cannot be established. 
+    """
     return MySQLdb.connect(
         host=os.getenv("MYSQL_HOST", "db"),
         user=os.getenv("MYSQL_USER", "quizbank_user"),
@@ -669,8 +733,38 @@ def upload_file():
 
 ## EDITING QUESTIONS
 
+ALLOWED_QUESTION_FIELDS_FOR_EDIT = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+ALLOWED_FILE_FIELDS_FOR_EDIT = {"assessment_type", "course", "year", "semester"}
+
 @app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 def update_question(q_id):
+    """
+    Supports editing selected fields in the 'questions' table ("question_stem", 
+    "concept_tags", "difficulty_rating_manual", "question_type", "question_options", 
+    "question_answer") and selected metadata in the 'files' row ("assessment_type", 
+    "course", "year", "semester").
+
+    Args:
+        q_id (int): 
+            Primary key of the question for editing.
+        JSON body (dict):
+            Key-value pairs for edit. Allowed keys are:
+                - questions: {"question_stem", "concept_tags", "difficulty_rating_manual", 
+                            "question_type", "question_options", "question_answer"}
+                - files: {"assessment_type", "course", "year", "semester"}
+            Notes:
+                - concept_tags must be list/tuple.
+                - difficulty_rating_manual must be float or null.
+
+    Returns:
+        flask.Response (application/json):
+            200 with the edited record if successful.
+            400 with {"error": "..."} if field input is not an allowed type.
+            404 if the question does not exist for editing.
+
+    Raises:
+        Database and JSON errors are returned as 4xx/5xx flask responses.
+    """
     # the requested edit attribute
     payload = request.get_json(silent=True) or {}
     if not payload:
@@ -680,9 +774,9 @@ def update_question(q_id):
     question_updates = {}
     file_updates = {}
     for k,v in payload.items():
-        if k in allowed_question_fields_for_edit:
+        if k in ALLOWED_QUESTION_FIELDS_FOR_EDIT:
             question_updates[k] = v
-        elif k in allowed_file_fields_for_edit:
+        elif k in ALLOWED_FILE_FIELDS_FOR_EDIT:
             file_updates[k] = v
 
     if not question_updates and not file_updates:
@@ -751,7 +845,26 @@ def update_question(q_id):
 ## HARD DELETE QUESTION
 @app.route("/api/harddeletequestions/<int:q_id>", methods=["DELETE"])
 def hard_delete_question(q_id):
+    """
+    Permanently delete a question from the 'questions' table.
 
+    Args:
+        q_id (int): 
+            Primary key of the question to be deleted.
+        Confirmation string (str):
+            MUST BE "YES" to proceed with deletion, otherwise error 400 is returned.
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"status": "deleted_permanently", "id": q_id} if successful
+            400 with {"error": "confirmation_required", ...} if confirmation not stated/invalid.
+            404 with {"status": "not_found", "id": q_id} if q_id does not exist in 'questions' table
+            500 with {"error": "delete_failed", ..." if error in database.
+
+    Raises:
+        All exceptions handled and return as a 4xx/5xx flask response.
+
+    """
     # Confirm before hard delete
     confirm = request.args.get("confirm", "").upper()
     if confirm != "YES":
@@ -781,6 +894,37 @@ def hard_delete_question(q_id):
 # Endpoint for adding question to the database
 @app.route("/addquestion", methods=["POST"])
 def addquestion():
+    """
+    Create a new question and adds it to the 'questions' table.
+
+    Args:
+        JSON body (dict):
+            Either:
+                - file_id (int): existing file row to attach the question to
+            Or ALL fields to find file_id:
+                - course (str)
+                - year (int)
+                - semester (str)
+                - assessment_type (str)
+            Required fields:
+                - question_type (str)
+                - question_stem (str)
+            Optional fields:
+                - concept_tags (list/tuple/JSON string/str): will be normalised to JSON.
+                - question_options (list/dict/JSON string): stored as JSON string.
+                - question_answer (JSON)L store as JSON.
+    
+    Returns:
+        flask.Response(application/json):
+            201 with {"status": "created", "question_id": <int>, "file": {...}, "data": {...}} if successful
+            400 with {"error": "missing_field", ...} when required field inputs are not present.
+            404 with {"error": "file_not_found"} when file_id is invalid.
+            500 with {"error": "insert_failed", "message": "..."} if error in database.
+
+    Raises:
+        Input and database error returns as 4xx/5xx responses.
+
+    """
     payload = request.get_json(silent=True) or {}
 
     # Required fields
