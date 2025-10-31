@@ -529,7 +529,38 @@ def download_file(file_id: int):
 
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
+    """
+    Predict difficulty for questions as a whole batch.
+    Selects questions from 'questions' table with NULL in 'difficulty_rating_manual'
+    with the saved Machine Learning pipeline, and update the Database
 
+    Args: 
+        file_id (int, optional): If provided, restricts difficulty prediction to only files in 'file_id'.
+        dry_run (int, optional): If dry_run=1, does not fill in the value in the database, and only return result. 
+                                    Default 0 to fill in the difficulty_rating_model field.
+
+        JSON body: {} (empty object). Body required for POST.
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"processed": int, # number of rows predicted
+                    "updated" int, # number of rows written
+                    "dry_run": bool,
+                    "items": [
+                    {
+                    "id": int,
+                    "question_base_id": int,
+                    "file_id": int,
+                    "difficulty_rating_model": float
+                    },
+                    ...
+                ]
+            }
+            500 with {"error": "model not loaded"} if the model cannot be reached.
+
+    Raises:
+        Database and model errors handled and returned as 4xx/5xx flask responses.
+    """
     if difficulty_model is None:
         return jsonify({"error": "model not loaded"}), 503
 
@@ -763,7 +794,7 @@ def update_question(q_id):
             404 if the question does not exist for editing.
 
     Raises:
-        Database and JSON errors are returned as 4xx/5xx flask responses.
+        Database and JSON errors are handled and returned as 4xx/5xx flask responses.
     """
     # the requested edit attribute
     payload = request.get_json(silent=True) or {}
@@ -862,7 +893,7 @@ def hard_delete_question(q_id):
             500 with {"error": "delete_failed", ..." if error in database.
 
     Raises:
-        All exceptions handled and return as a 4xx/5xx flask response.
+        All exceptions handled and returned as 4xx/5xx flask responses.
 
     """
     # Confirm before hard delete
@@ -922,7 +953,7 @@ def addquestion():
             500 with {"error": "insert_failed", "message": "..."} if error in database.
 
     Raises:
-        Input and database error returns as 4xx/5xx responses.
+        Input and database error are handled and returned as 4xx/5xx flask responses.
 
     """
     payload = request.get_json(silent=True) or {}
