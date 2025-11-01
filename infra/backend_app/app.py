@@ -17,6 +17,7 @@ from werkzeug.utils import secure_filename
 # app.py (New/Modified section)
 from flask_cors import CORS, cross_origin # ⬅️ ADD cross_origin here
 import re
+import sys
 
 app = Flask(__name__)
 
@@ -517,6 +518,21 @@ _numeric_feats_from_df = numeric_feats_from_df
 
 # -----------------------------------------------------
 ## Difficulty Rating Model
+
+# -----------------------------------------------------
+# 💡 2. FIX FOR GUNICORN 'module __main__' ERROR
+# The .pkl file expects these functions to be in the __main__ module.
+# When running with Gunicorn, __main__ is Gunicorn, not app.py.
+# We must manually inject these functions into the __main__ module
+# *before* joblib.load() is called.
+main_module = sys.modules['__main__']
+main_module._SENT_SPLIT = _SENT_SPLIT
+main_module._syllable_count = _syllable_count
+main_module._compute_readability_features = _compute_readability_features
+main_module.numeric_feats_from_df = numeric_feats_from_df
+main_module._numeric_feats_from_df = _numeric_feats_from_df
+# -----------------------------------------------------
+
 # load the difficulty rating model
 MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
 difficulty_model = None
