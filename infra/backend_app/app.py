@@ -483,7 +483,7 @@ def get_question():
         concept_tags.extend([s.strip() for s in t.split(",") if s.strip()])
 
     # Default Pagination and Sorting
-    limit = int(request.args.get("limit", 50))
+    limit = int(request.args.get("limit", 100000))
     offset = int(request.args.get("offset", 0))
     order_by_arg = (request.args.get("order_by") or "").lower()
     sort_arg = (request.args.get("sort") or "desc").lower()
