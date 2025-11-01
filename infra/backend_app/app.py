@@ -929,7 +929,7 @@ def upload_file():
     f.stream.seek(0)
     if head != b"%PDF-":
         return jsonify({"error": "Invalid PDF header"}), 400
-    # 💥 BEGIN LOCK FIX: Read entire stream into memory
+    # Read entire stream into memory
     try:
         f.stream.seek(0)
         file_content = f.stream.read()
@@ -1009,7 +1009,7 @@ def upload_file():
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
     # ============================================================== 
-    # 🔑 Retry loop for newly_inserted_questions with exponential backoff
+    # Retry loop for newly_inserted_questions with exponential backoff
     # ============================================================== 
     new_questions = []
     select_cols = [
@@ -1519,8 +1519,8 @@ def addquestion():
             return jsonify({"error": "insert_failed", "message": str(e)}), 500    
 
 # --# -----------------------------------------------------
-## ➕ Question Creation (File-Independent)
-## 🎯 Unique Endpoint from Template 2
+## Question Creation (File-Independent)
+## Unique Endpoint from Template 2
 
 @app.route("/api/createquestion", methods=["POST"])
 def create_question():
@@ -1541,10 +1541,10 @@ def create_question():
     semester = payload.get("semester") or None
     assessment_type = payload.get("assessment_type") or None
     
-    # 🌟 Extracting difficulty_rating_manual
+    # Extracting difficulty_rating_manual
     difficulty_rating_manual = payload.get("difficulty_rating_manual")
     
-    # ✅ FIX: Enforce FLOAT conversion or keep None if not provided
+    # Enforce FLOAT conversion or keep None if not provided
     if difficulty_rating_manual is not None and difficulty_rating_manual != "":
         try:
             difficulty_rating_manual = float(difficulty_rating_manual)
