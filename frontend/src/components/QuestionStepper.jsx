@@ -1,140 +1,251 @@
-// src/components/QuestionStepper.jsx 
+// src/components/QuestionStepper.jsx
 
 import React from 'react';
-import { Box, Card, Typography, List, ListItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
-// 🌟 NEW IMPORTS for Goal 2
-import EditNoteIcon from '@mui/icons-material/EditNote'; 
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'; 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {
+  Box,
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  IconButton,
+} from '@mui/material';
+import EditNoteIcon from '@mui/icons-material/EditNote'; // Open Ended
+import CodeIcon from '@mui/icons-material/Code'; // For CODING
+import TollIcon from '@mui/icons-material/Toll'; // For MCQ
+import AddIcon from '@mui/icons-material/Add';
+import MinimizeIcon from '@mui/icons-material/Minimize'; // ⭐ NEW: For FILL-IN-THE-BLANKS
+// ====================================================================
+// ✅ FIX 1: Icons for MRQ and OTHERS added to the import list
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'; // Used for OTHERS/Default
+import CheckBoxIcon from '@mui/icons-material/CheckBox'; // New icon for MRQ
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; // New icon for OTHERS
+// ====================================================================
 
-// CONSTANT for truncation
-const MAX_LENGTH = 23; 
+const MAX_LENGTH = 23;
+const ICON_COLOR = '#525151';
+
+// Define sizes for consistent styling
+const BUTTON_DIAMETER = '24px'; // Diameter of the overall button area/background circle
+const ADD_ICON_SIZE = '20px'; // Diameter of the inner AddIcon (24px - 4px = 20px)
+
+// 🌟 NEW: Define the max height for the list to fit 6 items (approx 6 * ~65px height per item)
+const MAX_LIST_HEIGHT = '400px';
 
 /**
  * Renders the sidebar with the list of questions (the stepper).
  */
-function QuestionStepper({ questions, activeQuestion, setActiveQuestion }) {
-    
-    // Helper to get the correct icon component based on question type
-    const getQuestionTypeIcon = (type) => {
-        const normalizedType = (type || '').toUpperCase();
-        if (normalizedType.includes("OPEN ENDED")) {
-            return <EditNoteIcon sx={{ color: '#525151' }} fontSize="small" />;
-        }
-        // Assuming 'MCQ' or 'Multiple choice' falls here
-        return <CheckBoxOutlineBlankIcon sx={{ color: '#525151' }} fontSize="small" />;
-    };
-    
-    // Helper to truncate the question text (UNCHANGED, now uses new MAX_LENGTH)
-    const truncateText = (text, maxLength) => {
-        if (!text) return `Question (No Text)`;
-        const content = text || `Question (ID: ${activeQuestion})`; // Fallback if no text provided
+// 🌟 MODIFICATION: Added onAddQuestion to props
+function QuestionStepper({
+  questions,
+  activeQuestion,
+  setActiveQuestion,
+  onAddQuestion,
+}) {
+  // Helper to get the correct icon component based on question type
+  const getQuestionTypeIcon = (type) => {
+    const normalizedType = (type || '').toUpperCase();
 
-        if (!content) return `Question (No Text)`;
-        if (content.length <= maxLength) return content;
-        return content.substring(0, maxLength) + '...';
-    };
+    // CODING Icon logic
+    if (normalizedType.includes('CODING')) {
+      return <CodeIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
+    }
 
+    // MCQ Icon logic
+    if (
+      normalizedType.includes('MCQ') ||
+      normalizedType.includes('MULTIPLE CHOICE')
+    ) {
+      return <TollIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
+    }
+
+    // OPEN-ENDED Icon logic
+    if (
+      normalizedType.includes('OPEN ENDED') ||
+      normalizedType.includes('OPEN-ENDED')
+    ) {
+      return <EditNoteIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
+    }
+
+    // ⭐ NEW: FILL-IN-THE-BLANKS Icon logic
+    if (normalizedType.includes('FILL-IN-THE-BLANKS')) {
+      return <MinimizeIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
+    }
+
+    // ✅ FIX 2: Explicitly handle MRQ (Multiple Response Question)
+    if (
+      normalizedType.includes('MRQ') ||
+      normalizedType.includes('MULTIPLE RESPONSE')
+    ) {
+      return <CheckBoxIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
+    }
+
+    // ✅ FIX 3: Explicitly handle OTHERS and use a clear default icon
+    if (normalizedType.includes('OTHERS') || !normalizedType) {
+      return <QuestionMarkIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
+    }
+
+    // Default fallback icon (Should now only catch truly unexpected strings)
     return (
-        <Card sx={{ p: 0, height: 'auto', width: '100%' }}> 
-            <Box sx={{ p: 2, backgroundColor: '#f0f0f0' }}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                    QUESTION ({questions.length})
-                </Typography>
-            </Box>
-            <Divider />
-            
-            <List dense disablePadding>
-                {questions.map((q, index) => (
-                    <ListItem
-                        key={q.id}
-                        button
-                        onClick={() => setActiveQuestion(q.id)}
-                        sx={{
-                            // Background color is grey (#EDEDED) for active state
-                            backgroundColor: activeQuestion === q.id ? '#EDEDED' : 'transparent',
-                            // Border color is orange (#F57F17) for active state
-                            borderLeft: activeQuestion === q.id ? '4px solid #F57F17' : 'none',
-                            py: 1.5, // 🌟 INCREASED vertical padding for extra height
-                            px: 2,
-                            alignItems: 'flex-start', 
-                        }}
-                    >
-                        {/* Custom Question Number Element (UNCHANGED) */}
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '24px', 
-                                height: '24px', 
-                                borderRadius: '8px', 
-                                backgroundColor: '#E4E2E2', 
-                                mr: 2, 
-                                mt: 0.2, 
-                                flexShrink: 0, 
-                            }}
-                        >
-                            <Typography 
-                                variant="caption" 
-                                component="span" 
-                                fontWeight="bold" 
-                                sx={{ color: '#9E9E9E' }} 
-                            >
-                                {index + 1}
-                            </Typography>
-                        </Box>
-
-                        {/* 🌟 NEW: Wrapper Box to hold the Question Stem and the Type Box in a column */}
-                        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                            
-                            {/* Question Stem (Primary Text) - Goal 1 implementation */}
-                            <ListItemText 
-                                primary={truncateText(q.question_stem || q.text, MAX_LENGTH)}
-                                sx={{ m: 0, mb: 1 }} // Added margin-bottom to separate from the new box
-                                primaryTypographyProps={{ 
-                                    noWrap: false, 
-                                    fontWeight: 'bold',
-                                    color: '#525151',
-                                }}
-                            />
-                            
-                            {/* 🌟 NEW: Question Type Box - Goal 2 implementation */}
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    p: 0.5,
-                                    width: 'fit-content', // Only take necessary width
-                                    borderRadius: '4px',
-                                    backgroundColor: '#E4E2E2', // Grey background
-                                }}
-                            >
-                                {/* Dynamic Icon */}
-                                {getQuestionTypeIcon(q.type)}
-                                
-                                {/* Question Type Text */}
-                                <Typography 
-                                    variant="caption" 
-                                    fontWeight="bold" 
-                                    sx={{ 
-                                        ml: 0.5, 
-                                        color: '#525151', 
-                                        lineHeight: 1 // Ensures compact vertical spacing
-                                    }}
-                                >
-                                    {q.type ? q.type.toUpperCase().replace(' ', '') : 'N/A'}
-                                </Typography>
-                            </Box>
-                        </Box>
-                        
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-        </Card>
+      <CheckBoxOutlineBlankIcon sx={{ color: ICON_COLOR }} fontSize="small" />
     );
+  };
+
+  // Helper to truncate the question text (UNCHANGED)
+  const truncateText = (text, maxLength) => {
+    if (!text) return `Question (No Text)`;
+    const content = text || `Question (ID: ${activeQuestion})`;
+    if (!content) return `Question (No Text)`;
+    if (content.length <= maxLength) return content;
+    return content.substring(0, maxLength) + '...';
+  };
+
+  // ❌ REMOVED: Placeholder for the add question action
+  // We now use the `onAddQuestion` prop directly.
+
+  return (
+    <Card sx={{ p: 0, height: 'auto', width: '100%' }}>
+      <Box
+        sx={{
+          p: 2,
+          backgroundColor: '#f0f0f0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="subtitle1" fontWeight="bold">
+          QUESTION ({questions.length})
+        </Typography>
+
+        <IconButton
+          // 🌟 MODIFICATION: Use the prop here
+          onClick={onAddQuestion}
+          size="small"
+          sx={{ p: 0 }}
+        >
+          <Box
+            sx={{
+              width: BUTTON_DIAMETER,
+              height: BUTTON_DIAMETER,
+              borderRadius: '50%', // Makes it a circle
+              backgroundColor: '#FFFFFF', // White fill
+              border: '1px solid #BDBDBD', // Grey stroke
+              display: 'flex',
+              justifyContent: 'center', // Horizontal Center
+              alignItems: 'center', // Vertical Center
+            }}
+          >
+            <AddIcon
+              sx={{
+                fontSize: ADD_ICON_SIZE, // 4px smaller than container (24px)
+                color: '#000000', // Black fill color for the plus sign
+              }}
+            />
+          </Box>
+        </IconButton>
+      </Box>
+      <Divider />
+
+      {/* 🌟 MODIFIED: Added max-height and overflow properties for scrolling */}
+      <List
+        dense
+        disablePadding
+        sx={{
+          maxHeight: MAX_LIST_HEIGHT, // Max height to show approximately 6 items
+          overflowY: 'auto', // Enables vertical scrolling when content exceeds maxHeight
+        }}
+      >
+        {questions.map((q, index) => (
+          <ListItem
+            key={q.id}
+            button
+            onClick={() => setActiveQuestion(q.id)}
+            sx={{
+              backgroundColor:
+                activeQuestion === q.id ? '#EDEDED' : 'transparent',
+              borderLeft:
+                activeQuestion === q.id ? '4px solid #F57F17' : 'none',
+              py: 1.5,
+              px: 2,
+              alignItems: 'flex-start',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '24px',
+                height: '24px',
+                borderRadius: '8px',
+                backgroundColor: '#E4E2E2',
+                mr: 2,
+                mt: 0.2,
+                flexShrink: 0,
+              }}
+            >
+              <Typography
+                variant="caption"
+                component="span"
+                fontWeight="bold"
+                sx={{ color: '#9E9E9E' }}
+              >
+                {index + 1}
+              </Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+              {/* Question Stem (Primary Text) */}
+              <ListItemText
+                primary={truncateText(q.question_stem || q.text, MAX_LENGTH)}
+                sx={{ m: 0, mb: 1 }}
+                primaryTypographyProps={{
+                  noWrap: false,
+                  fontWeight: 'bold',
+                  color: '#525151',
+                }}
+              />
+
+              {/* Question Type Box */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  p: 0.5,
+                  width: 'fit-content',
+                  borderRadius: '4px',
+                  backgroundColor: '#E4E2E2',
+                }}
+              >
+                {/* Dynamic Icon */}
+                {getQuestionTypeIcon(q.question_type)}
+
+                {/* Question Type Text */}
+                <Typography
+                  variant="caption"
+                  fontWeight="bold"
+                  sx={{
+                    ml: 0.5,
+                    color: '#525151',
+                    lineHeight: 1,
+                  }}
+                >
+                  {q.question_type
+                    ? q.question_type.toUpperCase().replace(' ', '')
+                    : 'N/A'}
+                </Typography>
+              </Box>
+            </Box>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </Card>
+  );
 }
 
 export default QuestionStepper;

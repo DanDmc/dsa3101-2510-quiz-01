@@ -1,48 +1,85 @@
 // src/pages/HomePage.jsx
 
 import React, { useState } from 'react';
-import { Grid, Box, Typography, CssBaseline } from '@mui/material';
+// 1. IMPORT BUTTON
+import {
+  Grid,
+  Box,
+  Typography,
+  CssBaseline,
+  CircularProgress,
+  Alert,
+  Button,
+} from '@mui/material';
 
 import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// 🌟 NEW: API_BASE for download
-const API_BASE = import.meta.env.VITE_APP_API_URL;
+// ❌ REMOVED: The hardcoded mockGroups list is no longer needed (from your HEAD logic)
 
-const mockGroups = [
-  'DSA4288M', 'DSA4288S', 'DSA4288', 'DSA3102', 'DSA3101', 
-  'DSA2102', 'DSA2101', 'DSA1101', 'ST4248', 'ST3236', 
-  'ST3131', 'ST2132', 'ST2131'
-];
-
-function HomePage({ 
+function HomePage({
   questions: propQuestions,
-  goToCreatePage, 
-  goToEditPage, 
-  goToSearchPage, 
-  goToHomePage, 
+  goToCreatePage,
+  goToEditPage,
+  goToSearchPage,
+  goToHomePage,
   handleDeleteQuestions,
-  isSafeDeletionEnabled,
-  setIsSafeDeletionEnabled 
-}) { 
+
+  // ⭐ Group Management Props (FROM YOUR HEAD)
+  courseGroups,
+  onAddGroup,
+  onRenameGroup,
+  onDeleteGroup,
+  onFilterChange,
+  isProcessing, // State for showing loading/processing feedback
+  // NEW: Filter options for the Toolbar/Search Page (FROM INCOMING)
+  courseOptions,
+  conceptOptions,
+  // 2. ACCEPT THE NEW PROP
+  onGenerateDifficulty,
+}) {
   const [selected, setSelected] = useState([]);
-  const [groups, setGroups] = useState(mockGroups);
 
-  // --- Group Management Handlers ---
-  const handleRenameGroup = (oldName, newName) => {
-    if (!newName || (groups.includes(newName) && newName !== oldName)) {
-      console.error("Invalid rename: New name is empty or already exists.");
-      return;
+  // ⬅️ NEW: The wrapper function that handles the complex filter object (FROM INCOMING)
+  const openSearchWith = (payload) => {
+    let params = {};
+
+    if (typeof payload === 'string') {
+      params = { query: payload.trim() };
+    } else if (payload && typeof payload === 'object') {
+      const {
+        query = '',
+        course = '',
+        question_type = '',
+        assessment_type = '',
+        academic_year,
+        year,
+        semester = '',
+        tags,
+        concept_tags,
+      } = payload;
+
+      params = {
+        query: (query || '').trim(),
+        course: (course || '').toString().trim(),
+        question_type: (question_type || '').toString().trim(),
+        assessment_type: (assessment_type || '').toString().trim(),
+        year: academic_year ?? year ?? '',
+        semester: (semester || '').toString().trim(),
+        tags: Array.isArray(tags)
+          ? tags.map(String)
+          : Array.isArray(concept_tags)
+          ? concept_tags.map(String)
+          : [],
+      };
+    } else {
+      params = { query: '' };
     }
-    setGroups(prevGroups => prevGroups.map(group => (group === oldName ? newName : group)));
-  };
-  
-  const handleDeleteGroup = (groupName) => {
-    setGroups(prevGroups => prevGroups.filter(group => group !== groupName));
-  };
 
-  // --- Table selection handlers ---
+    goToSearchPage(params);
+  };
+  // Handlers
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       setSelected(propQuestions.map((n) => n.id));
@@ -52,102 +89,118 @@ function HomePage({
   };
 
   const handleEditClick = () => {
-    const questionsToEdit = propQuestions.filter(q => selected.includes(q.id));
+    const questionsToEdit = propQuestions.filter((q) => selected.includes(q.id));
     goToEditPage(questionsToEdit);
   };
 
   const handleDeleteClick = () => {
-    handleDeleteQuestions(selected);
+    handleDeleteQuestions(selected); // Calls the hard delete wrapper in main.jsx
     setSelected([]);
   };
 
-  const handleSafeDeletionToggle = (event) => {
-    setIsSafeDeletionEnabled(event.target.checked);
-  };
+  // ❌ DELETED: handleSafeDeletionToggle is removed
+  // ❌ DELETED: handleRenameGroup/handleDeleteGroup from Incoming are removed (Using HEAD's props/logic)
 
-  // 🌟 NEW: Download Selected Questions (like individual download)
-  const handleDownloadSelected = () => {
-    if (selected.length === 0) return;
-
-    selected.forEach((id) => {
-      const question = propQuestions.find(q => q.id === id);
-      if (question && question.file_id) {
-        const downloadUrl = `${API_BASE}/files/${question.file_id}/download`;
-        window.open(downloadUrl, '_blank');
-      }
-    });
-  };
-
+  // --- START OF JSX RENDER ---
   return (
     <>
       <CssBaseline />
+
+      {/* ⭐ Display processing feedback */}
+      {isProcessing && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <CircularProgress size={16} />
+            <Typography variant="body2">
+              Processing operation... Please wait.
+            </Typography>
+          </Box>
+        </Alert>
+      )}
+
       <Grid container direction="column" rowSpacing={0}>
-        
-        {/* Toolbar */}
+        {/* --- FULL WIDTH TOOLBAR (row 1) --- */}
         <Grid item xs={12}>
-          <QuestionToolbar 
-            numSelected={selected.length} 
-            goToCreatePage={goToCreatePage} 
-            goToEditPage={handleEditClick} 
-            goToSearchPage={goToSearchPage}
+          <QuestionToolbar
+            numSelected={selected.length}
+            goToCreatePage={goToCreatePage}
+            goToEditPage={handleEditClick}
+            goToSearchPage={openSearchWith} // ⬅️ NEW: Use the wrapper function
+            // ⬅️ Pass processing state to disable toolbar buttons
+            disabled={isProcessing}
             handleDeleteClick={handleDeleteClick}
-            isSafeDeletionEnabled={isSafeDeletionEnabled}
-            handleSafeDeletionToggle={handleSafeDeletionToggle}
+            // ⬅️ NEW: Feed options down for the filter menu
+            courseOptions={courseOptions}
+            conceptOptions={conceptOptions}
           />
         </Grid>
 
-        {/* Main content */}
+        {/* --- ROW 2: COLUMNS WITH HORIZONTAL SPACING --- */}
         <Grid item>
           <Grid container columnSpacing={16}>
-            
-            {/* Left column: Questions */}
+            {/* LEFT COLUMN: TEXT + TABLE */}
             <Grid item xs={12} md={9}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
+                {/* 3. ADD THE HEADER BOX WITH BUTTON */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    sx={{ fontWeight: 'bold' }}
+                  >
                     Questions in Group
                   </Typography>
 
-                  {/* Download Selected Button */}
-                  <button
+                  <Button
                     variant="contained"
-                    onClick={handleDownloadSelected}
-                    disabled={selected.length === 0}
-                    style={{
-                      backgroundColor: '#388E3C',
-                      color: 'white',
-                      border: 'none',
-                      padding: '6px 12px',
-                      borderRadius: '4px',
-                      cursor: selected.length === 0 ? 'not-allowed' : 'pointer'
+                    onClick={onGenerateDifficulty}
+                    disabled={isProcessing}
+                    sx={{
+                      backgroundColor: '#F48828',
+                      color: '#FFFFFF',
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        backgroundColor: '#D3731E', // A slightly darker orange
+                      },
                     }}
                   >
-                    Download Selected
-                  </button>
+                    Generate Difficulty
+                  </Button>
                 </Box>
 
-                <QuestionTable 
+                <QuestionTable
                   questions={propQuestions}
                   selected={selected}
                   setSelected={setSelected}
                   onSelectAllClick={handleSelectAllClick}
+                  // ⬅️ Pass processing state
+                  disabled={isProcessing}
+                  // ⬅️ Pass goToEditPage for double-click feature
+                  goToEditPage={goToEditPage}
                 />
-            </Box>
+              </Box>
             </Grid>
 
-            {/* Right column: Groups */}
+            {/* RIGHT COLUMN: GROUPS PANEL */}
             <Grid item xs={12} md={3}>
-              <QuestionGroups 
-                groups={groups} 
-                onRenameGroup={handleRenameGroup} 
-                onDeleteGroup={handleDeleteGroup} 
+              <QuestionGroups
+                groups={courseGroups} // ⬅️ Uses HEAD's dynamic groups
+                onAddGroup={onAddGroup}
+                onRenameGroup={onRenameGroup}
+                onDeleteGroup={onDeleteGroup}
+                onFilterChange={onFilterChange}
+                // ⬅️ Pass processing state to QuestionGroups
+                disabled={isProcessing}
               />
             </Grid>
-
           </Grid>
         </Grid>
-
       </Grid>
     </>
   );

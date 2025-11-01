@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy only package files first (for caching)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the frontend source
+COPY src/ ./src
+COPY public/ ./public
+COPY index.html .
+COPY vite.config.js .
+
+# Expose the Vite dev port
+EXPOSE 5173
+
+# ✅ Use the Vite dev server as CMD
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+

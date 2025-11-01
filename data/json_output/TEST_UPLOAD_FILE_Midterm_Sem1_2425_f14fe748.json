@@ -1,0 +1,326 @@
+[
+  {
+    "question_no": "1.1",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write code to change the name of the 4th column of data to Surgical.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "R programming",
+      "data manipulation"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
+    ]
+  },
+  {
+    "question_no": "1.2",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write code to create a table of proportions for column Surgical. Report the percentage of patients that had surgery.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "R programming",
+      "descriptive statistics",
+      "data exploration"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
+    ]
+  },
+  {
+    "question_no": "1.3",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write code to create a histogram with normal density curve overlay-ed for the sample of satisfaction.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "R programming",
+      "data visualization",
+      "histograms"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
+    ]
+  },
+  {
+    "question_no": "1.4",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write code to create a QQ plot for the sample of satisfaction. Give your comments.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "R programming",
+      "data visualization",
+      "QQ plots"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
+    ]
+  },
+  {
+    "question_no": "1.5",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.67,
+    "question_stem": "Write code to create box plots of the satisfaction scores by groups of surgical status. Give your comments.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "R programming",
+      "data visualization",
+      "box plots"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
+    ]
+  },
+  {
+    "question_no": "1.6",
+    "question_type": "coding",
+    "difficulty_rating_manual": 1.0,
+    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classified by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      2
+    ],
+    "concept_tags": [
+      "R programming",
+      "data visualization",
+      "scatter plots"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
+    ]
+  },
+  {
+    "question_no": "1.7",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.67,
+    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT significant in the model, at significance level 0.1.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "linear regression",
+      "p-value"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.8",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.67,
+    "question_stem": "Two patients, A and B, that have information listed below. Write code to predict the satisfaction score for both of them. Report the prediction values.\nA: Age = 35, Severity = 45, Anxiety = 2.5 , and had no surgical.\nB: Age = 60, Severity = 40, Anxiety = 3 , and had surgical.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "linear regression",
+      "prediction"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.9",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good.\nS is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "data manipulation",
+      "feature engineering"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.10",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write code to create a new data frame, called data.X which has the three columns Age, Severity and Anxiety after standardization for all patients.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "data preprocessing",
+      "standardization"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.11",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.67,
+    "question_stem": "Write code to randomly split the total patients into two groups: one group has 15 patients (will be the train set) and other group has the rest of patients (will be the test set).",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "data splitting",
+      "machine learning"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.12",
+    "question_type": "coding",
+    "difficulty_rating_manual": 1.0,
+    "question_stem": "Use the train set with three standardized features to form the KNN classifiers where k = 3,5,7,9,11, and accuracy value for each classifier is kept in a vector named accuracy.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "KNN",
+      "classification",
+      "model training"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.13",
+    "question_type": "coding",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Write code to plot accuracy against k in the question above.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "data visualization",
+      "model evaluation"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.14",
+    "question_type": "open-ended",
+    "difficulty_rating_manual": 0.33,
+    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classifier with that value of k.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "KNN",
+      "model evaluation",
+      "hyperparameter tuning"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "1.15",
+    "question_type": "coding",
+    "difficulty_rating_manual": 1.0,
+    "question_stem": "Use the KNN with the best k found in Question 14 to predict the rank (Good, Not Good) that patient A listed in Question 8 will evaluates the hospital service.\nHint: you can use the same train set as in Question 12 above. You may standardize the values for the new patient using the mean and the standard deviation of all the patients in the data set given.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      3
+    ],
+    "concept_tags": [
+      "R programming",
+      "KNN",
+      "prediction",
+      "data preprocessing"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
+    ]
+  },
+  {
+    "question_no": "2.1",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Alena Lee is working for a company where her current salary is $50,000 annually and the salary is increased 5% every year. So far, until end of 2024, she has a saving amount of $30,000. She plans to form a start-up company which will requires an initial amount of $100,000. Dene a function, function.year, which helps to calculate and return the number of years that Alena Lee could save up enough money if the proportion of annual salary she puts for savings is xed at 0.2 (20%).",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4
+    ],
+    "concept_tags": [
+      "R programming",
+      "financial modeling",
+      "function definition"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
+    ]
+  },
+  {
+    "question_no": "2.2",
+    "question_type": "coding",
+    "difficulty_rating_manual": null,
+    "question_stem": "Alena Lee is working for a company where her current salary is $50,000 annually and the salary is increased 5% every year. So far, until end of 2024, she has a saving amount of $30,000. She plans to form a start-up company which will requires an initial amount of $100,000. Using function function.year dened above, write R codes that help to calculate the smallest proportion of annual salary that she should save so that she could have enough money for her start-up at the end of 2029, (5 years counting from start of 2025 to end of 2029). Note: The proportions of saving salary should be up to 2 decimal places only.",
+    "question_options": [],
+    "question_answer": null,
+    "page_numbers": [
+      4
+    ],
+    "concept_tags": [
+      "R programming",
+      "financial modeling",
+      "optimization"
+    ],
+    "page_image_paths": [
+      "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
+    ]
+  }
+]
