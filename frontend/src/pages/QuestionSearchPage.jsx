@@ -30,15 +30,27 @@ const fromAY = (ay) => {
   return m ? Number(m[1]) : undefined;
 };
 
+// --- MODIFICATION 1: Updated prettyType to include new types ---
 const prettyType = (t) => {
-  const map = { mcq: "MCQ", "open-ended": "Open Ended", openeded: "Open Ended", coding: "Coding" };
+  const map = {
+    mcq: "MCQ",
+    "open-ended": "Open Ended",
+    openeded: "Open Ended",
+    coding: "Coding",
+    mrq: "MRQ",
+    "fill-in-the-blanks": "Fill in the Blanks",
+    others: "Others"
+  };
   return map[(t || "").toLowerCase()] || (t || "Unknown");
 };
+
+// --- MODIFICATION 2: Updated typeChipProps to add MRQ styling ---
 const typeChipProps = (t) => {
   const k = (t || "").toLowerCase();
   if (k === "mcq") return { color: "warning", variant: "outlined" };
   if (k === "coding") return { color: "secondary", variant: "outlined" };
   if (k === "open-ended" || k === "openended" || k === "openeded") return { color: "info", variant: "outlined" };
+  if (k === "mrq") return { color: "success", variant: "outlined" };
   return { variant: "outlined" };
 };
 
@@ -67,8 +79,8 @@ export default function QuestionSearchPage({
   searchParams = null,
   goToCreatePage,
   goToEditPage,
-  handleDeleteQuestions,      // passed from App
-  onOptionsChange,            // optional: send options back to Home
+  handleDeleteQuestions,   // passed from App
+  onOptionsChange,         // optional: send options back to Home
 }) {
   // query + filters
   const [query, setQuery] = useState(initialQuery || "");
@@ -105,7 +117,8 @@ export default function QuestionSearchPage({
 
     // 2) question type (accepts "type" or "question_type")
     const t = (searchParams.type ?? searchParams.question_type ?? "").toString().trim();
-    setFType(t ? t : "All");
+    // --- MODIFICATION 3: Normalize incoming prop to lowercase for state ---
+    setFType(t ? t.toLowerCase() : "All");
 
     // 3) assessment type (map to dropdown labels)
     const a = (searchParams.assessment_type ?? "").toString().toLowerCase().trim();
@@ -140,6 +153,7 @@ export default function QuestionSearchPage({
   const buildParams = () => {
     const p = new URLSearchParams();
     if (query.trim()) p.set("q", query.trim());
+    // This logic is already correct, as fType state is now lowercase
     if (fType !== "All") p.set("type", fType.toLowerCase());
 
     if (fAssessment !== "All" && fAssessment !== "Unknown") {
@@ -323,14 +337,17 @@ export default function QuestionSearchPage({
               </form>
             </Box>
 
-            {/* Question Type */}
+            {/* --- MODIFICATION 4: Updated Question Type Dropdown --- */}
             <FormControl size="small" sx={{ minWidth: 170 }}>
               <InputLabel>Question Type</InputLabel>
               <Select label="Question Type" value={fType} onChange={(e) => setFType(e.target.value)}>
                 <MenuItem value="All">All</MenuItem>
-                <MenuItem value="open-ended">Open Ended</MenuItem>
                 <MenuItem value="mcq">MCQ</MenuItem>
+                <MenuItem value="open-ended">Open Ended</MenuItem>
+                <MenuItem value="mrq">MRQ</MenuItem>
+                <MenuItem value="fill-in-the-blanks">FILL-IN-THE-BLANKS</MenuItem>
                 <MenuItem value="coding">Coding</MenuItem>
+                <MenuItem value="others">Others</MenuItem>
               </Select>
             </FormControl>
 
@@ -421,7 +438,7 @@ export default function QuestionSearchPage({
                 borderRadius: 1,
                 transform:
                   sortDir === "asc" ? "rotate(180deg)" :
-                  sortDir === "desc" ? "rotate(0deg)" : "rotate(90deg)",
+                    sortDir === "desc" ? "rotate(0deg)" : "rotate(90deg)",
                 transition: "transform 0.2s",
               }}
               title={`Sort by type: ${sortDir}`}
