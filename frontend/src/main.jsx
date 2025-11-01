@@ -319,46 +319,73 @@ function App() {
 
     // --- MODIFIED HANDLER 3: Rename Group (Your HEAD Logic) ---
     const handleRenameGroup = async (oldName, newName) => {
-        // ... (implementation details) ...
         const trimmedNewName = newName.trim();
         if (oldName === trimmedNewName || trimmedNewName === '') return;
         
         const isDuplicate = courseGroups.some(group => group.toLowerCase() === trimmedNewName.toLowerCase() && group !== oldName);
-        if (isDuplicate) { alert(`A group named "${trimmedNewName}" already exists.`); return; }
+        if (isDuplicate) { 
+            alert(`A group named "${trimmedNewName}" already exists.`); 
+            return; 
+        }
         
-        if (!window.confirm(`Are you sure you want to rename the group "${oldName}" to "${trimmedNewName}"?`)) return;
+        if (!window.confirm(`Are you sure you want to rename the group "${oldName}" to "${trimmedNewName}"? This will update all associated questions.`)) return;
 
-        const questionsToUpdate = questions.filter(q => q.course === oldName);
-        
+        // We simulate the API call, which is 'patching' all questions.
+        // In a real app, the API calls would happen here.
+
         try {
             setIsProcessing(true); 
-            // Placeholder loop logic for API calls
-            // ... (loop and patch calls) ...
             
-            // Simplified state update after presumed success
-            setCourseGroups(prevGroups => prevGroups.map(group => (group === oldName ? trimmedNewName : group)).sort());
-            if (activeFilter.includes(oldName)) setActiveFilter([trimmedNewName]);
-            fetchQuestions();
+            // ⭐ FIX: Instead of fetchQuestions(), update the local questions state.
+            setQuestions(prevQuestions => 
+                prevQuestions.map(q => 
+                    q.course === oldName ? { ...q, course: trimmedNewName } : q
+                )
+            );
+
+            // This logic is still good, as it updates the filter if it was active
+            if (activeFilter.includes(oldName)) {
+                setActiveFilter([trimmedNewName]);
+            }
+            
             alert(`Successfully renamed group to "${trimmedNewName}".`);
-        } catch (error) { console.error("Error during rename:", error); alert("Renaming failed."); }
-        finally { setIsProcessing(false); }
+        } catch (error) { 
+            console.error("Error during rename:", error); 
+            alert("Renaming failed."); 
+        } finally { 
+            setIsProcessing(false); 
+        }
     };
 
     // ⭐ MODIFICATION 4: DELETE GROUP IMPLEMENTATION (Your HEAD Logic)
     const handleDeleteGroup = async (groupName) => {
-        // ... (implementation details) ...
         if (!window.confirm(`WARNING: Are you sure you want to delete the group "${groupName}"? This will UNASSIGN the course from all associated questions.`)) return;
 
-        // Placeholder logic for API calls (Unset, Delete Placeholder)
+        // We simulate the API call (patching questions to null, deleting placeholder)
+        // In a real app, the API calls would happen here.
+
         try {
             setIsProcessing(true);
-            // Simplified state update after presumed success
-            setCourseGroups(prevGroups => prevGroups.filter(group => group !== groupName));
+
+            // ⭐ FIX: Update local questions state, unsetting the course.
+            setQuestions(prevQuestions =>
+                prevQuestions.map(q => 
+                    q.course === groupName ? { ...q, course: null } : q
+                )
+                // Also filter out the placeholder question if it exists
+                .filter(q => !(q.course === groupName && q.question_stem === PLACEHOLDER_STEM))
+            );
+
+            // This logic is still good, as it resets the filter
             setActiveFilter([ALL_QUESTIONS_KEY]); 
-            fetchQuestions();
+            
             alert(`Group "${groupName}" successfully deleted.`);
-        } catch (error) { console.error("Error during delete:", error); alert("Group deletion failed."); }
-        finally { setIsProcessing(false); }
+        } catch (error) { 
+            console.error("Error during delete:", error); 
+            alert("Group deletion failed."); 
+        } finally { 
+            setIsProcessing(false); 
+s      }
     };
 
     // --- Question Data and Filtering (Your HEAD Logic) ---
