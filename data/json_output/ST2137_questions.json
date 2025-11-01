@@ -3,21 +3,19 @@
     "question_no": "1",
     "question_type": "coding",
     "difficulty_rating_manual": 0.41,
-    "question_stem": "This question is to be answered using Python.\nConsider the stud_perf dataset once again. There were three measures\nof performance of the students:\nFeature Description Details\nG1 First period grade from 0 to 20\nG2 Second period grade from 0 to 20\nG3 Final grade from 0 to 20\nIn this question, we shall investigate the agreement between G1 and\nG3 scores. If there is a high agreement, it means that teachers can\ndrop one of the scores and still get a good estimate of final grade of a\nstudent.\n1. First, read in the dataset, and divide the G1 and G3 scores into 10\nbins:\n• [0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16],\n(16,18], (18,20]\n• You should now have two new columns G1_bin and G3_bin in the\ndataset.\n2. Next, create a contingency table with G1_bin in the rows and\nG3_bin in the columns.\n3. Convert the cell counts into proportions. The sum of entries in all\ncells should now equal to 1. Create a visualisation of this table of\nproportions that is relevant to the goal of measuring agreement.\n4. If we let pij be the proportion in row i and column j, then the\nstrictest version of agreement is η0=∑i=110pii What is the range of\nvalues for η0? Which values correspond to higher agreement?\n5. A less stringent measure of agreement is given by η1=∑|i−j|≤1pij\nCompute η1 separately for the five groups defined by Medu and\nsummarise what you observe.",
+    "question_stem": "This question is to be answered using Python. Consider the stud_perf dataset once again. There were three measures of performance of the students:\nFeature Description Details\nG1 First period grade from 0 to 20\nG2 Second period grade from 0 to 20\nG3 Final grade from 0 to 20\nIn this question, we shall investigate the agreement between G1 and G3 scores. If there is a high agreement, it means that teachers can drop one of the scores and still get a good estimate of final grade of a student.\n1. First, read in the dataset, and divide the G1 and G3 scores into 10 bins:\n• [0,2], (2,4], (4,6], (6,8], (8,10], (10,12], (12,14], (14,16],\n(16,18], (18,20]\n• You should now have two new columns G1_bin and G3_bin in the\ndataset.\n2. Next, create a contingency table with G1_bin in the rows and\nG3_bin in the columns.\n3. Convert the cell counts into proportions. The sum of entries in all\ncells should now equal to 1. Create a visualisation of this table of\nproportions that is relevant to the goal of measuring agreement.\n4. If we let pij be the proportion in row i and column j, then the\nstrictest version of agreement is η0=∑i=110pii What is the range of\nvalues for η0? Which values correspond to higher agreement?\n5. A less stringent measure of agreement is given by η1=∑|i−j|≤1pij\nCompute η1 separately for the five groups defined by Medu and\nsummarise what you observe.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      1,
       2,
       3
     ],
     "concept_tags": [
       "data analysis",
-      "python programming",
-      "statistical agreement"
+      "contingency tables",
+      "agreement measures"
     ],
     "page_image_paths": [
-      "data/question_media/ST2137_questions_page1.png",
       "data/question_media/ST2137_questions_page3.png",
       "data/question_media/ST2137_questions_page2.png"
     ]
@@ -60,10 +58,27 @@
   },
   {
     "question_no": "3",
-    "question_type": "open-ended",
+    "question_type": "mcq",
     "difficulty_rating_manual": 0.97,
-    "question_stem": "Consider the following two histograms (created with Python) from the\nliverpool dataset used in Tutorial 2: (Image - Refer to question paper)\nWhat is the argument needed to convert the Histogram A into\nHistogram B?\nliverpool.GF.hist( 1 )\n1. Choice of: freq=False | density=True | type=\"percent\" | type=\"density\"",
-    "question_options": [],
+    "question_stem": "Consider the following two histograms (created with Python) from the\nliverpool dataset used in Tutorial 2:\n(Image - Refer to question paper)\nWhat is the argument needed to convert the Histogram A into\nHistogram B?",
+    "question_options": [
+      {
+        "label": "1",
+        "text": "freq=False"
+      },
+      {
+        "label": "2",
+        "text": "density=True"
+      },
+      {
+        "label": "3",
+        "text": "type=\"percent\""
+      },
+      {
+        "label": "4",
+        "text": "type=\"density\""
+      }
+    ],
     "question_answer": "freq=False",
     "page_numbers": [
       5
@@ -79,51 +94,44 @@
   },
   {
     "question_no": "4",
-    "question_type": "others",
+    "question_type": "coding",
     "difficulty_rating_manual": 0.44,
-    "question_stem": "The data in phones.csv contains information on phone calls made in Belgium from 1950 until 1973. Let Y be the number of calls, and X be the year variable. Read the data into Python as a pandas dataframe and answer the following questions:\n1. Write a function that takes in three arguments: beta0, beta1, and\nthe phones dataframe. It should compute the following L1-norm and\nreturn it: ∑i=1n|Yi−β0−β1Xi|\n2. Iterate over a range of beta0 and beta1 values and find the pair\nthat minimizes the L1-norm. Return this pair of beta0 and beta1 values.\n3. Create a plot of this line, along with the OLS estimate, along with\nthe datapoints.\n4. Discuss the benefits of the L1-fit over the OLS fit.",
+    "question_stem": "The data in phones.csv contains information on phone calls made in Belgium from 1950 until 1973. Let Y be the number of calls, and X be the year variable. Read the data into Python as a pandas dataframe and answer the following questions:\n1. Write a function that takes in three arguments: beta0, beta1, and the phones dataframe. It should compute the following L1-norm and return it: ∑i=1n|Yi−β0−β1Xi|\n2. Iterate over a range of beta0 and beta1 values and find the pair that minimizes the L1-norm. Return this pair of beta0 and beta1 values.\n3. Create a plot of this line, along with the OLS estimate, along with the datapoints.\n4. Discuss the benefits of the L1-fit over the OLS fit.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      6
+      "6"
     ],
     "concept_tags": [
-      "data analysis",
+      "linear regression",
       "L1-norm",
-      "OLS",
-      "Python programming"
+      "OLS"
     ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page6.png"
-    ]
+    "page_image_paths": []
   },
   {
     "question_no": "5",
     "question_type": "coding",
     "difficulty_rating_manual": 0.71,
-    "question_stem": "Suppose that the data in liverpool_2223_season.csv has been read into\nPython as liverpool. The following code tabulates the goal counts for\nand stores them in a column in goal_counts.\ngoal_counts =pd.DataFrame(np.zeros((10, 2), dtype='int'),\ncolumns=['GF', 'GA'])\ntmp2 =liverpool.GF.value_counts()\ngoal_counts.loc[tmp2.index, 'GF'] =tmp2\nContinue the code to fill up the second column, which tabulates the goal\ncounts against into the second column of goal_counts. Then create the\nfollowing bar chart, which compares the GF and GA:",
+    "question_stem": "Suppose that the data in liverpool_2223_season.csv has been read into Python as liverpool. The following code tabulates the goal counts for and stores them in a column in goal_counts.\ngoal_counts =pd.DataFrame(np.zeros((10, 2), dtype='int'),\ncolumns=['GF', 'GA'])\ntmp2 =liverpool.GF.value_counts()\ngoal_counts.loc[tmp2.index, 'GF'] =tmp2\nContinue the code to fill up the second column, which tabulates the goal counts against into the second column of goal_counts. Then create the following bar chart, which compares the GF and GA:",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      7,
-      8
+      "7",
+      "8"
     ],
     "concept_tags": [
       "pandas",
       "data manipulation",
-      "data visualization",
-      "Python programming"
+      "data visualization"
     ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page7.png",
-      "data/question_media/ST2137_questions_page8.png"
-    ]
+    "page_image_paths": []
   },
   {
     "question_no": "6",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.99,
-    "question_stem": "What is the most likely solution to the error below?",
+    "question_stem": "What is the most likely solution to the error below? (Image - Refer to question paper)",
     "question_options": [
       {
         "label": "A",
@@ -144,36 +152,31 @@
     ],
     "question_answer": "B. The pandas package has to be imported.",
     "page_numbers": [
-      9
+      "9"
     ],
     "concept_tags": [
-      "Python",
+      "python",
       "pandas",
       "error handling"
     ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page9.png"
-    ]
+    "page_image_paths": []
   },
   {
     "question_no": "7",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "The heifers dataset was introduced on in the topic on ANOVA. An\nanalyst used SAS to run the ANOVA procedure and estimate the\ncontrast comparing the Control group to the rest of the five groups. This\nis the code that the analyst used:\nproc glm data=ST2137.HEIFERS;\nclass type;\nmodel org=type / clparm;\nmeans type / hovtest=levene welch plots=none;\nlsmeans type / adjust=tukey pdiff alpha=.05;\nestimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;\nrun;\nThe essential output for this particular contrast can be seen in the\nfollowing figures: (Image - Refer to question paper)",
+    "question_stem": "The heifers dataset was introduced on in the topic on ANOVA. An analyst used SAS to run the ANOVA procedure and estimate the contrast comparing the Control group to the rest of the five groups. This is the code that the analyst used:\nproc glm data=ST2137.HEIFERS;\nclass type;\nmodel org=type / clparm;\nmeans type / hovtest=levene welch plots=none;\nlsmeans type / adjust=tukey pdiff alpha=.05;\nestimate 'control vs. rest' type -1 5 -1 -1 -1 -1 / divisor=5;\nrun;\nThe essential output for this particular contrast can be seen in the following figures: (Image - Refer to question paper)",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      10
+      "10"
     ],
     "concept_tags": [
       "ANOVA",
       "SAS",
-      "statistical modeling",
-      "contrasts"
+      "statistical analysis"
     ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page10.png"
-    ]
+    "page_image_paths": []
   },
   {
     "question_no": "1",
@@ -186,8 +189,8 @@
       11
     ],
     "concept_tags": [
-      "Python",
-      "statistical inference",
+      "python",
+      "statistics",
       "confidence intervals"
     ],
     "page_image_paths": [
@@ -198,7 +201,7 @@
     "question_no": "8",
     "question_type": "coding",
     "difficulty_rating_manual": 0.52,
-    "question_stem": "This question is to be answered using Python.\nIn Tutorial 6, we considered the notion of a sensitivity curve for assessing the robustness of an estimator. Suppose we have an estimator based on n observations: Tn(x1,x2,…,xn) The sensitivity curve sc(x) when a new observation x is added is given by sc(x)=(n+1)×[Tn+1(x1,…,xn,x)−Tn(x1,…,xn)] Let us consider a newly proposed robust estimator called the broadened median. Given a sample of size n, here is how it is computed:\n• For n odd, the broadened median is\n• the average of the three central order statistics for 5≤n≤12.\n• the average of the five central order statistics for n≥13.\n• For n even, the broadened median is\n• the weighted average of the central four order statistics for\n5≤n≤12, with weights 1/6,1/3,1/3 and 1/6.\n• the weighted average of the central six order statistics for n≥13, with weights 1/10,1/5,1/5,1/5,1/5 and 1/10.\nSuppose we have the following sample of 10 points (n=10):\n2,4,6,7,8,10,14,19,21,28\n1. Plot the sensitivity curve for x∈[5,25] when T represents the broadened median.\n2. Which of the robust estimators that we covered in class is most similar to the broadened median? Explain your answer.\nNote that your code does not have to handle the general case of estimator. It only has to work for the above dataset.",
+    "question_stem": "This question is to be answered using Python.\nIn Tutorial 6, we considered the notion of a sensitivity curve for assessing the robustness of an estimator. Suppose we have an estimator based on n observations: Tn(x1,x2,…,xn) The sensitivity curve sc(x) when a new observation x is added is given by sc(x)=(n+1)×[Tn+1(x1,…,xn,x)−Tn(x1,…,xn)] Let us consider a newly proposed robust estimator called the broadened median. Given a sample of size n, here is how it is computed:\n• For n odd, the broadened median is\n• the average of the three central order statistics for 5≤n≤12.\n• the average of the five central order statistics for n≥13.\n• For n even, the broadened median is\n• the weighted average of the central four order statistics for\n5≤n≤12, with weights 1/6,1/3,1/3 and 1/6.\n• the weighted average of the central six order statistics for n≥13,\nwith weights 1/10,1/5,1/5,1/5,1/5 and 1/10.\nSuppose we have the following sample of 10 points (n=10):\n2,4,6,7,8,10,14,19,21,28\n1. Plot the sensitivity curve for x∈[5,25] when T represents the broadened median.\n2. Which of the robust estimators that we covered in class is most similar to the broadened median? Explain your answer.\nNote that your code does not have to handle the general case of estimator. It only has to work for the above dataset.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -206,14 +209,13 @@
       13
     ],
     "concept_tags": [
-      "Python",
+      "python",
       "robust statistics",
-      "estimators",
-      "sensitivity curve"
+      "estimators"
     ],
     "page_image_paths": [
-      "data/question_media/ST2137_questions_page13.png",
-      "data/question_media/ST2137_questions_page12.png"
+      "data/question_media/ST2137_questions_page12.png",
+      "data/question_media/ST2137_questions_page13.png"
     ]
   },
   {
@@ -244,9 +246,9 @@
       14
     ],
     "concept_tags": [
-      "Python",
+      "python",
       "list slicing",
-      "data structures"
+      "programming"
     ],
     "page_image_paths": [
       "data/question_media/ST2137_questions_page14.png"
@@ -263,7 +265,7 @@
       15
     ],
     "concept_tags": [
-      "Python",
+      "python",
       "data visualization",
       "pandas",
       "categorical data analysis"
@@ -312,17 +314,16 @@
     "question_no": "12",
     "question_type": "open-ended",
     "difficulty_rating_manual": 0.34,
-    "question_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together. The data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons). There are two variables in the data set: time and plant (either 1 or 2). Consider the following output. For the raw data, when we construct boxplots for each plant, there is a single outlier for each plant (the maximum value in each group).\n## time\n## count mean std min 25% 50% 75% max\n## plant\n## 1 20.0 9.3820 3.997653 4.42 7.4475 8.515 11.045 21.62\n## 2 20.0 11.3535 5.126156 2.33 8.4400 11.960 13.845 25.75\nIf we had applied a log (base e) transform to time before creating the boxplots, would these two points still be outliers? Explain your answer clearly using the summary statistics above only.",
+    "question_stem": "In many manufacturing processes, the term work-in-progress is often abbreviated to WIP. In a book manufacturing plant, WIP represents the time it takes for sheets from a press to be folded, gathered, sewn, tipped (with glue) on end sheets, and finally bound together.\nThe data set wip.txt contains samples of 20 books from each of two production plants, and the time for WIP (defined as the time in hours from when the books came off the press till they were packed in cartons).\nThere are two variables in the data set: time and plant (either 1 or 2).\nConsider the following output. For the raw data, when we construct boxplots for each plant, there is a single outlier for each plant (the maximum value in each group).\n## time\n## count mean std min 25% 50% 75% max\n## plant\n## 1 20.0 9.3820 3.997653 4.42 7.4475 8.515 11.045 21.62\n## 2 20.0 11.3535 5.126156 2.33 8.4400 11.960 13.845 25.75\nIf we had applied a log (base e) transform to time before creating the boxplots, would these two points still be outliers? Explain your answer clearly using the summary statistics above only.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       18
     ],
     "concept_tags": [
-      "data analysis",
-      "outliers",
+      "statistics",
       "data transformation",
-      "summary statistics"
+      "outliers"
     ],
     "page_image_paths": [
       "data/question_media/ST2137_questions_page18.png"
@@ -330,28 +331,11 @@
   },
   {
     "question_no": "13",
-    "question_type": "mcq",
+    "question_type": "fill-in-the-blanks",
     "difficulty_rating_manual": 0.84,
-    "question_stem": "Consider the following two histograms (created with R) from the liverpool dataset used in Tutorial 2: (Image - Refer to question paper) What is the argument needed to convert the Histogram A into Histogram B? hist(liverpool$GF, 1 )",
-    "question_options": [
-      {
-        "label": "A",
-        "text": "freq=FALSE"
-      },
-      {
-        "label": "B",
-        "text": "density=TRUE"
-      },
-      {
-        "label": "C",
-        "text": "type=\"density\""
-      },
-      {
-        "label": "D",
-        "text": "type=\"percent\""
-      }
-    ],
-    "question_answer": "B. density=TRUE",
+    "question_stem": "Consider the following two histograms (created with R) from the liverpool dataset used in Tutorial 2: (Image - Refer to question paper) What is the argument needed to convert the Histogram A into Histogram B?\nhist(liverpool$GF, 1 )",
+    "question_options": [],
+    "question_answer": "density=TRUE",
     "page_numbers": [
       19
     ],
@@ -368,7 +352,7 @@
     "question_no": "14",
     "question_type": "coding",
     "difficulty_rating_manual": 0.64,
-    "question_stem": "Using the student-mat.csv dataset from our lectures, create a contingency table from the variables address and guardian. Store it as address_guardian. Write R code that will:\n1. Compute the proportion of students whose home address was rural, and whose guardian was their mother.\n2. Estimate the probability of students whose home address was rural, and whose guardian was their mother, under the null hypothesis of the chi2-test of independence.",
+    "question_stem": "Using the student-mat.csv dataset from our lectures, create a contingency table from the variables address and guardian. Store it as address_guardian.\nWrite R code that will:\n1. Compute the proportion of students whose home address was rural, and whose guardian was their mother.\n2. Estimate the probability of students whose home address was rural, and whose guardian was their mother, under the null hypothesis of the chi2-test of independence.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -376,10 +360,8 @@
     ],
     "concept_tags": [
       "R programming",
-      "data manipulation",
       "contingency tables",
-      "probability",
-      "chi-squared test"
+      "probability"
     ],
     "page_image_paths": [
       "data/question_media/ST2137_questions_page20.png"
@@ -410,14 +392,16 @@
     ],
     "question_answer": "D. 6",
     "page_numbers": [
-      "21"
+      21
     ],
     "concept_tags": [
       "R programming",
-      "vector manipulation",
-      "data structures"
+      "vector indexing",
+      "data manipulation"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page21.png"
+    ]
   },
   {
     "question_no": "16",
@@ -427,15 +411,19 @@
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      "22"
+      22
     ],
     "concept_tags": [
       "R programming",
       "simulation",
       "gamma distribution",
-      "optimization"
+      "optimization",
+      "confidence intervals",
+      "data visualization"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page22.png"
+    ]
   },
   {
     "question_no": "17",
@@ -462,13 +450,15 @@
     ],
     "question_answer": "C. library(psych)",
     "page_numbers": [
-      "23"
+      23
     ],
     "concept_tags": [
       "R programming",
       "package management"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page23.png"
+    ]
   },
   {
     "question_no": "18",
@@ -478,15 +468,17 @@
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      "24"
+      24
     ],
     "concept_tags": [
-      "programming languages",
-      "R",
-      "Python",
-      "SAS"
+      "R programming",
+      "Python programming",
+      "SAS programming",
+      "software comparison"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page24.png"
+    ]
   },
   {
     "question_no": "19",
@@ -496,16 +488,19 @@
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
-      "25"
+      25
     ],
     "concept_tags": [
       "R programming",
       "random variable generation",
       "rejection sampling",
       "gamma distribution",
-      "QQ plot"
+      "statistical plotting",
+      "QQ-plots"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page25.png"
+    ]
   },
   {
     "question_no": "20",
@@ -527,10 +522,10 @@
     ]
   },
   {
-    "question_no": "21.1",
+    "question_no": "21",
     "question_type": "open-ended",
     "difficulty_rating_manual": 0.51,
-    "question_stem": "Interpret the model, when the number of stores is 0. Make sure that your explanation does not involve the logarithm scale.",
+    "question_stem": "This question is to be answered using R.\nThe dataset in taiwan_outlier_removed.csv contains information on\nhousing prices from Taiwan. The dependent variable is price. We had\nworked with this data in our tutorial; the greatest outlier from there has\nbeen removed.\nIn this question, we shall work with price as the dependent variable,\nand the following two explanatory variables:\n1. ldist: The (natural) log of the distance to the nearest MRT station.\nThe original distance is in meters.\n2. num_stores: The number of convenience stores within walking\ndistance.\nRefer to the attached SAS output, and answer the questions 1–3.\nFollowing that, you will have to re-fit the model in R and run the\nadditional analyses.\n1. Interpret the model, when the number of stores is 0. Make sure\nthat your explanation does not involve the logarithm scale.\n2. The adjusted\nfor this model is 0.59. Your colleague has fitted the same model, but\nwithout the log transform of distance. Are the two adjusted\ncomparable? Why or why not?\n3. Study the SAS plots of residuals versus predictor and assess if\nthere is anything unusual.\n4. Use R to return prediction intervals for the following two cases:\n1. When the number of stores is 5, and the distance to MRT is\n2175m.\n2. When the number of stores is 2 and the distance to MRT is 965m.\n5. Identify the most influential point (in absolute value) with regard\n(Image - Refer to question paper) to the beta coefficient for the number of stores. You can state the ID\nnumber of this point.\n6. One of the columns in the influence matrix corresponds to dffit.\nWhat is the difference between this column and the unstandardised\nresiduals that we compute?\n7. Re-create the following plot. What do you observe about the\nrelationship between price and ldist, in the presence of num_stores?\nHint: what is the association between ldist and num_stores?\nAttachment:\nattachment_for_itemid_258138.pdf",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -538,133 +533,12 @@
       29
     ],
     "concept_tags": [
-      "regression",
-      "model interpretation"
-    ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page28.png",
-      "data/question_media/ST2137_questions_page29.png"
-    ]
-  },
-  {
-    "question_no": "21.2",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": 0.51,
-    "question_stem": "The adjusted\nfor this model is 0.59. Your colleague has fitted the same model, but\nwithout the log transform of distance. Are the two adjusted\ncomparable? Why or why not?",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      28,
-      29
-    ],
-    "concept_tags": [
-      "regression",
-      "R-squared",
-      "model comparison"
-    ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page28.png",
-      "data/question_media/ST2137_questions_page29.png"
-    ]
-  },
-  {
-    "question_no": "21.3",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": 0.51,
-    "question_stem": "Study the SAS plots of residuals versus predictor and assess if\nthere is anything unusual.",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      28,
-      29
-    ],
-    "concept_tags": [
-      "regression",
-      "residual analysis",
-      "model diagnostics"
-    ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page28.png",
-      "data/question_media/ST2137_questions_page29.png"
-    ]
-  },
-  {
-    "question_no": "21.4",
-    "question_type": "coding",
-    "difficulty_rating_manual": 0.51,
-    "question_stem": "Use R to return prediction intervals for the following two cases:\n1. When the number of stores is 5, and the distance to MRT is\n2175m.\n2. When the number of stores is 2 and the distance to MRT is 965m.",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      28,
-      29
-    ],
-    "concept_tags": [
+      "regression analysis",
       "R programming",
-      "prediction intervals",
-      "regression"
+      "statistical modeling"
     ],
     "page_image_paths": [
       "data/question_media/ST2137_questions_page28.png",
-      "data/question_media/ST2137_questions_page29.png"
-    ]
-  },
-  {
-    "question_no": "21.5",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": 0.51,
-    "question_stem": "Identify the most influential point (in absolute value) with regard\nto the beta coefficient for the number of stores. You can state the ID\nnumber of this point.",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      28,
-      29
-    ],
-    "concept_tags": [
-      "regression",
-      "influential points",
-      "model diagnostics"
-    ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page28.png",
-      "data/question_media/ST2137_questions_page29.png"
-    ]
-  },
-  {
-    "question_no": "21.6",
-    "question_type": "open-ended",
-    "difficulty_rating_manual": 0.51,
-    "question_stem": "One of the columns in the influence matrix corresponds to dffit.\nWhat is the difference between this column and the unstandardised\nresiduals that we compute?",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      29
-    ],
-    "concept_tags": [
-      "regression",
-      "influence measures",
-      "residuals"
-    ],
-    "page_image_paths": [
-      "data/question_media/ST2137_questions_page29.png"
-    ]
-  },
-  {
-    "question_no": "21.7",
-    "question_type": "coding",
-    "difficulty_rating_manual": 0.51,
-    "question_stem": "Re-create the following plot. What do you observe about the\nrelationship between price and ldist, in the presence of num_stores?\nHint: what is the association between ldist and num_stores?",
-    "question_options": [],
-    "question_answer": null,
-    "page_numbers": [
-      29
-    ],
-    "concept_tags": [
-      "R programming",
-      "data visualization",
-      "regression"
-    ],
-    "page_image_paths": [
       "data/question_media/ST2137_questions_page29.png"
     ]
   },
@@ -724,9 +598,8 @@
       "31"
     ],
     "concept_tags": [
-      "normality testing",
-      "statistical tests",
-      "hypothesis testing"
+      "normality test",
+      "statistical tests"
     ],
     "page_image_paths": []
   },
@@ -751,8 +624,8 @@
     ],
     "concept_tags": [
       "ANOVA",
-      "linear models",
-      "R programming"
+      "R programming",
+      "linear models"
     ],
     "page_image_paths": []
   },
@@ -760,7 +633,7 @@
     "question_no": "25",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.91,
-    "question_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset.\nThe following is the SAS output.\nThe value of 0.0148 corresponds to ∑i=1k∑j=1ni(Yij−Y¯¯)2 where Y¯¯\ncorresponds to the overall mean of all observations.",
+    "question_stem": "In the topic on One-Way ANOVA, we worked with the heifers dataset.\nThe following is the SAS output. (Image - Refer to question paper)\nThe value of 0.0148 corresponds to ∑i=1k∑j=1ni(Yij−Y¯¯)2 where Y¯¯\ncorresponds to the overall mean of all observations.",
     "question_options": [
       {
         "label": "A",
@@ -777,8 +650,8 @@
     ],
     "concept_tags": [
       "ANOVA",
-      "sum of squares",
-      "SAS output"
+      "SAS output",
+      "sum of squares"
     ],
     "page_image_paths": []
   },
@@ -786,7 +659,7 @@
     "question_no": "26",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.77,
-    "question_stem": "In the topic on regression, we fitted the following simple linear\nregression model to the concrete data:\nwhere\n•\n: is the Flow, and\n•\n: is amount of Water in the mixture.\nThe summary output for the model (from Python) is as follows:\nThe null hypothesis for the F-test above is\nH0:β1=β0=0",
+    "question_stem": "In the topic on regression, we fitted the following simple linear\nregression model to the concrete data:\nwhere\n•\n: is the Flow, and\n•\n: is amount of Water in the mixture.\nThe summary output for the model (from Python) is as follows: (Image - Refer to question paper)\nThe null hypothesis for the F-test above is\nH0:β1=β0=0",
     "question_options": [
       {
         "label": "A",
@@ -813,7 +686,7 @@
     "question_no": "27",
     "question_type": "mcq",
     "difficulty_rating_manual": 0.78,
-    "question_stem": "When assessing robustness of an estimator, one of the properties we consider is the breakdown point. For a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.",
+    "question_stem": "When assessing robustness of an estimator, one of the properties we consider is the breakdown point.\nFor a particular parameter of interest, an estimator with a large breakdown point is considered to be better than an estimator with a smaller breakdown point.",
     "question_options": [
       {
         "label": "A",
@@ -826,18 +699,20 @@
     ],
     "question_answer": "A. True",
     "page_numbers": [
-      "36"
+      36
     ],
     "concept_tags": [
-      "robustness",
+      "robust statistics",
       "estimators",
       "breakdown point"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page36.png"
+    ]
   },
   {
     "question_no": "28",
-    "question_type": "coding",
+    "question_type": "mcq",
     "difficulty_rating_manual": 0.86,
     "question_stem": "Consider the following SAS program:\nDATA ex_1;\nINPUT subject gender $ CA1 CA2 HW $;\nDATALINES;\n10 m 80 84 a ;\n7 m 85 89 a\n;\nWhen the code above was run, there was no output. Which one of the following two steps will fix the error?",
     "question_options": [
@@ -852,14 +727,16 @@
     ],
     "question_answer": "A. Removing the semi-colon on line 4.",
     "page_numbers": [
-      "37"
+      37
     ],
     "concept_tags": [
       "SAS programming",
-      "debugging",
-      "data step"
+      "data step",
+      "debugging"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page37.png"
+    ]
   },
   {
     "question_no": "29",
@@ -878,19 +755,21 @@
     ],
     "question_answer": "A. True",
     "page_numbers": [
-      "38"
+      38
     ],
     "concept_tags": [
       "simulation",
       "expected values",
       "confidence intervals",
-      "normality"
+      "normality assumption"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page38.png"
+    ]
   },
   {
     "question_no": "30",
-    "question_type": "coding",
+    "question_type": "mcq",
     "difficulty_rating_manual": 0.96,
     "question_stem": "Suppose that X∼N(μ=0,σ2=4). Which of the following R commands will return P(X>2) ?",
     "question_options": [
@@ -913,7 +792,7 @@
     ],
     "question_answer": "A. pnorm(2, mean = 0, sd = 2, lower.tail = FALSE)",
     "page_numbers": [
-      "39"
+      39
     ],
     "concept_tags": [
       "R programming",
@@ -921,6 +800,8 @@
       "probability",
       "pnorm"
     ],
-    "page_image_paths": []
+    "page_image_paths": [
+      "data/question_media/ST2137_questions_page39.png"
+    ]
   }
 ]

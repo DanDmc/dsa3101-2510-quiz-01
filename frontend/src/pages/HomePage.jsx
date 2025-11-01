@@ -1,154 +1,178 @@
 // src/pages/HomePage.jsx
+
 import React, { useState } from 'react';
-import { Grid, Box, Typography, CssBaseline } from '@mui/material';
+import { Grid, Box, Typography, CssBaseline, CircularProgress, Alert } from '@mui/material'; 
 
 import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// Unified and comprehensive list of mock groups
-const mockGroups = [
-  'DSA4288M','DSA4288S','DSA4288','DSA3102','DSA3101',
-  'DSA2102','DSA2101','DSA1101','ST4248','ST3236','ST3131','ST2132','ST2131'
-];
+// ❌ REMOVED: The hardcoded mockGroups list is no longer needed (from your HEAD logic)
 
-function HomePage({
-  questions: propQuestions,
-  goToCreatePage,
-  goToEditPage,
-  goToSearchPage,        // <-- from App (will navigate + store filters)
-  goToHomePage,
-  handleDeleteQuestions,
-  isSafeDeletionEnabled,
-  setIsSafeDeletionEnabled,
-  // NEW:
-  courseOptions,
-  conceptOptions,
-}) {
-  const [selected, setSelected] = useState([]);
-  const [groups, setGroups] = useState(mockGroups);
+function HomePage({ 
+    questions: propQuestions, 
+    goToCreatePage, 
+    goToEditPage, 
+    goToSearchPage, 
+    goToHomePage, 
+    handleDeleteQuestions, 
+    
+    // ⭐ Group Management Props (FROM YOUR HEAD)
+    courseGroups, 
+    onAddGroup, 
+    onRenameGroup, 
+    onDeleteGroup,
+    onFilterChange,
+    isProcessing, // State for showing loading/processing feedback
+    // NEW: Filter options for the Toolbar/Search Page (FROM INCOMING)
+    courseOptions,
+    conceptOptions,
+}) { 
+    const [selected, setSelected] = useState([]);
+    
+    // ⬅️ NEW: The wrapper function that handles the complex filter object (FROM INCOMING)
+    const openSearchWith = (payload) => {
+        let params = {};
+    
+        if (typeof payload === 'string') {
+            params = { query: payload.trim() };
+        } else if (payload && typeof payload === 'object') {
+            const {
+                query = '',
+                course = '',
+                question_type = '',
+                assessment_type = '',
+                academic_year, 
+                year, 
+                semester = '',
+                tags, 
+                concept_tags
+            } = payload;
+    
+            params = {
+                query: (query || '').trim(),
+                course: (course || '').toString().trim(),
+                question_type: (question_type || '').toString().trim(),
+                assessment_type: (assessment_type || '').toString().trim(),
+                year: academic_year ?? year ?? '',
+                semester: (semester || '').toString().trim(),
+                tags: Array.isArray(tags)
+                  ? tags.map(String)
+                  : Array.isArray(concept_tags)
+                    ? concept_tags.map(String)
+                    : []
+            };
+        } else {
+            params = { query: '' };
+        }
+    
+        goToSearchPage(params);
+    };
+    // Handlers
+    const handleSelectAllClick = (event) => {
+        if (event.target.checked) {
+            setSelected(propQuestions.map((n) => n.id)); 
+            return;
+        }
+        setSelected([]);
+    };
 
-  // --- Helpers: normalize and forward filters/keyword to App ---
-  // Accepts either a string or an object from the toolbar.
-  const openSearchWith = (payload) => {
-    let params = {};
+    const handleEditClick = () => {
+        const questionsToEdit = propQuestions.filter(q => selected.includes(q.id)); 
+        goToEditPage(questionsToEdit); 
+    };
 
-    if (typeof payload === 'string') {
-      // simple keyword
-      params = { query: payload.trim() };
-    } else if (payload && typeof payload === 'object') {
-      // normalize possible fields from the orange-button filter UI
-      const {
-        query = '',
-        course = '',
-        question_type = '',
-        assessment_type = '',
-        academic_year, // in case the toolbar sends this
-        year,          // or year directly
-        semester = '',
-        tags,          // array of strings
-        concept_tags   // alt name
-      } = payload;
+    const handleDeleteClick = () => {
+        handleDeleteQuestions(selected); // Calls the hard delete wrapper in main.jsx
+        setSelected([]);
+    };
 
-      params = {
-        query: (query || '').trim(),
-        course: (course || '').toString().trim(),
-        question_type: (question_type || '').toString().trim(),
-        assessment_type: (assessment_type || '').toString().trim(),
-        year: academic_year ?? year ?? '',     // prefer explicit year if given
-        semester: (semester || '').toString().trim(),
-        tags: Array.isArray(tags)
-          ? tags.map(String)
-          : Array.isArray(concept_tags)
-            ? concept_tags.map(String)
-            : []
-      };
-    } else {
-      params = { query: '' };
-    }
+    // ❌ DELETED: handleSafeDeletionToggle is removed
+    // ❌ DELETED: handleRenameGroup/handleDeleteGroup from Incoming are removed (Using HEAD's props/logic)
 
-    // Hand off to App, which should:
-    // - store params in state (e.g., setSearchParams(params))
-    // - navigate to QuestionSearchPage
-    goToSearchPage(params);
-  };
+    // --- START OF JSX RENDER ---
+    return (
+        <>
+            <CssBaseline /> 
+            
+            {/* ⭐ Display processing feedback */}
+            {isProcessing && (
+                <Alert severity="info" sx={{ mb: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <CircularProgress size={16} />
+                        <Typography variant="body2">Processing group operation... Please wait.</Typography>
+                    </Box>
+                </Alert>
+            )}
 
-  // --- Group Management (unchanged) ---
-  const handleRenameGroup = (oldName, newName) => {
-    if (!newName || (groups.includes(newName) && newName !== oldName)) return;
-    setGroups(prev => prev.map(g => (g === oldName ? newName : g)));
-  };
-  const handleDeleteGroup = (groupName) => setGroups(prev => prev.filter(g => g !== groupName));
+            <Grid
+                container
+                direction="column"
+                rowSpacing={0} 
+            >
+                
+                {/* --- FULL WIDTH TOOLBAR (row 1) --- */}
+                <Grid item xs={12}>
+                    <QuestionToolbar 
+                        numSelected={selected.length} 
+                        goToCreatePage={goToCreatePage} 
+                        goToEditPage={handleEditClick} 
+                        goToSearchPage={openSearchWith} // ⬅️ NEW: Use the wrapper function
+                        // ⬅️ Pass processing state to disable toolbar buttons
+                        disabled={isProcessing} 
+                        handleDeleteClick={handleDeleteClick}
+                        // ⬅️ NEW: Feed options down for the filter menu
+                        courseOptions={courseOptions}
+                        conceptOptions={conceptOptions}
+                    />
+                </Grid>
 
-  // Selection + actions
-  const handleSelectAllClick = (e) => {
-    if (e.target.checked) setSelected(propQuestions.map(n => n.id));
-    else setSelected([]);
-  };
-  const handleEditClick = () => {
-    const questionsToEdit = propQuestions.filter(q => selected.includes(q.id));
-    goToEditPage(questionsToEdit);
-  };
-  const handleDeleteClick = () => {
-    handleDeleteQuestions(selected);
-    setSelected([]);
-  };
-  const handleSafeDeletionToggle = (e) => setIsSafeDeletionEnabled(e.target.checked);
+                {/* --- ROW 2: COLUMNS WITH HORIZONTAL SPACING --- */}
+                <Grid item>
+                    <Grid
+                        container
+                        columnSpacing={16} 
+                    >
+                        
+                        {/* LEFT COLUMN: TEXT + TABLE */}
+                        <Grid item xs={12} md={9}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
+                                    Questions in Group
+                                </Typography>
 
-  return (
-    <>
-      <CssBaseline />
-      <Grid container direction="column" rowSpacing={0}>
-        {/* Toolbar row */}
-        <Grid item xs={12}>
-          <QuestionToolbar
-            numSelected={selected.length}
-            goToCreatePage={goToCreatePage}
-            goToEditPage={handleEditClick}
-            // ⬇️ Use the wrapper that supports keyword or full filter object
-            goToSearchPage={openSearchWith}
-            handleDeleteClick={handleDeleteClick}
-            isSafeDeletionEnabled={isSafeDeletionEnabled}
-            handleSafeDeletionToggle={handleSafeDeletionToggle}
-            // NEW: feed options down
-            courseOptions={courseOptions}
-            conceptOptions={conceptOptions}
-          />
-        </Grid>
+                                <QuestionTable 
+                                    questions={propQuestions} 
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                    onSelectAllClick={handleSelectAllClick}
+                                    // ⬅️ Pass processing state
+                                    disabled={isProcessing}
+                                    // ⬅️ Pass goToEditPage for double-click feature
+                                    goToEditPage={goToEditPage} 
+                                />
+                            </Box>
+                        </Grid>
 
-        {/* Content row */}
-        <Grid item>
-          <Grid container columnSpacing={16}>
-            {/* LEFT: table */}
-            <Grid item xs={12} md={9}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
-                  Questions in Group
-                </Typography>
+                        {/* RIGHT COLUMN: GROUPS PANEL */}
+                        <Grid item xs={12} md={3}> 
+                            <QuestionGroups 
+                                groups={courseGroups} // ⬅️ Uses HEAD's dynamic groups
+                                onAddGroup={onAddGroup}
+                                onRenameGroup={onRenameGroup} 
+                                onDeleteGroup={onDeleteGroup} 
+                                onFilterChange={onFilterChange}
+                                // ⬅️ Pass processing state to QuestionGroups
+                                disabled={isProcessing}
+                            />
+                        </Grid>
 
-                <QuestionTable
-                  questions={propQuestions}
-                  selected={selected}
-                  setSelected={setSelected}
-                  onSelectAllClick={handleSelectAllClick}
-                  goToEditPage={goToEditPage}
-                />
-              </Box>
-            </Grid>
+                    </Grid>
+                </Grid>
 
-            {/* RIGHT: groups */}
-            <Grid item xs={12} md={3}>
-              <QuestionGroups
-                groups={groups}
-                onRenameGroup={handleRenameGroup}
-                onDeleteGroup={handleDeleteGroup}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </>
-  );
+            </Grid>
+        </>
+    );
 }
 
 export default HomePage;
