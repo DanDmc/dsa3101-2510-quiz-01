@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from flask import Flask, request, jsonify, send_file, abort, render_template_string
 from flask_cors import CORS
-# from sqlalchemy import func, or_
 from contextlib import closing
 from werkzeug.utils import secure_filename
 from pathlib import Path
@@ -14,10 +13,19 @@ app = Flask(__name__)
 # ---- Set CORS to Vite port 5173 ----
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
-# Utility Helper Functions
+# ---- Utility Helper Functions ----
 def parse_json_field(field_json):
     """
-    Requires Docstring
+    Parses JSON string into appropriate Python object (i.e. dict or str)
+
+    Args:
+        field_json (str): JSON string / May also be a non-JSON string
+    
+    Returns:
+        Any: Deserialized Python object
+    
+    Raises:
+        None if input is empty or falsy
     """
     if not field_json:
         return None
@@ -28,7 +36,16 @@ def parse_json_field(field_json):
     
 def ts(v):
     """
-    Requires Docstring
+    Converts datetime-like objects to string representations
+
+    Args:
+        v (Any): datetime/date/object with ISO formatting / May also be non-datetime-like
+
+    Returns:
+        str: ISO 8601 formatted string if input supports isoformat, regular string otherwise
+    
+    Raises:
+        None if empty or falsy
     """
     if not v:
         return None
@@ -39,7 +56,13 @@ def ts(v):
     
 def _strip_known_prefixes(p: str) -> str:
     """
-    Requires Docstring
+    Removes known leading path prefixes from a string
+
+    Args:
+        p (str): The input path to normalise
+
+    Returns:
+        str: The path without known leading prefixes, or the original input path if no prefix was removed
     """
     prefixes = ("data/", "source_files/")
     for pref in prefixes:
@@ -49,7 +72,18 @@ def _strip_known_prefixes(p: str) -> str:
 
 def _safe_join_file(base_dir: str, file_path: str) -> str:
     """
-    Requires Docstring
+    Safely resolves a file path, normalising it relative to the base directory
+
+    Args:
+        base_dir (str): The base directory under which files are allowed
+        file_path (str): The input path to resolve
+
+    Returns:
+        str: The normalised, absolute (or base-relative) path that is guaranteed
+        to be inside base_dir
+
+    Raises:
+        FileNotFoundError: If file_path is empty or resolves outside base_dir.
     """
     if not file_path:
         raise FileNotFoundError("Empty file path")
@@ -77,7 +111,8 @@ def _get_file_row(file_id: int):
             "file_path" str, 
             "uploaded_at": datetime.datetime
         }
-
+    
+    Raises:
         None if not found
     """
     with closing(get_connection()) as conn:
@@ -85,43 +120,239 @@ def _get_file_row(file_id: int):
         cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
         return cur.fetchone()
 
-# ---- Upload / pipeline config ----
-app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
-app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
-ALLOWED_EXTENSIONS = {"pdf"}
+def normalize_concept_tags(val):
+    """
+    Normalise the 'concept_tags' to JSON string for storing in the database
+    Accepts lists/tuples/JSON/strings
 
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
-SRC_DIR  = DATA_DIR / "source_files"
-TXT_DIR  = DATA_DIR / "text_extracted"
-JSON_DIR = DATA_DIR / "json_output"
-for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
-    _d.mkdir(parents=True, exist_ok=True)
+    Args:
+        val (lists/tuples/JSON/strings): Concept tags provided by user
+    
+    Returns:
+        str: JSON string (e.g., '["regression","r-squared"]') or string if JSON array not valid
+            None when input is None
+    
+    Raises:
+        None if not found
+    """
+    # Standardise the format of the concept_tags field
+    if val is None:
+        return None
+    if isinstance(val, (list, tuple)):
+        return json.dumps(list(val), ensure_ascii=False)
+    if isinstance(val, str):
+        try:
+            parsed = json.loads(val)
+            if isinstance(parsed, (list, tuple)):
+                return json.dumps(list(parsed), ensure_ascii=False)
+        except Exception:
+            pass
+        return val
+    return json.dumps(val, ensure_ascii=False)
 
-def _allowed_pdf(filename: str) -> bool:
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_ridge.pkl")
+difficulty_model = None
+featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
 
-def _ensure_dirs(*parts) -> Path:
-    p = Path(app.config["UPLOAD_FOLDER"]).joinpath(*[str(x or "unknown") for x in parts])
-    p.mkdir(parents=True, exist_ok=True)
-    return p
+def _load_training_helpers():
+    """
+    Dynamically import the training script so that pickled helper functions can be resolved
+    
+    Args: 
+        None
 
-def _run(cmd, env_extra=None, timeout=900):
-    env = dict(os.environ)
-    if env_extra: env.update(env_extra)
-    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
-    return p.returncode, p.stdout.strip(), p.stderr.strip()
+    Returns:
+        None
+    
+    Raises:
+        Logs warnings only, does not raise to avoid crashes
+    """
+    if not os.path.exists(featurepath):
+        app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
+        return
+    try:
+        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
+        mod = importlib.util.module_from_spec(spec)
+        # Run the file so _numeric_feats_from_df is defined
+        spec.loader.exec_module(mod)  
+        # Register under __main__ so unpickler finds it
+        sys.modules["__main__"] = mod
+        app.logger.info("[difficulty] Registered _numeric_feats_from_df from training script.")
+    except Exception as e:
+        app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
 
-def get_connection():
-    return MySQLdb.connect(
-        host=os.getenv("MYSQL_HOST", "db"),
-        user=os.getenv("MYSQL_USER", "quizbank_user"),
-        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
-        db=os.getenv("MYSQL_DATABASE", "quizbank"),
-    )
+def parse_tags(val):
+    """
+    Converts the concept tags into JSON list format
 
-# check if table has the column mentioned
+    Args:
+        val (list/tuple/JSON): stored as JSON list
+
+    Return:
+        list: If val is not empty, else empty list []
+    
+    Raises:
+        None
+    """
+    if not val:
+        return []
+    if isinstance(val, (list, tuple)):
+        return list(val)
+    try:
+        return json.loads(val) or []
+    except Exception:
+        return []
+
+def predict_row(row: dict) -> float:
+    """
+    Predicts the difficulty rating using the Machine Learning model when taking the row as input
+
+    Args:
+        row (dict): {
+            "question_stem": stem,
+            "tags_text": tags_text,
+            "question_type": row.get("question_type") or "",
+            }
+    
+    Returns:
+        float: Difficulty rating value predicted by the model used
+    
+    Raises:
+        None
+    """
+    stem = (row.get("question_stem") or "").strip()
+    tags_text = " ".join(parse_tags(row.get("concept_tags")))
+    X = pd.DataFrame([{
+        "question_stem": stem,
+        "tags_text": tags_text,
+        "question_type": row.get("question_type") or "",
+    }])
+    yhat = float(difficulty_model.predict(X)[0])
+    return float(np.clip(yhat, 0.0, 1.0))
+
+def _normalize_semester(sem: str) -> str:
+    """
+    Normalize various semester inputs to a compact canonical form
+    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
+
+    Args:
+        sem (str): Semester label/value
+
+    Returns:
+        str: Semester Code
+
+    Raises:
+        None
+    """
+    if sem is None:
+        return ""
+    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
+    # Remove duplicate spaces
+    s = " ".join(s.split())
+
+    # Common mappings
+    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
+        return "S1"
+    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
+        return "S2"
+    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
+        return "ST1"
+    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
+        return "ST2"
+    return s.upper()
+
+
+def _normalize_assessment_type(t: str) -> str:
+    """
+    Normalize assessment_type strings to lowercase and remove whitespaces
+
+    Args:
+        t (str): Assessment type
+
+    Returns:
+        str: Normalised assessment type lowercased with whitespaces trimmed
+
+    Raises:
+        None
+    """
+    if t is None:
+        return ""
+    s = str(t).strip().lower().replace("-", " ")
+    s = " ".join(s.split())
+    return s.lower()
+
+
+def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
+    """
+    Search for 'file_id' by matching 'course', 'year', 'semester', 'assessment_type'
+    If latest = 'True', look for the most recently uploaded file
+
+    Args:
+        course (str): Course code, e.g. "ST2131"
+        year (int/str): Year (convert to int)
+        semester (str): Semester code, e.g. 2410
+        assessment_type (str): e.g. "quiz", "midterm"
+        latest (bool): If True, choose the most recent match based on uploaded_at and id
+
+    Returns:
+        int/None:
+            Matching files.id else None if no match
+    
+    Raises:
+        ValueError: If missing course or year not integer-like
+        MySQLError: If database cannot be established
+    """
+    if not course:
+        raise ValueError("course is required")
+    try:
+        year_int = int(str(year).strip())
+    except Exception:
+        raise ValueError("year must be an integer-like value")
+
+    course_norm = str(course).strip().upper()
+    sem_norm = _normalize_semester(semester)
+    atype_norm = _normalize_assessment_type(assessment_type)
+
+    sql = """
+        SELECT id
+        FROM files
+        WHERE UPPER(course) = %s
+          AND year = %s
+          AND UPPER(semester) = %s
+          AND UPPER(assessment_type) = %s
+        {order_clause}
+        LIMIT 1
+    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
+
+    params = (course_norm, year_int, sem_norm, atype_norm)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    params = (course, year, semester, assessment_type)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    return
+
 def has_column(conn, table: str, col: str) -> bool:
+    """
+    Check whether a given column exists in a table in the current database
+
+    Args:
+        conn: An open DB-API compatible database connection
+        table (str): The name of the table to inspect
+        col (str): The column name to look for
+
+    Returns:
+        bool: `True` if the column exists on the table in the current database,
+        `False` otherwise
+    """
     with closing(conn.cursor()) as c:
         c.execute("""
           SELECT COUNT(*)
@@ -132,11 +363,38 @@ def has_column(conn, table: str, col: str) -> bool:
         """, (table, col))
         return c.fetchone()[0] == 1
 
+def get_connection():
+    """
+    Create a new MySQL connection using environment variables:
+    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
+
+    Args:
+        None.
+
+    Returns:
+        MYSQLdb.connection: Open a connection to the quizbank database.
+
+    Raises:
+        MySQLdb.Error: If connection cannot be established. 
+    """
+    return MySQLdb.connect(
+        host=os.getenv("MYSQL_HOST", "db"),
+        user=os.getenv("MYSQL_USER", "quizbank_user"),
+        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
+        db=os.getenv("MYSQL_DATABASE", "quizbank"),
+    )
+
 # ---- Health Route ----
 @app.route("/health", methods=["GET"])
 def health():
     """
-    Requires Docstring
+    Lightweight health check endpoint.
+
+    Returns:
+        tuple[dict, int]: JSON containing:
+            - "ok" (bool): Always True if the app is running.
+            - "model_loaded" (bool): Whether the difficulty model was successfully loaded at startup.
+        and HTTP 200.
     """
     return {"ok": True, "model_loaded": difficulty_model is not None}, 200
 
@@ -144,7 +402,42 @@ def health():
 @app.route("/getquestion", methods=["GET"])
 def get_question():
     """
-    Requires Docstring
+    Fetch questions with their source file metadata from the database, with filters and pagination
+
+    Supported query parameters (All Optional):
+        - course (str): Filter by files.course
+        - year (int): Filter by files.year
+        - semester (str): Filter by files.semester
+        - assessment_type (str): Filter by files.assessment_type
+        - question_type (str): Filter by questions.question_type
+        - question_no (str/int): Filter by questions.question_no
+        - concept_tags (repeated or comma-separated): e.g.
+              ?concept_tags=regression&concept_tags=anova
+              ?concept_tags=regression,anova
+          Matched via JSON_CONTAINS on questions.concept_tags.
+        - limit (int, default=50): Max number of rows to return
+        - offset (int, default=0): Offset for pagination
+        - order_by (str, default="updated_at"): One of {"created_at","difficulty","updated_at"}
+        - sort (str, default="desc"): "asc" or "desc"
+
+    Returns:
+        flask.Response (application/json):
+            {
+              "total": <int>,
+              "items": [
+                 {
+                   "id": ...,
+                   "question_stem": ...,
+                   "concept_tags": [...],
+                   ...
+                   "course": ...,
+                   "year": ...,
+                   ...
+                 },
+                 ...
+              ]
+            }
+        with HTTP 200.
     """
     # Allowed Query Parameters
     course = request.args.get("course")
@@ -318,28 +611,8 @@ def download_file(file_id: int):
         conditional=True,
     )
 
-# DIFFICULTY RATING MODEL
-# load the difficulty rating model
-MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_ridge.pkl")
-difficulty_model = None
-# added featurepath to link _numeric_feats_from_df from the original folder 
-featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
-
-def _load_training_helpers():
-    """Dynamically import the training script so that pickled helper functions can be resolved."""
-    if not os.path.exists(featurepath):
-        app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
-        return
-    try:
-        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)  # runs the file so _numeric_feats_from_df is defined
-        # register under __main__ so unpickler finds it
-        sys.modules["__main__"] = mod
-        app.logger.info("[difficulty] Registered _numeric_feats_from_df from training script.")
-    except Exception as e:
-        app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
-
+# ---- Difficulty Rating Model ----
+# Load the difficulty rating model
 _load_training_helpers()
 
 try:
@@ -348,30 +621,40 @@ try:
 except Exception as e:
     app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
 
-def parse_tags(val):
-    if not val:
-        return []
-    if isinstance(val, (list, tuple)):
-        return list(val)
-    try:
-        return json.loads(val) or []
-    except Exception:
-        return []
-
-def predict_row(row: dict) -> float:
-    stem = (row.get("question_stem") or "").strip()
-    tags_text = " ".join(parse_tags(row.get("concept_tags")))
-    X = pd.DataFrame([{
-        "question_stem": stem,
-        "tags_text": tags_text,
-        "question_type": row.get("question_type") or "",
-    }])
-    yhat = float(difficulty_model.predict(X)[0])
-    return float(np.clip(yhat, 0.0, 1.0))
-
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
+    """
+    Predict difficulty for questions as a whole batch
+    Selects questions from 'questions' table with NULL in 'difficulty_rating_manual'
+    with the saved Machine Learning pipeline, and update the Database
 
+    Args: 
+        file_id (int, optional): If provided, restricts difficulty prediction to only files in 'file_id'
+        dry_run (int, optional): If dry_run=1, does not fill in the value in the database, and only return result
+                                    Default 0 to fill in the difficulty_rating_model field
+
+        JSON body: {} (empty object). Body required for POST
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"processed": int, # number of rows predicted
+                    "updated" int, # number of rows written
+                    "dry_run": bool,
+                    "items": [
+                    {
+                    "id": int,
+                    "question_base_id": int,
+                    "file_id": int,
+                    "difficulty_rating_model": float
+                    },
+                    ...
+                ]
+            }
+            500 with {"error": "model not loaded"} if the model cannot be reached
+    
+    Raises:
+        Database and model errors handled and returned as 4xx/5xx flask responses
+    """
     if difficulty_model is None:
         return jsonify({"error": "model not loaded"}), 503
 
@@ -425,27 +708,103 @@ def predict_difficulty():
         "items": results[:100],
     })
 
-# ---- Temporary Endpoint for backend to test upload feature ---
-@app.get("/upload")
-def upload_page():
-    return render_template_string("""
-<!doctype html><html><head><meta charset='utf-8'><title>Upload PDF</title></head>
-<body style="font-family:system-ui;padding:2rem;max-width:720px">
-  <h1>Upload a PDF</h1>
-  <form action="/upload_file" method="post" enctype="multipart/form-data">
-    <label>PDF file <input type="file" name="file" accept="application/pdf" required></label><br><br>
-    <label>Course <input type="text" name="course" placeholder="ST1131"></label><br>
-    <label>Year <input type="text" name="year" placeholder="2024"></label><br>
-    <label>Semester <input type="text" name="semester" placeholder="Sem 1"></label><br>
-    <label>Assessment Type <input type="text" name="assessment_type" placeholder="quiz"></label><br><br>
-    <button type="submit">Upload</button>
-  </form>
-</body></html>
-""")
+# ---- Upload / pipeline config ----
+app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
+app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
+ALLOWED_EXTENSIONS = {"pdf"}
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "data"
+SRC_DIR  = DATA_DIR / "source_files"
+TXT_DIR  = DATA_DIR / "text_extracted"
+JSON_DIR = DATA_DIR / "json_output"
+
+for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
+    _d.mkdir(parents=True, exist_ok=True)
+
+def _allowed_pdf(filename: str) -> bool:
+    """
+    Checks if an uploaded filename has a permitted extension
+
+    Currently only `.pdf` files are allowed
+    The check is case-insensitive and only looks at the final extension
+
+    Args:
+        filename (str): Name of the uploaded file
+
+    Returns:
+        bool: True if the filename ends with an allowed extension, False otherwise
+    """
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def _run(cmd, env_extra=None, timeout=900):
+    """
+    Run a subprocess in the project base directory and capture its output
+
+    Args:
+        cmd (str): Shell-like command to run (e.g. "python pdf_extractor.py")
+        env_extra (dict, optional): Extra environment variables to merge into
+            the current process environment
+        timeout (int, optional): Max number of seconds to allow the process
+            to run before raising a timeout - Defaults to 900s
+
+    Returns:
+        tuple[int, str, str]:
+            - returncode (int): Process return code (0 on success)
+            - stdout (str): Captured standard output (stripped)
+            - stderr (str): Captured standard error (stripped)
+    """
+    env = dict(os.environ)
+    if env_extra: env.update(env_extra)
+    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
+    return p.returncode, p.stdout.strip(), p.stderr.strip()
 
 # ---- Upload Route ----
 @app.post("/upload_file")
 def upload_file():
+    """
+    Handle PDF uploads, persist metadata to the database, and trigger the 3-step parsing pipeline
+
+    Workflow:
+        1. Validate request:
+        2. Save the PDF into the configured file_base_directory
+        3. Insert a row into the `files` table with the provided metadata
+        4. Mirror a copy into the pipeline's canonical source directory
+        5. Run the parsing pipeline:
+            - `python pdf_extractor.py` with TARGET_PDF=<filename>
+            - `python llm_parser.py` with TARGET_BASE=<filename_without_ext>
+            - `python insert_questions.py` with TARGET_BASE=<filename_without_ext>
+
+    Form fields:
+        - course (str, optional)
+        - year (str/int, optional)
+        - semester (str, optional)
+        - assessment_type (str, optional)
+
+    Returns:
+        flask.Response (application/json):
+            - 201 on success:
+                {
+                  "saved": true,
+                  "file": {
+                    "file_id": <int or null>,
+                    "original_name": "...",
+                    "stored_filename": "...",
+                    "stored_path": "..."
+                  },
+                  "pipeline": {
+                    "pdf_extractor": {...},
+                    "llm_parser": {...},
+                    "insert_questions": {...}
+                  }
+                }
+            - 400 on bad upload (no file, wrong type, invalid PDF header)
+            - 500 if a pipeline step fails (upload is still saved)
+
+    Future Improvements:
+        - DB insert failure is reported but does not roll back the file save
+        - Accept more file types
+    """
     course = request.form.get("course")
     year = request.form.get("year")
     semester = request.form.get("semester")
@@ -527,7 +886,6 @@ def upload_file():
             if not mirror_path.exists():
                 shutil.copyfile(dest_path, mirror_path)
     except Exception as e:
-        # Not fatal to the upload; pipeline might still work if it reads from file_base_directory.
         app.logger.warning(f"Mirror to SRC_DIR failed: {e}")
 
     # Use the ACTUAL saved filename as TARGET_BASE for the pipeline
@@ -573,30 +931,62 @@ def upload_file():
         "pipeline": logs
     }), 201
 
-## EDITING QUESTIONS
-allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
-allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
+# ---- Temporary Endpoint for backend testing of upload feature ---
+@app.get("/upload")
+def upload_page():
+    """
+    Temporary Endpoint for backend to test upload feature
+    """
+    return render_template_string("""
+<!doctype html><html><head><meta charset='utf-8'><title>Upload PDF</title></head>
+<body style="font-family:system-ui;padding:2rem;max-width:720px">
+  <h1>Upload a PDF</h1>
+  <form action="/upload_file" method="post" enctype="multipart/form-data">
+    <label>PDF file <input type="file" name="file" accept="application/pdf" required></label><br><br>
+    <label>Course <input type="text" name="course" placeholder="ST1131"></label><br>
+    <label>Year <input type="text" name="year" placeholder="2024"></label><br>
+    <label>Semester <input type="text" name="semester" placeholder="Sem 1"></label><br>
+    <label>Assessment Type <input type="text" name="assessment_type" placeholder="quiz"></label><br><br>
+    <button type="submit">Upload</button>
+  </form>
+</body></html>
+""")
 
-# for the 
-def normalize_concept_tags(val):
-    # standardise the format of the concept_tags field
-    if val is None:
-        return None
-    if isinstance(val, (list, tuple)):
-        return json.dumps(list(val), ensure_ascii=False)
-    if isinstance(val, str):
-        try:
-            parsed = json.loads(val)
-            if isinstance(parsed, (list, tuple)):
-                return json.dumps(list(parsed), ensure_ascii=False)
-        except Exception:
-            pass
-        return val  # plain string (e.g., "regression metrics")
-    return json.dumps(val, ensure_ascii=False)
+# ---- Edit Question Route ----
 
-@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
+ALLOWED_QUESTION_FIELDS_FOR_EDIT = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+ALLOWED_FILE_FIELDS_FOR_EDIT = {"assessment_type", "course", "year", "semester"}
+
+@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"])
 def update_question(q_id):
-    # the requested edit attribute
+    """
+    Supports editing selected fields in the 'questions' table ("question_stem", 
+    "concept_tags", "difficulty_rating_manual", "question_type", "question_options", 
+    "question_answer") and selected metadata in the 'files' row ("assessment_type", 
+    "course", "year", "semester").
+
+    Args:
+        q_id (int): 
+            Primary key of the question for editing.
+        JSON body (dict):
+            Key-value pairs for edit. Allowed keys are:
+                - questions: {"question_stem", "concept_tags", "difficulty_rating_manual", 
+                            "question_type", "question_options", "question_answer"}
+                - files: {"assessment_type", "course", "year", "semester"}
+            Notes:
+                - concept_tags must be list/tuple.
+                - difficulty_rating_manual must be float or null.
+
+    Returns:
+        flask.Response (application/json):
+            200 with the edited record if successful.
+            400 with {"error": "..."} if field input is not an allowed type.
+            404 if the question does not exist for editing.
+
+    Raises:
+        Database and JSON errors are handled and returned as 4xx/5xx flask responses.
+    """
+    # The requested edit attribute
     payload = request.get_json(silent=True) or {}
     if not payload:
         return jsonify({"error": "empty_body"}), 400
@@ -605,9 +995,9 @@ def update_question(q_id):
     question_updates = {}
     file_updates = {}
     for k,v in payload.items():
-        if k in allowed_question_fields_for_edit:
+        if k in ALLOWED_QUESTION_FIELDS_FOR_EDIT:
             question_updates[k] = v
-        elif k in allowed_file_fields_for_edit:
+        elif k in ALLOWED_FILE_FIELDS_FOR_EDIT:
             file_updates[k] = v
 
     if not question_updates and not file_updates:
@@ -631,19 +1021,19 @@ def update_question(q_id):
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
 
-        # for questions table edits
+        # For questions table edits
         if question_updates:
             set_sql = ", ".join(f"{k}=%s" for k in question_updates)
             cur.execute(f"UPDATE questions SET {set_sql} WHERE id=%s LIMIT 1",
                         (*question_updates.values(), q_id))
             conn.commit()
 
-        # for files table edits
+        # For files table edits
         if file_updates:
-            # first get the file_id
+            # Get the file_id
             cur.execute("SELECT file_id FROM questions WHERE id=%s", (q_id,))
             row = cur.fetchone()
-            # if not row then file don't exist
+            # If file does not exist
             if not row:
                 return jsonify({"error": "not_found_or_deleted", "id": q_id}), 404
             file_id = row["file_id"]
@@ -664,7 +1054,7 @@ def update_question(q_id):
         """, (q_id,))
         row = cur.fetchone()
 
-    # convert concept_tags back from JSON string to Python List for readibility
+    # Convert concept_tags back from JSON string to Python List for readibility
     if row and row.get("concept_tags"):
         try:
             row["concept_tags"] = json.loads(row["concept_tags"])
@@ -673,10 +1063,29 @@ def update_question(q_id):
 
     return jsonify(row), 200
 
-## HARD DELETE QUESTION
+# ---- Hard Deletion Route ----
 @app.route("/api/harddeletequestions/<int:q_id>", methods=["DELETE"])
 def hard_delete_question(q_id):
+    """
+    Permanently delete a question from the 'questions' table.
 
+    Args:
+        q_id (int): 
+            Primary key of the question to be deleted.
+        Confirmation string (str):
+            MUST BE "YES" to proceed with deletion, otherwise error 400 is returned.
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"status": "deleted_permanently", "id": q_id} if successful
+            400 with {"error": "confirmation_required", ...} if confirmation not stated/invalid.
+            404 with {"status": "not_found", "id": q_id} if q_id does not exist in 'questions' table
+            500 with {"error": "delete_failed", ..." if error in database.
+
+    Raises:
+        All exceptions handled and returned as 4xx/5xx flask responses.
+
+    """
     # Confirm before hard delete
     confirm = request.args.get("confirm", "").upper()
     if confirm != "YES":
@@ -691,7 +1100,7 @@ def hard_delete_question(q_id):
             cur = conn.cursor()
             cur.execute("DELETE FROM questions WHERE id = %s LIMIT 1", (q_id,))
             conn.commit()
-            # if no row to delete
+            # If there is no row to delete
             if cur.rowcount == 0:
                 return jsonify({"status": "not_found", "id": q_id}), 404
 
@@ -700,81 +1109,41 @@ def hard_delete_question(q_id):
         except Exception as e:
             conn.rollback()
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
-        
-# Helper function for getting file_id based on file details
-def _normalize_semester(sem: str) -> str:
-    """
-    Normalize various semester inputs to a compact canonical form.
-    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
-    """
-    if sem is None:
-        return ""
-    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
-    # remove duplicate spaces
-    s = " ".join(s.split())
 
-    # common mappings
-    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
-        return "S1"
-    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
-        return "S2"
-    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
-        return "ST1"
-    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
-        return "ST2"
-    return s.upper()
-
-
-def _normalize_assessment_type(t: str) -> str:
-    if t is None:
-        return ""
-    s = str(t).strip().lower().replace("-", " ")
-    s = " ".join(s.split())
-    return s.lower()
-
-
-def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
-    if not course:
-        raise ValueError("course is required")
-    try:
-        year_int = int(str(year).strip())
-    except Exception:
-        raise ValueError("year must be an integer-like value")
-
-    course_norm = str(course).strip().upper()
-    sem_norm = _normalize_semester(semester)
-    atype_norm = _normalize_assessment_type(assessment_type)
-
-    sql = """
-        SELECT id
-        FROM files
-        WHERE UPPER(course) = %s
-          AND year = %s
-          AND UPPER(semester) = %s
-          AND UPPER(assessment_type) = %s
-        {order_clause}
-        LIMIT 1
-    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
-
-    params = (course_norm, year_int, sem_norm, atype_norm)
-
-    with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        row = cur.fetchone()
-        return int(row[0]) if row else None
-    params = (course, year, semester, assessment_type)
-
-    with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        row = cur.fetchone()
-        return int(row[0]) if row else None
-    return
-
-# Endpoint for adding question to the database
+# ---- Add Question Route ----
 @app.route("/addquestion", methods=["POST"])
 def addquestion():
+    """
+    Create a new question and adds it to the 'questions' table.
+
+    Args:
+        JSON body (dict):
+            Either:
+                - file_id (int): existing file row to attach the question to
+            Or ALL fields to find file_id:
+                - course (str)
+                - year (int)
+                - semester (str)
+                - assessment_type (str)
+            Required fields:
+                - question_type (str)
+                - question_stem (str)
+            Optional fields:
+                - concept_tags (list/tuple/JSON string/str): will be normalised to JSON.
+                - question_options (list/dict/JSON string): stored as JSON string.
+                - question_answer (JSON)L store as JSON.
+    
+    Returns:
+        flask.Response(application/json):
+            201 with {"status": "created", "question_id": <int>, "file": {...}, "data": {...}} if successful
+            400 with {"error": "missing_field", ...} when required field inputs are not present.
+            404 with {"error": "file_not_found"} when file_id is invalid.
+            500 with {"error": "insert_failed", "message": "..."} if error in database.
+
+    Raises:
+        Input and database error are handled and returned as 4xx/5xx flask responses.
+
+    """
     payload = request.get_json(silent=True) or {}
 
     # Required fields
@@ -825,10 +1194,10 @@ def addquestion():
     if isinstance(answer_raw, (dict, list)):
         answer_val = json.dumps(answer_raw, ensure_ascii=False)
     else:
-        # leave as scalar string/number/None
+        # Leave as scalar string/number/None
         answer_val = answer_raw
 
-    # ---- Insert ----
+    # Insertion
     insert_sql = """
         INSERT INTO questions (
             question_base_id, version_id, file_id,

@@ -34,11 +34,11 @@ def extract_text_and_page_images(
     Args:
     ----------
     source_dir : str, default="data/source_files"
-        Directory containing the PDF files to process.
+        Directory containing the PDF files to process
     text_dir : str, default="data/text_extracted"
-        Directory where extracted text files (.txt) will be saved.
+        Directory where extracted text files (.txt) will be saved
     media_dir : str, default="data/question_media"
-        Directory where ALL page images will be stored.
+        Directory where ALL page images will be stored
         
     Returns:
     -------
