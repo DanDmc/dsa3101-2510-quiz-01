@@ -66,7 +66,8 @@ def extract_text_and_page_images(
     # --- End Determination ---
 
     # 3. Process Files
-    for pdf_file_name in pdf_files_to_process:
+    for pdf_file_name_str in pdf_files_to_process:
+        pdf_file_name = Path(pdf_file_name_str)
         pdf_path = source_dir / pdf_file_name
         base_name = pdf_file_name.stem
         txt_filename = base_name + ".txt"
