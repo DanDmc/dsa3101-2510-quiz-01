@@ -78,7 +78,7 @@ CREATE TABLE `files` (
 
 LOCK TABLES `files` WRITE;
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
-INSERT INTO `files` VALUES (1,NULL,1,'DSA1101',2024,'2','others','DSA1101_Final_Sem2_2425.pdf','data/source_files/DSA1101_Final_Sem2_2425.pdf','system_demo','2025-10-25 12:50:48'),(2,NULL,1,'IND5003',2025,'1','others','IND5003_regression_01.pdf','data/source_files/IND5003_regression_01.pdf','system_demo','2025-10-25 12:50:48'),(3,NULL,1,'ST2131',2025,'1','others','ST2131_final.pdf','data/source_files/ST2131_final.pdf','system_demo','2025-10-25 12:50:48'),(4,NULL,1,'ST2137',2025,'1','others','ST2137_questions.pdf','data/source_files/ST2137_questions.pdf','system_demo','2025-10-25 12:50:48');
+INSERT INTO `files` VALUES (1,NULL,1,'DSA1101',2024,'2','final','DSA1101_Final_Sem2_2425.pdf','data/source_files/DSA1101_Final_Sem2_2425.pdf','system_demo','2025-10-25 12:50:48'),(2,NULL,1,'IND5003',2025,'1','quiz','IND5003_regression_01.pdf','data/source_files/IND5003_regression_01.pdf','system_demo','2025-10-25 12:50:48'),(3,NULL,1,'ST2131',2025,'1','assessment','ST2131_final.pdf','data/source_files/ST2131_final.pdf','system_demo','2025-10-25 12:50:48'),(4,NULL,1,'ST2137',2025,'1','assessment','ST2137_questions.pdf','data/source_files/ST2137_questions.pdf','system_demo','2025-10-25 12:50:48');
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
 
