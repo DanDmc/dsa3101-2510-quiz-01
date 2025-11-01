@@ -3,20 +3,10 @@ LLM-based Question Parser
 =========================
 
 This module uses Google's Gemini API to parse extracted text from exam papers
-into structured JSON format suitable for database insertion.
-
-Simple, adaptive, and accurate two-step approach:
-1. Build a dictionary mapping page_number → image_path from text markers
-2. LLM extracts questions (with page numbers), and we map to image paths
-
-Key Features:
-- Adaptive chunking: dynamically chooses pages per chunk (3–10) based on content density
-- Sequential processing (rate-limit safe)
-- Accurate page_number and image_path mapping
-- Real-time progress + timing for each chunk and file
-- Schema-compatible output for insert_questions.py
+into structured JSON format using a formal output schema for reliability.
 """
 
+from pathlib import Path # <-- Standardized to Path
 import os
 import sys
 import io
@@ -24,33 +14,87 @@ import json
 import re
 import time
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold, Schema, Type
 
 
-# === Configuration ===
+# === 1. Configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = "gemini-1.5-flash"  # Note: Updated to gemini-1.5-flash as 2.5 isn't public
+MODEL = "gemini-1.5-flash"
 
-TEXT_DIR = os.path.join("data", "text_extracted")
-OUTPUT_DIR = os.path.join("data", "json_output")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# Standardized to Path
+TEXT_DIR = Path("data") / "text_extracted"
+OUTPUT_DIR = Path("data") / "json_output"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 if not API_KEY:
     print("Error: GEMINI_API_KEY environment variable not set.")
     sys.exit(1)
 
+# === 2. LLM Setup and Schema Definition (MAJOR FIX) ===
+
+# Define the strict schema the model MUST follow
+QUESTION_SCHEMA = Schema(
+    type=Type.ARRAY,
+    items=Schema(
+        type=Type.OBJECT,
+        properties={
+            "question_no": Schema(type=Type.STRING, description="Exact numbering (e.g., '1a', '3.1')."),
+            "question_type": Schema(
+                type=Type.STRING, 
+                description="Classification: mcq|mrq|coding|open-ended|fill-in-the-blanks|others.",
+                enum=["mcq", "mrq", "coding", "open-ended", "fill-in-the-blanks", "others"],
+            ),
+            "difficulty_rating_manual": Schema(
+                type=Type.NUMBER, 
+                description="Manual difficulty rating, decimal 0.0–1.0. Convert percent to decimal if present.",
+            ),
+            "question_stem": Schema(
+                type=Type.STRING, 
+                description="The question text only (no options/answers). Replace any image markers with '(Image - Refer to question paper)'."
+            ),
+            "question_options": Schema(
+                type=Type.ARRAY,
+                description="Array of {'label': 'A', 'text': '...'} for MCQ/MRQ, empty list [] otherwise. Replace any image markers with '(Image - Refer to question paper)'."
+            ),
+            "question_answer": Schema(
+                type=Type.STRING, 
+                description="The correct answer with explanation if present, or NULL if unknown."
+            ),
+            "page_numbers": Schema(
+                type=Type.ARRAY, 
+                items=Schema(type=Type.INTEGER), 
+                description="List of page numbers [X] found in the question."
+            ),
+            "concept_tags": Schema(
+                type=Type.ARRAY, 
+                items=Schema(type=Type.STRING), 
+                description="1-3 relevant concept tags (e.g., ['probability', 'distributions']).",
+            ),
+        },
+        required=["question_no", "question_type", "question_stem"],
+    )
+)
+
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel(
     MODEL,
     generation_config={
-        "temperature": 0.1,  # low temperature = consistent structured JSON
+        "temperature": 0.1, 
         "top_p": 0.95,
         "top_k": 40,
-    }
+        "response_mime_type": "application/json", # Force JSON output
+        "response_schema": QUESTION_SCHEMA,       # Enforce this schema
+    },
+    safety_settings=[
+        # Allow less strict output since exam text might contain math/code
+        HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
+    ]
 )
 
 
 # === Utility Functions ===
 def build_page_to_image_map(full_text):
+    """Parse text markers to map page number to image paths."""
     page_map = {}
     pages = full_text.split("=== PAGE BREAK ===")
     for page_text in pages:
@@ -63,28 +107,34 @@ def build_page_to_image_map(full_text):
 
 
 def build_prompt(text):
+    """
+    Construct a structured instruction prompt for an LLM.
+    
+    The prompt is now much shorter because the schema is passed via API arguments.
+    """
     return f"""
-Extract all exam questions as a JSON array.
+Analyze the provided text from an exam paper. 
+Your task is to extract every question and organize it into the requested JSON schema.
 
-For each question, extract:
-- question_no: exact numbering (e.g., "1", "1a", "2b", "1(a)", "3.1")
-- question_type: mcq|mrq|coding|open-ended|fill-in-the-blanks|others (it must be classified as one of these categories only, nothing else)
-- difficulty_rating_manual: decimal 0–1 (convert % to decimal if present)
-- question_stem: the question text only (no options/answers). Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
-- question_options: array of {{"label": "A", "text": "..."}} for MCQ/MRQ, empty [] otherwise. Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
-- question_answer: correct answer (e.g. A. <answer value here>) with explanation if present, null otherwise. Sometimes correct answer is indicated with a tick mark.
-- page_numbers: array of [PAGE_NUMBER:X] values found in this question
-- concept_tags: 1-3 relevant tags (e.g., ["probability", "distributions"])
+Instructions for Content:
+1. Replace all raw image markers ([PAGE_IMAGE_SAVED:...]) in the stem and options with the exact placeholder text: "(Image - Refer to question paper)".
+2. Extract page numbers from markers ([PAGE_NUMBER:X]).
+3. Convert any percentage difficulty ratings (e.g., "50%") into a decimal (0.5).
+4. Ignore any administrative text like "Item Weight", "Item Psychometrics".
+5. Return ONLY the JSON object that conforms to the requested schema.
 
-Ignore: "Item Weight", "Item Psychometrics", or [PAGE_IMAGE_SAVED:...] markers.
-Return ONLY valid JSON array — no markdown, no extra commentary.
-
-Text:
+Text to Analyze:
 {text}
 """
 
 
 def sanitize_output(text):
+    """
+    Clean LLM output by stripping code fences. 
+    
+    NOTE: Using response_mime_type should eliminate the need for this, but it's 
+    kept as a robust defensive measure against LLM formatting drift.
+    """
     text = text.strip()
     if text.startswith("```"):
         parts = text.split("```")
@@ -96,11 +146,12 @@ def sanitize_output(text):
 
 
 def map_pages_to_images(questions, page_to_image_map):
+    """Attach image paths to each parsed question based on its page numbers."""
     for q in questions:
         page_numbers_raw = q.get("page_numbers", [])
         image_paths = []
         
-        # Ensure page_numbers are integers
+        # Ensure page_numbers are integers (V1/V2 cleaning logic)
         page_numbers = []
         if isinstance(page_numbers_raw, list):
             for p in page_numbers_raw:
@@ -120,17 +171,18 @@ def map_pages_to_images(questions, page_to_image_map):
 
 
 # === Core Processing ===
-def parse_file(txt_file):
-    input_path = os.path.join(TEXT_DIR, txt_file)
-
+def parse_file(txt_file_path: Path): # <-- Accepts a Path object
+    """Parse a single extracted-exam text file into structured question objects."""
+    
+    # Use Path object directly
     try:
-        with open(input_path, "r", encoding="utf-8") as f:
+        with open(txt_file_path, "r", encoding="utf-8") as f:
             full_text = f.read()
     except FileNotFoundError:
-        print(f" Error: Text file not found at {input_path}")
+        print(f" Error: Text file not found at {txt_file_path}")
         return None
     except Exception as e:
-        print(f" Error reading file {input_path}: {e}")
+        print(f" Error reading file {txt_file_path}: {e}")
         return None
 
 
@@ -168,23 +220,20 @@ def parse_file(txt_file):
         try:
             prompt = build_prompt(chunk_text)
             
-            # === DEBUG: Show what is sent to LLM (first 500 chars only) ===
-            # print("\n=== PROMPT (truncated) ===")
-            # print(prompt[:500] + "...\n====================")
-            
             response = model.generate_content(prompt)
             
-            # === DEBUG: Show raw output from LLM ===
-            # print("\n=== RAW LLM OUTPUT ===")
-            # print(response.text[:1000] + "...\n====================")
-
+            # Since the model is forced to output JSON, the text *should* be clean.
             output = sanitize_output(response.text)
 
             # Attempt to clean up stray characters if JSON fails
             output_clean = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', output)
+            
+            # The output is an array of questions, but if the LLM output is wrapped 
+            # in prose, the schema enforcement might put it in a single object.
             parsed = json.loads(output_clean)
 
             if not isinstance(parsed, list):
+                # If the schema enforcement produced a single object instead of an array
                 parsed = [parsed]
 
             elapsed = time.time() - start
@@ -194,6 +243,7 @@ def parse_file(txt_file):
         except json.JSONDecodeError as e:
             elapsed = time.time() - start
             print(f" Invalid JSON ({elapsed:.1f}s) — {e}")
+            # Log the invalid content for later debugging/manual correction
             print("---START OF INVALID JSON---")
             print(output_clean)
             print("---END OF INVALID JSON---")
@@ -211,45 +261,50 @@ def parse_file(txt_file):
     return all_questions
 
 
-# --- FIX: Modified function to accept a target_base argument ---
+# === Main Execution Entry Point (Fixed V2 Logic) ===
 def parse_exam_papers(target_base=None):
     
-    # --- FIX: Check if a specific target_base is provided ---
+    total_start = time.time()
+    
+    # --- Determine Files to Process ---
     if target_base:
-        # SINGLE FILE MODE
+        # SINGLE FILE MODE (Pipeline)
         txt_file_name = f"{target_base}.txt"
+        txt_file_path = TEXT_DIR / txt_file_name
         
-        if not os.path.exists(os.path.join(TEXT_DIR, txt_file_name)):
+        if not txt_file_path.exists():
             print(f" Error: Target text file not found: {txt_file_name}")
-            sys.exit(1) # Exit with error
+            sys.exit(1) # Signal failure to the Flask app
         
-        txt_files = [txt_file_name] # List with just the one file
+        txt_files_to_process = [txt_file_path] 
         print(f"Found 1 target text file to process: {txt_file_name}\n")
     else:
-        # LEGACY MODE
-        txt_files = [f for f in os.listdir(TEXT_DIR) if f.lower().endswith(".txt")]
-        if not txt_files:
+        # LEGACY MODE (Standalone/Batch)
+        txt_files_to_process = [f for f in TEXT_DIR.glob("*.txt")]
+        if not txt_files_to_process:
             print(" No text files found in text_extracted/")
             return
-        print(f"Found {len(txt_files)} file(s) to process (legacy mode)\n")
-    # --- END FIX ---
+        print(f"Found {len(txt_files_to_process)} file(s) to process (legacy mode)\n")
+    # --- End Determination ---
 
 
     print(f"\n{'='*60}")
-    print("QuizBank LLM Parser — Adaptive Chunking Edition")
+    print("QuizBank LLM Parser — Structured JSON Edition")
     print(f"{'='*60}")
-    print(f"Processing {len(txt_files)} file(s)\n")
+    print(f"Processing {len(txt_files_to_process)} file(s)\n")
 
-    total_start = time.time()
 
-    for idx, txt_file in enumerate(txt_files, 1):
-        print(f"\n[{idx}/{len(txt_files)}] {txt_file}")
+    for idx, txt_file_path in enumerate(txt_files_to_process, 1):
+        txt_file_name = txt_file_path.name
+        
+        print(f"\n[{idx}/{len(txt_files_to_process)}] {txt_file_name}")
         file_start = time.time()
 
-        questions = parse_file(txt_file)
+        questions = parse_file(txt_file_path)
 
         if questions:
-            output_path = os.path.join(OUTPUT_DIR, os.path.splitext(txt_file)[0] + ".json")
+            output_path = OUTPUT_DIR / f"{txt_file_path.stem}.json"
+            
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(questions, f, indent=2, ensure_ascii=False)
 
@@ -257,11 +312,11 @@ def parse_exam_papers(target_base=None):
             with_imgs = sum(1 for q in questions if q.get("page_image_paths"))
             with_pages = sum(1 for q in questions if q.get("page_numbers"))
 
-            print(f"\n {len(questions)} questions saved")
+            print(f"\n {len(questions)} questions saved to {output_path.name}")
             print(f" {with_pages} with page numbers, {with_imgs} with images")
             print(f" {elapsed:.1f}s ({elapsed/60:.1f} min)")
         else:
-            print(f" No questions found")
+            print(f" No questions found in {txt_file_name}")
 
     total_elapsed = time.time() - total_start
     print(f"\n{'='*60}")
@@ -270,17 +325,14 @@ def parse_exam_papers(target_base=None):
 
 
 if __name__ == "__main__":
-    # ===== Option 2: Ensure stdout supports UTF-8 (cross-platform) =====
+    # ===== Ensure stdout supports UTF-8 (cross-platform) =====
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-    # --- FIX: Read the environment variable from app.py ---
     target_base = os.getenv("TARGET_BASE")
 
-    if not target_base:
-        print("Warning: TARGET_BASE environment variable not set.")
-        print("Running in 'process all' mode (legacy).\n")
-        parse_exam_papers() # Fallback to old behavior
-    else:
-        # Pass the single target base name into the function
-        print(f"Processing single file from TARGET_BASE: {target_base}\n")
+    if target_base:
+        # Pipeline Mode
         parse_exam_papers(target_base=target_base)
+    else:
+        # Legacy Mode
+        parse_exam_papers()

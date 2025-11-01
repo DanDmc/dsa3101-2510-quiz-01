@@ -14,10 +14,8 @@ import joblib
 from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
-# app.py (New/Modified section)
-from flask_cors import CORS, cross_origin # ⬅️ ADD cross_origin here
-import re
-import sys
+from flask_cors import CORS, cross_origin
+import re, sys, importlib.util 
 
 app = Flask(__name__)
 
@@ -160,6 +158,7 @@ def get_file_id(course: str, year, semester: str, assessment_type: str, latest: 
         row = cur.fetchone()
         return int(row[0]) if row else None
 
+
 # -----------------------------------------------------
 ## 🏷️ Tag Normalization Helper (Used by addquestion/update_question/create_question)
 
@@ -183,7 +182,13 @@ def normalize_concept_tags(val):
 ## 🩺 Health Check
 
 @app.route("/health", methods=["GET"])
-def health(): return {"ok": True}
+def health():
+    """Lightweight health check endpoint."""
+    return {
+        "ok": True,
+        "model_loaded": difficulty_model is not None,
+        "active_model": active_model_name
+    }, 200
 
 # -----------------------------------------------------
 ## 📥 Question Retrieval
@@ -408,7 +413,7 @@ def download_file(file_id: int):
 
     guessed, _ = mimetypes.guess_type(file_row.get("file_name") or full_path)
     app.logger.info("DOWNLOAD full_path=%s base=%s dbpath=%s",
-                 full_path, file_base_directory, path_in_db)
+                   full_path, file_base_directory, path_in_db)
 
     return send_file(
         full_path,
@@ -454,7 +459,7 @@ def download_question_image(question_id: int):
     download_name = os.path.basename(full_path)
 
     app.logger.info("DOWNLOAD_IMAGE full_path=%s base=%s dbpath=%s",
-                    full_path, question_media_base_directory, first_image_path)
+                      full_path, question_media_base_directory, first_image_path)
 
     return send_file(
         full_path,
@@ -463,96 +468,77 @@ def download_question_image(question_id: int):
         download_name=download_name,
         conditional=True,
     )
-    
+
+# -----------------------------------------------------
+## 🤖 Difficulty Rating Model (with Fallback)
+# -----------------------------------------------------
+
+# --- 1. Define Model Paths ---
+MODEL_PATH_V1 = os.getenv("diff_model_path_v1", "/app/models/model_ridge.pkl") # V1's "correct" model
+MODEL_PATH_V2 = os.getenv("diff_model_path_v2", "/app/models/difficulty_v1.pkl") # V2's "fallback" model
+featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py" # V1's helper file
+
+# --- 2. Define V1 Helper Function (Dynamic Load) ---
+def _load_training_helpers():
+    """
+    V1: Dynamically import the training script so that pickled helper functions can be resolved.
+    """
+    if not os.path.exists(featurepath):
+        app.logger.warning(f"[difficulty_V1] Helper file not found at {featurepath}")
+        raise FileNotFoundError(f"V1 helper file not found: {featurepath}")
+    try:
+        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod) 
+        sys.modules["__main__"] = mod # V1's __main__ hack
+        app.logger.info("[difficulty_V1] Registered _numeric_feats_from_df from training script.")
+    except Exception as e:
+        app.logger.warning(f"[difficulty_V1] Could not import training helpers: {e}")
+        raise e
+
+# --- 3. Define V2 Helper Functions (Hardcoded Fallback) ---
 _SENT_SPLIT = re.compile(r'[.!?]')
 def _syllable_count(w): return 1
 def _compute_readability_features(texts):
-
-    """
-
-    texts: iterable of question stems (strings)
-
-    returns: np.ndarray shape (n, 2) with:
-
-        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
-
-    """
-
+    """V2: Hardcoded readability features."""
     rows = []
-
     for t in texts:
-
         t = t if isinstance(t, str) else ""
-
         tokens = re.findall(r"\b\w+\b", t)
-
         n_w = len(tokens) if tokens else 1
-
         n_sents = max(1, len([s for s in _SENT_SPLIT.split(t) if s.strip()]))
-
         n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
-
-
-
-        # Flesch Reading Ease (higher = easier)
-
         fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
-
-        # Flesch-Kincaid Grade Level (higher = harder)
-
         fkgl = 0.39 * (n_w / n_sents) + 11.8 * (n_syll / n_w) - 15.59
-
-
-
         rows.append([fre, fkgl])
-
     return np.array(rows, dtype=float)
 
 def numeric_feats_from_df(X):
-
+    """V2: Hardcoded numeric features function."""
     stems = X["question_stem"].fillna("").to_numpy()
-
     return _compute_readability_features(stems)
 _numeric_feats_from_df = numeric_feats_from_df
 
+def _apply_v2_main_module_hack():
+    """V2: Applies hardcoded functions to __main__ for joblib to use."""
+    main_module = sys.modules['__main__']
+    main_module._SENT_SPLIT = _SENT_SPLIT
+    main_module._syllable_count = _syllable_count
+    main_module._compute_readability_features = _compute_readability_features
+    main_module.numeric_feats_from_df = numeric_feats_from_df
+    main_module._numeric_feats_from_df = _numeric_feats_from_df
+    app.logger.info("[difficulty_V2] Applied V2 hardcoded __main__ module hack.")
 
-# -----------------------------------------------------
-## Difficulty Rating Model
-
-# -----------------------------------------------------
-# 💡 2. FIX FOR GUNICORN 'module __main__' ERROR
-# The .pkl file expects these functions to be in the __main__ module.
-# When running with Gunicorn, __main__ is Gunicorn, not app.py.
-# We must manually inject these functions into the __main__ module
-# *before* joblib.load() is called.
-main_module = sys.modules['__main__']
-main_module._SENT_SPLIT = _SENT_SPLIT
-main_module._syllable_count = _syllable_count
-main_module._compute_readability_features = _compute_readability_features
-main_module.numeric_feats_from_df = numeric_feats_from_df
-main_module._numeric_feats_from_df = _numeric_feats_from_df
-# -----------------------------------------------------
-
-# load the difficulty rating model
-MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
-difficulty_model = None
-try:
-    difficulty_model = joblib.load(MODEL_PATH)
-    app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
-except Exception as e:
-    app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
-
+# --- 4. Universal Prediction Functions (Work with either model) ---
 def parse_tags_for_model(val):
-    if not val:
-        return []
-    if isinstance(val, (list, tuple)):
-        return list(val)
-    try:
-        return json.loads(val) or []
-    except Exception:
-        return []
+    """Helper to parse concept tags for the model."""
+    if not val: return []
+    if isinstance(val, (list, tuple)): return list(val)
+    try: return json.loads(val) or []
+    except Exception: return []
 
 def predict_row(row: dict) -> float:
+    """Predicts difficulty using the globally loaded 'difficulty_model'."""
     stem = (row.get("question_stem") or "").strip()
     tags_text = " ".join(parse_tags_for_model(row.get("concept_tags")))
     X = pd.DataFrame([{
@@ -563,11 +549,36 @@ def predict_row(row: dict) -> float:
     yhat = float(difficulty_model.predict(X)[0])
     return float(np.clip(yhat, 0.0, 1.0))
 
+# --- 5. Main Loading Try/Except Block ---
+difficulty_model = None
+active_model_name = "NONE"
+
+try:
+    # --- TRY V1 (Preferred) ---
+    app.logger.info(f"[difficulty] V1: Attempting dynamic load of {MODEL_PATH_V1}...")
+    _load_training_helpers() # Populates __main__ from V1's .py file
+    difficulty_model = joblib.load(MODEL_PATH_V1)
+    active_model_name = "V1_model_ridge"
+    app.logger.info(f"[difficulty] V1: Successfully loaded model: {MODEL_PATH_V1}")
+except Exception as e_v1:
+    app.logger.warning(f"[difficulty] V1: Failed to load model ({MODEL_PATH_V1}): {e_v1}")
+    app.logger.info(f"[difficulty] V2: Attempting fallback load of {MODEL_PATH_V2}...")
+    try:
+        # --- FALLBACK TO V2 ---
+        _apply_v2_main_module_hack() # Populates __main__ with V2's hardcoded functions
+        difficulty_model = joblib.load(MODEL_PATH_V2)
+        active_model_name = "V2_difficulty_v1"
+        app.logger.info(f"[difficulty] V2: Successfully loaded fallback model: {MODEL_PATH_V2}")
+    except Exception as e_v2:
+        app.logger.error(f"[difficulty] V2: CRITICAL: Fallback model failed to load ({MODEL_PATH_V2}): {e_v2}")
+
+# --- 6. ML Prediction Endpoint ---
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
 
     if difficulty_model is None:
-        return jsonify({"error": "model not loaded"}), 503
+        # 💡 FIX: Return the active_model_name in the error for better debugging
+        return jsonify({"error": "Model not loaded", "active_model": active_model_name}), 503
 
     file_id = request.args.get("file_id", type=int)
     dry_run = request.args.get("dry_run", default=0, type=int) == 1
@@ -618,6 +629,7 @@ def predict_difficulty():
         "dry_run": dry_run,
         "items": results[:100],
     })
+
 
 # -----------------------------------------------------
 ## ⬆️ File Upload
@@ -975,7 +987,7 @@ def delete_question(q_id):
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
 
 # -----------------------------------------------------
-## ➕ Question Creation (Legacy/File-Dependent)
+## ➕ Question addition (Legacy/File-Dependent)
 
 @app.route("/addquestion", methods=["POST"])
 def addquestion():

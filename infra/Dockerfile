@@ -5,12 +5,17 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # === Install system dependencies ===
+# 🚨 CONSOLIDATION FIX: Added required system libraries (libmysqlclient-dev, libpoppler-cpp-dev)
+# required by pip packages (MySQLdb/pdfplumber) that were missing in V1/V2.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     netcat-traditional \
+    libmysqlclient-dev \
+    libpoppler-cpp-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # === Copy requirements and install Python dependencies ===
+# NOTE: V1/V2 assumed requirements.txt is in 'backend/' relative to the compose context.
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -24,6 +29,7 @@ COPY data/ ./data/
 RUN mkdir -p data/text_extracted data/json_output
 
 # === Command with retry logic and proper wait ===
+# 💡 CONSOLIDATION: Retaining the exact idle command provided in V1/V2.
 CMD ["bash", "-c", "\
     echo '🟢 Backend container started in idle mode. MySQL host: db'; \
     echo '💡 To process new PDFs manually, run:'; \
