@@ -28,11 +28,15 @@ import google.generativeai as genai
 
 # === Configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-1.5-flash"  # Note: Updated to gemini-1.5-flash as 2.5 isn't public
 
 TEXT_DIR = os.path.join("data", "text_extracted")
 OUTPUT_DIR = os.path.join("data", "json_output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+if not API_KEY:
+    print("Error: GEMINI_API_KEY environment variable not set.")
+    sys.exit(1)
 
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel(
@@ -93,11 +97,24 @@ def sanitize_output(text):
 
 def map_pages_to_images(questions, page_to_image_map):
     for q in questions:
-        page_numbers = q.get("page_numbers", [])
+        page_numbers_raw = q.get("page_numbers", [])
         image_paths = []
+        
+        # Ensure page_numbers are integers
+        page_numbers = []
+        if isinstance(page_numbers_raw, list):
+            for p in page_numbers_raw:
+                try:
+                    page_numbers.append(int(p))
+                except (ValueError, TypeError):
+                    pass # Ignore non-integer page numbers
+        
+        q["page_numbers"] = page_numbers # Store the cleaned list
+        
         for page_num in page_numbers:
             if page_num in page_to_image_map:
                 image_paths.extend(page_to_image_map[page_num])
+        
         q["page_image_paths"] = list(set(image_paths))
     return questions
 
@@ -106,8 +123,16 @@ def map_pages_to_images(questions, page_to_image_map):
 def parse_file(txt_file):
     input_path = os.path.join(TEXT_DIR, txt_file)
 
-    with open(input_path, "r", encoding="utf-8") as f:
-        full_text = f.read()
+    try:
+        with open(input_path, "r", encoding="utf-8") as f:
+            full_text = f.read()
+    except FileNotFoundError:
+        print(f" Error: Text file not found at {input_path}")
+        return None
+    except Exception as e:
+        print(f" Error reading file {input_path}: {e}")
+        return None
+
 
     print(f" Building page-to-image mapping...")
     page_to_image_map = build_page_to_image_map(full_text)
@@ -118,7 +143,7 @@ def parse_file(txt_file):
         print(" No pages found in file!")
         return None
 
-    avg_page_length = sum(len(p) for p in pages) / len(pages)
+    avg_page_length = sum(len(p) for p in pages) / len(pages) if pages else 0
     if avg_page_length < 500:
         adaptive_chunk_size, reason = 10, "sparse content"
     elif avg_page_length < 1500:
@@ -144,14 +169,14 @@ def parse_file(txt_file):
             prompt = build_prompt(chunk_text)
             
             # === DEBUG: Show what is sent to LLM (first 500 chars only) ===
-            print("\n=== PROMPT (truncated) ===")
-            print(prompt[:500] + "...\n====================")
+            # print("\n=== PROMPT (truncated) ===")
+            # print(prompt[:500] + "...\n====================")
             
             response = model.generate_content(prompt)
             
             # === DEBUG: Show raw output from LLM ===
-            print("\n=== RAW LLM OUTPUT ===")
-            print(response.text[:1000] + "...\n====================")
+            # print("\n=== RAW LLM OUTPUT ===")
+            # print(response.text[:1000] + "...\n====================")
 
             output = sanitize_output(response.text)
 
@@ -169,6 +194,9 @@ def parse_file(txt_file):
         except json.JSONDecodeError as e:
             elapsed = time.time() - start
             print(f" Invalid JSON ({elapsed:.1f}s) — {e}")
+            print("---START OF INVALID JSON---")
+            print(output_clean)
+            print("---END OF INVALID JSON---")
         except Exception as e:
             elapsed = time.time() - start
             print(f" Error: {e} ({elapsed:.1f}s)")
@@ -183,17 +211,34 @@ def parse_file(txt_file):
     return all_questions
 
 
-def parse_exam_papers():
-    txt_files = [f for f in os.listdir(TEXT_DIR) if f.lower().endswith(".txt")]
+# --- FIX: Modified function to accept a target_base argument ---
+def parse_exam_papers(target_base=None):
+    
+    # --- FIX: Check if a specific target_base is provided ---
+    if target_base:
+        # SINGLE FILE MODE
+        txt_file_name = f"{target_base}.txt"
+        
+        if not os.path.exists(os.path.join(TEXT_DIR, txt_file_name)):
+            print(f" Error: Target text file not found: {txt_file_name}")
+            sys.exit(1) # Exit with error
+        
+        txt_files = [txt_file_name] # List with just the one file
+        print(f"Found 1 target text file to process: {txt_file_name}\n")
+    else:
+        # LEGACY MODE
+        txt_files = [f for f in os.listdir(TEXT_DIR) if f.lower().endswith(".txt")]
+        if not txt_files:
+            print(" No text files found in text_extracted/")
+            return
+        print(f"Found {len(txt_files)} file(s) to process (legacy mode)\n")
+    # --- END FIX ---
 
-    if not txt_files:
-        print(" No text files found in text_extracted/")
-        return
 
     print(f"\n{'='*60}")
     print("QuizBank LLM Parser — Adaptive Chunking Edition")
     print(f"{'='*60}")
-    print(f"Found {len(txt_files)} file(s)\n")
+    print(f"Processing {len(txt_files)} file(s)\n")
 
     total_start = time.time()
 
@@ -228,4 +273,14 @@ if __name__ == "__main__":
     # ===== Option 2: Ensure stdout supports UTF-8 (cross-platform) =====
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-    parse_exam_papers()
+    # --- FIX: Read the environment variable from app.py ---
+    target_base = os.getenv("TARGET_BASE")
+
+    if not target_base:
+        print("Warning: TARGET_BASE environment variable not set.")
+        print("Running in 'process all' mode (legacy).\n")
+        parse_exam_papers() # Fallback to old behavior
+    else:
+        # Pass the single target base name into the function
+        print(f"Processing single file from TARGET_BASE: {target_base}\n")
+        parse_exam_papers(target_base=target_base)

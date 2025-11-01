@@ -20,4 +20,4 @@ EXPOSE 5000
 
 # If your Flask app exposes 'app = Flask(__name__)' in app.py, this is robust:
 # We use gunicorn instead of flask since it allows us to set the "--timeout" flag (stops flask timeouts for lengthy processes like upload_file) and "workers"
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "600", "--workers", "3", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "900", "--workers", "3", "app:app"]
