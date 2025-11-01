@@ -6,7 +6,7 @@ from contextlib import closing
 from werkzeug.utils import secure_filename
 from pathlib import Path
 import os, MySQLdb, mimetypes, json, datetime, joblib, tempfile, shutil, hashlib, subprocess, shlex
-import sys, importlib.util, re
+import sys, importlib.util, re, time
 
 app = Flask(__name__)
 
@@ -384,6 +384,31 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE", "quizbank"),
     )
 
+def _get_question_row(question_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        # Fetch the page_image_paths column
+        cur.execute("SELECT id, page_image_paths FROM questions WHERE id=%s", (question_id,))
+        return cur.fetchone()
+
+def _safe_join_media(base_dir: str, file_path: str) -> str:
+    """Safely join a base directory with a media file path."""
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+    
+    # Clean the path: remove leading slashes and "data/question_media/" prefix
+    cleaned_path = file_path.strip().lstrip('/')
+    if cleaned_path.startswith('data/question_media/'):
+        cleaned_path = cleaned_path[len('data/question_media/'):]
+        
+    candidate = os.path.normpath(os.path.join(base_dir, cleaned_path))
+    base_dir_norm = os.path.normpath(base_dir)
+    
+    # Security check to prevent path traversal
+    if not candidate.startswith(base_dir_norm + os.sep):
+        raise FileNotFoundError("Invalid media path")
+    return candidate
+
 # ---- Health Route ----
 @app.route("/health", methods=["GET"])
 def health():
@@ -584,6 +609,7 @@ def get_question():
 
 # ---- Download Route ----
 file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
+question_media_base_directory = os.getenv("question_media_base_directory", "/app/data/question_media")
 
 @app.route("/files/<int:file_id>/download", methods=["GET"])
 def download_file(file_id: int):
