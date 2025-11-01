@@ -1,25 +1,26 @@
 // src/components/QuestionToolbar.jsx
 import React, { useState } from 'react';
-import { 
-    Box, Button, TextField, InputAdornment, IconButton, 
+import {
+    Box, Button, TextField, InputAdornment, IconButton,
     Typography, 
-    // REMOVED: Switch, FormControlLabel (since Safe Delete is removed)
-    Menu, MenuItem, FormControl, InputLabel, Select, Chip, OutlinedInput 
+    Menu, MenuItem, FormControl, InputLabel, Select, Chip, OutlinedInput // Kept all necessary filter imports
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { useTheme } from '@mui/material/styles'; // Import useTheme
+import { useTheme } from '@mui/material/styles'; 
 
-// --- MOCK DATA FOR FILTERS ---
-// These should match your database tables
-const MOCK_QUESTION_TYPES = ["MCQ", "Open-ended", "MRQ", "Coding", "others"];
+// --- MOCK DATA FOR FILTERS (Combined/Refined) ---
+const MOCK_QUESTION_TYPES = ["MCQ", "Open-ended", "MRQ", "Ordering", "Matching", "Coding", "others"];
 const MOCK_ASSESSMENT_TYPES = ["quiz", "midterm", "final", "assessment", "project"]; 
 const MOCK_YEARS = [2024, 2023, 2022, 2021];
 const MOCK_SEMESTERS = ["Semester 1", "Semester 2", "Special Term 1", "Special Term 2"];
 const MOCK_TAGS = ["linear regression", "residuals", "data visualization", "model suitability", "model limitations", "binary response"];
+
+// --- Academic Year Options (from Incoming) ---
+const AY_OPTIONS = ["All","2025/2026","2024/2025","2023/2024","2022/2023","Unknown"];
 
 // --- Style constant ---
 const LARGE_BUTTON_SX = {
@@ -46,60 +47,64 @@ function QuestionToolbar({
     goToEditPage, 
     goToSearchPage, 
     handleDeleteClick,
+    courseOptions = [{ key: 'All', label: 'All' }, { key: 'UNKNOWN', label: 'Unknown' }], // From Incoming
+    conceptOptions = ['All'], // From Incoming
 }) { 
     
     const theme = useTheme(); 
     
-    // --- State for the filter menu anchor ---
+    // --- Menu State ---
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
-    // --- State for all filter values ---
-    const [query, setQuery] = useState("");
+    // --- Filter State (Combined from HEAD and Incoming) ---
+    const [query, setQuery] = useState('');
     const [filterQuestionType, setFilterQuestionType] = useState(''); 
     const [filterAssessmentType, setFilterAssessmentType] = useState(''); 
-    const [filterYear, setFilterYear] = useState(''); 
-    const [filterSemester, setFilterSemester] = useState(''); 
-    const [filterTags, setFilterTags] = useState([]); 
+    const [filterYear, setFilterYear] = useState(''); // Your HEAD logic
+    const [filterSemester, setFilterSemester] = useState(''); // Your HEAD logic
+    const [filterAY, setFilterAY] = useState('All'); // Incoming AY state
+    const [filterCourse, setFilterCourse] = useState('All'); // Incoming Course state
+    const [filterTags, setFilterTags] = useState([]); // Your HEAD multi-select state
+    const [filterConcept, setFilterConcept] = useState('All'); // Incoming single-select concept
 
     // --- Menu open/close handlers ---
-    const handleMenuClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleMenuClose = () => {
-      setAnchorEl(null);
-    };
+    const handleMenuClick = (event) => setAnchorEl(event.currentTarget);
+    const handleMenuClose = () => setAnchorEl(null);
 
-    // --- Single function to trigger search ---
+    // --- Single function to trigger search (Consolidated logic) ---
     const handleSearchTrigger = (e) => {
         e?.preventDefault(); 
         
         // Bundle all filter states into one object
         const searchParams = {
             query: query.trim(),
+            // Using your HEAD's fields, mapping incoming state to them
             question_type: filterQuestionType, 
             assessment_type: filterAssessmentType, 
-            year: filterYear,
-            semester: filterSemester,
-            tags: filterTags
+            year: filterYear, // Placeholder for future logic
+            semester: filterSemester, // Placeholder for future logic
+            tags: filterTags, // Using HEAD's multi-select state
         };
 
-        // Send the complete search object
         goToSearchPage(searchParams);
         handleMenuClose(); 
     };
 
     // --- Handler to clear all filters ---
     const handleClearFilters = () => {
-        setQuery("");
+        setQuery('');
         setFilterQuestionType(''); 
         setFilterAssessmentType('');
         setFilterYear('');
         setFilterSemester('');
+        setFilterAY('All');
+        setFilterCourse('All');
         setFilterTags([]);
+        setFilterConcept('All');
     };
     
-    // --- Multi-select change handlers ---
+    // --- Multi-select change handlers (HEAD Logic) ---
     const handleTagChange = (event) => {
         const { target: { value } } = event;
         setFilterTags(typeof value === 'string' ? value.split(',') : value);
@@ -114,7 +119,7 @@ function QuestionToolbar({
                     Create / Upload
                 </Button>
 
-                {/* The Safe Delete Toggle block is removed */}
+                {/* ❌ REMOVED: The Safe Delete Toggle box from Incoming is discarded */}
                 
                 <Button 
                     variant="outlined" 
@@ -153,7 +158,7 @@ function QuestionToolbar({
                     />
                 </form>
                 
-                {/* --- FILTER MENU BUTTON --- */}
+                {/* --- FILTER MENU BUTTON (From HEAD) --- */}
                 <IconButton
                     onClick={handleMenuClick}
                     title="Filters"
@@ -168,28 +173,24 @@ function QuestionToolbar({
                     <ViewListIcon />
                 </IconButton>
 
-                {/* --- FILTER MENU POPUP --- */}
+                {/* --- FILTER MENU POPUP (Combined/Integrated) --- */}
                 <Menu
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleMenuClose}
                     PaperProps={{
                       style: {
-                        width: 400, // Set a width for the menu
+                        width: 420, // Adjusted width
                         padding: '16px',
                       },
                     }}
                 >
                     <Typography variant="h6" gutterBottom>Filters</Typography>
-                    
-                    {/* --- Question Type Dropdown (Single-Select) --- */}
-                    <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
+
+                    {/* Question Type Dropdown */}
+                    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
                         <InputLabel>Question Type</InputLabel>
-                        <Select
-                            value={filterQuestionType}
-                            onChange={(e) => setFilterQuestionType(e.target.value)}
-                            label="Question Type"
-                        >
+                        <Select value={filterQuestionType} label="Question Type" onChange={(e)=>setFilterQuestionType(e.target.value)}>
                             <MenuItem value=""><em>All Types</em></MenuItem>
                             {MOCK_QUESTION_TYPES.map((type) => (
                                 <MenuItem key={type} value={type}>{type}</MenuItem>
@@ -197,59 +198,43 @@ function QuestionToolbar({
                         </Select>
                     </FormControl>
 
-                    {/* --- Assessment Type Dropdown --- */}
-                    <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
+                    {/* Course Dropdown (Integrated from Incoming logic/state) */}
+                    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+                        <InputLabel>Course</InputLabel>
+                        <Select value={filterCourse} label="Course" onChange={(e)=>setFilterCourse(e.target.value)}>
+                            {courseOptions.map(opt => (
+                                <MenuItem key={opt.key} value={opt.key}>{opt.label}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    {/* Academic Year Dropdown (Integrated from Incoming) */}
+                    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+                        <InputLabel>Academic Year</InputLabel>
+                        <Select value={filterAY} label="Academic Year" onChange={(e)=>setFilterAY(e.target.value)}>
+                            {AY_OPTIONS.map(ay => <MenuItem key={ay} value={ay}>{ay}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+
+                    {/* Assessment Type Dropdown */}
+                    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
                         <InputLabel>Assessment Type</InputLabel>
-                        <Select
-                            value={filterAssessmentType}
-                            onChange={(e) => setFilterAssessmentType(e.target.value)}
-                            label="Assessment Type"
-                        >
+                        <Select value={filterAssessmentType} label="Assessment Type" onChange={(e)=>setFilterAssessmentType(e.target.value)}>
                             <MenuItem value=""><em>All Types</em></MenuItem>
                             {MOCK_ASSESSMENT_TYPES.map((type) => (
                                 <MenuItem key={type} value={type}>{type}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    
-                    {/* --- Year Dropdown --- */}
-                    <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
-                        <InputLabel>Year</InputLabel>
-                        <Select
-                            value={filterYear}
-                            onChange={(e) => setFilterYear(e.target.value)}
-                            label="Year"
-                        >
-                            <MenuItem value=""><em>All Years</em></MenuItem>
-                            {MOCK_YEARS.map((year) => (
-                                <MenuItem key={year} value={year}>{year}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    
-                    {/* --- Semester Dropdown --- */}
-                    <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
-                        <InputLabel>Semester</InputLabel>
-                        <Select
-                            value={filterSemester}
-                            onChange={(e) => setFilterSemester(e.target.value)}
-                            label="Semester"
-                        >
-                            <MenuItem value=""><em>All Semesters</em></MenuItem>
-                            {MOCK_SEMESTERS.map((sem) => (
-                                <MenuItem key={sem} value={sem}>{sem}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    
-                    {/* --- 5. Concept Tags Multi-select --- */}
-                    <FormControl fullWidth variant="outlined" size="small" sx={{ mb: 2 }}>
+
+                    {/* Concept Tags Multi-select (Using HEAD's Multi-select logic) */}
+                    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
                         <InputLabel>Concept Tags</InputLabel>
                         <Select
                             multiple
-                            value={filterTags}
-                            onChange={handleTagChange}
-                            input={<OutlinedInput label="Concept Tags" />}
+                            value={filterTags} // Using HEAD's state
+                            onChange={handleTagChange} // Using HEAD's handler
+                            input={<OutlinedInput label="Concept Tags" />} // Needs OutlinedInput import
                             renderValue={(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
@@ -258,23 +243,23 @@ function QuestionToolbar({
                                 </Box>
                             )}
                         >
-                            {MOCK_TAGS.map((tag) => (
+                            {(conceptOptions || ['All']).map(tag => (
                                 <MenuItem key={tag} value={tag} style={getStyles(tag, filterTags, theme)}>
                                     {tag}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    
-                    {/* --- Action Buttons --- */}
+
+                    {/* Action Buttons */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                        <Button onClick={handleClearFilters} size="small">Clear</Button>
-                        <Button onClick={handleSearchTrigger} variant="contained" size="small">Apply</Button>
+                        <Button onClick={handleClearFilters} size="small">CLEAR</Button>
+                        <Button onClick={handleSearchTrigger} variant="contained" size="small">APPLY</Button>
                     </Box>
                 </Menu>
+              </Box>
             </Box>
-        </Box>
-    );
+        );
 }
 
 export default QuestionToolbar;

@@ -1396,6 +1396,122 @@ def create_question():
             app.logger.error(f"Failed to insert new question: {e}")
             return jsonify({"error": "insert_failed", "message": str(e)}), 500
 
+
+# ---------------------------------------------
+# SEARCH QUESTIONS ENDPOINT (dedup by question_base_id)
+# ---------------------------------------------
+@app.route("/search", methods=["GET"])
+def search_questions():
+    keyword = (request.args.get("q") or "").strip().lower()
+    qtype = (request.args.get("type") or "all").strip().lower()
+    course = (request.args.get("course") or "").strip().upper()  # filter key
+    assessment_type = (request.args.get("assessment_type") or "").strip().lower()
+    academic_year = (request.args.get("academic_year") or "").strip()
+    concept = (request.args.get("concept_tags") or "").strip().lower()
+
+    latest_sql = """
+        SELECT COALESCE(question_base_id, id) AS gid, MAX(id) AS max_id
+        FROM questions
+        GROUP BY COALESCE(question_base_id, id)
+    """
+
+    # Derive course_key from f.course, else from filename prefix like ST2131
+    # REGEXP_SUBSTR is available in MySQL 8
+    sql = f"""
+        SELECT
+            q.id AS question_id,
+            q.question_base_id,
+            q.file_id,
+            q.question_no,
+            q.question_stem,
+            q.question_type,
+            q.concept_tags,
+            COALESCE(
+               UPPER(NULLIF(TRIM(f.course), '')),
+               UPPER(REGEXP_SUBSTR(f.file_name, '^[A-Za-z]{{2,5}}[0-9]{{4}}'))
+            )                             AS course_key,
+            f.year,
+            LOWER(NULLIF(TRIM(f.assessment_type), '')) AS assessment_type_raw,
+            q.updated_at
+        FROM ({latest_sql}) t
+        JOIN questions q ON q.id = t.max_id
+        JOIN files     f ON f.id = q.file_id
+    """
+
+    where, params = [], []
+
+    if keyword:
+        where.append("(LOWER(q.question_stem) LIKE %s OR LOWER(q.concept_tags) LIKE %s)")
+        like = f"%{keyword}%"
+        params += [like, like]
+
+    if qtype != "all":
+        where.append("LOWER(q.question_type) = %s")
+        params.append(qtype)
+
+    # Only filter by course when a *real* key comes in
+    if course:
+        where.append("""COALESCE(
+               UPPER(NULLIF(TRIM(f.course), '')),
+               UPPER(REGEXP_SUBSTR(f.file_name, '^[A-Za-z]{2,5}[0-9]{4}'))
+            ) = %s""")
+        params.append(course)
+
+    if assessment_type:
+        where.append("LOWER(NULLIF(TRIM(f.assessment_type), '')) = %s")
+        params.append(assessment_type)
+
+    if academic_year:
+        where.append("f.year = %s")
+        params.append(academic_year)
+
+    if concept:
+        where.append("LOWER(q.concept_tags) LIKE %s")
+        params.append(f"%{concept}%")
+
+    if where:
+        sql += " WHERE " + " AND ".join(where)
+
+    sql += " ORDER BY f.year DESC, q.updated_at DESC LIMIT 200"
+
+    with closing(get_connection()) as conn, closing(conn.cursor(MySQLdb.cursors.DictCursor)) as cur:
+        cur.execute(sql, tuple(params))
+        rows = cur.fetchall()
+
+    out = []
+    for r in rows:
+        # tags → list
+        try:
+            tags = json.loads(r.get("concept_tags") or "[]")
+            if not isinstance(tags, list):
+                tags = [tags]
+        except Exception:
+            tags = [r["concept_tags"]] if r.get("concept_tags") else []
+
+        ck = r.get("course_key") or "UNKNOWN"
+        course_label = "Unknown" if ck == "UNKNOWN" else ck
+
+        atype = (r.get("assessment_type_raw") or "").lower()
+        atype = atype if atype in ("final", "midterm", "quiz") else "Unknown"
+
+        out.append({
+            "question_id": r["question_id"],
+            "question_base_id": r.get("question_base_id"),
+            "file_id": r.get("file_id"),
+            "question_no": r.get("question_no"),
+            "question_stem": r.get("question_stem"),
+            "question_type": r.get("question_type"),
+            "concept_tags": tags,
+            "course": course_label,   # display
+            "course_key": ck,         # filter key to send back
+            "year": r.get("year"),
+            "assessment_type": atype,
+            "updated_at": r.get("updated_at"),
+        })
+
+    return jsonify(out)
+
+
 if __name__ == "__main__":
     # Run the Flask app directly
     app.run(host="0.0.0.0", port=5000, debug=True)
