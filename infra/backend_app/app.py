@@ -355,11 +355,11 @@ def has_column(conn, table: str, col: str) -> bool:
     """
     with closing(conn.cursor()) as c:
         c.execute("""
-          SELECT COUNT(*)
-          FROM INFORMATION_SCHEMA.COLUMNS
-          WHERE TABLE_SCHEMA = DATABASE()
-            AND TABLE_NAME = %s
-            AND COLUMN_NAME = %s
+            SELECT COUNT(*)
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE()
+              AND TABLE_NAME = %s
+              AND COLUMN_NAME = %s
         """, (table, col))
         return c.fetchone()[0] == 1
 
@@ -601,7 +601,7 @@ def download_file(file_id: int):
 
     guessed, _ = mimetypes.guess_type(file_row.get("file_name") or full_path)
     app.logger.info("DOWNLOAD full_path=%s base=%s dbpath=%s",
-                full_path, file_base_directory, path_in_db)
+                 full_path, file_base_directory, path_in_db)
 
     return send_file(
         full_path,
@@ -610,6 +610,88 @@ def download_file(file_id: int):
         download_name=file_row.get("file_name") or os.path.basename(full_path),
         conditional=True,
     )
+    
+@app.route("/question/<int:question_id>/download_image", methods=["GET"])
+def download_question_image(question_id: int):
+    question_row = _get_question_row(question_id)
+    if not question_row:
+        abort(404, description="Invalid question ID")
+
+    image_paths_json = question_row.get("page_image_paths")
+    if not image_paths_json:
+        abort(404, description="No images found for this question")
+
+    try:
+        image_paths = json.loads(image_paths_json)
+    except Exception:
+        abort(500, description="Failed to parse image paths")
+
+    if not image_paths or not isinstance(image_paths, list) or len(image_paths) == 0:
+        abort(404, description="No image path in list")
+
+    # --- Download only the FIRST image for simplicity ---
+    first_image_path = image_paths[0]
+
+    try:
+        # Use the new safe join function and base directory
+        full_path = _safe_join_media(question_media_base_directory, first_image_path)
+    except FileNotFoundError as e:
+        abort(404, description=str(e))
+
+    if not os.path.exists(full_path):
+        app.logger.error("Image file not in folder: %s", full_path)
+        abort(404, description="Image file not in folder")
+
+    # Get mimetype and download name
+    guessed, _ = mimetypes.guess_type(full_path)
+    download_name = os.path.basename(full_path)
+
+    app.logger.info("DOWNLOAD_IMAGE full_path=%s base=%s dbpath=%s",
+                    full_path, question_media_base_directory, first_image_path)
+
+    return send_file(
+        full_path,
+        mimetype=guessed or "image/png", # Default to image/png
+        as_attachment=True,
+        download_name=download_name,
+        conditional=True,
+    )
+    
+_SENT_SPLIT = re.compile(r'[.!?]')
+def _syllable_count(w): return 1
+def _compute_readability_features(texts):
+
+    """
+
+    texts: iterable of question stems (strings)
+
+    returns: np.ndarray shape (n, 2) with:
+
+        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
+
+    """
+
+    rows = []
+
+    for t in texts:
+
+        t = t if isinstance(t, str) else ""
+
+        tokens = re.findall(r"\b\w+\b", t)
+
+        n_w = len(tokens) if tokens else 1
+
+        n_sents = max(1, len([s for s in _SENT_SPLIT.split(t) if s.strip()]))
+
+        n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
+
+
+
+        # Flesch Reading Ease (higher = easier)
+
+        fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
+
+        # Flesch-Kincaid Grade Level (higher = harder)
 
 # ---- Difficulty Rating Model ----
 # Load the difficulty rating model
@@ -808,8 +890,7 @@ def upload_file():
     course = request.form.get("course")
     year = request.form.get("year")
     semester = request.form.get("semester")
-    assessment_type = request.form.get("assessment_type")
-
+    assessment_type = request.form.get("assessment_type") or "others"
     if "file" not in request.files:
         return jsonify({"error": "No file part"}), 400
     f = request.files["file"]
@@ -817,34 +898,29 @@ def upload_file():
         return jsonify({"error": "No selected file"}), 400
     if not _allowed_pdf(f.filename):
         return jsonify({"error": "Only .pdf allowed"}), 400
-
     # Basic PDF magic header check
     head = f.stream.read(5)
     f.stream.seek(0)
     if head != b"%PDF-":
         return jsonify({"error": "Invalid PDF header"}), 400
-
-    # Where downloads look for files
-    base_dir = Path(os.getenv("file_base_directory", "/data/source_files"))
+    # 💥 BEGIN LOCK FIX: Read entire stream into memory
+    try:
+        f.stream.seek(0)
+        file_content = f.stream.read()
+    except Exception as e:
+        app.logger.error(f"Failed to read file stream: {e}")
+        return jsonify({"error": "file_read_failed", "message": str(e)}), 500
+    base_dir = Path(os.getenv("file_base_directory", "/app/data/source_files"))
     base_dir.mkdir(parents=True, exist_ok=True)
-
-    # Secure the original name; we prefer to keep it for nicer downloads/UX
     original_name = secure_filename(f.filename)
-
-    # Stream to a temp file while hashing
     h = hashlib.sha256()
-    tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
+    fd, tmp_path_str = tempfile.mkstemp(suffix=".pdf")
+    os.close(fd)
+    tmp_path = Path(tmp_path_str)
     with open(tmp_path, "wb") as w:
-        while True:
-            chunk = f.stream.read(1024 * 1024)
-            if not chunk:
-                break
-            h.update(chunk)
-            w.write(chunk)
+        h.update(file_content)
+        w.write(file_content)
     short_hash = h.hexdigest()[:8]
-
-    # Choose final filename inside file_base_directory
-    # If a same-named file already exists, append a short hash before the extension.
     stem = Path(original_name).stem
     suffix = Path(original_name).suffix or ".pdf"
     candidate_name = original_name
@@ -856,8 +932,7 @@ def upload_file():
 
     # Move temp file into the canonical storage directory
     shutil.move(str(tmp_path), dest_path)
-
-    # Insert into DB — IMPORTANT: download uses file_name to resolve under file_base_directory
+    # Insert into DB
     file_id = None
     try:
         with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
@@ -875,10 +950,7 @@ def upload_file():
             "db_error": str(e),
             "path": str(dest_path)
         }), 201
-
-    # Ensure the parser can find the file.
-    # By default, SRC_DIR == BASE_DIR/"data/source_files".
-    # If the env var points elsewhere, mirror a copy into SRC_DIR for your existing pipeline.
+    # Mirror to SRC_DIR if needed
     try:
         if Path(file_base_directory) != SRC_DIR:
             SRC_DIR.mkdir(parents=True, exist_ok=True)
@@ -887,39 +959,98 @@ def upload_file():
                 shutil.copyfile(dest_path, mirror_path)
     except Exception as e:
         app.logger.warning(f"Mirror to SRC_DIR failed: {e}")
-
-    # Use the ACTUAL saved filename as TARGET_BASE for the pipeline
     base = Path(candidate_name).stem
     logs = {}
-
-    # 1) Extract text (filter to this PDF via TARGET_PDF)
+    # 1) Extract text
     code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": candidate_name})
     logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
-
-    # 2) LLM parse (filter via TARGET_BASE)
+    # 2) LLM parse
     code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
     logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
-        return jsonify({
-            "saved": True,
-            "file_id": file_id,
-            "pipeline": logs,
-            "error": "llm_parser failed"
-        }), 500
-
-    # 3) Insert questions (filter via TARGET_BASE)
-    code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
+        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"}), 500
+    # 3) Insert questions
+    code, out, err = _run(
+    "python insert_questions.py", 
+    env_extra={
+        "TARGET_BASE": base, 
+        "FILE_ID": str(file_id) # <-- Pass the integer ID as a string
+    }
+)
     logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
-        return jsonify({
-            "saved": True,
-            "file_id": file_id,
-            "pipeline": logs,
-            "error": "insert_questions failed"
-        }), 500
-
+        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
+    # ============================================================== 
+    # 🔑 Retry loop for newly_inserted_questions with exponential backoff
+    # ============================================================== 
+    new_questions = []
+    select_cols = [
+        "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
+        "q.question_type", "q.question_stem", "q.question_stem_html",
+        "q.concept_tags", "q.page_image_paths",
+        "q.last_used", "q.created_at", "q.updated_at",
+        "q.question_options", "q.question_answer",
+        "q.difficulty_rating_manual", "q.difficulty_rating_model",
+        "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
+    ]
+    max_attempts = 12      # Exponential backoff, max 12 attempts (~5 min total)
+    base_wait = 5          # initial wait in seconds
+    for attempt in range(max_attempts):
+        with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
+            sql = f"""
+                SELECT {", ".join(select_cols)}
+                FROM questions q
+                JOIN files f ON f.id = q.file_id
+                WHERE q.file_id = %s
+                ORDER BY q.question_no ASC, q.id ASC
+            """
+            cur.execute(sql, (file_id,))
+            rows = cur.fetchall()
+        if rows:
+            # populate new_questions
+            for row in rows:
+                (
+                    q_id, q_base_id, q_version_id, file_id_r, q_no,
+                    q_type, stem, stem_html,
+                    concept_json, media_json, last_used, created_at, updated_at,
+                    options_json, answer_json,
+                    difficulty_manual, difficulty_model,
+                    f_course, f_year, f_semester, f_assessment, f_name, f_path
+                ) = row
+                difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
+                new_questions.append({
+                    "id": q_id,
+                    "question_base_id": q_base_id,
+                    "version_id": q_version_id,
+                    "file_id": file_id_r,
+                    "question_no": q_no,
+                    "question_type": q_type,
+                    "question_stem": stem,
+                    "question_stem_html": stem_html,
+                    "concept_tags": parse_json_field(concept_json),
+                    "question_media": parse_json_field(media_json),
+                    "question_options": parse_json_field(options_json),
+                    "question_answer": parse_json_field(answer_json),
+                    "last_used": ts(last_used),
+                    "created_at": ts(created_at),
+                    "updated_at": ts(updated_at),
+                    "difficulty_rating_manual": difficulty_manual,
+                    "difficulty_model": difficulty_model,
+                    "difficulty_level": difficulty_level,
+                    "course": f_course,
+                    "year": f_year,
+                    "semester": f_semester,
+                    "assessment_type": f_assessment,
+                    "file_name": f_name,
+                    "file_path": f_path,
+                })
+            break  # exit loop once rows are found
+        else:
+            wait_time = min(base_wait * (2 ** attempt), 30)  # exponential backoff, max 30s
+            app.logger.info(f"Attempt {attempt+1}/{max_attempts}: no questions yet, retrying in {wait_time}s")
+            time.sleep(wait_time)
     return jsonify({
         "saved": True,
         "file": {
@@ -928,9 +1059,19 @@ def upload_file():
             "stored_filename": candidate_name,
             "stored_path": str(dest_path)
         },
-        "pipeline": logs
+        "pipeline": logs,
+        "newly_inserted_questions": new_questions
     }), 201
 
+
+
+# -----------------------------------------------------
+# Question Editing (PATCH)
+
+allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
+
+@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 # ---- Temporary Endpoint for backend testing of upload feature ---
 @app.get("/upload")
 def upload_page():
@@ -1003,7 +1144,7 @@ def update_question(q_id):
     if not question_updates and not file_updates:
         return jsonify({"error": "no_allowed_fields"}), 400
 
-    # Allowing for edits in difficulty_rating_manual, edits only accept a FLOAT
+    # Handle difficulty_rating_manual: must be a FLOAT or None
     if "difficulty_rating_manual" in question_updates:
         try:
             if question_updates["difficulty_rating_manual"] is None:
@@ -1014,9 +1155,28 @@ def update_question(q_id):
             return jsonify({"error": "invalid_type",
                             "field": "difficulty_rating_manual"}), 400
 
-    # Allowing for edits in concept_tags, edits only accept a LIST
+    # Handle concept_tags: normalise to JSON string
     if "concept_tags" in question_updates:
         question_updates["concept_tags"] = normalize_concept_tags(question_updates["concept_tags"])
+        
+    # Handle question_options: normalise to JSON string (if provided)
+    if "question_options" in question_updates and question_updates["question_options"] is not None:
+        try:
+            # Ensure it's a JSON string if not already
+            if isinstance(question_updates["question_options"], (list, dict)):
+                question_updates["question_options"] = json.dumps(question_updates["question_options"], ensure_ascii=False)
+            elif isinstance(question_updates["question_options"], str):
+                json.loads(question_updates["question_options"]) # Just validate
+            else:
+                raise ValueError("Invalid format")
+        except:
+             return jsonify({"error": "invalid_json_format", "field": "question_options"}), 400
+             
+    # Handle question_answer: normalise to JSON string if complex type (if provided)
+    if "question_answer" in question_updates and question_updates["question_answer"] is not None:
+        if isinstance(question_updates["question_answer"], (list, dict)):
+            question_updates["question_answer"] = json.dumps(question_updates["question_answer"], ensure_ascii=False)
+
 
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
@@ -1041,6 +1201,7 @@ def update_question(q_id):
             cur.execute(f"UPDATE files SET {set_sql} WHERE id=%s LIMIT 1",
                         (*file_updates.values(), file_id))
             conn.commit()
+            
         # Return the updated record, combined files and questions
         cur.execute("""
             SELECT q.id, q.question_base_id, q.file_id,
@@ -1056,10 +1217,13 @@ def update_question(q_id):
 
     # Convert concept_tags back from JSON string to Python List for readibility
     if row and row.get("concept_tags"):
-        try:
-            row["concept_tags"] = json.loads(row["concept_tags"])
-        except Exception:
-            pass
+        row["concept_tags"] = parse_json_field(row["concept_tags"])
+        
+    # convert dates to string
+    if row and row.get("created_at"):
+        row["created_at"] = ts(row["created_at"])
+    if row and row.get("updated_at"):
+        row["updated_at"] = ts(row["updated_at"])
 
     return jsonify(row), 200
 
@@ -1094,20 +1258,49 @@ def hard_delete_question(q_id):
             "message": "Add ?confirm=YES to permanently delete the question."
         }), 400
 
+@app.route("/api/deletequestion/<int:q_id>", methods=["DELETE"])
+def delete_question(q_id):
+    deleted_file_id = None
+    
     with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        
+        # 1. Get file_id before deleting the question
         try:
-            # SQL portion to delete
-            cur = conn.cursor()
+            cur.execute("SELECT file_id FROM questions WHERE id = %s", (q_id,))
+            file_id_row = cur.fetchone()
+            if file_id_row:
+                deleted_file_id = file_id_row[0]
+        except Exception as e:
+            app.logger.warning(f"Error fetching file_id for QID {q_id}: {e}")
+        
+        # 2. Delete the question from the questions table
+        try:
             cur.execute("DELETE FROM questions WHERE id = %s LIMIT 1", (q_id,))
             conn.commit()
             # If there is no row to delete
             if cur.rowcount == 0:
+                conn.commit()
                 return jsonify({"status": "not_found", "id": q_id}), 404
-
+            
+            # 3. Clean up orphaned file record if a file_id was found
+            if deleted_file_id is not None:
+                
+                # Count remaining questions linked to this file_id
+                cur.execute("SELECT COUNT(*) FROM questions WHERE file_id = %s", (deleted_file_id,))
+                remaining_count = cur.fetchone()[0]
+                
+                # 4. If count is zero, delete the file record
+                if remaining_count == 0:
+                    app.logger.info(f"Deleting orphaned file container with ID {deleted_file_id}")
+                    cur.execute("DELETE FROM files WHERE id = %s LIMIT 1", (deleted_file_id,))
+            
+            conn.commit()
             return jsonify({"status": "deleted_permanently", "id": q_id}), 200
 
         except Exception as e:
             conn.rollback()
+            app.logger.error(f"Transaction failed during question delete for QID {q_id}: {e}")
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
 
 # ---- Add Question Route ----
@@ -1146,7 +1339,7 @@ def addquestion():
     """
     payload = request.get_json(silent=True) or {}
 
-    # Required fields
+    # Required fields: find file_id or create it from metadata
     file_id = payload.get("file_id")
     if not (file_id and isinstance(file_id, int)):
         course = payload.get("course")
@@ -1154,6 +1347,7 @@ def addquestion():
         semester = payload.get("semester")
         assessment_type = payload.get("assessment_type")
 
+        # Validate file metadata fields
         if not course:
             return jsonify({"error": "missing_field", "field": "course"}), 400
         if not year:
@@ -1163,7 +1357,14 @@ def addquestion():
         if not assessment_type:
             return jsonify({"error": "missing_field", "field": "assessment_type"}), 400
 
-        file_id = get_file_id(course, year, semester, assessment_type)
+        try:
+            file_id = get_file_id(course, year, semester, assessment_type)
+        except ValueError as e:
+            return jsonify({"error": "invalid_file_metadata", "message": str(e)}), 400
+        
+        if not file_id:
+             return jsonify({"error": "file_container_not_found", "message": "No existing file container matches the provided metadata. Consider using /api/createquestion."}), 404
+
 
     question_type  = (payload.get("question_type") or "").strip()
     question_stem  = (payload.get("question_stem") or "").strip()
@@ -1182,6 +1383,7 @@ def addquestion():
     concept_tags = normalize_concept_tags(concept_tags_raw)
 
     options_raw = payload.get("question_options")
+    options_val = []
     if isinstance(options_raw, str):
         try:
             options_val = json.loads(options_raw)
@@ -1189,7 +1391,7 @@ def addquestion():
             return jsonify({"error": "invalid_json", "field": "question_options"}), 400
     else:
         options_val = options_raw if options_raw is not None else []
-
+        
     answer_raw = payload.get("question_answer")
     if isinstance(answer_raw, (dict, list)):
         answer_val = json.dumps(answer_raw, ensure_ascii=False)
@@ -1219,23 +1421,26 @@ def addquestion():
     """
 
     now = datetime.datetime.now()
-
+    
+    # Template 2 has some None/json.dumps([]) defaults that conflict with T1, 
+    # but the logic for T1 seems more complete and robust, so using T1's logic 
+    # for data values here, except where T2 has a clearer default (e.g., question_no is optional).
     data = (
-        0,
-        1,
-        file_id,
-        None,
-        json.dumps([]),
+        0, # question_base_id (will be updated below)
+        1, # version_id
+        file_id, # The file_id we found
+        payload.get("question_no") or None, # question_no (optional, from both)
+        json.dumps([]), # page_numbers
         question_type,
-        None,
-        None,
+        payload.get("difficulty_rating_manual") or None, # difficulty_rating_manual (optional)
+        None, # difficulty_rating_model
         question_stem,
-        None,
+        None, # question_stem_html
         json.dumps(options_val if options_val is not None else []),
         answer_val,
-        json.dumps([]),
-        json.dumps(concept_tags if concept_tags is not None else []),
-        None,
+        json.dumps([]), # page_image_paths
+        concept_tags, # Already json string or None
+        None, # last_used
         now,
         now
     )
@@ -1246,12 +1451,21 @@ def addquestion():
             cur.execute(insert_sql, data)
             new_id = cur.lastrowid
 
+            # Set question_base_id to its own ID
             cur.execute(
                 "UPDATE questions SET question_base_id = %s WHERE id = %s",
                 (new_id, new_id)
             )
             conn.commit()
 
+            # For the response, we need the file's original metadata if it wasn't provided in the payload
+            # (which is the case if file_id was provided), so we re-fetch if needed.
+            if not all([payload.get("course"), payload.get("year"), payload.get("semester"), payload.get("assessment_type")]):
+                 cur.execute("SELECT course, year, semester, assessment_type FROM files WHERE id = %s", (file_id,))
+                 f_meta = cur.fetchone()
+                 if f_meta:
+                     course, year, semester, assessment_type = f_meta
+                
             return jsonify({
                 "status": "created",
                 "question_id": new_id,
@@ -1265,10 +1479,413 @@ def addquestion():
                     "question_stem": question_stem,
                     "question_options": options_val or [],
                     "question_answer": answer_val,
-                    "concept_tags": concept_tags or []
+                    "concept_tags": parse_json_field(concept_tags) or [], # return as list
+                    "course": course,
+                    "year": year,
+                    "semester": semester,
+                    "assessment_type": assessment_type,
                 }
             }), 201
 
         except Exception as e:
             conn.rollback()
+            app.logger.error(f"Failed to insert new question: {e}")
+            return jsonify({"error": "insert_failed", "message": str(e)}), 500    
+
+# --# -----------------------------------------------------
+## ➕ Question Creation (File-Independent)
+## 🎯 Unique Endpoint from Template 2
+
+@app.route("/api/createquestion", methods=["POST"])
+def create_question():
+    payload = request.get_json(silent=True) or {}
+    
+    # --- 1. Validate Core Question Fields ---
+    question_type = (payload.get("question_type") or "").strip()
+    question_stem = (payload.get("question_stem") or "").strip()
+    
+    if not question_type: 
+        return jsonify({"error": "missing_field", "field": "question_type"}), 400
+    if not question_stem: 
+        return jsonify({"error": "missing_field", "field": "question_stem"}), 400
+        
+    # --- 2. Extract Optional File Metadata ---
+    course = payload.get("course") or None
+    year = payload.get("year") or None
+    semester = payload.get("semester") or None
+    assessment_type = payload.get("assessment_type") or None
+    
+    # 🌟 Extracting difficulty_rating_manual
+    difficulty_rating_manual = payload.get("difficulty_rating_manual")
+    
+    # ✅ FIX: Enforce FLOAT conversion or keep None if not provided
+    if difficulty_rating_manual is not None and difficulty_rating_manual != "":
+        try:
+            difficulty_rating_manual = float(difficulty_rating_manual)
+        except (ValueError, TypeError):
+            # If the value is invalid but not None, default to None to prevent SQL crash
+            difficulty_rating_manual = None 
+    else:
+        difficulty_rating_manual = None
+    
+    # --- 3. Create Unique File Container Record ---
+    file_id = None
+    file_row = None
+    
+    with closing(get_connection()) as conn:
+        try:
+            cur = conn.cursor()
+            
+            # Insert file record 
+            insert_file_sql = """
+                INSERT INTO files (course, year, semester, assessment_type, file_name, file_path)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            
+            # Determine file name/path defaults
+            timestamp_str = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            file_name_default = f"MANUAL_Q_{timestamp_str}.txt" 
+            file_path_default = f"data/source_files/{file_name_default}" 
+            
+            cur.execute(
+                insert_file_sql, 
+                (
+                    course, year, semester, assessment_type, 
+                    file_name_default, file_path_default
+                )
+            )
+            conn.commit()
+            file_id = cur.lastrowid
+            
+            # Fetch the newly created file row for the response payload
+            file_row = _get_file_row(file_id)
+            
+        except Exception as e:
+            conn.rollback()
+            app.logger.error(f"Failed to create synthetic file record in create_question: {e}")
+            return jsonify({"error": "file_creation_failed", "message": str(e)}), 500
+            
+    # --- 4. Prepare Question Data and Insert ---
+    
+    # Optional fields (reusing logic from above)
+    concept_tags = normalize_concept_tags(payload.get("concept_tags"))
+    
+    options_raw = payload.get("question_options")
+    options_val = []
+    if isinstance(options_raw, str):
+        try:
+            options_val = json.loads(options_raw)
+        except Exception:
+            return jsonify({"error": "invalid_json", "field": "question_options"}), 400
+    else:
+        options_val = options_raw if options_raw is not None else []
+        
+    answer_raw = payload.get("question_answer")
+    if isinstance(answer_raw, (dict, list)):
+        answer_val = json.dumps(answer_raw, ensure_ascii=False)
+    else:
+        answer_val = answer_raw # leave as scalar string/number/None
+
+    # --- Insert SQL (Fixed to include difficulty_rating_manual) ---
+    insert_sql = """
+        INSERT INTO questions (
+            question_base_id, version_id, file_id,
+            question_no, page_numbers, question_type,
+            difficulty_rating_manual, difficulty_rating_model,
+            question_stem, question_stem_html,
+            question_options, question_answer,
+            page_image_paths, concept_tags,
+            last_used, created_at, updated_at
+        ) VALUES (
+            %s,%s,%s,
+            %s,%s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,%s
+        )
+    """
+    now = datetime.datetime.now()
+    
+    data = (
+        0, # question_base_id 
+        1, # version_id
+        file_id, # The newly created file_id
+        payload.get("question_no") or None, # question_no (optional)
+        json.dumps([]), # page_numbers
+        question_type,
+        difficulty_rating_manual, # <-- Uses the GUARANTEED FLOAT or NONE value
+        None, # difficulty_rating_model (Set by ML/pipeline later)
+        question_stem,
+        None, # question_stem_html
+        json.dumps(options_val if options_val is not None else []),
+        answer_val,
+        json.dumps([]), # page_image_paths
+        concept_tags, # Already json string or None
+        None, # last_used
+        now,
+        now
+    )
+    
+    with closing(get_connection()) as conn:
+        try:
+            cur = conn.cursor()
+            cur.execute(insert_sql, data)
+            new_id = cur.lastrowid
+            
+            # Set question_base_id to its own ID
+            cur.execute(
+                "UPDATE questions SET question_base_id = %s WHERE id = %s",
+                (new_id, new_id)
+            )
+            conn.commit()
+            
+            return jsonify({
+                "status": "created",
+                "question_id": new_id,
+                "file": {
+                    "id": file_row["id"],
+                    "file_name": file_row.get("file_name"),
+                    "file_path": file_row.get("file_path"),
+                },
+                "data": {
+                    "question_type": question_type,
+                    "question_stem": question_stem,
+                    "question_options": options_val or [],
+                    "question_answer": answer_val,
+                    "concept_tags": parse_json_field(concept_tags) or [],
+                    "course": course,
+                    "year": year,
+                    "semester": semester,
+                    "assessment_type": assessment_type,
+                }
+            }), 201
+            
+        except Exception as e:
+            conn.rollback()
+            app.logger.error(f"Failed to insert new question: {e}")
             return jsonify({"error": "insert_failed", "message": str(e)}), 500
+            
+    # --- 4. Prepare Question Data and Insert ---
+    
+    # Optional fields (reusing logic from above)
+    concept_tags = normalize_concept_tags(payload.get("concept_tags"))
+    
+    options_raw = payload.get("question_options")
+    options_val = []
+    if isinstance(options_raw, str):
+        try:
+            options_val = json.loads(options_raw)
+        except Exception:
+            return jsonify({"error": "invalid_json", "field": "question_options"}), 400
+    else:
+        options_val = options_raw if options_raw is not None else []
+        
+    answer_raw = payload.get("question_answer")
+    if isinstance(answer_raw, (dict, list)):
+        answer_val = json.dumps(answer_raw, ensure_ascii=False)
+    else:
+        answer_val = answer_raw # leave as scalar string/number/None
+
+    # --- Insert SQL (Reusing the structure from addquestion) ---
+    insert_sql = """
+        INSERT INTO questions (
+            question_base_id, version_id, file_id,
+            question_no, page_numbers, question_type,
+            difficulty_rating_manual, difficulty_rating_model,
+            question_stem, question_stem_html,
+            question_options, question_answer,
+            page_image_paths, concept_tags,
+            last_used, created_at, updated_at
+        ) VALUES (
+            %s,%s,%s,
+            %s,%s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,
+            %s,%s,%s
+        )
+    """
+    now = datetime.datetime.now()
+    
+    # We explicitly set all other non-user-supplied fields to None/default
+    data = (
+        0, # question_base_id (will be updated below)
+        1, # version_id
+        file_id, # The newly created file_id
+        payload.get("question_no") or None, # question_no (optional)
+        json.dumps([]), # page_numbers
+        question_type,
+        payload.get("difficulty_rating_manual") or None, # difficulty_rating_manual (optional)
+        None, # difficulty_rating_model
+        question_stem,
+        None, # question_stem_html
+        json.dumps(options_val if options_val is not None else []),
+        answer_val,
+        json.dumps([]), # page_image_paths
+        concept_tags, # Already json string or None
+        None, # last_used
+        now,
+        now
+    )
+    with closing(get_connection()) as conn:
+        try:
+            cur = conn.cursor()
+            cur.execute(insert_sql, data)
+            new_id = cur.lastrowid
+            
+            # Set question_base_id to its own ID
+            cur.execute(
+                "UPDATE questions SET question_base_id = %s WHERE id = %s",
+                (new_id, new_id)
+            )
+            conn.commit()
+            
+            return jsonify({
+                "status": "created",
+                "question_id": new_id,
+                "file": {
+                    "id": file_row["id"],
+                    "file_name": file_row.get("file_name"),
+                    "file_path": file_row.get("file_path"),
+                },
+                # Return the data we used for clarity (including optional metadata)
+                "data": {
+                    "question_type": question_type,
+                    "question_stem": question_stem,
+                    "question_options": options_val or [],
+                    "question_answer": answer_val,
+                    "concept_tags": parse_json_field(concept_tags) or [],
+                    "course": course,
+                    "year": year,
+                    "semester": semester,
+                    "assessment_type": assessment_type,
+                }
+            }), 201
+            
+        except Exception as e:
+            conn.rollback()
+            app.logger.error(f"Failed to insert new question: {e}")
+            return jsonify({"error": "insert_failed", "message": str(e)}), 500
+
+
+# ---------------------------------------------
+# SEARCH QUESTIONS ENDPOINT (dedup by question_base_id)
+# ---------------------------------------------
+@app.route("/search", methods=["GET"])
+def search_questions():
+    keyword = (request.args.get("q") or "").strip().lower()
+    qtype = (request.args.get("type") or "all").strip().lower()
+    course = (request.args.get("course") or "").strip().upper()  # filter key
+    assessment_type = (request.args.get("assessment_type") or "").strip().lower()
+    academic_year = (request.args.get("academic_year") or "").strip()
+    concept = (request.args.get("concept_tags") or "").strip().lower()
+
+    latest_sql = """
+        SELECT COALESCE(question_base_id, id) AS gid, MAX(id) AS max_id
+        FROM questions
+        GROUP BY COALESCE(question_base_id, id)
+    """
+
+    # Derive course_key from f.course, else from filename prefix like ST2131
+    # REGEXP_SUBSTR is available in MySQL 8
+    sql = f"""
+        SELECT
+            q.id AS question_id,
+            q.question_base_id,
+            q.file_id,
+            q.question_no,
+            q.question_stem,
+            q.question_type,
+            q.concept_tags,
+            COALESCE(
+               UPPER(NULLIF(TRIM(f.course), '')),
+               UPPER(REGEXP_SUBSTR(f.file_name, '^[A-Za-z]{{2,5}}[0-9]{{4}}'))
+            )                             AS course_key,
+            f.year,
+            LOWER(NULLIF(TRIM(f.assessment_type), '')) AS assessment_type_raw,
+            q.updated_at
+        FROM ({latest_sql}) t
+        JOIN questions q ON q.id = t.max_id
+        JOIN files     f ON f.id = q.file_id
+    """
+
+    where, params = [], []
+
+    if keyword:
+        where.append("(LOWER(q.question_stem) LIKE %s OR LOWER(q.concept_tags) LIKE %s)")
+        like = f"%{keyword}%"
+        params += [like, like]
+
+    if qtype != "all":
+        where.append("LOWER(q.question_type) = %s")
+        params.append(qtype)
+
+    # Only filter by course when a *real* key comes in
+    if course:
+        where.append("""COALESCE(
+               UPPER(NULLIF(TRIM(f.course), '')),
+               UPPER(REGEXP_SUBSTR(f.file_name, '^[A-Za-z]{2,5}[0-9]{4}'))
+            ) = %s""")
+        params.append(course)
+
+    if assessment_type:
+        where.append("LOWER(NULLIF(TRIM(f.assessment_type), '')) = %s")
+        params.append(assessment_type)
+
+    if academic_year:
+        where.append("f.year = %s")
+        params.append(academic_year)
+
+    if concept:
+        where.append("LOWER(q.concept_tags) LIKE %s")
+        params.append(f"%{concept}%")
+
+    if where:
+        sql += " WHERE " + " AND ".join(where)
+
+    sql += " ORDER BY f.year DESC, q.updated_at DESC LIMIT 200"
+
+    with closing(get_connection()) as conn, closing(conn.cursor(MySQLdb.cursors.DictCursor)) as cur:
+        cur.execute(sql, tuple(params))
+        rows = cur.fetchall()
+
+    out = []
+    for r in rows:
+        # tags → list
+        try:
+            tags = json.loads(r.get("concept_tags") or "[]")
+            if not isinstance(tags, list):
+                tags = [tags]
+        except Exception:
+            tags = [r["concept_tags"]] if r.get("concept_tags") else []
+
+        ck = r.get("course_key") or "UNKNOWN"
+        course_label = "Unknown" if ck == "UNKNOWN" else ck
+
+        atype = (r.get("assessment_type_raw") or "").lower()
+        atype = atype if atype in ("final", "midterm", "quiz") else "Unknown"
+
+        out.append({
+            "question_id": r["question_id"],
+            "question_base_id": r.get("question_base_id"),
+            "file_id": r.get("file_id"),
+            "question_no": r.get("question_no"),
+            "question_stem": r.get("question_stem"),
+            "question_type": r.get("question_type"),
+            "concept_tags": tags,
+            "course": course_label,   # display
+            "course_key": ck,         # filter key to send back
+            "year": r.get("year"),
+            "assessment_type": atype,
+            "updated_at": r.get("updated_at"),
+        })
+
+    return jsonify(out)
+
+
+if __name__ == "__main__":
+    # Run the Flask app directly
+    app.run(host="0.0.0.0", port=5000, debug=True)

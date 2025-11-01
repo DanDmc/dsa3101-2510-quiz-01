@@ -15,15 +15,17 @@ The extracted text and page image references are used by llm_parser.py to
 structure questions into the database.
 """
 
+import re
 from pathlib import Path
 import os
 import pdfplumber
 
 
 def extract_text_and_page_images(
-    source_dir = Path("data/source_files"),
-    text_dir = Path("data/text_extracted"),
-    media_dir = Path("data/question_media")
+    source_dir="data/source_files", 
+    text_dir="data/text_extracted",
+    media_dir="data/question_media",
+    target_pdf=None  # <-- FIX: Added argument to accept a specific file
 ):
     """
     Extract text from all PDF files and save ALL pages as images.
@@ -38,7 +40,9 @@ def extract_text_and_page_images(
     text_dir : str, default="data/text_extracted"
         Directory where extracted text files (.txt) will be saved
     media_dir : str, default="data/question_media"
-        Directory where ALL page images will be stored
+        Directory where ALL page images will be stored.
+    target_pdf : str, default=None
+        If provided, only this specific PDF filename will be processed.
         
     Returns:
     -------
@@ -54,8 +58,8 @@ def extract_text_and_page_images(
     
     Examples
     --------
-    >>> extract_text_and_page_images()  # Use defaults
-    >>> extract_text_and_page_images(media_dir="data/custom_images")  # Custom path
+    >>> extract_text_and_page_images()  # Use defaults (legacy, process all)
+    >>> extract_text_and_page_images(target_pdf="my_file.pdf") # Process one file
     """
     os.makedirs(text_dir, exist_ok=True)
     os.makedirs(media_dir, exist_ok=True)
@@ -79,6 +83,11 @@ def extract_text_and_page_images(
                 for i, page in enumerate(pdf.pages, start=1):
                     page_text = page.extract_text() or ""
 
+                    # --- CLEANING STEP ---
+                    page_text = re.sub(r'\(cid:\d+\)', '', page_text)  # removes markers
+                    page_text = re.sub(r'\s{2,}', ' ', page_text)    # normalize extra spaces
+
+
                     # Save EVERY page as image
                     img_filename = f"{base_name}_page{i}.png"
                     img_rel_path = os.path.join(media_dir, img_filename)
@@ -88,7 +97,9 @@ def extract_text_and_page_images(
                     page_image.save(img_rel_path)
 
                     # Insert placeholder with path AND page number
-                    placeholder = f"[PAGE_IMAGE_SAVED: {img_rel_path}] [PAGE_NUMBER: {i}]"
+                    # Use a clean relative path for the text file
+                    img_placeholder_path = os.path.join(os.path.basename(media_dir), img_filename)
+                    placeholder = f"[PAGE_IMAGE_SAVED: {img_placeholder_path}] [PAGE_NUMBER: {i}]"
                     page_text += f"\n{placeholder}\n"
 
                     full_text.append(page_text.strip())
@@ -108,4 +119,15 @@ def extract_text_and_page_images(
             print(f"❌ Failed to process {target_pdf}: {e}\n")
 
 if __name__ == "__main__":
-    extract_text_and_page_images()
+    # --- FIX: Read the environment variable passed from app.py ---
+    target_pdf = os.getenv("TARGET_PDF")
+    
+    if not target_pdf:
+        print("Warning: TARGET_PDF environment variable not set.")
+        print("Running in 'process all' mode (legacy).\n")
+        # Fallback to old behavior if run manually
+        extract_text_and_page_images() 
+    else:
+        # Pass the single target file into the function
+        print(f"Processing single file from TARGET_PDF: {target_pdf}\n")
+        extract_text_and_page_images(target_pdf=target_pdf)
