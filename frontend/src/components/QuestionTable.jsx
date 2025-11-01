@@ -182,7 +182,7 @@ setSelected(newSelected);
                 <TableRow
                   key={row.id}
                   hover
-                  onDoubleClick={() => goToEditPage(row.id)} // ⬅️ Integrated Feature 1
+                  onDoubleClick={() => goToEditPage([row])} // ⬅️ Integrated Feature 1
                   onClick={(event) => handleClick(event, row.id)}
                   role="checkbox"
                   aria-checked={isItemSelected}

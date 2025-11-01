@@ -15,7 +15,7 @@ import { useTheme } from '@mui/material/styles'; // Import useTheme
 
 // --- MOCK DATA FOR FILTERS ---
 // These should match your database tables
-const MOCK_QUESTION_TYPES = ["MCQ", "Open-ended", "MRQ", "Ordering", "Matching", "Coding"];
+const MOCK_QUESTION_TYPES = ["MCQ", "Open-ended", "MRQ", "Coding", "others"];
 const MOCK_ASSESSMENT_TYPES = ["quiz", "midterm", "final", "assessment", "project"]; 
 const MOCK_YEARS = [2024, 2023, 2022, 2021];
 const MOCK_SEMESTERS = ["Semester 1", "Semester 2", "Special Term 1", "Special Term 2"];

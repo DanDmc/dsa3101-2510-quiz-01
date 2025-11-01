@@ -452,7 +452,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
                     MenuProps={{ PaperProps: { sx: { borderRadius: '8px', mt: 1 } }, anchorOrigin: { vertical: 'bottom', horizontal: 'left' }, transformOrigin: { vertical: 'top', horizontal: 'left' } }}
                     sx={{ '& .MuiSelect-select': { p: 0 }, '& fieldset': { border: 'none' } }}
                 >
-                    {["SEM 1", "SEM 2"].map(option => (
+                    {["Semester 1", "Semester 2", "Special Term 1", "Special Term 2"].map(option => (
                         <MenuItem key={option} value={option} sx={{ color: '#212121', '&.Mui-selected': { backgroundColor: '#212121', color: '#FFFFFF' }, '&:hover': { backgroundColor: '#E0E0E0' } }}>{option}</MenuItem>
                     ))}
                 </Select>

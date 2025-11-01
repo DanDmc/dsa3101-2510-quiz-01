@@ -411,7 +411,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
 
                 if (newQuestions && newQuestions.length > 0) {
                     // Update state with the new questions from the pipeline
-                    setQuestions(newQuestions); 
+                    setQuestions(prevQuestions => [...prevQuestions, ...newQuestions]);
                     
                     // Set the first new question as active
                     setActiveQuestionId(newQuestions[0].id);

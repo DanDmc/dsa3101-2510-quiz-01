@@ -13,7 +13,7 @@ the graders open and run your code le.
 4. Attheendofthetest,pleaseuploadtheanswerletoCANVAS/DSA1101/Assignments/Midterm
 Submission.
 1
-[PAGE_IMAGE_SAVED: data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page1.png] [PAGE_NUMBER: 1]
+[PAGE_IMAGE_SAVED: question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page1.png] [PAGE_NUMBER: 1]
 
 === PAGE BREAK ===
 
@@ -46,7 +46,7 @@ status. Give your comments.
 for which the points are classied by the surgical status: points of patients had surgical is
 in red color and points of patients with no surgical is in blue color. Give your comments.
 2
-[PAGE_IMAGE_SAVED: data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png] [PAGE_NUMBER: 2]
+[PAGE_IMAGE_SAVED: question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png] [PAGE_NUMBER: 2]
 
 === PAGE BREAK ===
 
@@ -83,7 +83,7 @@ Hint: you can use the same train set as in Question 12 above. You may standardiz
 values for the new patient using the mean and the standard deviation of all the patients in
 the data set given.
 3
-[PAGE_IMAGE_SAVED: data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png] [PAGE_NUMBER: 3]
+[PAGE_IMAGE_SAVED: question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png] [PAGE_NUMBER: 3]
 
 === PAGE BREAK ===
 
@@ -102,4 +102,4 @@ money for her start-up at the end of 2029, (5 years counting from start of 2025 
 Note: The proportions of saving salary should be up to 2 decimal places only.
 END OF QUESTIONS
 4
-[PAGE_IMAGE_SAVED: data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png] [PAGE_NUMBER: 4]
+[PAGE_IMAGE_SAVED: question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png] [PAGE_NUMBER: 4]
