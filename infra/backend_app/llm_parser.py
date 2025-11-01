@@ -10,13 +10,14 @@ Simple, adaptive, and accurate two-step approach:
 2. LLM extracts questions (with page numbers), and we map to image paths
 
 Key Features:
-- Adaptive chunking: dynamically chooses pages per chunk (3–10) based on content density
+- Adaptive chunking: dynamically chooses pages per chunk (3-10) based on content density
 - Sequential processing (rate-limit safe)
 - Accurate page_number and image_path mapping
 - Real-time progress + timing for each chunk and file
 - Schema-compatible output for insert_questions.py
 """
 
+from pathlib import Path
 import os
 import sys
 import io
@@ -30,9 +31,9 @@ import google.generativeai as genai
 API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = "gemini-1.5-flash"  # Note: Updated to gemini-1.5-flash as 2.5 isn't public
 
-TEXT_DIR = os.path.join("data", "text_extracted")
-OUTPUT_DIR = os.path.join("data", "json_output")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+TEXT_DIR = Path("data/text_extracted")
+JSON_DIR = Path("data/json_output")
+os.makedirs(JSON_DIR, exist_ok=True)
 
 if not API_KEY:
     print("Error: GEMINI_API_KEY environment variable not set.")
@@ -51,6 +52,37 @@ model = genai.GenerativeModel(
 
 # === Utility Functions ===
 def build_page_to_image_map(full_text):
+    """
+    Parse an extracted PDF/text block and build a mapping from page number to
+    the image paths saved for that page.
+
+    The function expects `full_text` to be a single string containing multiple
+    pages separated by the literal marker:
+        "=== PAGE BREAK ==="
+    and, within each page's text, optional markers of the form:
+        [PAGE_NUMBER: <int>]
+        [PAGE_IMAGE_SAVED: <path/to/image.png>]
+
+    If a page contains multiple `[PAGE_IMAGE_SAVED: ...]` markers, all of them
+    are collected into a list for that page. If no image markers are present,
+    the page maps to an empty list.
+
+    Example output:
+        {
+            1: ["data/question_media/DSA1101_page1.png"],
+            2: ["data/question_media/DSA1101_page2_img1.png",
+                "data/question_media/DSA1101_page2_img2.png"],
+        }
+
+    Args:
+        full_text (str): The entire extracted text containing page-break and
+            page-metadata markers.
+
+    Returns:
+        dict[int, list[str]]: A dictionary where each key is a page number and
+        each value is a list of image paths (possibly empty) associated with
+        that page.
+    """
     page_map = {}
     pages = full_text.split("=== PAGE BREAK ===")
     for page_text in pages:
@@ -63,6 +95,37 @@ def build_page_to_image_map(full_text):
 
 
 def build_prompt(text):
+    """
+    Construct a structured instruction prompt for an LLM to extract exam questions
+    from raw PDF/text into a strict JSON array.
+
+    The prompt tells the model to:
+      - return **only** a valid JSON array (no markdown, no prose);
+      - extract one object per question;
+      - normalise fields such as:
+          - `question_no` (preserve original numbering, e.g. "1(a)", "2b", "3.1")
+          - `question_type` (must be one of: mcq, mrq, coding, open-ended,
+            fill-in-the-blanks, others)
+          - `difficulty_rating_manual` (0-1 decimal; convert % if it appears)
+          - `question_stem` (question text only; image markers replaced with
+            "(Image - Refer to question paper)")
+          - `question_options` (list of {"label": ..., "text": ...} for MCQ/MRQ;
+            [] otherwise; image markers replaced similarly)
+          - `question_answer` (correct answer with explanation if available,
+            or null)
+          - `page_numbers` (all `[PAGE_NUMBER:X]` found for the question)
+          - `concept_tags` (1-3 relevant tags)
+      - ignore administrative / non-question metadata such as
+        "Item Weight", "Item Psychometrics", and raw `[PAGE_IMAGE_SAVED: ...]`
+        markers.
+
+    Args:
+        text (str): The raw extracted text (usually from a PDF) that contains
+            questions, page markers, and possibly image markers.
+
+    Returns:
+        str: A complete prompt string ready to be sent to an LLM.
+    """
     return f"""
 Extract all exam questions as a JSON array.
 
@@ -85,6 +148,27 @@ Text:
 
 
 def sanitize_output(text):
+    """
+    Clean LLM output by stripping code fences and leading language markers.
+
+    Many LLMs return JSON wrapped in Markdown fences like:
+
+        ```json
+        [ ... ]
+        ```
+
+    This helper:
+      1. trims whitespace;
+      2. if the text starts with ``` it splits on ``` and takes the inner part;
+      3. if that inner part starts with "json" on the first line, it drops that line;
+      4. returns the cleaned string, stripped again.
+
+    Args:
+        text (str): Raw LLM output (possibly with Markdown fences).
+
+    Returns:
+        str: Plain JSON text (or the original text if no fences were found).
+    """
     text = text.strip()
     if text.startswith("```"):
         parts = text.split("```")
@@ -96,6 +180,24 @@ def sanitize_output(text):
 
 
 def map_pages_to_images(questions, page_to_image_map):
+    """
+    Attach image paths to each parsed question based on its page numbers.
+
+    For every question in `questions`, this looks at the question's
+    `page_numbers` field (list of ints) and gathers all image paths from
+    `page_to_image_map` for those pages. The collected image paths are
+    de-duplicated and stored under `q["page_image_paths"]`.
+
+    Args:
+        questions (list[dict]): Parsed questions, each possibly containing
+            "page_numbers": [int, ...].
+        page_to_image_map (dict[int, list[str]]): Mapping from page number
+            to a list of image paths for that page.
+
+    Returns:
+        list[dict]: The same list of questions, but each enriched with
+        "page_image_paths": [...], possibly empty.
+    """
     for q in questions:
         page_numbers_raw = q.get("page_numbers", [])
         image_paths = []
@@ -121,6 +223,35 @@ def map_pages_to_images(questions, page_to_image_map):
 
 # === Core Processing ===
 def parse_file(txt_file):
+    """
+    Parse a single extracted-exam text file into structured question objects.
+
+    Steps:
+        1. Read the text file from TEXT_DIR.
+        2. Build a page→image mapping from markers in the text
+           (via `build_page_to_image_map`).
+        3. Split the text into pages using "=== PAGE BREAK ===".
+        4. Choose an adaptive chunk size (how many pages per LLM call)
+           based on average page length:
+               - < 500 chars → 10 pages per chunk (sparse)
+               - < 1500 chars → 5 pages per chunk (medium)
+               - else → 3 pages per chunk (dense)
+        5. For each chunk:
+               - build the LLM prompt (`build_prompt`)
+               - call the model (`model.generate_content(...)`)
+               - clean the output (`sanitize_output`)
+               - JSON-decode it and accumulate the questions
+               - log success / failure with timing
+        6. After all chunks, map page numbers back to image paths
+           (`map_pages_to_images`).
+
+    Args:
+        txt_file (str): Filename (relative, e.g. "ST1234_Midterm.txt") inside TEXT_DIR.
+
+    Returns:
+        list[dict] | None: List of parsed question dicts if at least one chunk
+        was successfully parsed; None if no questions could be parsed.
+    """
     input_path = os.path.join(TEXT_DIR, txt_file)
 
     try:
@@ -211,45 +342,47 @@ def parse_file(txt_file):
     return all_questions
 
 
-# --- FIX: Modified function to accept a target_base argument ---
-def parse_exam_papers(target_base=None):
-    
-    # --- FIX: Check if a specific target_base is provided ---
+def parse_exam_papers():
+    """
+    Main entry point for batch parsing of exam text files.
+
+    Behavior:
+        - Looks for the environment variable `TARGET_BASE`.
+          If present, it will process **only** that single text file:
+              <TARGET_BASE>.txt
+          located in `TEXT_DIR`, and write the result to:
+              JSON_DIR/<TARGET_BASE>.json
+        - For that file, it:
+              * calls `parse_file(...)`
+              * writes parsed questions to JSON (pretty-printed, UTF-8)
+              * logs counts of questions, how many had pages, how many had images
+              * logs total runtime
+
+    Environment:
+        TARGET_BASE (str): base name of the text file (without extension)
+            to process, e.g. "ST2131_Midterm_2024".
+
+    Side effects:
+        - Writes a JSON file into JSON_DIR.
+        - Prints progress and timing to stdout.
+
+    Returns:
+        None
+    """
+    target_base = os.environ.get("TARGET_BASE")
     if target_base:
-        # SINGLE FILE MODE
-        txt_file_name = f"{target_base}.txt"
+        txt_file = f"{target_base}.txt"
+
+        print(f"\n{'='*60}")
+        print(f"📄 Parsing single text file (TARGET_BASE): {target_base}.txt")
+        print(f"{'='*60}")
         
-        if not os.path.exists(os.path.join(TEXT_DIR, txt_file_name)):
-            print(f" Error: Target text file not found: {txt_file_name}")
-            sys.exit(1) # Exit with error
-        
-        txt_files = [txt_file_name] # List with just the one file
-        print(f"Found 1 target text file to process: {txt_file_name}\n")
-    else:
-        # LEGACY MODE
-        txt_files = [f for f in os.listdir(TEXT_DIR) if f.lower().endswith(".txt")]
-        if not txt_files:
-            print(" No text files found in text_extracted/")
-            return
-        print(f"Found {len(txt_files)} file(s) to process (legacy mode)\n")
-    # --- END FIX ---
-
-
-    print(f"\n{'='*60}")
-    print("QuizBank LLM Parser — Adaptive Chunking Edition")
-    print(f"{'='*60}")
-    print(f"Processing {len(txt_files)} file(s)\n")
-
-    total_start = time.time()
-
-    for idx, txt_file in enumerate(txt_files, 1):
-        print(f"\n[{idx}/{len(txt_files)}] {txt_file}")
         file_start = time.time()
 
         questions = parse_file(txt_file)
 
         if questions:
-            output_path = os.path.join(OUTPUT_DIR, os.path.splitext(txt_file)[0] + ".json")
+            output_path = os.path.join(JSON_DIR, os.path.splitext(txt_file)[0] + ".json")
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(questions, f, indent=2, ensure_ascii=False)
 
@@ -263,7 +396,7 @@ def parse_exam_papers(target_base=None):
         else:
             print(f" No questions found")
 
-    total_elapsed = time.time() - total_start
+    total_elapsed = time.time() - file_start
     print(f"\n{'='*60}")
     print(f" Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
     print(f"{'='*60}\n")

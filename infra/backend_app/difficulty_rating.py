@@ -1,4 +1,25 @@
-## difficulty_rating.py by the backend
+"""
+Difficulty Rating Training Script
+
+This module trains a machine learning pipeline to predict question difficulty
+(0-1) from the existing `questions` table in the quizbank database.
+
+Flow:
+1. Connect to MySQL using env vars (MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE, MYSQL_PORT).
+2. Pull rows with a non-NULL `difficulty_rating_manual`.
+3. Turn `concept_tags` into text, and use three feature branches:
+   - TF-IDF over `question_stem`
+   - TF-IDF over tags text (parsed from JSON)
+   - One-hot over `question_type`
+4. Fit a Ridge regressor.
+5. Report MAE and R² on a holdout split.
+6. Save the entire pipeline (preprocessing + model) to `diff_model_path`
+   so the Flask app can later `joblib.load(...)` it and call `.predict(...)`.
+
+This script is meant to be run as a standalone training job:
+    python train_difficulty.py
+(or similar).
+"""
 
 import os
 import json
@@ -31,7 +52,19 @@ except Exception:
 
 # ---------------------- DB helpers ----------------------
 def get_conn():
-    """Create a DB connection using env vars (matches docker-compose)."""
+    """
+    Create and return a MySQL connection using environment variables.
+
+    Environment variables:
+        - MYSQL_HOST (default "127.0.0.1")
+        - MYSQL_USER (default "quizbank_user")
+        - MYSQL_PASSWORD (default "quizbank_pass")
+        - MYSQL_DATABASE (default "quizbank")
+        - MYSQL_PORT (default 3306)
+
+    Returns:
+        mysql.connections.Connection: An open DB connection ready for queries.
+    """
     return mysql.connect(
         host=os.getenv("MYSQL_HOST", "127.0.0.1"),
         user=os.getenv("MYSQL_USER", "quizbank_user"),
@@ -43,7 +76,19 @@ def get_conn():
 
 
 def parse_tags(val):
-    """concept_tags is stored as JSON (string) in DB; normalize to space-joined text."""
+    """
+    
+    Normalize the `concept_tags` field from the DB into a single space-joined string.
+
+    The DB stores `concept_tags` as JSON text (e.g. '["regression", "anova"]').
+    This helper converts it into `"regression anova"` so it can be TF-IDF'ed.
+
+    Args:
+        val (Any): Raw value from the DB (None, str JSON, list, tuple, etc.)
+
+    Returns:
+        str: Space-joined tag string suitable for text vectorization.
+    """
     if val is None or val == "":
         return ""
     if isinstance(val, (list, tuple)):
@@ -59,9 +104,37 @@ def parse_tags(val):
 
 # ---------------------- Pipeline build ----------------------
 def concat_text_cols(df: pd.DataFrame):
-        return (df["question_stem"].fillna("") + " " + df["tags_text"].fillna("")).to_numpy()
+    """
+    Concatenate question stem and tags text into a single text feature.
+
+    This is a utility-style transform that joins:
+        df["question_stem"] + " " + df["tags_text"]
+    and returns a NumPy array of strings.
+
+    Args:
+        df (pd.DataFrame): Input dataframe with 'question_stem' and 'tags_text'.
+
+    Returns:
+        np.ndarray: Array of concatenated text strings.
+    """
+    return (df["question_stem"].fillna("") + " " + df["tags_text"].fillna("")).to_numpy()
 
 def build_pipeline() -> Pipeline:
+    """
+    Build the full sklearn pipeline for difficulty prediction.
+
+    The pipeline:
+        - applies TF-IDF to question stems (1-2 grams)
+        - applies TF-IDF to tags text (1-2 grams)
+        - one-hot encodes question_type
+        - combines all features with ColumnTransformer (sparse)
+        - fits a Ridge regressor
+
+    Returns:
+        sklearn.pipeline.Pipeline: A ready-to-fit pipeline that takes a dataframe
+        with columns ["question_stem", "tags_text", "question_type"] and outputs
+        a difficulty score.
+    """
     # Separate TF-IDF vectorizers for each text column (no custom function)
     stem_branch = Pipeline(steps=[
         ("tfidf_stem", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=20000)),
@@ -89,6 +162,34 @@ def build_pipeline() -> Pipeline:
 
 # ---------------------- Training entry ----------------------
 def main():
+    """
+    Entry point for training the difficulty prediction model.
+
+    Steps:
+        1. Query labeled data from the `questions` table:
+           rows where `difficulty_rating_manual IS NOT NULL`.
+        2. Coerce the target to float and clip to [0,1].
+        3. Build feature columns:
+               - question_stem
+               - tags_text (from concept_tags via `parse_tags`)
+               - question_type
+        4. Train/test split (80/20).
+        5. Fit the pipeline (preprocess + Ridge).
+        6. Evaluate using MAE and R².
+        7. Save the entire pipeline to `diff_model_path` (env) or
+           `./models/difficulty_v1.pkl` by default.
+
+    Environment:
+        diff_model_path: override the output path for the saved pipeline.
+
+    Side effects:
+        - prints metrics to stdout
+        - creates the output directory if needed
+        - writes a `.pkl` with the trained pipeline
+
+    Returns:
+        None
+    """
     # Pull labeled data
     sql = """
         SELECT question_stem, question_type, concept_tags, difficulty_rating_manual
