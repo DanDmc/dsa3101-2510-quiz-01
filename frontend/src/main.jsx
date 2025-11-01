@@ -363,15 +363,22 @@ function App() {
 
     // --- Question Data and Filtering (Your HEAD Logic) ---
     const filteredQuestions = questions.filter(question => {
+        // First, immediately check if the "Show All" filter is active.
+        if (activeFilter.includes(ALL_QUESTIONS_KEY)) {
+            return true; // If so, include every question.
+        }
+
+        // If "Show All" is not active, then proceed with the specific filter logic.
         const course = question.course ? question.course.trim() : null; 
         
-        // ... (filter logic) ...
         return activeFilter.some(filterKey => {
-            if (filterKey === NO_GROUPS_KEY) { return course === null; }
+            if (filterKey === NO_GROUPS_KEY) { 
+                return course === null; // Correctly checks for null/undefined courses
+            }
+            // This logic is now safe, because ALL_QUESTIONS_KEY was handled above.
             return course === filterKey;
         });
     });
-
     
     const renderPage = () => {
         switch (currentPage) {
