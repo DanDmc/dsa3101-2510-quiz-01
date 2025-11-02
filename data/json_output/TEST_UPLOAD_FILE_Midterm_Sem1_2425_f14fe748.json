@@ -28,9 +28,9 @@
       2
     ],
     "concept_tags": [
-      "descriptive statistics",
-      "data manipulation",
-      "r programming"
+      "data exploration",
+      "r programming",
+      "descriptive statistics"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -48,8 +48,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "descriptive statistics",
-      "r programming"
+      "r programming",
+      "distributions"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -67,8 +67,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "normality test",
-      "r programming"
+      "r programming",
+      "normality testing"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -86,8 +86,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "comparative statistics",
-      "r programming"
+      "r programming",
+      "comparative statistics"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -97,7 +97,7 @@
     "question_no": "6",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classi(cid:28)ed by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
+    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classified by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -105,8 +105,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "bivariate analysis",
-      "r programming"
+      "r programming",
+      "bivariate analysis"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -116,7 +116,7 @@
     "question_no": "7",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT signi(cid:28)cant in the model, at signi(cid:28)cance level 0.1.",
+    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT significant in the model, at significance level 0.1.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -125,7 +125,6 @@
     "concept_tags": [
       "linear regression",
       "statistical modeling",
-      "p-value",
       "r programming"
     ],
     "page_image_paths": [
@@ -163,8 +162,8 @@
     ],
     "concept_tags": [
       "data manipulation",
-      "feature engineering",
-      "r programming"
+      "r programming",
+      "feature engineering"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -201,8 +200,8 @@
     ],
     "concept_tags": [
       "data splitting",
-      "machine learning",
-      "r programming"
+      "r programming",
+      "machine learning workflow"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -212,17 +211,17 @@
     "question_no": "12",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Use the train set with three standardized features to form the KNN classi(cid:28)ers where k = 3,5,7,9,11, and accuracy value for each classi(cid:28)er is kept in a vector named accuracy.",
+    "question_stem": "Use the train set with three standardized features to form the KNN classifiers where k = 3,5,7,9,11, and accuracy value for each classifier is kept in a vector named accuracy.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       3
     ],
     "concept_tags": [
-      "k-nearest neighbors",
+      "knn",
       "classification",
-      "model training",
-      "r programming"
+      "r programming",
+      "model training"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -240,8 +239,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "model evaluation",
-      "r programming"
+      "r programming",
+      "model evaluation"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -251,16 +250,16 @@
     "question_no": "14",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classi(cid:28)er with that value of k.",
+    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classifier with that value of k.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       3
     ],
     "concept_tags": [
-      "model selection",
-      "accuracy",
-      "k-nearest neighbors"
+      "model evaluation",
+      "hyperparameter tuning",
+      "knn"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -270,7 +269,7 @@
     "question_no": "15",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Use the KNN with the best k found in Question 14 to predict the rank (Good, Not Good) that patient A listed in Question 8 will evaluates the hospital service. Hint: you can use the same train set as in Question 12 above. You may standardize the values for the new patient using the mean and the standard deviation of all the patients in the data set given.",
+    "question_stem": "Use the KNN with the best k found in Question 14 to predict the rank (Good, Not Good) that patient A listed in Question 8 will evaluates the hospital service.\nHint: you can use the same train set as in Question 12 above. You may standardize the values for the new patient using the mean and the standard deviation of all the patients in the data set given.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -278,9 +277,9 @@
     ],
     "concept_tags": [
       "prediction",
-      "k-nearest neighbors",
-      "data preprocessing",
-      "r programming"
+      "knn",
+      "r programming",
+      "data preprocessing"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
