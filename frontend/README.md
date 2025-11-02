@@ -6,7 +6,7 @@ This is a full-stack, containerized web application designed to be the central h
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 This project is a microservice-based architecture managed by Docker.
 
@@ -18,7 +18,7 @@ This project is a microservice-based architecture managed by Docker.
 
 ---
 
-## 🚀 Getting Started (Docker Compose)
+## Getting Started (Docker Compose)
 
 This is the only setup method required. It will build and run the frontend, backend, and database in their own containers.
 
@@ -139,7 +139,7 @@ This separation makes the code highly **maintainable** (bugs are easier to find)
     * `EditQuestionForm.jsx`: A variant of `QuestionForm` used on the `EditPage` that comes pre-filled with existing data.
 ---
 
-## 🛑 How to Stop
+## How to Stop
 
 There are two ways to stop the application, depending on how you started it.
 
