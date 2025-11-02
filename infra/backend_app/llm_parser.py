@@ -19,8 +19,6 @@ Key Features:
 
 from pathlib import Path
 import os
-import sys
-import io
 import json
 import re
 import time
@@ -29,15 +27,11 @@ import google.generativeai as genai
 
 # === Configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = "gemini-1.5-flash"  # Note: Updated to gemini-1.5-flash as 2.5 isn't public
+MODEL = "gemini-2.5-flash"
 
 TEXT_DIR = Path("data/text_extracted")
 JSON_DIR = Path("data/json_output")
 os.makedirs(JSON_DIR, exist_ok=True)
-
-if not API_KEY:
-    print("Error: GEMINI_API_KEY environment variable not set.")
-    sys.exit(1)
 
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel(
@@ -85,6 +79,7 @@ def build_page_to_image_map(full_text):
     """
     page_map = {}
     pages = full_text.split("=== PAGE BREAK ===")
+
     for page_text in pages:
         page_nums = re.findall(r'\[PAGE_NUMBER:\s*(\d+)\]', page_text)
         img_paths = re.findall(r'\[PAGE_IMAGE_SAVED:\s*([^\]]+)\]', page_text)
@@ -106,15 +101,15 @@ def build_prompt(text):
           - `question_no` (preserve original numbering, e.g. "1(a)", "2b", "3.1")
           - `question_type` (must be one of: mcq, mrq, coding, open-ended,
             fill-in-the-blanks, others)
-          - `difficulty_rating_manual` i.e. DifficultyLevel/P-value (if present) otherwise null
+          - `difficulty_rating_manual` (0-1 decimal; convert % if it appears)
           - `question_stem` (question text only; image markers replaced with
             "(Image - Refer to question paper)")
           - `question_options` (list of {"label": ..., "text": ...} for MCQ/MRQ;
             [] otherwise; image markers replaced similarly)
           - `question_answer` (correct answer with explanation if available,
             or null)
-          - `page_numbers` (all page numbers found for the question, corresponding to the [PAGE_NUMBER: in the next [PAGE_IMAGE_SAVED] marker)
-          - `concept_tags` (1-3 relevant tags related to math/data science/statistics/similar fields)
+          - `page_numbers` (all `[PAGE_NUMBER:X]` found for the question)
+          - `concept_tags` (1-3 relevant tags)
       - ignore administrative / non-question metadata such as
         "Item Weight", "Item Psychometrics", and raw `[PAGE_IMAGE_SAVED: ...]`
         markers.
@@ -130,14 +125,14 @@ def build_prompt(text):
 Extract all exam questions as a JSON array.
 
 For each question, extract:
-- question_no: exact numbering (e.g., "1", "1a", "2b", "1(a)", "3.1" for subquestions of larger questions)
+- question_no: exact numbering (e.g., "1", "1a", "2b", "1(a)", "3.1")
 - question_type: mcq|mrq|coding|open-ended|fill-in-the-blanks|others (it must be classified as one of these categories only, nothing else)
-- difficulty_rating_manual only if it is present in the question, such as DifficultyLevel/P-value: decimal 0–1. Otherwise null
+- difficulty_rating_manual: decimal 0–1 (convert % to decimal if present)
 - question_stem: the question text only (no options/answers). Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
 - question_options: array of {{"label": "A", "text": "..."}} for MCQ/MRQ, empty [] otherwise. Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
 - question_answer: correct answer (e.g. A. <answer value here>) with explanation if present, null otherwise. Sometimes correct answer is indicated with a tick mark.
-- page_numbers: array of integers only (e.g. [21, 22]) corresponding to the [PAGE_NUMBER: in the next [PAGE_IMAGE_SAVED] marker you find in the text. Never leave it empty
-- concept_tags: 1-3 relevant conceptual tags related to math/data science/statistics/similar fields (e.g., ["probability", "distributions"], make it all lowercase.
+- page_numbers: array of [PAGE_NUMBER:X] values found in this question
+- concept_tags: 1-3 relevant tags (e.g., ["probability", "distributions"])
 
 Ignore: "Item Weight", "Item Psychometrics", or [PAGE_IMAGE_SAVED:...] markers.
 Return ONLY valid JSON array — no markdown, no extra commentary.
@@ -199,24 +194,11 @@ def map_pages_to_images(questions, page_to_image_map):
         "page_image_paths": [...], possibly empty.
     """
     for q in questions:
-        page_numbers_raw = q.get("page_numbers", [])
+        page_numbers = q.get("page_numbers", [])
         image_paths = []
-        
-        # Ensure page_numbers are integers
-        page_numbers = []
-        if isinstance(page_numbers_raw, list):
-            for p in page_numbers_raw:
-                try:
-                    page_numbers.append(int(p))
-                except (ValueError, TypeError):
-                    pass # Ignore non-integer page numbers
-        
-        q["page_numbers"] = page_numbers # Store the cleaned list
-        
         for page_num in page_numbers:
             if page_num in page_to_image_map:
                 image_paths.extend(page_to_image_map[page_num])
-        
         q["page_image_paths"] = list(set(image_paths))
     return questions
 
@@ -254,27 +236,20 @@ def parse_file(txt_file):
     """
     input_path = os.path.join(TEXT_DIR, txt_file)
 
-    try:
-        with open(input_path, "r", encoding="utf-8") as f:
-            full_text = f.read()
-    except FileNotFoundError:
-        print(f" Error: Text file not found at {input_path}")
-        return None
-    except Exception as e:
-        print(f" Error reading file {input_path}: {e}")
-        return None
+    with open(input_path, "r", encoding="utf-8") as f:
+        full_text = f.read()
 
-
-    print(f" Building page-to-image mapping...")
+    print(f"   📖 Building page-to-image mapping...")
     page_to_image_map = build_page_to_image_map(full_text)
-    print(f" Found {len(page_to_image_map)} pages with images")
+    print(f"      Found {len(page_to_image_map)} pages with images")
 
     pages = full_text.split("=== PAGE BREAK ===")
     if not pages:
-        print(" No pages found in file!")
+        print("   ⚠️  No pages found in file!")
         return None
 
-    avg_page_length = sum(len(p) for p in pages) / len(pages) if pages else 0
+    # Adaptive chunk size based on average page length
+    avg_page_length = sum(len(p) for p in pages) / len(pages)
     if avg_page_length < 500:
         adaptive_chunk_size, reason = 10, "sparse content"
     elif avg_page_length < 1500:
@@ -287,56 +262,40 @@ def parse_file(txt_file):
         chunk_text = "\n=== PAGE BREAK ===\n".join(pages[i:i + adaptive_chunk_size])
         chunks.append(chunk_text)
 
-    print(f" {len(pages)} pages → {len(chunks)} chunk(s) "
+    print(f"   📄 {len(pages)} pages → {len(chunks)} chunk(s) "
           f"({adaptive_chunk_size} pages/chunk, {reason})")
 
     all_questions = []
 
     for idx, chunk_text in enumerate(chunks, 1):
-        print(f" Chunk {idx}/{len(chunks)}...", end=" ", flush=True)
+        print(f"   🚀 Chunk {idx}/{len(chunks)}...", end=" ", flush=True)
         start = time.time()
 
         try:
             prompt = build_prompt(chunk_text)
-            
-            # === DEBUG: Show what is sent to LLM (first 500 chars only) ===
-            # print("\n=== PROMPT (truncated) ===")
-            # print(prompt[:500] + "...\n====================")
-            
             response = model.generate_content(prompt)
-            
-            # === DEBUG: Show raw output from LLM ===
-            # print("\n=== RAW LLM OUTPUT ===")
-            # print(response.text[:1000] + "...\n====================")
-
             output = sanitize_output(response.text)
-
-            # Attempt to clean up stray characters if JSON fails
-            output_clean = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', output)
-            parsed = json.loads(output_clean)
+            parsed = json.loads(output)
 
             if not isinstance(parsed, list):
                 parsed = [parsed]
 
             elapsed = time.time() - start
-            print(f" {len(parsed)} question(s) ({elapsed:.1f}s)")
+            print(f"✅ {len(parsed)} question(s) ({elapsed:.1f}s)")
             all_questions.extend(parsed)
 
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError:
             elapsed = time.time() - start
-            print(f" Invalid JSON ({elapsed:.1f}s) — {e}")
-            print("---START OF INVALID JSON---")
-            print(output_clean)
-            print("---END OF INVALID JSON---")
+            print(f"⚠️  Invalid JSON ({elapsed:.1f}s)")
         except Exception as e:
             elapsed = time.time() - start
-            print(f" Error: {e} ({elapsed:.1f}s)")
+            print(f"❌ Error: {e} ({elapsed:.1f}s)")
 
     if not all_questions:
-        print(" No questions parsed.")
+        print("   ⚠️  No questions parsed.")
         return None
 
-    print(f" Mapping page numbers to image paths...")
+    print(f"   🔗 Mapping page numbers to image paths...")
     all_questions = map_pages_to_images(all_questions, page_to_image_map)
 
     return all_questions
@@ -390,30 +349,17 @@ def parse_exam_papers():
             with_imgs = sum(1 for q in questions if q.get("page_image_paths"))
             with_pages = sum(1 for q in questions if q.get("page_numbers"))
 
-            print(f"\n {len(questions)} questions saved")
-            print(f" {with_pages} with page numbers, {with_imgs} with images")
-            print(f" {elapsed:.1f}s ({elapsed/60:.1f} min)")
+            print(f"\n   ✅ {len(questions)} questions saved")
+            print(f"   📊 {with_pages} with page numbers, {with_imgs} with images")
+            print(f"   ⏱️  {elapsed:.1f}s ({elapsed/60:.1f} min)")
         else:
-            print(f" No questions found")
+            print(f"   ⚠️  No questions found")
 
     total_elapsed = time.time() - file_start
     print(f"\n{'='*60}")
-    print(f" Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
+    print(f"✅ Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
     print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":
-    # ===== Option 2: Ensure stdout supports UTF-8 (cross-platform) =====
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
-    # --- FIX: Read the environment variable from app.py ---
-    target_base = os.getenv("TARGET_BASE")
-
-    if not target_base:
-        print("Warning: TARGET_BASE environment variable not set.")
-        print("Running in 'process all' mode (legacy).\n")
-        parse_exam_papers() # Fallback to old behavior
-    else:
-        # Pass the single target base name into the function
-        print(f"Processing single file from TARGET_BASE: {target_base}\n")
-        parse_exam_papers(target_base=target_base)
+    parse_exam_papers()

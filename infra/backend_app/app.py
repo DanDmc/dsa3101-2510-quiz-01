@@ -916,7 +916,8 @@ def upload_file():
     course = request.form.get("course")
     year = request.form.get("year")
     semester = request.form.get("semester")
-    assessment_type = request.form.get("assessment_type") or "others"
+    assessment_type = request.form.get("assessment_type")
+
     if "file" not in request.files:
         return jsonify({"error": "No file part"}), 400
     f = request.files["file"]
@@ -924,29 +925,34 @@ def upload_file():
         return jsonify({"error": "No selected file"}), 400
     if not _allowed_pdf(f.filename):
         return jsonify({"error": "Only .pdf allowed"}), 400
+
     # Basic PDF magic header check
     head = f.stream.read(5)
     f.stream.seek(0)
     if head != b"%PDF-":
         return jsonify({"error": "Invalid PDF header"}), 400
-    # Read entire stream into memory
-    try:
-        f.stream.seek(0)
-        file_content = f.stream.read()
-    except Exception as e:
-        app.logger.error(f"Failed to read file stream: {e}")
-        return jsonify({"error": "file_read_failed", "message": str(e)}), 500
-    base_dir = Path(os.getenv("file_base_directory", "/app/data/source_files"))
+
+    # Where downloads look for files
+    base_dir = Path(os.getenv("file_base_directory", "/data/source_files"))
     base_dir.mkdir(parents=True, exist_ok=True)
+
+    # Secure the original name; we prefer to keep it for nicer downloads/UX
     original_name = secure_filename(f.filename)
+
+    # Stream to a temp file while hashing
     h = hashlib.sha256()
-    fd, tmp_path_str = tempfile.mkstemp(suffix=".pdf")
-    os.close(fd)
-    tmp_path = Path(tmp_path_str)
+    tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
     with open(tmp_path, "wb") as w:
-        h.update(file_content)
-        w.write(file_content)
+        while True:
+            chunk = f.stream.read(1024 * 1024)
+            if not chunk:
+                break
+            h.update(chunk)
+            w.write(chunk)
     short_hash = h.hexdigest()[:8]
+
+    # Choose final filename inside file_base_directory
+    # If a same-named file already exists, append a short hash before the extension.
     stem = Path(original_name).stem
     suffix = Path(original_name).suffix or ".pdf"
     candidate_name = original_name
@@ -958,7 +964,8 @@ def upload_file():
 
     # Move temp file into the canonical storage directory
     shutil.move(str(tmp_path), dest_path)
-    # Insert into DB
+
+    # Insert into DB — IMPORTANT: download uses file_name to resolve under file_base_directory
     file_id = None
     try:
         with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
@@ -976,7 +983,10 @@ def upload_file():
             "db_error": str(e),
             "path": str(dest_path)
         }), 201
-    # Mirror to SRC_DIR if needed
+
+    # Ensure the parser can find the file.
+    # By default, SRC_DIR == BASE_DIR/"data/source_files".
+    # If the env var points elsewhere, mirror a copy into SRC_DIR for your existing pipeline.
     try:
         if Path(file_base_directory) != SRC_DIR:
             SRC_DIR.mkdir(parents=True, exist_ok=True)
@@ -985,98 +995,39 @@ def upload_file():
                 shutil.copyfile(dest_path, mirror_path)
     except Exception as e:
         app.logger.warning(f"Mirror to SRC_DIR failed: {e}")
+
+    # Use the ACTUAL saved filename as TARGET_BASE for the pipeline
     base = Path(candidate_name).stem
     logs = {}
-    # 1) Extract text
+
+    # 1) Extract text (filter to this PDF via TARGET_PDF)
     code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": candidate_name})
     logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
-    # 2) LLM parse
+
+    # 2) LLM parse (filter via TARGET_BASE)
     code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
     logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"}), 500
-    # 3) Insert questions
-    code, out, err = _run(
-    "python insert_questions.py", 
-    env_extra={
-        "TARGET_BASE": base, 
-        "FILE_ID": str(file_id) # <-- Pass the integer ID as a string
-    }
-)
+        return jsonify({
+            "saved": True,
+            "file_id": file_id,
+            "pipeline": logs,
+            "error": "llm_parser failed"
+        }), 500
+
+    # 3) Insert questions (filter via TARGET_BASE)
+    code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
     logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
-        return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
-    # ============================================================== 
-    # Retry loop for newly_inserted_questions with exponential backoff
-    # ============================================================== 
-    new_questions = []
-    select_cols = [
-        "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
-        "q.question_type", "q.question_stem", "q.question_stem_html",
-        "q.concept_tags", "q.page_image_paths",
-        "q.last_used", "q.created_at", "q.updated_at",
-        "q.question_options", "q.question_answer",
-        "q.difficulty_rating_manual", "q.difficulty_rating_model",
-        "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
-    ]
-    max_attempts = 12      # Exponential backoff, max 12 attempts (~5 min total)
-    base_wait = 5          # initial wait in seconds
-    for attempt in range(max_attempts):
-        with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
-            sql = f"""
-                SELECT {", ".join(select_cols)}
-                FROM questions q
-                JOIN files f ON f.id = q.file_id
-                WHERE q.file_id = %s
-                ORDER BY q.question_no ASC, q.id ASC
-            """
-            cur.execute(sql, (file_id,))
-            rows = cur.fetchall()
-        if rows:
-            # populate new_questions
-            for row in rows:
-                (
-                    q_id, q_base_id, q_version_id, file_id_r, q_no,
-                    q_type, stem, stem_html,
-                    concept_json, media_json, last_used, created_at, updated_at,
-                    options_json, answer_json,
-                    difficulty_manual, difficulty_model,
-                    f_course, f_year, f_semester, f_assessment, f_name, f_path
-                ) = row
-                difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
-                new_questions.append({
-                    "id": q_id,
-                    "question_base_id": q_base_id,
-                    "version_id": q_version_id,
-                    "file_id": file_id_r,
-                    "question_no": q_no,
-                    "question_type": q_type,
-                    "question_stem": stem,
-                    "question_stem_html": stem_html,
-                    "concept_tags": parse_json_field(concept_json),
-                    "question_media": parse_json_field(media_json),
-                    "question_options": parse_json_field(options_json),
-                    "question_answer": parse_json_field(answer_json),
-                    "last_used": ts(last_used),
-                    "created_at": ts(created_at),
-                    "updated_at": ts(updated_at),
-                    "difficulty_rating_manual": difficulty_manual,
-                    "difficulty_model": difficulty_model,
-                    "difficulty_level": difficulty_level,
-                    "course": f_course,
-                    "year": f_year,
-                    "semester": f_semester,
-                    "assessment_type": f_assessment,
-                    "file_name": f_name,
-                    "file_path": f_path,
-                })
-            break  # exit loop once rows are found
-        else:
-            wait_time = min(base_wait * (2 ** attempt), 30)  # exponential backoff, max 30s
-            app.logger.info(f"Attempt {attempt+1}/{max_attempts}: no questions yet, retrying in {wait_time}s")
-            time.sleep(wait_time)
+        return jsonify({
+            "saved": True,
+            "file_id": file_id,
+            "pipeline": logs,
+            "error": "insert_questions failed"
+        }), 500
+
     return jsonify({
         "saved": True,
         "file": {
@@ -1085,8 +1036,7 @@ def upload_file():
             "stored_filename": candidate_name,
             "stored_path": str(dest_path)
         },
-        "pipeline": logs,
-        "newly_inserted_questions": new_questions
+        "pipeline": logs
     }), 201
 
 
