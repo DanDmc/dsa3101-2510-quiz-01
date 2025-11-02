@@ -945,7 +945,7 @@ def upload_file():
     course = request.form.get("course")
     year = request.form.get("year")
     semester = request.form.get("semester")
-    assessment_type = request.form.get("assessment_type")
+    assessment_type = request.form.get("assessment_type") or "others"
 
     if "file" not in request.files:
         return jsonify({"error": "No file part"}), 400
