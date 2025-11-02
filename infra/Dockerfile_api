@@ -1,7 +1,7 @@
 # Dockerfile_api
 
 # === Base image ===
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # === Environment Variables ===
 ENV PYTHONDONTWRITEBYTECODE=1 \
