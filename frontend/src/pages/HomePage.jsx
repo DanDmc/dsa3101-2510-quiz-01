@@ -70,7 +70,6 @@ function HomePage({
   // Filter options for the Toolbar/Search Page
   courseOptions,
   conceptOptions,
-  // 2. ACCEPT THE NEW PROP
   onGenerateDifficulty,
 }) {
   const [selected, setSelected] = useState([]);
@@ -132,8 +131,7 @@ function HomePage({
     setSelected([]);
   };
   
-  // --- DOWNLOAD SELECTED BUTTON HANDLER MOVED HERE ---
-  // --- DOWNLOAD SELECTED BUTTON HANDLER MODIFIED FOR POPUP ---
+  // --- DOWNLOAD SELECTED BUTTON HANDLER ---
 const handleDownloadSelected = async () => {
     if (selected.length === 0) return;
 
@@ -152,15 +150,15 @@ const handleDownloadSelected = async () => {
         }
     }
 
-    // 3. CRITICAL CHECK: Show alert if any questions are blocked
+    // 3. Show alert if any questions are blocked
     if (questionsMissingFileId.length > 0) {
         const totalBlocked = questionsMissingFileId.length;
         const totalSelected = selected.length;
         
-        let message = `⚠️ Warning: ${totalBlocked} of the ${totalSelected} selected question(s) cannot be downloaded.`;
+        let message = ` Warning: ${totalBlocked} of the ${totalSelected} selected question(s) cannot be downloaded.`;
         
         if (totalBlocked === totalSelected) {
-            message = '🚫 **Download Failed:** None of the selected questions have an associated source file (file_id) in the database. Download canceled.';
+            message = '**Download Failed:** None of the selected questions have an associated source file (file_id) in the database. Download canceled.';
             alert(message);
             return; // Stop the function entirely if nothing can be downloaded
         } else {
@@ -283,7 +281,7 @@ const handleDownloadSelected = async () => {
                             Download Files Selected
                         </Button>
                         
-                        {/* 2. EXISTING GENERATE DIFFICULTY BUTTON (Right) */}
+                        {/* 2. GENERATE DIFFICULTY BUTTON (Right) */}
                         <Button
                             variant="contained"
                             onClick={onGenerateDifficulty}

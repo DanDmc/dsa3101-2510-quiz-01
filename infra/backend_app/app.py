@@ -465,6 +465,25 @@ def predict_row(row: dict) -> float:
     return float(np.clip(yhat, 0.0, 1.0))
 
 def _get_question_row(question_id: int):
+    """
+    description: Fetches the question row, including the 'id' and 'page_image_paths' columns, 
+                 from the 'questions' table in the database based on the provided question ID. 
+                 It uses a dictionary cursor for easy column access.
+
+    args:
+        question_id (int): The unique identifier (ID) of the question to retrieve.
+
+    returns:
+        dict or None: A dictionary containing the 'id' and 'page_image_paths' of the question 
+                      if found, or None if no question matches the given ID.
+
+    raises:
+        OperationalError: If there is an issue with the database connection (e.g., connection 
+                          timeout, server unavailability).
+        ProgrammingError: If the SQL syntax is incorrect or the table/columns do not exist.
+        Error: Any other general database-related error caught by the underlying MySQLdb module.
+    """
+
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
         # Fetch the page_image_paths column
@@ -472,7 +491,25 @@ def _get_question_row(question_id: int):
         return cur.fetchone()
 
 def _safe_join_media(base_dir: str, file_path: str) -> str:
-    """Safely join a base directory with a media file path."""
+    """
+    description: Safely joins a base directory path with a potentially relative media file path. 
+                 It cleans the file path by removing leading slashes and a specific directory 
+                 prefix ('data/question_media/') before joining, and crucially, performs a 
+                 security check to prevent path traversal attacks.
+
+    args:
+        base_dir (str): The absolute or relative path of the root directory the media must reside in.
+        file_path (str): The raw, potentially unvalidated path to the media file.
+
+    returns:
+        str: The normalized, absolute path to the media file, guaranteed to be within base_dir.
+
+    raises:
+        FileNotFoundError: If the provided file_path is empty.
+        FileNotFoundError: If the resulting joined path attempts to traverse outside of the 
+                           specified base_dir (path traversal security check failure).
+    """
+    
     if not file_path:
         raise FileNotFoundError("Empty file path")
     
@@ -693,6 +730,25 @@ question_media_base_directory = os.getenv("question_media_base_directory", "/app
 
 @app.route("/files/<int:file_id>/download", methods=["GET"])
 def download_file(file_id: int):
+    """
+    description: Retrieves file metadata from the database using a file ID, constructs the safe 
+                 filesystem path, verifies file existence, determines the MIME type, and streams 
+                 the file back to the client as an attachment.
+
+    args:
+        file_id (int): The unique database identifier for the file being requested.
+
+    returns:
+        flask.Response: A Flask response object containing the file data, headers configured 
+                        for download (Content-Disposition), and the appropriate MIME type.
+
+    raises:
+        HTTPException (404 Not Found): 
+            If the file_id does not exist in the database.
+            If the internal function _safe_join_file raises a FileNotFoundError (e.g., path traversal detected).
+            If the computed full_path does not exist on the filesystem ("File not in folder").
+    """
+    
     file_row = _get_file_row(file_id)
     if not file_row:
         abort(404, description = "Invalid file")
@@ -719,6 +775,29 @@ def download_file(file_id: int):
     
 @app.route("/question/<int:question_id>/download_image", methods=["GET"])
 def download_question_image(question_id: int):
+    """
+    description: Retrieves a question's image paths from the database, parses the JSON list, 
+                 and attempts to stream the first image in the list to the client. It uses 
+                 a secure function (_safe_join_media) to prevent path traversal.
+
+    args:
+        question_id (int): The unique database identifier for the question whose image is being requested.
+
+    returns:
+        flask.Response: A Flask response object containing the image file data, configured 
+                        for download (as an attachment), with the appropriate MIME type.
+
+    raises:
+        HTTPException (404 Not Found): 
+            If the question_id does not exist in the database.
+            If the question row has no 'page_image_paths' defined.
+            If the parsed list of image paths is empty or not a list.
+            If the internal function _safe_join_media raises a FileNotFoundError (e.g., path traversal detected).
+            If the computed full_path does not exist on the filesystem ("Image file not in folder").
+        HTTPException (500 Internal Server Error):
+            If the database value for 'page_image_paths' is present but cannot be parsed as valid JSON.
+    """
+    
     question_row = _get_question_row(question_id)
     if not question_row:
         abort(404, description="Invalid question ID")
@@ -764,19 +843,45 @@ def download_question_image(question_id: int):
     )
     
 _SENT_SPLIT = re.compile(r'[.!?]')
-def _syllable_count(w): return 1
+
+def _syllable_count(w):
+    """
+    description: Estimates the number of syllables in a given word. 
+                 Note: This is currently implemented as a simple stub and always returns 1, 
+                 regardless of the input word.
+
+    args:
+        w (str): The word string to analyze for syllable count.
+
+    returns:
+        int: The estimated number of syllables. Currently, always returns 1.
+
+    raises:
+        # No exceptions are raised by this function as currently implemented.
+    """
+    return 1
+
 def _compute_readability_features(texts):
-
     """
+    Legacy code, kept for emergency backup purposes
+    description: Calculates the Flesch Reading Ease (FRE) and Flesch-Kincaid Grade Level (FKGL) 
+                 for a sequence of text strings. It tokenizes the text to count words, sentences, 
+                 and uses an external function (_syllable_count) to estimate syllables. 
+                 Includes robust handling for empty or non-string inputs.
 
-    texts: iterable of question stems (strings)
+    args:
+        texts (list or numpy.ndarray): A sequence of strings (or items convertible to strings) 
+                                       where each element is a document or text block to analyze.
 
-    returns: np.ndarray shape (n, 2) with:
+    returns:
+        numpy.ndarray: A 2-dimensional array of shape (n, 2), where n is the number of input texts. 
+                       Each row contains the calculated [FRE, FKGL] scores.
+                       FRE (higher = easier), FKGL (score = US school grade level).
 
-        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
-
+    raises:
+        # No specific external exceptions are guaranteed to be raised by this function itself.
+        # It defensively handles potential ZeroDivisionError by ensuring n_w and n_sents are at least 1.
     """
-
     rows = []
 
     for t in texts:
@@ -900,11 +1005,50 @@ def predict_difficulty():
 @app.post("/api/upload_file")
 def upload_file():
     """
-    Handle PDF uploads, persist metadata to the database, trigger the parsing pipeline,
-    and FETCH the newly inserted questions to return to the client.
-    """
-    print("--- STARTING UPLOAD HANDLER ---")
+    Handle PDF uploads, persist metadata to the database, and trigger the 3-step parsing pipeline
 
+    Workflow:
+        1. Validate request:
+        2. Save the PDF into the configured file_base_directory
+        3. Insert a row into the `files` table with the provided metadata
+        4. Mirror a copy into the pipeline's canonical source directory
+        5. Run the parsing pipeline:
+            - `python pdf_extractor.py` with TARGET_PDF=<filename>
+            - `python llm_parser.py` with TARGET_BASE=<filename_without_ext>
+            - `python insert_questions.py` with TARGET_BASE=<filename_without_ext>
+
+    Form fields:
+        - course (str, optional)
+        - year (str/int, optional)
+        - semester (str, optional)
+        - assessment_type (str, optional)
+
+    Returns:
+        flask.Response (application/json):
+            - 201 on success:
+                {
+                  "saved": true,
+                  "file": {
+                    "file_id": <int or null>,
+                    "original_name": "...",
+                    "stored_filename": "...",
+                    "stored_path": "..."
+                  },
+                  "pipeline": {
+                    "pdf_extractor": {...},
+                    "llm_parser": {...},
+                    "insert_questions": {...}
+                  }
+                }
+            - 400 on bad upload (no file, wrong type, invalid PDF header)
+            - 500 if a pipeline step fails (upload is still saved)
+
+    Future Improvements:
+        - DB insert failure is reported but does not roll back the file save
+        - Accept more file types
+    """
+
+    print("--- STARTING UPLOAD HANDLER ---")
     # --- 1. INITIAL SETUP & VALIDATION ---
     course = request.form.get("course")
     year = request.form.get("year")
@@ -933,7 +1077,7 @@ def upload_file():
     # Secure the original name
     original_name = secure_filename(f.filename)
 
-    # Stream to a temp file while hashing (existing logic)
+    # Stream to a temp file while hashing
     h = hashlib.sha256()
     tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
     with open(tmp_path, "wb") as w:
@@ -978,7 +1122,7 @@ def upload_file():
             "path": str(dest_path)
         }), 201
 
-    # --- Mirroring logic (existing) ---
+    # --- Mirroring logic ---
     try:
         if Path(os.getenv("file_base_directory", "/data/source_files")) != Path(os.getenv("SRC_DIR", "/app/data/source_files")):
             SRC_DIR = Path(os.getenv("SRC_DIR", "/app/data/source_files"))
@@ -1008,7 +1152,7 @@ def upload_file():
         }), 500
 
     # 3) Insert questions 
-    # 🔑 MODIFICATION: Pass file_id to insertion script for linking
+    # Pass file_id to insertion script for linking
     code, out, err = _run(
         "python insert_questions.py", 
         env_extra={"TARGET_BASE": base, "FILE_ID": str(file_id)}
@@ -1019,9 +1163,7 @@ def upload_file():
             "saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"
         }), 500
 
-    # =====================================================================
-    # 🔑 4. NEW LOGIC: RETRIEVE QUESTIONS & RETURN TO CLIENT (THE FINAL FIX)
-    # ===================================================================== 
+    # RETRIEVE QUESTIONS & RETURN TO CLIENT
     new_questions = []
     select_cols = [
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
@@ -1088,8 +1230,7 @@ def upload_file():
             time.sleep(1) 
 
 
-    # --- FINAL SUCCESS RESPONSE ---
-    # MODIFICATION: Include newly_inserted_questions in the final JSON response.
+    # Include newly_inserted_questions in the final JSON response.
     return jsonify({
         "saved": True,
         "file": {
@@ -1527,6 +1668,36 @@ def addquestion():
 
 @app.route("/api/createquestion", methods=["POST"])
 def create_question():
+    """
+    description: Processes a JSON payload to validate core question fields and inserts 
+                 a new synthetic file record into the 'files' table. This function 
+                 prepares the necessary database link for a manually created question 
+                 and handles data type conversions and validation for specific fields 
+                 like 'difficulty_rating_manual'.
+
+    args:
+        None: This function implicitly uses the Flask global `request` object to retrieve 
+              the JSON payload from the request body.
+
+    returns:
+        tuple[flask.Response, int]: A tuple containing a JSON response body and an 
+                                    HTTP status code:
+                                    - **400 Bad Request**: If the payload is missing 
+                                      required fields (e.g., 'question_type', 
+                                      'question_stem').
+                                    - **500 Internal Server Error**: If a database 
+                                      error occurs during the creation of the file record.
+                                    - *(Note: The final successful return (200 OK) for 
+                                      the question record insertion is not present in 
+                                      the provided code fragment.)*
+
+    raises:
+        ValueError, TypeError: Handled internally during the conversion of 
+                               `difficulty_rating_manual` to a float.
+        MySQLdb.Error: Database exceptions that occur during file insertion are caught 
+                       and result in a 500 status code.
+    """
+
     payload = request.get_json(silent=True) or {}
     
     # --- 1. Validate Core Question Fields ---

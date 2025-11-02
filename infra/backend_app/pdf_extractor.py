@@ -69,7 +69,7 @@ def extract_text_and_page_images(
         txt_filename = base_name + ".txt"
         text_output_path = os.path.join(text_dir, txt_filename)
 
-        print(f"🧾 Extracting text and saving ALL page images from {target_pdf}...")
+        print(f" Extracting text and saving ALL page images from {target_pdf}...")
 
         try:
             with pdfplumber.open(pdf_path) as pdf:
@@ -100,12 +100,12 @@ def extract_text_and_page_images(
             with open(text_output_path, "w", encoding="utf-8") as f:
                 f.write(text)
 
-            print(f"✅ Saved extracted text to {text_output_path}")
-            print(f"🖼️ Saved {total_pages} page image(s)")
+            print(f" Saved extracted text to {text_output_path}")
+            print(f" Saved {total_pages} page image(s)")
             print()
 
         except Exception as e:
-            print(f"❌ Failed to process {target_pdf}: {e}\n")
+            print(f" Failed to process {target_pdf}: {e}\n")
 
 if __name__ == "__main__":
     extract_text_and_page_images()

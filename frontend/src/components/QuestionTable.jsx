@@ -137,7 +137,7 @@ setSelected(newSelected);
   return (
     <Card sx={{ width: TABLE_MAX_WIDTH, maxWidth: TABLE_MAX_WIDTH, border: BORDER_STYLE, boxShadow: 'none', borderRadius: 0, overflowX: 'auto' }}>
       
-      {/* The Download Selected Button JSX previously here has been removed. */}
+      {/* The Download Selected Button was previously here during development we moved it to HomePage.jsx afterwards. */}
 
       <TableContainer>
         <Table>
@@ -290,7 +290,7 @@ setSelected(newSelected);
         ActionsComponent={TablePaginationActions} 
       />
 
-    {/* dialog portion put at bottom this is for CONCEPT_TAGGING */}
+    {/* dialog portion put at bottom, for CONCEPT_TAGGING */}
     <Dialog open={openConcepts} onClose={() => setOpenConcepts(false)}>
       <DialogTitle>Concept Tags</DialogTitle>
       <DialogContent>

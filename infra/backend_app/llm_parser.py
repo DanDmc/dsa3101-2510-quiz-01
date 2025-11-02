@@ -239,13 +239,13 @@ def parse_file(txt_file):
     with open(input_path, "r", encoding="utf-8") as f:
         full_text = f.read()
 
-    print(f"   📖 Building page-to-image mapping...")
+    print(f" Building page-to-image mapping...")
     page_to_image_map = build_page_to_image_map(full_text)
-    print(f"      Found {len(page_to_image_map)} pages with images")
+    print(f" Found {len(page_to_image_map)} pages with images")
 
     pages = full_text.split("=== PAGE BREAK ===")
     if not pages:
-        print("   ⚠️  No pages found in file!")
+        print(" No pages found in file!")
         return None
 
     # Adaptive chunk size based on average page length
@@ -262,13 +262,13 @@ def parse_file(txt_file):
         chunk_text = "\n=== PAGE BREAK ===\n".join(pages[i:i + adaptive_chunk_size])
         chunks.append(chunk_text)
 
-    print(f"   📄 {len(pages)} pages → {len(chunks)} chunk(s) "
+    print(f" {len(pages)} pages → {len(chunks)} chunk(s) "
           f"({adaptive_chunk_size} pages/chunk, {reason})")
 
     all_questions = []
 
     for idx, chunk_text in enumerate(chunks, 1):
-        print(f"   🚀 Chunk {idx}/{len(chunks)}...", end=" ", flush=True)
+        print(f" Chunk {idx}/{len(chunks)}...", end=" ", flush=True)
         start = time.time()
 
         try:
@@ -281,21 +281,21 @@ def parse_file(txt_file):
                 parsed = [parsed]
 
             elapsed = time.time() - start
-            print(f"✅ {len(parsed)} question(s) ({elapsed:.1f}s)")
+            print(f" {len(parsed)} question(s) ({elapsed:.1f}s)")
             all_questions.extend(parsed)
 
         except json.JSONDecodeError:
             elapsed = time.time() - start
-            print(f"⚠️  Invalid JSON ({elapsed:.1f}s)")
+            print(f" Invalid JSON ({elapsed:.1f}s)")
         except Exception as e:
             elapsed = time.time() - start
-            print(f"❌ Error: {e} ({elapsed:.1f}s)")
+            print(f" Error: {e} ({elapsed:.1f}s)")
 
     if not all_questions:
-        print("   ⚠️  No questions parsed.")
+        print(" No questions parsed.")
         return None
 
-    print(f"   🔗 Mapping page numbers to image paths...")
+    print(f" Mapping page numbers to image paths...")
     all_questions = map_pages_to_images(all_questions, page_to_image_map)
 
     return all_questions
@@ -333,7 +333,7 @@ def parse_exam_papers():
         txt_file = f"{target_base}.txt"
 
         print(f"\n{'='*60}")
-        print(f"📄 Parsing single text file (TARGET_BASE): {target_base}.txt")
+        print(f" Parsing single text file (TARGET_BASE): {target_base}.txt")
         print(f"{'='*60}")
         
         file_start = time.time()
@@ -349,15 +349,15 @@ def parse_exam_papers():
             with_imgs = sum(1 for q in questions if q.get("page_image_paths"))
             with_pages = sum(1 for q in questions if q.get("page_numbers"))
 
-            print(f"\n   ✅ {len(questions)} questions saved")
-            print(f"   📊 {with_pages} with page numbers, {with_imgs} with images")
-            print(f"   ⏱️  {elapsed:.1f}s ({elapsed/60:.1f} min)")
+            print(f"\n {len(questions)} questions saved")
+            print(f" {with_pages} with page numbers, {with_imgs} with images")
+            print(f" {elapsed:.1f}s ({elapsed/60:.1f} min)")
         else:
-            print(f"   ⚠️  No questions found")
+            print(f"  No questions found")
 
     total_elapsed = time.time() - file_start
     print(f"\n{'='*60}")
-    print(f"✅ Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
+    print(f" Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
     print(f"{'='*60}\n")
 
 

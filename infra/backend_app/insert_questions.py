@@ -64,18 +64,18 @@ def connect_to_database(max_retries=5, retry_delay=3):
     """
     for attempt in range(max_retries):
         try:
-            print(f"📡 Attempting to connect to database (attempt {attempt + 1}/{max_retries})...")
+            print(f" Attempting to connect to database (attempt {attempt + 1}/{max_retries})...")
             conn = mysql.connector.connect(**DB_CONFIG)
             cursor = conn.cursor(buffered=True)
-            print("✅ Successfully connected to database!")
+            print(" Successfully connected to database!")
             return conn, cursor
         except mysql.connector.Error as e:
             if attempt < max_retries - 1:
-                print(f"⚠️ Connection failed: {e}")
-                print(f"⏳ Retrying in {retry_delay} seconds...")
+                print(f" Connection failed: {e}")
+                print(f" Retrying in {retry_delay} seconds...")
                 time.sleep(retry_delay)
             else:
-                print(f"❌ Failed to connect after {max_retries} attempts")
+                print(f" Failed to connect after {max_retries} attempts")
                 raise
 
 
@@ -105,7 +105,7 @@ def get_file_id(cursor, file_name):
     if result:
         return result[0]
     else:
-        raise ValueError(f"❌ No matching file record for {file_name}")
+        raise ValueError(f" No matching file record for {file_name}")
 
 
 def insert_question(cursor, q, file_id):
@@ -213,7 +213,7 @@ def process_json_files():
     - Supports multi-page questions with multiple images
     """
     
-    # === Check for pipeline-provided FILE_ID and TARGET_BASE (V2 logic) ===
+    # === Check for pipeline-provided FILE_ID and TARGET_BASE  ===
     target_file_id_env = os.getenv("FILE_ID")
     target_base = os.getenv("TARGET_BASE")
     pipeline_mode_file_id = None
@@ -231,18 +231,17 @@ def process_json_files():
         # ... (Error handling remains the same)
         sys.exit(1)
 
-    # Now, only pass the connection object (temp_conn) to closing
+    # Pass the connection object (temp_conn) to closing
     with closing(temp_conn) as conn:
         # Use the cursor that was already created by connect_to_database
-        # You were correctly passing the cursor as buffered=True inside the connect function.
         cursor = temp_cursor
     
-        # --- Determine which JSON files to process (V2 logic) ---
+        # --- Determine which JSON files to process ---
         json_files = []
         if target_base and pipeline_mode_file_id:
             # SINGLE FILE MODE (from app.py)
 
-            # 🔑 CRITICAL FIX: The TARGET_BASE already contains the hash, 
+            # The TARGET_BASE contains the hash, 
             # so we use it directly to form the JSON file name.
             json_file_name = f"{target_base}.json" 
 
@@ -262,15 +261,13 @@ def process_json_files():
                 print(" No JSON files found in json_output directory")
                 return
             print(f"\nFound {len(json_files)} JSON file(s) to process (legacy mode)\n")
-        # --- END FIX ---
         
         for json_file in json_files:
-            json_file_path_obj = Path(json_file)  # <-- NEW LINE: Convert string to Path object
+            json_file_path_obj = Path(json_file)
             json_path = JSON_DIR / json_file
             
-            # Line 186 fix: Use the Path object's .stem attribute
+            # We use the Path object's .stem attribute
             pdf_name = json_file_path_obj.stem + ".pdf" 
-            # CRITICAL FIX END
             
             print(f" Inserting questions for {json_file}")
 
@@ -279,21 +276,21 @@ def process_json_files():
                 with open(json_path, "r", encoding="utf-8-sig") as f:
                     content = f.read().strip()
             except FileNotFoundError:
-                print(f"⚠️ Skipping {json_file}: File was deleted or moved.\n")
+                print(f" Skipping {json_file}: File was deleted or moved.\n")
                 continue
 
             if not content:
-                print(f"⚠️ Skipping {json_file} (empty file)\n")
+                print(f" Skipping {json_file} (empty file)\n")
                 continue
 
             try:
                 questions = json.loads(content)
             except json.JSONDecodeError as e:
-                print(f"⚠️ Skipping {json_file}: Invalid JSON ({e})\n")
+                print(f" Skipping {json_file}: Invalid JSON ({e})\n")
                 continue
 
             try:
-                # 🛑 CRITICAL LOGIC: Determine the correct file_id to use
+                # Determine the correct file_id to use
                 if pipeline_mode_file_id:
                     # Use the ID passed from the Flask pipeline
                     file_id = pipeline_mode_file_id
@@ -356,9 +353,9 @@ def process_json_files():
 
             except Exception as e:
                 conn.rollback()
-                print(f" ❌ Failed for {json_file}: {e}\n")
+                print(f" Failed for {json_file}: {e}\n")
 
-        print("🎯 Done inserting all questions!")
+        print(" Done inserting all questions!")
 
 
 if __name__ == "__main__":
