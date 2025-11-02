@@ -1069,7 +1069,7 @@ def upload_file():
                         "created_at": ts(row["created_at"]),
                         "updated_at": ts(row["updated_at"]),
                         "difficulty_rating_manual": row["difficulty_rating_manual"],
-                        "difficulty_model": row["difficulty_model"],
+                        "difficulty_model": row["difficulty_rating_model"],
                         "course": row["course"],
                         "year": row["year"],
                         "semester": row["semester"],

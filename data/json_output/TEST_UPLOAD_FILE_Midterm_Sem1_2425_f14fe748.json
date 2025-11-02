@@ -28,8 +28,8 @@
       2
     ],
     "concept_tags": [
-      "data exploration",
       "descriptive statistics",
+      "data manipulation",
       "r programming"
     ],
     "page_image_paths": [
@@ -86,7 +86,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "comparative analysis",
+      "comparative statistics",
       "r programming"
     ],
     "page_image_paths": [
@@ -97,7 +97,7 @@
     "question_no": "6",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classified by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
+    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classi(cid:28)ed by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -116,7 +116,7 @@
     "question_no": "7",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT significant in the model, at significance level 0.1.",
+    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT signi(cid:28)cant in the model, at signi(cid:28)cance level 0.1.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -125,7 +125,7 @@
     "concept_tags": [
       "linear regression",
       "statistical modeling",
-      "hypothesis testing",
+      "p-value",
       "r programming"
     ],
     "page_image_paths": [
@@ -155,7 +155,7 @@
     "question_no": "9",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good. S is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
+    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good.\nS is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -182,7 +182,7 @@
     ],
     "concept_tags": [
       "data preprocessing",
-      "feature scaling",
+      "standardization",
       "r programming"
     ],
     "page_image_paths": [
@@ -212,14 +212,14 @@
     "question_no": "12",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Use the train set with three standardized features to form the KNN classifiers where k = 3,5,7,9,11, and accuracy value for each classifier is kept in a vector named accuracy.",
+    "question_stem": "Use the train set with three standardized features to form the KNN classi(cid:28)ers where k = 3,5,7,9,11, and accuracy value for each classi(cid:28)er is kept in a vector named accuracy.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       3
     ],
     "concept_tags": [
-      "knn",
+      "k-nearest neighbors",
       "classification",
       "model training",
       "r programming"
@@ -251,7 +251,7 @@
     "question_no": "14",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classifier with that value of k.",
+    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classi(cid:28)er with that value of k.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -259,8 +259,8 @@
     ],
     "concept_tags": [
       "model selection",
-      "knn",
-      "accuracy"
+      "accuracy",
+      "k-nearest neighbors"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -277,8 +277,8 @@
       3
     ],
     "concept_tags": [
-      "knn",
       "prediction",
+      "k-nearest neighbors",
       "data preprocessing",
       "r programming"
     ],
@@ -297,8 +297,8 @@
       4
     ],
     "concept_tags": [
-      "financial modeling",
       "programming",
+      "financial modeling",
       "functions"
     ],
     "page_image_paths": [
@@ -316,9 +316,9 @@
       4
     ],
     "concept_tags": [
-      "financial modeling",
       "programming",
-      "optimization"
+      "optimization",
+      "financial modeling"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
