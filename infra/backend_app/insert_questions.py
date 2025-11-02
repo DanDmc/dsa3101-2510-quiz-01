@@ -180,10 +180,13 @@ def process_json_files():
         # --- END FIX ---
         
         for json_file in json_files:
+            json_file_path_obj = Path(json_file)  # <-- NEW LINE: Convert string to Path object
             json_path = JSON_DIR / json_file
             
-            # Note: pdf_name is derived from json_file for file_id lookup
-            pdf_name = json_file.stem + ".pdf" 
+            # Line 186 fix: Use the Path object's .stem attribute
+            pdf_name = json_file_path_obj.stem + ".pdf" 
+            # CRITICAL FIX END
+            
             print(f" Inserting questions for {json_file}")
 
             # Read and validate JSON file

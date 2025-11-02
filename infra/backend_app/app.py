@@ -560,7 +560,7 @@ try:
     difficulty_model = joblib.load(MODEL_PATH_V1)
     active_model_name = "V1_model_ridge"
     app.logger.info(f"[difficulty] V1: Successfully loaded model: {MODEL_PATH_V1}")
-    print("--- Successfully loaded Model V1 ---") # <--- ADD THIS
+    print("--- Successfully loaded Model V1 (Ridgemodel) ---") # <--- ADD THIS
 except Exception as e_v1:
     app.logger.warning(f"[difficulty] V1: Failed to load model ({MODEL_PATH_V1}): {e_v1}")
     app.logger.info(f"[difficulty] V2: Attempting fallback load of {MODEL_PATH_V2}...")
@@ -570,7 +570,7 @@ except Exception as e_v1:
         difficulty_model = joblib.load(MODEL_PATH_V2)
         active_model_name = "V2_difficulty_v1"
         app.logger.info(f"[difficulty] V2: Successfully loaded fallback model: {MODEL_PATH_V2}")
-        print("--- Successfully loaded Model V2 ---") # <--- ADD THIS
+        print("--- Successfully loaded Model V2 (difficulty_v1) ---") # <--- ADD THIS
     except Exception as e_v2:
         app.logger.error(f"[difficulty] V2: CRITICAL: Fallback model failed to load ({MODEL_PATH_V2}): {e_v2}")
 
