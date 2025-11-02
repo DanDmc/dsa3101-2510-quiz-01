@@ -1,7 +1,8 @@
+from flask import Flask, request, jsonify, send_file, abort, render_template_string
 import pandas as pd
 import numpy as np
-from flask import Flask, request, jsonify, send_file, abort, render_template_string
-from flask_cors import CORS
+from sqlalchemy import func, or_
+from flask_cors import CORS, cross_origin
 from contextlib import closing
 from werkzeug.utils import secure_filename
 from pathlib import Path
@@ -10,8 +11,132 @@ import sys, importlib.util, re, time
 
 app = Flask(__name__)
 
-# ---- Set CORS to Vite port 5173 ----
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+# -----------------------------------------------------
+# 💡 FIX: CORS is set to the correct Vite port 5173
+CORS(app, 
+     origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
+# -----------------------------------------------------
+
+# ---- Upload / pipeline config ----
+app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
+app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
+ALLOWED_EXTENSIONS = {"pdf"}
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "data"
+SRC_DIR  = DATA_DIR / "source_files"
+TXT_DIR  = DATA_DIR / "text_extracted"
+JSON_DIR = DATA_DIR / "json_output"
+
+for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
+    _d.mkdir(parents=True, exist_ok=True)
+
+def _allowed_pdf(filename: str) -> bool:
+    """
+    Checks if an uploaded filename has a permitted extension
+
+    Currently only `.pdf` files are allowed
+    The check is case-insensitive and only looks at the final extension
+
+    Args:
+        filename (str): Name of the uploaded file
+
+    Returns:
+        bool: True if the filename ends with an allowed extension, False otherwise
+    """
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def _ensure_dirs(*parts) -> Path:
+    """
+    description: Constructs a full filesystem path by joining a configured base upload 
+                 directory with one or more subdirectories specified in `parts`. It 
+                 ensures that all necessary directories in the path exist, creating 
+                 them if they do not. Handles null or empty parts by replacing them with 
+                 the string "unknown".
+
+    args:
+        *parts (tuple[Any]): One or more path components (strings, integers, etc.) 
+                             to be joined to the base upload folder.
+
+    returns:
+        pathlib.Path: A Path object representing the final, verified (existing) directory.
+
+    raises:
+        OSError: If the function is unable to create the directory path (e.g., due to 
+                 permission issues, or if a component is a file instead of a directory).
+    """
+
+    p = Path(app.config["UPLOAD_FOLDER"]).joinpath(*[str(x or "unknown") for x in parts])
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+def _run(cmd, env_extra=None, timeout=900):
+    """
+    Run a subprocess in the project base directory and capture its output
+
+    Args:
+        cmd (str): Shell-like command to run (e.g. "python pdf_extractor.py")
+        env_extra (dict, optional): Extra environment variables to merge into
+            the current process environment
+        timeout (int, optional): Max number of seconds to allow the process
+            to run before raising a timeout - Defaults to 900s
+
+    Returns:
+        tuple[int, str, str]:
+            - returncode (int): Process return code (0 on success)
+            - stdout (str): Captured standard output (stripped)
+            - stderr (str): Captured standard error (stripped)
+    """
+    env = dict(os.environ)
+    if env_extra: env.update(env_extra)
+    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
+    return p.returncode, p.stdout.strip(), p.stderr.strip()
+
+def get_connection():
+    """
+    Create a new MySQL connection using environment variables:
+    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
+
+    Args:
+        None.
+
+    Returns:
+        MYSQLdb.connection: Open a connection to the quizbank database.
+
+    Raises:
+        MySQLdb.Error: If connection cannot be established. 
+    """
+    return MySQLdb.connect(
+        host=os.getenv("MYSQL_HOST", "db"),
+        user=os.getenv("MYSQL_USER", "quizbank_user"),
+        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
+        db=os.getenv("MYSQL_DATABASE", "quizbank"),
+    )
+
+def has_column(conn, table: str, col: str) -> bool:
+    """
+    Check whether a given column exists in a table in the current database
+
+    Args:
+        conn: An open DB-API compatible database connection
+        table (str): The name of the table to inspect
+        col (str): The column name to look for
+
+    Returns:
+        bool: `True` if the column exists on the table in the current database,
+        `False` otherwise
+    """
+    with closing(conn.cursor()) as c:
+        c.execute("""
+            SELECT COUNT(*)
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE()
+              AND TABLE_NAME = %s
+              AND COLUMN_NAME = %s
+        """, (table, col))
+        return c.fetchone()[0] == 1
 
 # ---- Utility Helper Functions ----
 def parse_json_field(field_json):
@@ -53,7 +178,30 @@ def ts(v):
         return v.isoformat()
     else:
         return str(v)
+
+def _get_file_row(file_id: int):
+    """
+    Fetch file metadata from files table using its primary key
+
+    Args:
+        file_id (int): file_id of the desired file for download
+
+    Returns:
+        dict: {
+            "id": int,
+            "file_name": str,
+            "file_path" str, 
+            "uploaded_at": datetime.datetime
+        }
     
+    Raises:
+        None if not found
+    """
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
+        return cur.fetchone()
+
 def _strip_known_prefixes(p: str) -> str:
     """
     Removes known leading path prefixes from a string
@@ -69,6 +217,114 @@ def _strip_known_prefixes(p: str) -> str:
         if p.startswith(pref):
             return p[len(pref):]
     return p
+
+def _normalize_semester(sem: str) -> str:
+    """
+    Normalize various semester inputs to a compact canonical form
+    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
+
+    Args:
+        sem (str): Semester label/value
+
+    Returns:
+        str: Semester Code
+
+    Raises:
+        None
+    """
+    if sem is None:
+        return ""
+    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
+    # Remove duplicate spaces
+    s = " ".join(s.split())
+
+    # Common mappings
+    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
+        return "S1"
+    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
+        return "S2"
+    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
+        return "ST1"
+    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
+        return "ST2"
+    return s.upper()
+
+def _normalize_assessment_type(t: str) -> str:
+    """
+    Normalize assessment_type strings to lowercase and remove whitespaces
+
+    Args:
+        t (str): Assessment type
+
+    Returns:
+        str: Normalised assessment type lowercased with whitespaces trimmed
+
+    Raises:
+        None
+    """
+    if t is None:
+        return ""
+    s = str(t).strip().lower().replace("-", " ")
+    s = " ".join(s.split())
+    return s.lower()
+
+def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
+    """
+    Search for 'file_id' by matching 'course', 'year', 'semester', 'assessment_type'
+    If latest = 'True', look for the most recently uploaded file
+
+    Args:
+        course (str): Course code, e.g. "ST2131"
+        year (int/str): Year (convert to int)
+        semester (str): Semester code, e.g. 2410
+        assessment_type (str): e.g. "quiz", "midterm"
+        latest (bool): If True, choose the most recent match based on uploaded_at and id
+
+    Returns:
+        int/None:
+            Matching files.id else None if no match
+    
+    Raises:
+        ValueError: If missing course or year not integer-like
+        MySQLError: If database cannot be established
+    """
+    if not course:
+        raise ValueError("course is required")
+    try:
+        year_int = int(str(year).strip())
+    except Exception:
+        raise ValueError("year must be an integer-like value")
+
+    course_norm = str(course).strip().upper()
+    sem_norm = _normalize_semester(semester)
+    atype_norm = _normalize_assessment_type(assessment_type)
+
+    sql = """
+        SELECT id
+        FROM files
+        WHERE UPPER(course) = %s
+          AND year = %s
+          AND UPPER(semester) = %s
+          AND UPPER(assessment_type) = %s
+        {order_clause}
+        LIMIT 1
+    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
+
+    params = (course_norm, year_int, sem_norm, atype_norm)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    params = (course, year, semester, assessment_type)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    return
 
 def _safe_join_file(base_dir: str, file_path: str) -> str:
     """
@@ -96,29 +352,6 @@ def _safe_join_file(base_dir: str, file_path: str) -> str:
     if not (candidate == base_dir_norm or candidate.startswith(base_dir_norm + os.sep)):
         raise FileNotFoundError("Invalid file path")
     return candidate
-
-def _get_file_row(file_id: int):
-    """
-    Fetch file metadata from files table using its primary key
-
-    Args:
-        file_id (int): file_id of the desired file for download
-
-    Returns:
-        dict: {
-            "id": int,
-            "file_name": str,
-            "file_path" str, 
-            "uploaded_at": datetime.datetime
-        }
-    
-    Raises:
-        None if not found
-    """
-    with closing(get_connection()) as conn:
-        cur = conn.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
-        return cur.fetchone()
 
 def normalize_concept_tags(val):
     """
@@ -229,160 +462,6 @@ def predict_row(row: dict) -> float:
     }])
     yhat = float(difficulty_model.predict(X)[0])
     return float(np.clip(yhat, 0.0, 1.0))
-
-def _normalize_semester(sem: str) -> str:
-    """
-    Normalize various semester inputs to a compact canonical form
-    Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
-
-    Args:
-        sem (str): Semester label/value
-
-    Returns:
-        str: Semester Code
-
-    Raises:
-        None
-    """
-    if sem is None:
-        return ""
-    s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
-    # Remove duplicate spaces
-    s = " ".join(s.split())
-
-    # Common mappings
-    if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
-        return "S1"
-    if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
-        return "S2"
-    if s in {"st1", "st 1", "special term 1", "specialterm 1", "special term i", "st i"}:
-        return "ST1"
-    if s in {"st2", "st 2", "special term 2", "specialterm 2", "special term ii", "st ii"}:
-        return "ST2"
-    return s.upper()
-
-
-def _normalize_assessment_type(t: str) -> str:
-    """
-    Normalize assessment_type strings to lowercase and remove whitespaces
-
-    Args:
-        t (str): Assessment type
-
-    Returns:
-        str: Normalised assessment type lowercased with whitespaces trimmed
-
-    Raises:
-        None
-    """
-    if t is None:
-        return ""
-    s = str(t).strip().lower().replace("-", " ")
-    s = " ".join(s.split())
-    return s.lower()
-
-
-def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
-    """
-    Search for 'file_id' by matching 'course', 'year', 'semester', 'assessment_type'
-    If latest = 'True', look for the most recently uploaded file
-
-    Args:
-        course (str): Course code, e.g. "ST2131"
-        year (int/str): Year (convert to int)
-        semester (str): Semester code, e.g. 2410
-        assessment_type (str): e.g. "quiz", "midterm"
-        latest (bool): If True, choose the most recent match based on uploaded_at and id
-
-    Returns:
-        int/None:
-            Matching files.id else None if no match
-    
-    Raises:
-        ValueError: If missing course or year not integer-like
-        MySQLError: If database cannot be established
-    """
-    if not course:
-        raise ValueError("course is required")
-    try:
-        year_int = int(str(year).strip())
-    except Exception:
-        raise ValueError("year must be an integer-like value")
-
-    course_norm = str(course).strip().upper()
-    sem_norm = _normalize_semester(semester)
-    atype_norm = _normalize_assessment_type(assessment_type)
-
-    sql = """
-        SELECT id
-        FROM files
-        WHERE UPPER(course) = %s
-          AND year = %s
-          AND UPPER(semester) = %s
-          AND UPPER(assessment_type) = %s
-        {order_clause}
-        LIMIT 1
-    """.format(order_clause="ORDER BY uploaded_at DESC, id DESC" if latest else "")
-
-    params = (course_norm, year_int, sem_norm, atype_norm)
-
-    with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        row = cur.fetchone()
-        return int(row[0]) if row else None
-    params = (course, year, semester, assessment_type)
-
-    with closing(get_connection()) as conn:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        row = cur.fetchone()
-        return int(row[0]) if row else None
-    return
-
-def has_column(conn, table: str, col: str) -> bool:
-    """
-    Check whether a given column exists in a table in the current database
-
-    Args:
-        conn: An open DB-API compatible database connection
-        table (str): The name of the table to inspect
-        col (str): The column name to look for
-
-    Returns:
-        bool: `True` if the column exists on the table in the current database,
-        `False` otherwise
-    """
-    with closing(conn.cursor()) as c:
-        c.execute("""
-            SELECT COUNT(*)
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = DATABASE()
-              AND TABLE_NAME = %s
-              AND COLUMN_NAME = %s
-        """, (table, col))
-        return c.fetchone()[0] == 1
-
-def get_connection():
-    """
-    Create a new MySQL connection using environment variables:
-    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
-
-    Args:
-        None.
-
-    Returns:
-        MYSQLdb.connection: Open a connection to the quizbank database.
-
-    Raises:
-        MySQLdb.Error: If connection cannot be established. 
-    """
-    return MySQLdb.connect(
-        host=os.getenv("MYSQL_HOST", "db"),
-        user=os.getenv("MYSQL_USER", "quizbank_user"),
-        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
-        db=os.getenv("MYSQL_DATABASE", "quizbank"),
-    )
 
 def _get_question_row(question_id: int):
     with closing(get_connection()) as conn:
@@ -816,57 +895,6 @@ def predict_difficulty():
         "items": results[:100],
     })
 
-# ---- Upload / pipeline config ----
-app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
-app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
-ALLOWED_EXTENSIONS = {"pdf"}
-
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
-SRC_DIR  = DATA_DIR / "source_files"
-TXT_DIR  = DATA_DIR / "text_extracted"
-JSON_DIR = DATA_DIR / "json_output"
-
-for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
-    _d.mkdir(parents=True, exist_ok=True)
-
-def _allowed_pdf(filename: str) -> bool:
-    """
-    Checks if an uploaded filename has a permitted extension
-
-    Currently only `.pdf` files are allowed
-    The check is case-insensitive and only looks at the final extension
-
-    Args:
-        filename (str): Name of the uploaded file
-
-    Returns:
-        bool: True if the filename ends with an allowed extension, False otherwise
-    """
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def _run(cmd, env_extra=None, timeout=900):
-    """
-    Run a subprocess in the project base directory and capture its output
-
-    Args:
-        cmd (str): Shell-like command to run (e.g. "python pdf_extractor.py")
-        env_extra (dict, optional): Extra environment variables to merge into
-            the current process environment
-        timeout (int, optional): Max number of seconds to allow the process
-            to run before raising a timeout - Defaults to 900s
-
-    Returns:
-        tuple[int, str, str]:
-            - returncode (int): Process return code (0 on success)
-            - stdout (str): Captured standard output (stripped)
-            - stderr (str): Captured standard error (stripped)
-    """
-    env = dict(os.environ)
-    if env_extra: env.update(env_extra)
-    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
-    return p.returncode, p.stdout.strip(), p.stderr.strip()
-
 # ---- Upload Route ----
 @app.post("/upload_file")
 def upload_file():
@@ -913,6 +941,7 @@ def upload_file():
         - DB insert failure is reported but does not roll back the file save
         - Accept more file types
     """
+    print("--- STARTING UPLOAD HANDLER ---") # <--- ADDED
     course = request.form.get("course")
     year = request.form.get("year")
     semester = request.form.get("semester")
@@ -1071,10 +1100,10 @@ def upload_page():
 
 # ---- Edit Question Route ----
 
-ALLOWED_QUESTION_FIELDS_FOR_EDIT = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
-ALLOWED_FILE_FIELDS_FOR_EDIT = {"assessment_type", "course", "year", "semester"}
+Aallowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
 
-@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"])
+@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 def update_question(q_id):
     """
     Supports editing selected fields in the 'questions' table ("question_stem", 
@@ -1103,7 +1132,8 @@ def update_question(q_id):
     Raises:
         Database and JSON errors are handled and returned as 4xx/5xx flask responses.
     """
-    # The requested edit attribute
+
+    # the requested edit attribute
     payload = request.get_json(silent=True) or {}
     if not payload:
         return jsonify({"error": "empty_body"}), 400
@@ -1112,9 +1142,9 @@ def update_question(q_id):
     question_updates = {}
     file_updates = {}
     for k,v in payload.items():
-        if k in ALLOWED_QUESTION_FIELDS_FOR_EDIT:
+        if k in allowed_question_fields_for_edit:
             question_updates[k] = v
-        elif k in ALLOWED_FILE_FIELDS_FOR_EDIT:
+        elif k in allowed_file_fields_for_edit:
             file_updates[k] = v
 
     if not question_updates and not file_updates:
@@ -1157,19 +1187,19 @@ def update_question(q_id):
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
 
-        # For questions table edits
+        # for questions table edits
         if question_updates:
             set_sql = ", ".join(f"{k}=%s" for k in question_updates)
             cur.execute(f"UPDATE questions SET {set_sql} WHERE id=%s LIMIT 1",
                         (*question_updates.values(), q_id))
             conn.commit()
 
-        # For files table edits
+        # for files table edits
         if file_updates:
-            # Get the file_id
+            # first get the file_id
             cur.execute("SELECT file_id FROM questions WHERE id=%s", (q_id,))
             row = cur.fetchone()
-            # If file does not exist
+            # if not row then file don't exist
             if not row:
                 return jsonify({"error": "not_found_or_deleted", "id": q_id}), 404
             file_id = row["file_id"]
@@ -1191,7 +1221,7 @@ def update_question(q_id):
         """, (q_id,))
         row = cur.fetchone()
 
-    # Convert concept_tags back from JSON string to Python List for readibility
+    # convert concept_tags back from JSON string to Python List for readibility
     if row and row.get("concept_tags"):
         row["concept_tags"] = parse_json_field(row["concept_tags"])
         
@@ -1204,8 +1234,8 @@ def update_question(q_id):
     return jsonify(row), 200
 
 # ---- Hard Deletion Route ----
-@app.route("/api/harddeletequestions/<int:q_id>", methods=["DELETE"])
-def hard_delete_question(q_id):
+@app.route("/api/deletequestion/<int:q_id>", methods=["DELETE"])
+def delete_question(q_id):
     """
     Permanently delete a question from the 'questions' table.
 
@@ -1226,16 +1256,7 @@ def hard_delete_question(q_id):
         All exceptions handled and returned as 4xx/5xx flask responses.
 
     """
-    # Confirm before hard delete
-    confirm = request.args.get("confirm", "").upper()
-    if confirm != "YES":
-        return jsonify({
-            "error": "confirmation_required",
-            "message": "Add ?confirm=YES to permanently delete the question."
-        }), 400
 
-@app.route("/api/deletequestion/<int:q_id>", methods=["DELETE"])
-def delete_question(q_id):
     deleted_file_id = None
     
     with closing(get_connection()) as conn:
@@ -1253,8 +1274,6 @@ def delete_question(q_id):
         # 2. Delete the question from the questions table
         try:
             cur.execute("DELETE FROM questions WHERE id = %s LIMIT 1", (q_id,))
-            conn.commit()
-            # If there is no row to delete
             if cur.rowcount == 0:
                 conn.commit()
                 return jsonify({"status": "not_found", "id": q_id}), 404
@@ -1313,6 +1332,7 @@ def addquestion():
         Input and database error are handled and returned as 4xx/5xx flask responses.
 
     """
+
     payload = request.get_json(silent=True) or {}
 
     # Required fields: find file_id or create it from metadata
@@ -1372,10 +1392,10 @@ def addquestion():
     if isinstance(answer_raw, (dict, list)):
         answer_val = json.dumps(answer_raw, ensure_ascii=False)
     else:
-        # Leave as scalar string/number/None
-        answer_val = answer_raw
+        # Template 1 uses raw_answer which is not defined, Template 2 uses answer_raw. Using answer_raw.
+        answer_val = answer_raw 
 
-    # Insertion
+    # ---- Insert ----
     insert_sql = """
         INSERT INTO questions (
             question_base_id, version_id, file_id,
