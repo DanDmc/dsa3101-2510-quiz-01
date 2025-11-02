@@ -17,6 +17,23 @@ Question extraction from uploaded PDF, categorises metadata, and predicts diffic
 ```bash
 cd infra
 docker compose up --build
+
+This will start up the containers for the DB, the flask API, the frontend server and the difficulty rating model deployment.
+When finished running, it should display
+seed-difficulty-1  | [seed] done.
+
+The database will be populated with seed data from the 4 assessment pdfs stored in data/source_files, which was created through the upload processes using python scripts in 'backend'.
+
+MySQL DB (db) runs on port 3306 in the container.
+
+Adminer for the DB is accessible at: http://127.0.0.1:8080
+
+Flask API (api) runs on port 5000 in the container, and is accessible at: http://127.0.0.1:5001
+
+Frontend app (frontend) runs on port 5173 in the container, and its User Interface is accessible at: http://localhost:5173
+
+
+
 ```
 ## Summary
 The folder holds all folder crucial in setting up and dockerising our quiz project.
