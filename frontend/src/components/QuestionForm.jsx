@@ -1,3 +1,22 @@
+/**
+ * @file QuestionForm component.
+ * @module components/QuestionForm
+ * Renders a simplified, single question input form primarily for creation or basic editing.
+ *
+ * This component displays controls for question type, tagging, required status, 
+ * the question stem text field, and a mock section for answer choices. Note that 
+ * the answer choices are currently rendered using static mock data and are not 
+ * fully functional for dynamic state manipulation.
+ *
+ * @typedef {object} ActiveQuestionData
+ * @property {string} [text] - The initial question text to pre-fill the question stem input.
+ *
+ * @param {object} props The component props.
+ * @param {ActiveQuestionData} [props.activeQuestion] - An optional object containing 
+ * data for the question currently selected or being edited.
+ * @returns {JSX.Element} A Material-UI Card containing the question form elements.
+ */
+
 // src/components/QuestionForm.jsx (Updated to remove image functionality)
 
 import React from 'react';
@@ -44,7 +63,7 @@ function QuestionForm({ activeQuestion }) {
 
         {/* Question Input Area - Now uses full 12 columns since image is removed */}
         <Grid container spacing={2}>
-          <Grid item xs={12}> {/* 🛠️ FIX 2: Changed to xs=12 to take up full row width */}
+          <Grid item xs={12}> {/* Changed to xs=12 to take up full row width */}
             <Typography variant="body1" fontWeight="bold" gutterBottom>Question 1*</Typography>
             <TextField
               fullWidth
@@ -56,14 +75,13 @@ function QuestionForm({ activeQuestion }) {
               sx={{ backgroundColor: '#f9f9f9' }}
             />
           </Grid>
-          {/* Removed the image placeholder Grid item */}
         </Grid>
         
         {/* Choices Section */}
         <Box mt={3}>
           <Typography variant="body1" fontWeight="bold">Choices*</Typography>
           
-          {/* Removed the "Question with Image" Switch */}
+          {/* Removed the "Question with Image" Switch, we didn't manage to implement it in time (Depreciated) */}
           
           {mockChoices.map((index) => (
             <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>

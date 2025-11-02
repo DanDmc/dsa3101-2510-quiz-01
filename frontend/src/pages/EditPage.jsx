@@ -1,3 +1,34 @@
+/**
+ * @file EditPage component.
+ * @module pages/EditPage
+ * Renders the main interface for bulk editing questions loaded from the database or uploaded via file.
+ *
+ * This component initializes its state with `selectedQuestions` from the parent route, manages all 
+ * question-specific and global assessment metadata state, and coordinates the saving (PATCH/POST) 
+ * and deletion (DELETE) operations with the API. It includes file upload functionality to dynamically 
+ * append new questions to the current editing session.
+ *
+ * @typedef {object} QuestionData
+ * @property {number} id - Local unique ID.
+ * @property {number} question_base_id - ID of the original question record in the database (0 if local/new).
+ * @property {string} [question_stem] - The question text.
+ * @property {Array<string>} [concept_tags] - List of concept tags.
+ * @property {string | null} [course] - Course metadata.
+ *
+ * @param {object} props The component props.
+ * @param {Array<QuestionData>} props.selectedQuestions - The array of question objects passed from the previous route 
+ * (e.g., the search page) to be loaded and edited.
+ * @param {function(): void} props.goToHomePage - Navigation handler to return to the application's home page (used by CreateToolbar's Cancel and after successful saving/deletion).
+ * @param {number} [props.headerHeight=0] - Height of the header component for CSS viewport calculations.
+ * @param {number} [props.footerHeight=0] - Height of the footer component for CSS viewport calculations.
+ * @returns {JSX.Element} A layout containing the question sidebar, global metadata toolbar, and scrollable form area.
+ * @fires fetch - Triggers API calls for:
+ * - POST to '/api/createquestion' (for new questions added during the session).
+ * - PATCH to '/api/editquestions/:id' (for updates to existing questions).
+ * - DELETE to '/api/deletequestion/:id' (for permanently removing saved questions).
+ * - POST to '/api/upload_file' (to import questions from a local file).
+ */
+
 // src/pages/EditPage.jsx
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
@@ -6,7 +37,7 @@ import {
     Container,
     CssBaseline,
     Grid,
-    Button, // ⬅️ Used as a standard button, not a label
+    Button,
     Divider,
     Typography
 } from '@mui/material';
@@ -169,7 +200,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
         }
     }, [activeQuestionId]);
 
-    // 🌟 HANDLER: Add a new question
+    // HANDLER: Add a new question
     const handleAddQuestion = useCallback(() => {
         setQuestions(prevQuestions => {
             const maxExistingId = Math.max(0, ...prevQuestions.map(q => q.id));
@@ -205,7 +236,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
         }));
     }, []);
 
-    // ✅ MODIFIED: Deletion Handler for EditPage (Requires API call)
+    // Deletion Handler for EditPage (Requires API call)
     const handleDeleteQuestion = useCallback(async (questionToDelete) => {
         const idToDelete = questionToDelete.id;
         const questionBaseId = questionToDelete.question_base_id;
@@ -264,7 +295,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
         }
     }, [questions, goToHomePage]); // Added goToHomePage as dependency for call inside setActiveQuestionId
 
-    // ... (Filter logic is retained) ...
+    // ... Filter logic ...
     const handleFilterToggle = (filterValue) => {
         setActiveFilters(prevFilters => {
             if (prevFilters.includes(filterValue)) {
@@ -283,7 +314,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
     const filteredQuestions = getFilteredQuestions();
 
 
-    // 🎯 HANDLER: Implements the branching save/update logic (Logic retained)
+    // HANDLER: Implements the branching save/update
     const handleSaveAll = async () => {
         const publishStartTime = Date.now();
 
@@ -373,7 +404,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
 
     const handleDownload = () => { alert('Download triggered'); };
     
-    // 🔑 NEW ASYNC HANDLER: Uploads the file and handles the response
+    // ASYNC HANDLER: Uploads the file and handles the response
     const handleFileChange = async (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -435,7 +466,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
         }
     };
 
-    // 💥 MODIFIED HANDLER: This function only executes the log and opens the file explorer.
+    // HANDLER: This function only executes the log and opens the file explorer.
     const handleUploadButtonClick = () => {
         // 1. Print the required console message (prints only once now)
         console.log("you are on the EditPage");
@@ -472,16 +503,16 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
                         <Box sx={{ textAlign:'center' }}>
                             <Button 
                                 variant="contained" 
-                                onClick={handleUploadButtonClick} // ⬅️ Triggers log and file explorer
+                                onClick={handleUploadButtonClick} // Triggers log and file explorer
                                 disabled={isUploading}
                                 sx={{ backgroundColor:ORANGE_COLOR, color:WHITE_COLOR }}>
                                 {isUploading ? 'Processing File...' : 'Upload File'}
-                                {/* 🔑 Hidden File Input Element: Now wired to the async handleFileChange */}
+                                {/* Hidden File Input Element: Wired to the async handleFileChange */}
                                 <input
                                     id="edit-page-file-upload-input" 
                                     type="file" 
                                     hidden 
-                                    onChange={handleFileChange} // ⬅️ API call and state update happens here
+                                    onChange={handleFileChange} // API call and state update happens here
                                 />
                             </Button>
                         </Box>
@@ -521,7 +552,6 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
                             <Grid item sx={{ maxWidth:FORM_GRID_WIDTH, mb: 0.5 }}>
                                 <CreateFilterToolbar
                                     ref={filterToolbarRef} // Added ref here
-                                    // 🚨 CRITICAL PROPS PASSED DOWN
                                     selectedQuestions={questions} // Pass the state being edited
                                     isEditMode={true}
                                     isGroupedAssessment={isGroupedAssessment}
@@ -549,7 +579,7 @@ function EditPage({ selectedQuestions, goToHomePage, headerHeight = 0, footerHei
                                                 key={q.id}
                                                 ref={el => { questionRefs.current[q.id] = el; }}
                                                 sx={{
-                                                    // Dynamic styling (retained)
+                                                    // Dynamic styling
                                                     maxWidth: q.id === activeQuestionId ? `calc(${FORM_GRID_WIDTH} + ${ACTIVE_FORM_WIDTH_INCREASE})` : FORM_GRID_WIDTH,
                                                     border: q.id === activeQuestionId ? '2px solid #F57F17' : 'none',
                                                     borderRadius: '8px',

@@ -1,3 +1,13 @@
+/**
+ * @file Footer component.
+ * @module components/Footer
+ * Renders a static footer component designed to sit at the bottom of the page.
+ * * It displays copyright information, version details, and maintenance credits.
+ * This component takes no props and is purely presentational.
+ * * @param {object} props The component props (none used).
+ * @returns {JSX.Element} A Material-UI Box element configured as the page footer.
+ */
+
 // src//components/Footer.jsx
 
 import React from 'react';

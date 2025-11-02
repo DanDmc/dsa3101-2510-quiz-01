@@ -1,3 +1,24 @@
+/**
+ * @file CreateQuestionPage component.
+ * @module pages/CreateQuestionPage
+ * Renders the main interface for manually creating or bulk editing a collection of questions.
+ *
+ * This page acts as the state manager for a dynamically generated list of questions (`questions`). 
+ * It coordinates the sidebar navigation (QuestionStepper), the global metadata controls 
+ * (CreateFilterToolbar), and the individual question editing forms (EditQuestionForm). 
+ * The main features include auto-creation of the first question, state synchronization for 
+ * global assessment metadata, and the logic for publishing the entire question set to the API.
+ *
+ * @param {object} props The component props.
+ * @param {function(): void} props.goToHomePage - Navigation handler to return to the application's home page (used by CreateToolbar's Cancel).
+ * @param {number} [props.headerHeight=0] - Height of the header component, used for CSS viewport calculations.
+ * @param {number} [props.footerHeight=0] - Height of the footer component, used for CSS viewport calculations.
+ * @param {function(Array<object>): void} props.onNavigateToEdit - Handler used by the "Upload File" button 
+ * to transfer the currently composed questions array to an external edit page route.
+ * @returns {JSX.Element} A layout containing the question sidebar and the scrollable form area.
+ * @fires fetch - Triggers API calls to the '/api/createquestion' endpoint for each question during the publish process.
+ */
+
 // src/pages/CreateQuestionPage.jsx
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import {
@@ -34,7 +55,7 @@ const createNewQuestion = (id) => ({
 
 const cleanValue = (value) => (value === '' || value === undefined ? null : value);
 
-// 🔑 MODIFICATION 1: Accept the new navigation/data transfer prop
+// Accept the new navigation/data transfer prop
 function CreateQuestionPage({ goToHomePage, headerHeight = 0, footerHeight = 0, onNavigateToEdit }) {
     const SIDEBAR_WIDTH_MD = 300;
     const ORANGE_COLOR = '#F57F17';
@@ -145,7 +166,7 @@ function CreateQuestionPage({ goToHomePage, headerHeight = 0, footerHeight = 0, 
         );
     };
 
-    // ✅ MODIFIED: Removed the unnecessary window.confirm for unsaved local data
+    // Removed the unnecessary window.confirm for unsaved local data
     const handleDeleteQuestion = useCallback((idToDelete) => {
         // No confirmation needed for unsaved questions in a Create workflow
         
@@ -264,7 +285,7 @@ function CreateQuestionPage({ goToHomePage, headerHeight = 0, footerHeight = 0, 
     
     const handleDownload = () => { alert('Download triggered'); };
     
-    // 💥 MODIFICATION 2: This handler performs the navigation and data transfer
+    // This handler performs the navigation and data transfer
     const handleFileUpload = () => {
         // 1. Log the required message (from the previous request)
         
@@ -301,7 +322,7 @@ function CreateQuestionPage({ goToHomePage, headerHeight = 0, footerHeight = 0, 
                             />
                         </Box>
                         <Box sx={{ textAlign:'center' }}>
-                            {/* 💥 MODIFICATION 3: Button now directly calls the modified handler 
+                            {/* Button now directly calls the modified handler 
                                 and the file input logic has been removed. */}
                             <Button variant="contained" component="label"
                                 onClick={handleFileUpload} // Calls the new transfer/navigate function

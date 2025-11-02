@@ -1,3 +1,10 @@
+/*
+ * File: App.css
+ * Description: Global base styles, including the spinning logo animation and utility classes.
+ * Purpose: Defines visual behavior for the application's root elements and common utilities.
+ */
+
+/* --- 1. LOGO AND ANIMATION STYLES --- */
 
 
 .logo {
@@ -21,6 +28,10 @@
     transform: rotate(360deg);
   }
 }
+
+/* * Media Query: Applies the spinning animation only if the user does NOT 
+ * prefer reduced motion (accessibility check).
+ */
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {

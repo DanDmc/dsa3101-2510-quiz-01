@@ -3,29 +3,23 @@ PDF Text and Page Image Extractor
 ==================================
 
 This module extracts text content from PDF files and saves ALL pages as images
-for visual reference in the frontend.
-
-Features:
-- Extracts text from all pages of PDF files
-- Saves EVERY page as PNG (not just pages with embedded images)
-- Inserts page image path placeholders in text with page numbers
-- Maintains page break information for context
-
-The extracted text and page image references are used by llm_parser.py to 
-structure questions into the database.
+for visual reference in the frontend. It is standardized on Python's pathlib.Path.
 """
 
 import re
 from pathlib import Path
 import os
+import sys
+from pathlib import Path # <-- Use Pathlib for consistency
 import pdfplumber
 
 
+# NOTE: Default paths are now pathlib.Path objects
 def extract_text_and_page_images(
-    source_dir="data/source_files", 
-    text_dir="data/text_extracted",
-    media_dir="data/question_media",
-    target_pdf=None  # <-- FIX: Added argument to accept a specific file
+    source_dir: Path = Path("data/source_files"), 
+    text_dir: Path = Path("data/text_extracted"),
+    media_dir: Path = Path("data/question_media"),
+    target_pdf: str = None 
 ):
     """
     Extract text from all PDF files and save ALL pages as images.
@@ -71,7 +65,7 @@ def extract_text_and_page_images(
             raise FileNotFoundError(f"TARGET_PDF = {target_pdf} not found in {source_dir}")
         base_name = os.path.splitext(target_pdf)[0]
         txt_filename = base_name + ".txt"
-        text_output_path = os.path.join(text_dir, txt_filename)
+        text_output_path = text_dir / txt_filename
 
         print(f"🧾 Extracting text and saving ALL page images from {target_pdf}...")
 
@@ -87,18 +81,18 @@ def extract_text_and_page_images(
                     page_text = re.sub(r'\(cid:\d+\)', '', page_text)  # removes markers
                     page_text = re.sub(r'\s{2,}', ' ', page_text)    # normalize extra spaces
 
-
                     # Save EVERY page as image
                     img_filename = f"{base_name}_page{i}.png"
-                    img_rel_path = os.path.join(media_dir, img_filename)
+                    img_rel_path = media_dir / img_filename # Full path where image is saved
 
                     # Render entire page as image and save
                     page_image = page.to_image(resolution=200)
                     page_image.save(img_rel_path)
 
                     # Insert placeholder with path AND page number
-                    # Use a clean relative path for the text file
-                    img_placeholder_path = os.path.join(os.path.basename(media_dir), img_filename)
+                    # The path reported in the text file MUST be relative to the media_dir base
+                    # to be correctly resolved by the Flask app.
+                    img_placeholder_path = Path(media_dir.name) / img_filename
                     placeholder = f"[PAGE_IMAGE_SAVED: {img_placeholder_path}] [PAGE_NUMBER: {i}]"
                     page_text += f"\n{placeholder}\n"
 
@@ -119,15 +113,16 @@ def extract_text_and_page_images(
             print(f"❌ Failed to process {target_pdf}: {e}\n")
 
 if __name__ == "__main__":
-    # --- FIX: Read the environment variable passed from app.py ---
+    # --- Execute the unified function based on ENV var ---
+    
     target_pdf = os.getenv("TARGET_PDF")
     
     if not target_pdf:
         print("Warning: TARGET_PDF environment variable not set.")
         print("Running in 'process all' mode (legacy).\n")
-        # Fallback to old behavior if run manually
+        # Call with no args for batch processing
         extract_text_and_page_images() 
     else:
-        # Pass the single target file into the function
         print(f"Processing single file from TARGET_PDF: {target_pdf}\n")
+        # Pass the environment variable directly (which is the filename string)
         extract_text_and_page_images(target_pdf=target_pdf)

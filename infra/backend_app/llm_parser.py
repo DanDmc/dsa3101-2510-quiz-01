@@ -24,12 +24,13 @@ import io
 import json
 import re
 import time
-import google.generativeai as genai
+from google import genai
+from google.genai.types import HarmCategory, HarmBlockThreshold, GenerationConfig
+from google.genai import types
 
-
-# === Configuration ===
+# === 1. Configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = "gemini-1.5-flash"  # Note: Updated to gemini-1.5-flash as 2.5 isn't public
+MODEL = "gemini-1.5-flash"
 
 TEXT_DIR = Path("data/text_extracted")
 JSON_DIR = Path("data/json_output")
@@ -39,15 +40,68 @@ if not API_KEY:
     print("Error: GEMINI_API_KEY environment variable not set.")
     sys.exit(1)
 
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel(
-    MODEL,
-    generation_config={
-        "temperature": 0.1,  # low temperature = consistent structured JSON
-        "top_p": 0.95,
-        "top_k": 40,
-    }
+# === 2. LLM Setup and Schema Definition (MAJOR FIX) ===
+
+# Define the strict schema the model MUST follow
+QUESTION_SCHEMA = types.Schema(
+    type=types.Type.ARRAY,
+    items=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "question_no": types.Schema(type=types.Type.STRING, description="Exact numbering (e.g., '1a', '3.1')."),
+            "question_type": types.Schema(
+                type=types.Type.STRING, 
+                description="Classification: mcq|mrq|coding|open-ended|fill-in-the-blanks|others.",
+                enum=["mcq", "mrq", "coding", "open-ended", "fill-in-the-blanks", "others"],
+            ),
+            "difficulty_rating_manual": types.Schema(
+                type=types.Type.NUMBER, 
+                description="Manual difficulty rating, decimal 0.0–1.0. Convert percent to decimal if present.",
+            ),
+            "question_stem": types.Schema(
+                type=types.Type.STRING, 
+                description="The question text only (no options/answers). Replace any image markers with '(Image - Refer to question paper)'."
+            ),
+            "question_options": types.Schema(
+                type=types.Type.ARRAY,
+                description="Array of {'label': 'A', 'text': '...'} for MCQ/MRQ, empty list [] otherwise. Replace any image markers with '(Image - Refer to question paper)'."
+            ),
+            "question_answer": types.Schema(
+                type=types.Type.STRING, 
+                description="The correct answer with explanation if present, or NULL if unknown."
+            ),
+            "page_numbers": types.Schema(
+                type=types.Type.ARRAY, 
+                items=types.Schema(type=types.Type.INTEGER), 
+                description="List of page numbers [X] found in the question."
+            ),
+            "concept_tags": types.Schema(
+                type=types.Type.ARRAY, 
+                items=types.Schema(type=types.Type.STRING), 
+                description="1-3 relevant concept tags (e.g., ['probability', 'distributions']).",
+            ),
+        },
+        required=["question_no", "question_type", "question_stem"],
+    )
 )
+
+# 1. Instantiate the Client and store it globally.
+client = genai.Client(api_key=API_KEY)
+
+# 2. Define the configuration object globally.
+GLOBAL_GENERATION_CONFIG = types.GenerationConfig(
+    temperature=0.1, 
+    top_p=0.95,
+    top_k=40,
+    response_mime_type="application/json", 
+    response_schema=QUESTION_SCHEMA
+)
+
+GLOBAL_SAFETY_SETTINGS = [
+    HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
+]
+
+# NOTE: The global 'model' object is ELIMINATED. We use 'client' for all API calls.
 
 
 # === Utility Functions ===
@@ -202,7 +256,7 @@ def map_pages_to_images(questions, page_to_image_map):
         page_numbers_raw = q.get("page_numbers", [])
         image_paths = []
         
-        # Ensure page_numbers are integers
+        # Ensure page_numbers are integers (V1/V2 cleaning logic)
         page_numbers = []
         if isinstance(page_numbers_raw, list):
             for p in page_numbers_raw:
@@ -252,16 +306,20 @@ def parse_file(txt_file):
         list[dict] | None: List of parsed question dicts if at least one chunk
         was successfully parsed; None if no questions could be parsed.
     """
+    
+    # Global variables required by this function
+    global client, MODEL, GLOBAL_GENERATION_CONFIG, GLOBAL_SAFETY_SETTINGS
     input_path = os.path.join(TEXT_DIR, txt_file)
 
+    # Use Path object directly
     try:
-        with open(input_path, "r", encoding="utf-8") as f:
+        with open(txt_file_path, "r", encoding="utf-8") as f:
             full_text = f.read()
     except FileNotFoundError:
-        print(f" Error: Text file not found at {input_path}")
+        print(f" Error: Text file not found at {txt_file_path}")
         return None
     except Exception as e:
-        print(f" Error reading file {input_path}: {e}")
+        print(f" Error reading file {txt_file_path}: {e}")
         return None
 
 
@@ -299,23 +357,27 @@ def parse_file(txt_file):
         try:
             prompt = build_prompt(chunk_text)
             
-            # === DEBUG: Show what is sent to LLM (first 500 chars only) ===
-            # print("\n=== PROMPT (truncated) ===")
-            # print(prompt[:500] + "...\n====================")
+            # 🚨 CRITICAL FIX USAGE: Call the API via client.models.generate_content 🚨
+            response = client.models.generate_content(
+                model=MODEL, 
+                contents=prompt,
+                config=GLOBAL_GENERATION_CONFIG
+                # safety_settings=GLOBAL_SAFETY_SETTINGS # Removed because it was causing errors
+            )
+            # 🚨 END FIX USAGE 🚨
             
-            response = model.generate_content(prompt)
-            
-            # === DEBUG: Show raw output from LLM ===
-            # print("\n=== RAW LLM OUTPUT ===")
-            # print(response.text[:1000] + "...\n====================")
-
+            # Since the model is forced to output JSON, the text *should* be clean.
             output = sanitize_output(response.text)
 
             # Attempt to clean up stray characters if JSON fails
             output_clean = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', output)
+            
+            # The output is an array of questions, but if the LLM output is wrapped 
+            # in prose, the schema enforcement might put it in a single object.
             parsed = json.loads(output_clean)
 
             if not isinstance(parsed, list):
+                # If the schema enforcement produced a single object instead of an array
                 parsed = [parsed]
 
             elapsed = time.time() - start
@@ -325,6 +387,7 @@ def parse_file(txt_file):
         except json.JSONDecodeError as e:
             elapsed = time.time() - start
             print(f" Invalid JSON ({elapsed:.1f}s) — {e}")
+            # Log the invalid content for later debugging/manual correction
             print("---START OF INVALID JSON---")
             print(output_clean)
             print("---END OF INVALID JSON---")
@@ -379,7 +442,7 @@ def parse_exam_papers():
         
         file_start = time.time()
 
-        questions = parse_file(txt_file)
+        questions = parse_file(txt_file_path)
 
         if questions:
             output_path = os.path.join(JSON_DIR, os.path.splitext(txt_file)[0] + ".json")
@@ -390,11 +453,11 @@ def parse_exam_papers():
             with_imgs = sum(1 for q in questions if q.get("page_image_paths"))
             with_pages = sum(1 for q in questions if q.get("page_numbers"))
 
-            print(f"\n {len(questions)} questions saved")
+            print(f"\n {len(questions)} questions saved to {output_path.name}")
             print(f" {with_pages} with page numbers, {with_imgs} with images")
             print(f" {elapsed:.1f}s ({elapsed/60:.1f} min)")
         else:
-            print(f" No questions found")
+            print(f" No questions found in {txt_file_name}")
 
     total_elapsed = time.time() - file_start
     print(f"\n{'='*60}")
@@ -403,17 +466,19 @@ def parse_exam_papers():
 
 
 if __name__ == "__main__":
-    # ===== Option 2: Ensure stdout supports UTF-8 (cross-platform) =====
+    # ===== Ensure stdout supports UTF-8 (cross-platform) =====
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-    # --- FIX: Read the environment variable from app.py ---
+     # --- FIX: Read the environment variable from app.py ---
     target_base = os.getenv("TARGET_BASE")
 
-    if not target_base:
-        print("Warning: TARGET_BASE environment variable not set.")
-        print("Running in 'process all' mode (legacy).\n")
-        parse_exam_papers() # Fallback to old behavior
-    else:
+    if target_base:
+        # Pipeline Mode
         # Pass the single target base name into the function
         print(f"Processing single file from TARGET_BASE: {target_base}\n")
         parse_exam_papers(target_base=target_base)
+    else:
+        # Legacy Mode
+        print("Warning: TARGET_BASE environment variable not set.")
+        print("Running in 'process all' mode (legacy).\n")
+        parse_exam_papers() # Fallback to old behavior

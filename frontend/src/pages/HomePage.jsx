@@ -1,3 +1,40 @@
+/**
+ * @file HomePage component.
+ * @module pages/HomePage
+ * Renders the main dashboard for the application. It displays the primary table 
+ * of questions, the filtering panel for managing question groups, and the main 
+ * toolbar for global actions.
+ *
+ * This page manages the current question selection (`selected` IDs) and passes 
+ * various event handlers to its children to manage navigation, group filtering, 
+ * bulk deletion, and processing feedback.
+ *
+ * @typedef {object} QuestionData
+ * @property {number} id - The question's ID.
+ * @property {string} question_stem - The question text.
+ * * @typedef {object} FilterOption
+ * @property {string} key - The unique identifier for the option.
+ * @property {string} label - The display name for the option.
+ *
+ * @param {object} props The component props.
+ * @param {Array<QuestionData>} props.questions - The list of questions currently displayed based on the root filter/search state.
+ * @param {function(): void} props.goToCreatePage - Navigation handler to the question creation page.
+ * @param {function(Array<QuestionData>): void} props.goToEditPage - Navigation handler to the edit page with selected questions.
+ * @param {function(object): void} props.goToSearchPage - Handler used to trigger an advanced search query in the parent context.
+ * @param {function(): void} props.goToHomePage - Navigation handler to reset to the default home state.
+ * @param {function(Array<number>): void} props.handleDeleteQuestions - Handler for bulk deleting the specified question IDs.
+ * @param {Array<string>} props.courseGroups - The list of existing question groups (used by QuestionGroups).
+ * @param {function(): void} props.onAddGroup - Handler to add a new question group.
+ * @param {function(string, string): void} props.onRenameGroup - Handler to rename a question group.
+ * @param {function(string): void} props.onDeleteGroup - Handler to delete a question group.
+ * @param {function(Array<string>): void} props.onFilterChange - Handler for updating the active group filters.
+ * @param {boolean} props.isProcessing - State flag indicating if an asynchronous operation (e.g., loading, saving, deletion) is currently running.
+ * @param {Array<FilterOption>} props.courseOptions - Course options for the toolbar filter menu.
+ * @param {Array<string>} props.conceptOptions - Concept tag options for the toolbar filter menu.
+ * @param {function(): void} props.onGenerateDifficulty - Handler triggered by the "Generate Difficulty" button to start model prediction.
+ * @returns {JSX.Element} The primary dashboard layout.
+ */
+
 // src/pages/HomePage.jsx
 
 import React, { useState } from 'react';
@@ -16,7 +53,7 @@ import QuestionToolbar from '../components/QuestionToolbar';
 import QuestionTable from '../components/QuestionTable';
 import QuestionGroups from '../components/QuestionGroups';
 
-// ❌ REMOVED: The hardcoded mockGroups list is no longer needed (from your HEAD logic)
+// REMOVED: The hardcoded mockGroups list is no longer needed (since we call from the database). Mock was early on in testing though we do retain in case if the database connection fails
 
 function HomePage({
   questions: propQuestions,
@@ -26,14 +63,14 @@ function HomePage({
   goToHomePage,
   handleDeleteQuestions,
 
-  // ⭐ Group Management Props (FROM YOUR HEAD)
+  // Group Management Props
   courseGroups,
   onAddGroup,
   onRenameGroup,
   onDeleteGroup,
   onFilterChange,
   isProcessing, // State for showing loading/processing feedback
-  // NEW: Filter options for the Toolbar/Search Page (FROM INCOMING)
+  // Filter options for the Toolbar/Search Page
   courseOptions,
   conceptOptions,
   // 2. ACCEPT THE NEW PROP
@@ -41,7 +78,7 @@ function HomePage({
 }) {
   const [selected, setSelected] = useState([]);
 
-  // ⬅️ NEW: The wrapper function that handles the complex filter object (FROM INCOMING)
+  // The wrapper function that handles the complex filter object
   const openSearchWith = (payload) => {
     let params = {};
 
@@ -98,15 +135,15 @@ function HomePage({
     setSelected([]);
   };
 
-  // ❌ DELETED: handleSafeDeletionToggle is removed
-  // ❌ DELETED: handleRenameGroup/handleDeleteGroup from Incoming are removed (Using HEAD's props/logic)
+  // handleSafeDeletionToggle is removed
+  // handleRenameGroup/handleDeleteGroup from Incoming are removed
 
   // --- START OF JSX RENDER ---
   return (
     <>
       <CssBaseline />
 
-      {/* ⭐ Display processing feedback */}
+      {/* Display processing feedback */}
       {isProcessing && (
         <Alert severity="info" sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -125,11 +162,11 @@ function HomePage({
             numSelected={selected.length}
             goToCreatePage={goToCreatePage}
             goToEditPage={handleEditClick}
-            goToSearchPage={openSearchWith} // ⬅️ NEW: Use the wrapper function
-            // ⬅️ Pass processing state to disable toolbar buttons
+            goToSearchPage={openSearchWith} // Use the wrapper function
+            // Pass processing state to disable toolbar buttons
             disabled={isProcessing}
             handleDeleteClick={handleDeleteClick}
-            // ⬅️ NEW: Feed options down for the filter menu
+            // Feed options down for the filter menu
             courseOptions={courseOptions}
             conceptOptions={conceptOptions}
           />
@@ -179,9 +216,9 @@ function HomePage({
                   selected={selected}
                   setSelected={setSelected}
                   onSelectAllClick={handleSelectAllClick}
-                  // ⬅️ Pass processing state
+                  // Pass processing state
                   disabled={isProcessing}
-                  // ⬅️ Pass goToEditPage for double-click feature
+                  // Pass goToEditPage for double-click feature
                   goToEditPage={goToEditPage}
                 />
               </Box>
@@ -190,12 +227,12 @@ function HomePage({
             {/* RIGHT COLUMN: GROUPS PANEL */}
             <Grid item xs={12} md={3}>
               <QuestionGroups
-                groups={courseGroups} // ⬅️ Uses HEAD's dynamic groups
+                groups={courseGroups} // dynamic groups
                 onAddGroup={onAddGroup}
                 onRenameGroup={onRenameGroup}
                 onDeleteGroup={onDeleteGroup}
                 onFilterChange={onFilterChange}
-                // ⬅️ Pass processing state to QuestionGroups
+                // Pass processing state to QuestionGroups
                 disabled={isProcessing}
               />
             </Grid>

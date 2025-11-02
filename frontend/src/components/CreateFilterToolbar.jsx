@@ -1,16 +1,52 @@
+/**
+ * @file CreateFilterToolbar component, used for setting and displaying metadata
+ * (Assessment Type, Course, Year, Semester) for questions, particularly in 
+ * a bulk-edit context.
+ * @module components/CreateFilterToolbar
+ * 
+ * Renders a toolbar with controls to set metadata filters.
+ *
+ * This component automatically detects uniformity among selected questions in
+ * 'Edit Mode' and toggles to a 'Grouped Assessment' state, populating the local
+ * state with the common metadata values. It exposes a method via ref to retrieve
+ * the currently modified filters.
+ *
+ * @typedef {object} QuestionMetadata
+ * @property {string} [course] - The course code (e.g., 'ST2131').
+ * @property {string} [assessment_type] - The SQL key for assessment type (e.g., 'quiz').
+ * @property {string} [year] - The academic year (e.g., '2023').
+ * @property {string} [semester] - The academic semester (e.g., 'Semester 1').
+ *
+ * @param {object} props The component props.
+ * @param {Array<QuestionMetadata>} props.selectedQuestions - The list of question objects currently selected for editing.
+ * @param {number} [props.gapSpacing=4] - The spacing unit between filter controls (MUI spacing value).
+ * @param {boolean} [props.isEditMode=false] - Flag to enable uniformity checks and load existing data.
+ * @param {QuestionMetadata} props.assessmentMetadata - The current assessment metadata from the parent state.
+ * @param {function(string, string | null): void} props.onAssessmentMetadataChange - Callback to update parent state when a filter value changes.
+ * @param {function(boolean): void} props.onToggleGroupedAssessment - Callback to inform the parent when the 'isGrouped' state changes.
+ * * @param {React.Ref<{getModifiedFilters: function(): QuestionMetadata}>} ref A forwarded ref used to expose
+ * the `getModifiedFilters` method to the parent component.
+ *
+ * @returns {JSX.Element} A Material-UI Box containing the grouped assessment toggle and metadata input controls.
+ * @fires props.onAssessmentMetadataChange
+ * @fires props.onToggleGroupedAssessment
+ */
+
+// src/components/CreateFilterToolbar.jsx
+
 import React, { useState, useEffect, useImperativeHandle, forwardRef, useMemo } from 'react';
 import {
-    Box,
-    Button,
-    Typography,
-    Switch,
-    FormControlLabel,
-    TextField,
-    MenuItem,
-    Select,
-    InputBase,
-    Stack,
-    Divider,
+    Box,
+    Button,
+    Typography,
+    Switch,
+    FormControlLabel,
+    TextField,
+    MenuItem,
+    Select,
+    InputBase,
+    Stack,
+    Divider,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -18,120 +54,120 @@ import AddIcon from '@mui/icons-material/Add';
 
 // --- ASSESSMENT TYPE MAPPING (UNCHANGED) ---
 const ASSESSMENT_TYPE_MAP = {
-    "Quiz": 'quiz',
-    "Midterms": 'midterm',
-    "Final": 'final',
-    "Assignment": 'assessment', // Based on SQL schema: 'assessment'
-    "Project": 'project',
-    "Others": 'others',
-    // Reverse map for displaying the current selection back in the dropdown UI
-    'quiz': "Quiz",
-    'midterm': "Midterms",
-    'final': "Final",
-    'assessment': "Assignment",
-    'project': "Project",
-    'others': "Others",
+    "Quiz": 'quiz',
+    "Midterms": 'midterm',
+    "Final": 'final',
+    "Assignment": 'assessment', // Based on SQL schema: 'assessment'
+    "Project": 'project',
+    "Others": 'others',
+    // Reverse map for displaying the current selection back in the dropdown UI
+    'quiz': "Quiz",
+    'midterm': "Midterms",
+    'final': "Final",
+    'assessment': "Assignment",
+    'project': "Project",
+    'others': "Others",
 };
 
 // --- STYLED COMPONENTS (UNCHANGED) ---
 const CustomTextField = styled(TextField)(({ theme }) => ({
-    '& .MuiInputBase-root': {
-        borderRadius: '8px',
-        height: '40px',
-        backgroundColor: '#FFFFFF', 
-        color: '#F57F17',
-        border: '1px solid #F57F17',
-        width: '140px',
-    },
-    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-    '& .Mui-disabled': {
-        '&.MuiInputBase-root': { backgroundColor: '#FFFFFF', border: '1px solid #9E9E9E', cursor: 'not-allowed' },
-        '& .MuiInputBase-input': { color: '#9E9E9E' },
-    },
-    '& .MuiInputBase-input': { padding: '0 8px', boxSizing: 'border-box', color: '#F57F17', textAlign: 'center' },
-    '& .MuiInputBase-input::placeholder': { color: '#F57F17', opacity: 1 },
+    '& .MuiInputBase-root': {
+        borderRadius: '8px',
+        height: '40px',
+        backgroundColor: '#FFFFFF', 
+        color: '#F57F17',
+        border: '1px solid #F57F17',
+        width: '140px',
+    },
+    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+    '& .Mui-disabled': {
+        '&.MuiInputBase-root': { backgroundColor: '#FFFFFF', border: '1px solid #9E9E9E', cursor: 'not-allowed' },
+        '& .MuiInputBase-input': { color: '#9E9E9E' },
+    },
+    '& .MuiInputBase-input': { padding: '0 8px', boxSizing: 'border-box', color: '#F57F17', textAlign: 'center' },
+    '& .MuiInputBase-input::placeholder': { color: '#F57F17', opacity: 1 },
 }));
 
 const OrangeSelectButton = styled(Button)(({ theme }) => ({
-    height: '40px', 
-    minWidth: 'auto', 
-    textTransform: 'none', 
-    padding: 0, 
-    borderRadius: '8px',
-    backgroundColor: '#F57F17', 
-    color: '#FFFFFF',
-    boxSizing: 'border-box', 
-    '&:hover': { backgroundColor: '#E66907' },
-    '&.Mui-disabled': { backgroundColor: '#FFFFFF', border: '1px solid #9E9E9E', color: '#9E9E9E' },
+    height: '40px', 
+    minWidth: 'auto', 
+    textTransform: 'none', 
+    padding: 0, 
+    borderRadius: '8px',
+    backgroundColor: '#F57F17', 
+    color: '#FFFFFF',
+    boxSizing: 'border-box', 
+    '&:hover': { backgroundColor: '#E66907' },
+    '&.Mui-disabled': { backgroundColor: '#FFFFFF', border: '1px solid #9E9E9E', color: '#9E9E9E' },
 }));
 
 const WhiteSelectButton = styled(Button)(({ theme }) => ({
-    height: '40px', 
-    minWidth: 'auto', 
-    textTransform: 'none', 
-    padding: 0, 
-    borderRadius: '8px',
-    backgroundColor: '#FFFFFF', color: '#F57F17', border: '1px solid #F57F17',
-    boxSizing: 'border-box', 
-    '&:hover': { backgroundColor: '#F0F0F0' },
-    '&.Mui-disabled': { backgroundColor: '#FFFFFF', border: '1px solid #9E9E9E', color: '#9E9E9E' },
+    height: '40px', 
+    minWidth: 'auto', 
+    textTransform: 'none', 
+    padding: 0, 
+    borderRadius: '8px',
+    backgroundColor: '#FFFFFF', color: '#F57F17', border: '1px solid #F57F17',
+    boxSizing: 'border-box', 
+    '&:hover': { backgroundColor: '#F0F0F0' },
+    '&.Mui-disabled': { backgroundColor: '#FFFFFF', border: '1px solid #9E9E9E', color: '#9E9E9E' },
 }));
 
 const LeftSwitch = styled(Switch)(({ theme }) => ({
-    padding: 8,
-    '& .MuiSwitch-switchBase': {
-        padding: 10,
-        '&.Mui-checked': {
-            color: '#FFFFFF',
-            transform: 'translateX(20px)',
-            '& + .MuiSwitch-track': { backgroundColor: '#97BE98', opacity: 1, border: 0 },
-            '& .MuiSwitch-thumb': { backgroundColor: '#2E7D32' },
-        },
-    },
-    '& .MuiSwitch-track': { borderRadius: 22 / 2, backgroundColor: '#E0E0E0' },
-    '& .MuiSwitch-thumb': { width: 16, height: 16, backgroundColor: '#9E9E9E' },
+    padding: 8,
+    '& .MuiSwitch-switchBase': {
+        padding: 10,
+        '&.Mui-checked': {
+            color: '#FFFFFF',
+            transform: 'translateX(20px)',
+            '& + .MuiSwitch-track': { backgroundColor: '#97BE98', opacity: 1, border: 0 },
+            '& .MuiSwitch-thumb': { backgroundColor: '#2E7D32' },
+        },
+    },
+    '& .MuiSwitch-track': { borderRadius: 22 / 2, backgroundColor: '#E0E0E0' },
+    '& .MuiSwitch-thumb': { width: 16, height: 16, backgroundColor: '#9E9E9E' },
 }));
 
 // --- COMPONENT ---
 const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isEditMode = false, assessmentMetadata, onAssessmentMetadataChange, onToggleGroupedAssessment }, ref) => { 
-    
-    // Initialize state to use null/empty string as needed for database/display
-    // NOTE: assessmentType stores the SQL key (e.g., 'quiz', 'others')
-    const [isGrouped, setIsGrouped] = useState(false);
-    const [assessmentType, setAssessmentType] = useState(''); 
-    const [semester, setSemester] = useState('');
-    const [year, setYear] = useState('');
-    const [course, setCourse] = useState(''); 
-    
-    // 🎯 NEW LOCAL STATES FOR ADD COURSE LOGIC 
-    const [isAddingNewCourse, setIsAddingNewCourse] = useState(false);
-    const [newCourseInput, setNewCourseInput] = useState('');
-    const [localNewCourses, setLocalNewCourses] = useState([]); 
+    
+    // Initialize state to use null/empty string as needed for database/display
+    // NOTE: assessmentType stores the SQL key (e.g., 'quiz', 'others')
+    const [isGrouped, setIsGrouped] = useState(false);
+    const [assessmentType, setAssessmentType] = useState(''); 
+    const [semester, setSemester] = useState('');
+    const [year, setYear] = useState('');
+    const [course, setCourse] = useState(''); 
+    
+    // 🎯 NEW LOCAL STATES FOR ADD COURSE LOGIC 
+    const [isAddingNewCourse, setIsAddingNewCourse] = useState(false);
+    const [newCourseInput, setNewCourseInput] = useState('');
+    const [localNewCourses, setLocalNewCourses] = useState([]); 
 
-    // Local store of the modified filters
-    const [modifiedFilters, setModifiedFilters] = useState({});
+    // Local store of the modified filters
+    const [modifiedFilters, setModifiedFilters] = useState({});
 
-    // 🎯 LOGIC: Determine available courses based on mode and current questions + local additions
-    const availableCourses = useMemo(() => {
-        const courses = new Set();
+    // 🎯 LOGIC: Determine available courses based on mode and current questions + local additions
+    const availableCourses = useMemo(() => {
+        const courses = new Set();
 
-        // 1. Add existing courses (only if in Edit Mode)
-        if (isEditMode && selectedQuestions && selectedQuestions.length > 0) {
-            selectedQuestions.forEach(q => {
-                if (q.course) {
-                    courses.add(q.course);
-                }
-            });
-        }
-        
-        // 2. Add locally created courses
-        localNewCourses.forEach(c => courses.add(c));
-        
-        return Array.from(courses).sort();
-    }, [selectedQuestions, isEditMode, localNewCourses]);
+        // 1. Add existing courses (only if in Edit Mode)
+        if (isEditMode && selectedQuestions && selectedQuestions.length > 0) {
+            selectedQuestions.forEach(q => {
+                if (q.course) {
+                    courses.add(q.course);
+                }
+            });
+        }
+        
+        // 2. Add locally created courses
+        localNewCourses.forEach(c => courses.add(c));
+        
+        return Array.from(courses).sort();
+    }, [selectedQuestions, isEditMode, localNewCourses]);
 
 
-    // ✅ CRITICAL FIX: Logic to check uniformity and auto-toggle 'isGrouped' and set local state
+    // FIX: Logic to check uniformity and auto-toggle 'isGrouped' and set local state
     // This hook needs to be robust against initial load and prop changes
     useEffect(() => {
         
@@ -170,7 +206,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
             // 1. Set internal state to ON
             setIsGrouped(true);
             
-            // 2. ✅ FIX: Set local state variables for DISPLAY/INPUT to the uniform values
+            // 2. FIX: Set local state variables for DISPLAY/INPUT to the uniform values
             // This ensures the input controls reflect the loaded data immediately
             setAssessmentType(firstQ.assessment_type || ''); // SQL key
             setSemester(firstQ.semester || '');
@@ -218,7 +254,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
 
     // --- HANDLERS ---
     
-    // 🎯 HANDLER: Triggered when "Add New Course" menu item is clicked
+    // HANDLER: Triggered when "Add New Course" menu item is clicked
     const handleCourseDropdownChange = (event) => {
         const newCourse = event.target.value;
         
@@ -231,7 +267,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
         }
     };
     
-    // 🎯 HANDLER: Triggered when the user submits the new course name
+    // HANDLER: Triggered when the user submits the new course name
     const handleNewCourseSubmit = () => {
         const courseToCreate = newCourseInput.trim();
         if (courseToCreate) {
@@ -262,7 +298,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
         } 
     };
 
-    // ✅ MODIFICATION: Maps the DISPLAY NAME to the SQL KEY
+    // MODIFICATION: Maps the DISPLAY NAME to the SQL KEY
     const handleAssessmentChange = (event) => {
         const displayValue = event.target.value;
         // Lookup the SQL key (e.g., 'quiz' for "Quiz")
@@ -317,7 +353,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
 
     const filterControlsDisabled = !isGrouped;
     
-    // ✅ MODIFICATION: Create an array of display names for the dropdown
+    // MODIFICATION: Create an array of display names for the dropdown
     const assessmentDisplayNames = [
         "Assignment", "Final", "Midterms", "Quiz", "Project", "Others"
     ];
@@ -325,7 +361,7 @@ const CreateFilterToolbar = forwardRef(({ selectedQuestions, gapSpacing = 4, isE
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', }}> 
             
-            {/* 🎯 NEW: Conditional Input Field and Buttons for Adding Course */}
+            {/* NEW: Conditional Input Field and Buttons for Adding Course */}
             {isAddingNewCourse && (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, ml: 6 }}>
                     <TextField
