@@ -13,9 +13,16 @@ import io
 import json
 import re
 import time
-import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from google.generativeai import types
+# OLD version
+# import google.generativeai as genai
+# from google.generativeai.types import HarmCategory, HarmBlockThreshold
+# from google.generativeai import types
+
+# New version
+from google import genai
+
+from google.genai.types import HarmCategory, HarmBlockThreshold
+from google.genai import types
 
 # === 1. Configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY")
