@@ -28,9 +28,9 @@
       2
     ],
     "concept_tags": [
+      "data exploration",
       "descriptive statistics",
-      "r programming",
-      "data analysis"
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -48,8 +48,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "distributions"
+      "descriptive statistics",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -67,8 +67,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "normality test"
+      "normality testing",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -86,8 +86,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "comparative analysis"
+      "comparative analysis",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -105,8 +105,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "bivariate analysis"
+      "bivariate analysis",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -142,8 +142,8 @@
       3
     ],
     "concept_tags": [
+      "predictive modeling",
       "linear regression",
-      "prediction",
       "r programming"
     ],
     "page_image_paths": [
@@ -154,7 +154,7 @@
     "question_no": "9",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good. S is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
+    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good.\nS is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -162,8 +162,8 @@
     ],
     "concept_tags": [
       "data manipulation",
-      "r programming",
-      "feature engineering"
+      "feature engineering",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -218,10 +218,9 @@
       3
     ],
     "concept_tags": [
-      "knn",
+      "k-nearest neighbors",
       "classification",
-      "machine learning",
-      "r programming"
+      "machine learning"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -239,8 +238,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "model evaluation"
+      "model evaluation",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -258,7 +257,7 @@
     ],
     "concept_tags": [
       "model selection",
-      "knn",
+      "k-nearest neighbors",
       "accuracy"
     ],
     "page_image_paths": [
@@ -276,10 +275,9 @@
       3
     ],
     "concept_tags": [
-      "knn",
+      "k-nearest neighbors",
       "prediction",
-      "machine learning",
-      "r programming"
+      "data preprocessing"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -296,9 +294,9 @@
       4
     ],
     "concept_tags": [
-      "financial mathematics",
-      "programming",
-      "functions"
+      "financial modeling",
+      "r programming",
+      "function definition"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
@@ -315,9 +313,9 @@
       4
     ],
     "concept_tags": [
-      "financial modeling",
       "optimization",
-      "programming"
+      "r programming",
+      "financial planning"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"

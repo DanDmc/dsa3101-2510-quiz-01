@@ -895,57 +895,21 @@ def predict_difficulty():
         "items": results[:100],
     })
 
-# ---- Upload Route ----
+# ---- Upload Route (MODIFIED) ----
 @app.post("/api/upload_file")
 def upload_file():
     """
-    Handle PDF uploads, persist metadata to the database, and trigger the 3-step parsing pipeline
-
-    Workflow:
-        1. Validate request:
-        2. Save the PDF into the configured file_base_directory
-        3. Insert a row into the `files` table with the provided metadata
-        4. Mirror a copy into the pipeline's canonical source directory
-        5. Run the parsing pipeline:
-            - `python pdf_extractor.py` with TARGET_PDF=<filename>
-            - `python llm_parser.py` with TARGET_BASE=<filename_without_ext>
-            - `python insert_questions.py` with TARGET_BASE=<filename_without_ext>
-
-    Form fields:
-        - course (str, optional)
-        - year (str/int, optional)
-        - semester (str, optional)
-        - assessment_type (str, optional)
-
-    Returns:
-        flask.Response (application/json):
-            - 201 on success:
-                {
-                  "saved": true,
-                  "file": {
-                    "file_id": <int or null>,
-                    "original_name": "...",
-                    "stored_filename": "...",
-                    "stored_path": "..."
-                  },
-                  "pipeline": {
-                    "pdf_extractor": {...},
-                    "llm_parser": {...},
-                    "insert_questions": {...}
-                  }
-                }
-            - 400 on bad upload (no file, wrong type, invalid PDF header)
-            - 500 if a pipeline step fails (upload is still saved)
-
-    Future Improvements:
-        - DB insert failure is reported but does not roll back the file save
-        - Accept more file types
+    Handle PDF uploads, persist metadata to the database, trigger the parsing pipeline,
+    and FETCH the newly inserted questions to return to the client.
     """
-    print("--- STARTING UPLOAD HANDLER ---") # <--- ADDED
+    print("--- STARTING UPLOAD HANDLER ---")
+
+    # --- 1. INITIAL SETUP & VALIDATION ---
     course = request.form.get("course")
     year = request.form.get("year")
     semester = request.form.get("semester")
-    assessment_type = request.form.get("assessment_type") or "others"
+    # Using 'or "others"' ensures assessment_type is never NULL for DB insert
+    assessment_type = request.form.get("assessment_type") or "others" 
 
     if "file" not in request.files:
         return jsonify({"error": "No file part"}), 400
@@ -965,10 +929,10 @@ def upload_file():
     base_dir = Path(os.getenv("file_base_directory", "/data/source_files"))
     base_dir.mkdir(parents=True, exist_ok=True)
 
-    # Secure the original name; we prefer to keep it for nicer downloads/UX
+    # Secure the original name
     original_name = secure_filename(f.filename)
 
-    # Stream to a temp file while hashing
+    # Stream to a temp file while hashing (existing logic)
     h = hashlib.sha256()
     tmp_path = Path(tempfile.mkstemp(suffix=".pdf")[1])
     with open(tmp_path, "wb") as w:
@@ -980,8 +944,7 @@ def upload_file():
             w.write(chunk)
     short_hash = h.hexdigest()[:8]
 
-    # Choose final filename inside file_base_directory
-    # If a same-named file already exists, append a short hash before the extension.
+    # Choose final filename
     stem = Path(original_name).stem
     suffix = Path(original_name).suffix or ".pdf"
     candidate_name = original_name
@@ -989,12 +952,13 @@ def upload_file():
     if dest_path.exists():
         candidate_name = f"{stem}_{short_hash}{suffix}"
         dest_path = base_dir / candidate_name
-    dest_path = dest_path.relative_to('/app')
+    # Assuming dest_path is correctly relative to '/app'
+    dest_path = dest_path.relative_to('/app') 
 
-    # Move temp file into the canonical storage directory
+    # Move temp file into canonical storage directory
     shutil.move(str(tmp_path), dest_path)
 
-    # Insert into DB — IMPORTANT: download uses file_name to resolve under file_base_directory
+    # --- 2. DB INSERT (FILE METADATA) ---
     file_id = None
     try:
         with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
@@ -1013,11 +977,10 @@ def upload_file():
             "path": str(dest_path)
         }), 201
 
-    # Ensure the parser can find the file.
-    # By default, SRC_DIR == BASE_DIR/"data/source_files".
-    # If the env var points elsewhere, mirror a copy into SRC_DIR for your existing pipeline.
+    # --- Mirroring logic (existing) ---
     try:
-        if Path(file_base_directory) != SRC_DIR:
+        if Path(os.getenv("file_base_directory", "/data/source_files")) != Path(os.getenv("SRC_DIR", "/app/data/source_files")):
+            SRC_DIR = Path(os.getenv("SRC_DIR", "/app/data/source_files"))
             SRC_DIR.mkdir(parents=True, exist_ok=True)
             mirror_path = SRC_DIR / candidate_name
             if not mirror_path.exists():
@@ -1025,38 +988,107 @@ def upload_file():
     except Exception as e:
         app.logger.warning(f"Mirror to SRC_DIR failed: {e}")
 
-    # Use the ACTUAL saved filename as TARGET_BASE for the pipeline
+    # --- 3. PIPELINE EXECUTION ---
     base = Path(candidate_name).stem
     logs = {}
 
-    # 1) Extract text (filter to this PDF via TARGET_PDF)
+    # 1) Extract text 
     code, out, err = _run("python pdf_extractor.py", env_extra={"TARGET_PDF": candidate_name})
     logs["pdf_extractor"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "pdf_extractor failed"}), 500
 
-    # 2) LLM parse (filter via TARGET_BASE)
+    # 2) LLM parse
     code, out, err = _run("python llm_parser.py", env_extra={"TARGET_BASE": base})
     logs["llm_parser"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
         return jsonify({
-            "saved": True,
-            "file_id": file_id,
-            "pipeline": logs,
-            "error": "llm_parser failed"
+            "saved": True, "file_id": file_id, "pipeline": logs, "error": "llm_parser failed"
         }), 500
 
-    # 3) Insert questions (filter via TARGET_BASE)
-    code, out, err = _run("python insert_questions.py", env_extra={"TARGET_BASE": base})
+    # 3) Insert questions 
+    # 🔑 MODIFICATION: Pass file_id to insertion script for linking
+    code, out, err = _run(
+        "python insert_questions.py", 
+        env_extra={"TARGET_BASE": base, "FILE_ID": str(file_id)}
+    )
     logs["insert_questions"] = {"code": code, "stdout": out, "stderr": err}
     if code != 0:
         return jsonify({
-            "saved": True,
-            "file_id": file_id,
-            "pipeline": logs,
-            "error": "insert_questions failed"
+            "saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"
         }), 500
 
+    # =====================================================================
+    # 🔑 4. NEW LOGIC: RETRIEVE QUESTIONS & RETURN TO CLIENT (THE FINAL FIX)
+    # ===================================================================== 
+    new_questions = []
+    select_cols = [
+        "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
+        "q.question_type", "q.question_stem", "q.question_stem_html",
+        "q.concept_tags", "q.page_image_paths",
+        "q.last_used", "q.created_at", "q.updated_at",
+        "q.question_options", "q.question_answer",
+        "q.difficulty_rating_manual", "q.difficulty_rating_model",
+        "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
+    ]
+    max_attempts = 12       
+    base_wait = 5           
+    
+    for attempt in range(max_attempts):
+        try:
+            # Use dictionary=True for safer, named column access
+            with closing(get_connection()) as conn, closing(conn.cursor(dictionary=True)) as cur: 
+                sql = f"""
+                    SELECT {", ".join(select_cols)}
+                    FROM questions q
+                    JOIN files f ON f.id = q.file_id
+                    WHERE q.file_id = %s
+                    ORDER BY q.question_no ASC, q.id ASC
+                """
+                cur.execute(sql, (file_id,))
+                rows = cur.fetchall()
+            
+            if rows:
+                for row in rows:
+                    # Map row data to the client's expected structure
+                    new_questions.append({
+                        "id": row["id"],
+                        "question_base_id": row["question_base_id"],
+                        "version_id": row["version_id"],
+                        "file_id": row["file_id"],
+                        "question_no": row["question_no"],
+                        "question_type": row["question_type"],
+                        "question_stem": row["question_stem"],
+                        "question_stem_html": row["question_stem_html"],
+                        "concept_tags": parse_json_field(row["concept_tags"]),
+                        "question_media": parse_json_field(row["page_image_paths"]),
+                        "question_options": parse_json_field(row["question_options"]),
+                        "question_answer": parse_json_field(row["question_answer"]),
+                        "last_used": ts(row["last_used"]),
+                        "created_at": ts(row["created_at"]),
+                        "updated_at": ts(row["updated_at"]),
+                        "difficulty_rating_manual": row["difficulty_rating_manual"],
+                        "difficulty_model": row["difficulty_model"],
+                        "course": row["course"],
+                        "year": row["year"],
+                        "semester": row["semester"],
+                        "assessment_type": row["assessment_type"],
+                        "file_name": row["file_name"],
+                        "file_path": row["file_path"],
+                    })
+                break  # Exit loop once rows are found
+            else:
+                wait_time = min(base_wait * (2 ** attempt), 30)
+                time.sleep(wait_time)
+                
+        except Exception as e:
+            # Log and continue retry in case of transient DB error
+            app.logger.error(f"Database fetch error during backoff: {e}")
+            time.sleep(1) 
+
+
+    # --- FINAL SUCCESS RESPONSE ---
+    # MODIFICATION: Include newly_inserted_questions in the final JSON response.
     return jsonify({
         "saved": True,
         "file": {
@@ -1065,7 +1097,8 @@ def upload_file():
             "stored_filename": candidate_name,
             "stored_path": str(dest_path)
         },
-        "pipeline": logs
+        "pipeline": logs,
+        "newly_inserted_questions": new_questions # THIS IS THE FINAL DATA RETURN
     }), 201
 
 
