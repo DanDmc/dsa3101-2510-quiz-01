@@ -1,0 +1,78 @@
+SIMPLE EDA SUMMARY
+======================================================================
+
+Total questions: 75
+
+TARGET: difficulty_rating_manual (1=easy, 0=hard)
+  Mean: 0.817
+  Median: 0.910
+  Std: 0.207
+  Range: [0.230, 1.000]
+
+======================================================================
+3-FEATURE MODEL (Base)
+======================================================================
+
+FEATURE 1: question_type (categorical -> One-Hot)
+question_type
+mcq                   56
+coding                 9
+open-ended             7
+fill-in-the-blanks     3
+Name: count, dtype: int64
+
+FEATURE 2: question_stem (text -> TF-IDF)
+  Avg tokens: 51.9
+  Min tokens: 10
+  Max tokens: 258
+  Correlation with difficulty: -0.481
+
+FEATURE 3: concept_tags (text -> TF-IDF)
+  Questions with tags: 75 (100.0%)
+  Questions without tags: 0 (0.0%)
+  Mean difficulty (with tags): 0.817
+  Mean difficulty (no tags): nan
+
+======================================================================
+4-FEATURE MODEL (+ Readability)
+======================================================================
+
+FEATURE 4a: Flesch Reading Ease (higher = easier text)
+  Mean: 73.25
+  Std: 17.79
+  Range: [18.05, 111.07]
+  Correlation with difficulty: 0.139
+
+FEATURE 4b: Flesch-Kincaid Grade Level (higher = harder text)
+  Mean: 6.49
+  Std: 3.44
+  Range: [0.50, 19.19]
+  Correlation with difficulty: -0.135
+
+======================================================================
+5-FEATURE MODEL (+ Length Metrics)
+======================================================================
+
+FEATURE 5a: num_chars
+  Mean: 268.6
+  Correlation with difficulty: -0.499
+
+FEATURE 5b: num_tokens
+  Mean: 51.9
+  Correlation with difficulty: -0.481
+
+FEATURE 5c: num_sentences
+  Mean: 4.3
+  Correlation with difficulty: -0.343
+
+FEATURE 5d: num_syllables
+  Mean: 73.4
+  Correlation with difficulty: -0.482
+
+KEY INSIGHTS
+----------------------------------------------------------------------
+
+Strongest correlations with difficulty (by absolute value):
+  1. num_chars: -0.499
+  2. num_syllables: -0.482
+  3. num_tokens: -0.481

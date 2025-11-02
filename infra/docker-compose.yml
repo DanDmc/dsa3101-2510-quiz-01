@@ -17,7 +17,7 @@ services:
     working_dir: /app
     environment:
       - CHOKIDAR_USEPOLLING=true
-      # VITE_APP_API_URL should be configured internally or via the host OS/network
+      - VITE_APP_API_URL=http://localhost:5001
     depends_on:
       - api
 
@@ -37,7 +37,9 @@ services:
     ports:
       - "3307:3306"
     volumes:
+      # Persist database data so you don’t lose it between restarts
       - mysql_data:/var/lib/mysql
+      # Initialize schema + seed data only on first run
       - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
     healthcheck:
@@ -113,7 +115,7 @@ services:
       '
     restart: "no"
 
-# Declare the named volumes
+# Declare the named volume for MySQL persistence
 volumes:
   mysql_data:
   frontend_node_modules:

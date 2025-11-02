@@ -5,7 +5,9 @@ PDF Text and Page Image Extractor
 This module extracts text content from PDF files and saves ALL pages as images
 for visual reference in the frontend. It is standardized on Python's pathlib.Path.
 """
+
 import re
+from pathlib import Path
 import os
 import sys
 from pathlib import Path # <-- Use Pathlib for consistency
@@ -53,45 +55,19 @@ def extract_text_and_page_images(
     >>> extract_text_and_page_images()  # Use defaults (legacy, process all)
     >>> extract_text_and_page_images(target_pdf="my_file.pdf") # Process one file
     """
+    os.makedirs(text_dir, exist_ok=True)
+    os.makedirs(media_dir, exist_ok=True)
 
-    # 1. Setup Directories
-    text_dir.mkdir(parents=True, exist_ok=True)
-    media_dir.mkdir(parents=True, exist_ok=True)
-    
-    pdf_files_to_process = []
-    
-    # 2. Determine Files to Process (Consolidated V2 Logic)
+    target_pdf = os.environ.get("TARGET_PDF")
     if target_pdf:
-        # SINGLE FILE MODE (Pipeline)
-        pdf_file_name = Path(target_pdf).name # Ensure we only use the filename component
-        pdf_path_full = source_dir / pdf_file_name
-        
-        if not pdf_path_full.exists():
-            print(f" Error: Target file not found: {pdf_path_full}")
-            sys.exit(1) # Signal failure to the main app
-        
-        pdf_files_to_process = [pdf_file_name] 
-        print(f"\n Found 1 target PDF file to process: {pdf_file_name}\n")
-    else:
-        # LEGACY MODE (Batch process all .pdf files)
-        # Use Path.glob() for clean file filtering
-        pdf_files_to_process = [f.name for f in source_dir.glob("*.pdf")]
-        
-        if not pdf_files_to_process:
-            print(f" No PDF files found in {source_dir}")
-            return
-        print(f"\n Found {len(pdf_files_to_process)} PDF file(s) to process (legacy mode)\n")
-    # --- End Determination ---
-
-    # 3. Process Files
-    for pdf_file_name_str in pdf_files_to_process:
-        pdf_file_name = Path(pdf_file_name_str)
-        pdf_path = source_dir / pdf_file_name
-        base_name = pdf_file_name.stem
+        pdf_path = os.path.join(source_dir, target_pdf)
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"TARGET_PDF = {target_pdf} not found in {source_dir}")
+        base_name = os.path.splitext(target_pdf)[0]
         txt_filename = base_name + ".txt"
         text_output_path = text_dir / txt_filename
 
-        print(f"Extracting text and saving ALL page images from {pdf_file_name}...")
+        print(f"🧾 Extracting text and saving ALL page images from {target_pdf}...")
 
         try:
             with pdfplumber.open(pdf_path) as pdf:
@@ -129,13 +105,12 @@ def extract_text_and_page_images(
             with open(text_output_path, "w", encoding="utf-8") as f:
                 f.write(text)
 
-            print(f" Saved extracted text to {text_output_path.name}")
-            print(f" Saved {total_pages} page image(s)")
+            print(f"✅ Saved extracted text to {text_output_path}")
+            print(f"🖼️ Saved {total_pages} page image(s)")
             print()
 
         except Exception as e:
-            print(f" Failed to process {pdf_file_name}: {e}\n")
-
+            print(f"❌ Failed to process {target_pdf}: {e}\n")
 
 if __name__ == "__main__":
     # --- Execute the unified function based on ENV var ---

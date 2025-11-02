@@ -17,7 +17,7 @@ Key Features:
 - Schema-compatible output for insert_questions.py
 """
 
-from pathlib import Path 
+from pathlib import Path
 import os
 import sys
 import io
@@ -32,10 +32,9 @@ from google.genai import types
 API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = "gemini-1.5-flash"
 
-# Standardized to Path
-TEXT_DIR = Path("data") / "text_extracted"
-OUTPUT_DIR = Path("data") / "json_output"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+TEXT_DIR = Path("data/text_extracted")
+JSON_DIR = Path("data/json_output")
+os.makedirs(JSON_DIR, exist_ok=True)
 
 if not API_KEY:
     print("Error: GEMINI_API_KEY environment variable not set.")
@@ -138,7 +137,6 @@ def build_page_to_image_map(full_text):
         each value is a list of image paths (possibly empty) associated with
         that page.
     """
-    
     page_map = {}
     pages = full_text.split("=== PAGE BREAK ===")
     for page_text in pages:
@@ -182,7 +180,6 @@ def build_prompt(text):
     Returns:
         str: A complete prompt string ready to be sent to an LLM.
     """
-    
     return f"""
 Extract all exam questions as a JSON array.
 
@@ -226,7 +223,6 @@ def sanitize_output(text):
     Returns:
         str: Plain JSON text (or the original text if no fences were found).
     """
-    
     text = text.strip()
     if text.startswith("```"):
         parts = text.split("```")
@@ -256,7 +252,6 @@ def map_pages_to_images(questions, page_to_image_map):
         list[dict]: The same list of questions, but each enriched with
         "page_image_paths": [...], possibly empty.
     """
-    
     for q in questions:
         page_numbers_raw = q.get("page_numbers", [])
         image_paths = []
@@ -281,7 +276,7 @@ def map_pages_to_images(questions, page_to_image_map):
 
 
 # === Core Processing ===
-def parse_file(txt_file_path: Path): # <-- Accepts a Path object
+def parse_file(txt_file):
     """
     Parse a single extracted-exam text file into structured question objects.
 
@@ -314,6 +309,7 @@ def parse_file(txt_file_path: Path): # <-- Accepts a Path object
     
     # Global variables required by this function
     global client, MODEL, GLOBAL_GENERATION_CONFIG, GLOBAL_SAFETY_SETTINGS
+    input_path = os.path.join(TEXT_DIR, txt_file)
 
     # Use Path object directly
     try:
@@ -409,8 +405,7 @@ def parse_file(txt_file_path: Path): # <-- Accepts a Path object
     return all_questions
 
 
-# === Main Execution Entry Point (Fixed V2 Logic) ===
-def parse_exam_papers(target_base=None):
+def parse_exam_papers():
     """
     Main entry point for batch parsing of exam text files.
 
@@ -437,48 +432,20 @@ def parse_exam_papers(target_base=None):
     Returns:
         None
     """
-
-    total_start = time.time()
-    
-    # --- Determine Files to Process ---
+    target_base = os.environ.get("TARGET_BASE")
     if target_base:
-        # SINGLE FILE MODE (Pipeline)
-        txt_file_name = f"{target_base}.txt"
-        txt_file_path = TEXT_DIR / txt_file_name
+        txt_file = f"{target_base}.txt"
+
+        print(f"\n{'='*60}")
+        print(f"📄 Parsing single text file (TARGET_BASE): {target_base}.txt")
+        print(f"{'='*60}")
         
-        if not txt_file_path.exists():
-            print(f" Error: Target text file not found: {txt_file_name}")
-            sys.exit(1) # Signal failure to the Flask app
-        
-        txt_files_to_process = [txt_file_path] 
-        print(f"Found 1 target text file to process: {txt_file_name}\n")
-    else:
-        # LEGACY MODE (Standalone/Batch)
-        txt_files_to_process = [f for f in TEXT_DIR.glob("*.txt")]
-        if not txt_files_to_process:
-            print(" No text files found in text_extracted/")
-            return
-        print(f"Found {len(txt_files_to_process)} file(s) to process (legacy mode)\n")
-    # --- End Determination ---
-
-
-    print(f"\n{'='*60}")
-    print("QuizBank LLM Parser — Structured JSON Edition")
-    print(f"{'='*60}")
-    print(f"Processing {len(txt_files_to_process)} file(s)\n")
-
-
-    for idx, txt_file_path in enumerate(txt_files_to_process, 1):
-        txt_file_name = txt_file_path.name
-        
-        print(f"\n[{idx}/{len(txt_files_to_process)}] {txt_file_name}")
         file_start = time.time()
 
         questions = parse_file(txt_file_path)
 
         if questions:
-            output_path = OUTPUT_DIR / f"{txt_file_path.stem}.json"
-            
+            output_path = os.path.join(JSON_DIR, os.path.splitext(txt_file)[0] + ".json")
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(questions, f, indent=2, ensure_ascii=False)
 
@@ -492,7 +459,7 @@ def parse_exam_papers(target_base=None):
         else:
             print(f" No questions found in {txt_file_name}")
 
-    total_elapsed = time.time() - total_start
+    total_elapsed = time.time() - file_start
     print(f"\n{'='*60}")
     print(f" Complete: {total_elapsed:.1f}s ({total_elapsed/60:.1f} min)")
     print(f"{'='*60}\n")

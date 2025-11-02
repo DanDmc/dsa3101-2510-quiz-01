@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # === Copy requirements and install Python dependencies ===
 # NOTE: V1/V2 assumed requirements.txt is in 'backend/' relative to the compose context.
 COPY backend/requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # === Copy backend scripts ===

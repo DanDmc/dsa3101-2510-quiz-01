@@ -21,7 +21,6 @@ This script is meant to be run as a standalone training job:
 (or similar).
 """
 
-
 import os
 import json
 from contextlib import closing
@@ -68,7 +67,6 @@ def get_conn():
     Returns:
         mysql.connections.Connection: An open DB connection ready for queries.
     """
-
     return mysql.connect(
         host=os.getenv("MYSQL_HOST", "127.0.0.1"),
         user=os.getenv("MYSQL_USER", "quizbank_user"),
@@ -93,7 +91,6 @@ def parse_tags(val):
     Returns:
         str: Space-joined tag string suitable for text vectorization.
     """
-    
     if val is None or val == "":
         return ""
     if isinstance(val, (list, tuple)):
@@ -210,8 +207,7 @@ def build_pipeline() -> Pipeline:
         with columns ["question_stem", "tags_text", "question_type"] and outputs
         a difficulty score.
     """
-    
-    # 1. Text Features (TF-IDF on stem/tags)
+    # Separate TF-IDF vectorizers for each text column (no custom function)
     stem_branch = Pipeline(steps=[
         ("tfidf_stem", TfidfVectorizer(
             ngram_range=(1, 2), min_df=2, max_features=20000)),
@@ -278,7 +274,6 @@ def main():
     Returns:
         None
     """
-
     # Pull labeled data
     sql = """
         SELECT question_stem, question_type, concept_tags, difficulty_rating_manual

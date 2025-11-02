@@ -1,158 +1,25 @@
-from flask import Flask, request, jsonify, send_file, abort, render_template_string
-import os
-import MySQLdb
 import pandas as pd
-from sqlalchemy import func, or_
-from contextlib import closing
-import mimetypes
-import time
-import json
-import datetime
 import numpy as np
-import pandas as pd
-import joblib
-from pathlib import Path
-import tempfile, shutil, hashlib, subprocess, shlex
+from flask import Flask, request, jsonify, send_file, abort, render_template_string
+from flask_cors import CORS
+from contextlib import closing
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
 import re, sys, importlib.util 
+# app.py (New/Modified section)
+from flask_cors import CORS, cross_origin # ⬅️ ADD cross_origin here
+import re
+import sys
+from pathlib import Path
+import os, MySQLdb, mimetypes, json, datetime, joblib, tempfile, shutil, hashlib, subprocess, shlex
+import sys, importlib.util, re, time
 
 app = Flask(__name__)
 
-# -----------------------------------------------------
-# 💡 FIX: CORS is set to the correct Vite port 5173
-CORS(app, 
-     origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-     allow_headers=["Content-Type", "Authorization"],
-     supports_credentials=True)
-# -----------------------------------------------------
-
-# ---- Upload / pipeline config ----
-app.config.setdefault("UPLOAD_FOLDER", os.getenv("UPLOAD_FOLDER", "./uploads"))
-app.config.setdefault("MAX_CONTENT_LENGTH", int(os.getenv("MAX_UPLOAD_MB", "50")) * 1024 * 1024)
-ALLOWED_EXTENSIONS = {"pdf"}
-
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
-SRC_DIR = DATA_DIR / "source_files" 
-TXT_DIR = DATA_DIR / "text_extracted" 
-JSON_DIR = DATA_DIR / "json_output" 
-for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
-    _d.mkdir(parents=True, exist_ok=True)
-
-def _allowed_pdf(filename: str) -> bool:
-    """
-    Checks if an uploaded filename has a permitted extension
-
-    Currently only `.pdf` files are allowed
-    The check is case-insensitive and only looks at the final extension
-
-    Args:
-        filename (str): Name of the uploaded file
-
-    Returns:
-        bool: True if the filename ends with an allowed extension, False otherwise
-    """
-
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def _ensure_dirs(*parts) -> Path:
-    """
-    description: Constructs a full filesystem path by joining a configured base upload 
-                 directory with one or more subdirectories specified in `parts`. It 
-                 ensures that all necessary directories in the path exist, creating 
-                 them if they do not. Handles null or empty parts by replacing them with 
-                 the string "unknown".
-
-    args:
-        *parts (tuple[Any]): One or more path components (strings, integers, etc.) 
-                             to be joined to the base upload folder.
-
-    returns:
-        pathlib.Path: A Path object representing the final, verified (existing) directory.
-
-    raises:
-        OSError: If the function is unable to create the directory path (e.g., due to 
-                 permission issues, or if a component is a file instead of a directory).
-    """
-
-    p = Path(app.config["UPLOAD_FOLDER"]).joinpath(*[str(x or "unknown") for x in parts])
-    p.mkdir(parents=True, exist_ok=True)
-    return p
-
-def _run(cmd, env_extra=None, timeout=900):
-    """
-    Run a subprocess in the project base directory and capture its output
-
-    Args:
-        cmd (str): Shell-like command to run (e.g. "python pdf_extractor.py")
-        env_extra (dict, optional): Extra environment variables to merge into
-            the current process environment
-        timeout (int, optional): Max number of seconds to allow the process
-            to run before raising a timeout - Defaults to 900s
-
-    Returns:
-        tuple[int, str, str]:
-            - returncode (int): Process return code (0 on success)
-            - stdout (str): Captured standard output (stripped)
-            - stderr (str): Captured standard error (stripped)
-    """
-
-    env = dict(os.environ)
-    if env_extra: env.update(env_extra)
-    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
-    return p.returncode, p.stdout.strip(), p.stderr.strip()
-
-def get_connection():
-    """
-    Create a new MySQL connection using environment variables:
-    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
-
-    Args:
-        None.
-
-    Returns:
-        MYSQLdb.connection: Open a connection to the quizbank database.
-
-    Raises:
-        MySQLdb.Error: If connection cannot be established. 
-    """
-
-    return MySQLdb.connect(
-        host=os.getenv("MYSQL_HOST", "db"),
-        user=os.getenv("MYSQL_USER", "quizbank_user"),
-        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
-        db=os.getenv("MYSQL_DATABASE", "quizbank"),
-    )
-
-# check if table has the column mentioned
-def has_column(conn, table: str, col: str) -> bool:
-    """
-    Check whether a given column exists in a table in the current database
-
-    Args:
-        conn: An open DB-API compatible database connection
-        table (str): The name of the table to inspect
-        col (str): The column name to look for
-
-    Returns:
-        bool: `True` if the column exists on the table in the current database,
-        `False` otherwise
-    """
-
-    with closing(conn.cursor()) as c:
-        c.execute("""
-            SELECT COUNT(*)
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = DATABASE()
-              AND TABLE_NAME = %s
-              AND COLUMN_NAME = %s
-        """, (table, col))
-        return c.fetchone()[0] == 1
+# ---- Set CORS to Vite port 5173 ----
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # ---- Utility Helper Functions ----
-
-# Helper function for safely parsing JSON fields from the database
 def parse_json_field(field_json):
     """
     Parses JSON string into appropriate Python object (i.e. dict or str)
@@ -166,14 +33,13 @@ def parse_json_field(field_json):
     Raises:
         None if input is empty or falsy
     """
-    
-    if not field_json: return None 
+    if not field_json:
+        return None
     try:
         return json.loads(field_json)
     except Exception:
-        return field_json 
-
-# Helper function to convert datetime to ISO string
+        return field_json
+    
 def ts(v):
     """
     Converts datetime-like objects to string representations
@@ -187,10 +53,56 @@ def ts(v):
     Raises:
         None if empty or falsy
     """
+    if not v:
+        return None
+    if hasattr(v, "isoformat"):
+        return v.isoformat()
+    else:
+        return str(v)
     
-    return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
+def _strip_known_prefixes(p: str) -> str:
+    """
+    Removes known leading path prefixes from a string
 
-# Helper function for getting a file row from the database
+    Args:
+        p (str): The input path to normalise
+
+    Returns:
+        str: The path without known leading prefixes, or the original input path if no prefix was removed
+    """
+    prefixes = ("data/", "source_files/")
+    for pref in prefixes:
+        if p.startswith(pref):
+            return p[len(pref):]
+    return p
+
+def _safe_join_file(base_dir: str, file_path: str) -> str:
+    """
+    Safely resolves a file path, normalising it relative to the base directory
+
+    Args:
+        base_dir (str): The base directory under which files are allowed
+        file_path (str): The input path to resolve
+
+    Returns:
+        str: The normalised, absolute (or base-relative) path that is guaranteed
+        to be inside base_dir
+
+    Raises:
+        FileNotFoundError: If file_path is empty or resolves outside base_dir.
+    """
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+    if os.path.isabs(file_path):
+        candidate = os.path.normpath(file_path)
+    else:
+        cleaned = _strip_known_prefixes(file_path.strip())
+        candidate = os.path.normpath(os.path.join(base_dir, cleaned))
+    base_dir_norm = os.path.normpath(base_dir)
+    if not (candidate == base_dir_norm or candidate.startswith(base_dir_norm + os.sep)):
+        raise FileNotFoundError("Invalid file path")
+    return candidate
+
 def _get_file_row(file_id: int):
     """
     Fetch file metadata from files table using its primary key
@@ -209,14 +121,120 @@ def _get_file_row(file_id: int):
     Raises:
         None if not found
     """
-
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
         cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
         return cur.fetchone()
 
-# -----------------------------------------------------
-## 🗂️ File Normalization Helpers (Used by addquestion/get_file_id)
+def normalize_concept_tags(val):
+    """
+    Normalise the 'concept_tags' to JSON string for storing in the database
+    Accepts lists/tuples/JSON/strings
+
+    Args:
+        val (lists/tuples/JSON/strings): Concept tags provided by user
+    
+    Returns:
+        str: JSON string (e.g., '["regression","r-squared"]') or string if JSON array not valid
+            None when input is None
+    
+    Raises:
+        None if not found
+    """
+    # Standardise the format of the concept_tags field
+    if val is None:
+        return None
+    if isinstance(val, (list, tuple)):
+        return json.dumps(list(val), ensure_ascii=False)
+    if isinstance(val, str):
+        try:
+            parsed = json.loads(val)
+            if isinstance(parsed, (list, tuple)):
+                return json.dumps(list(parsed), ensure_ascii=False)
+        except Exception:
+            pass
+        return val
+    return json.dumps(val, ensure_ascii=False)
+
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_elasticnet.pkl")
+difficulty_model = None
+featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
+
+def _load_training_helpers():
+    """
+    Dynamically import the training script so that pickled helper functions can be resolved
+    
+    Args: 
+        None
+
+    Returns:
+        None
+    
+    Raises:
+        Logs warnings only, does not raise to avoid crashes
+    """
+    if not os.path.exists(featurepath):
+        app.logger.warning(f"[difficulty] Helper file not found at {featurepath}")
+        return
+    try:
+        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
+        mod = importlib.util.module_from_spec(spec)
+        # Run the file so _numeric_feats_from_df is defined
+        spec.loader.exec_module(mod)  
+        # Register under __main__ so unpickler finds it
+        sys.modules["__main__"] = mod
+        app.logger.info("[difficulty] Registered _numeric_feats_from_df from training script.")
+    except Exception as e:
+        app.logger.warning(f"[difficulty] Could not import training helpers: {e}")
+
+def parse_tags(val):
+    """
+    Converts the concept tags into JSON list format
+
+    Args:
+        val (list/tuple/JSON): stored as JSON list
+
+    Return:
+        list: If val is not empty, else empty list []
+    
+    Raises:
+        None
+    """
+    if not val:
+        return []
+    if isinstance(val, (list, tuple)):
+        return list(val)
+    try:
+        return json.loads(val) or []
+    except Exception:
+        return []
+
+def predict_row(row: dict) -> float:
+    """
+    Predicts the difficulty rating using the Machine Learning model when taking the row as input
+
+    Args:
+        row (dict): {
+            "question_stem": stem,
+            "tags_text": tags_text,
+            "question_type": row.get("question_type") or "",
+            }
+    
+    Returns:
+        float: Difficulty rating value predicted by the model used
+    
+    Raises:
+        None
+    """
+    stem = (row.get("question_stem") or "").strip()
+    tags_text = " ".join(parse_tags(row.get("concept_tags")))
+    X = pd.DataFrame([{
+        "question_stem": stem,
+        "tags_text": tags_text,
+        "question_type": row.get("question_type") or "",
+    }])
+    yhat = float(difficulty_model.predict(X)[0])
+    return float(np.clip(yhat, 0.0, 1.0))
 
 def _normalize_semester(sem: str) -> str:
     """
@@ -236,10 +254,10 @@ def _normalize_semester(sem: str) -> str:
     if sem is None:
         return ""
     s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
-    # remove duplicate spaces
+    # Remove duplicate spaces
     s = " ".join(s.split())
 
-    # common mappings
+    # Common mappings
     if s in {"1", "sem 1", "semester 1", "s1", "sem1"}:
         return "S1"
     if s in {"2", "sem 2", "semester 2", "s2", "sem2"}:
@@ -264,10 +282,9 @@ def _normalize_assessment_type(t: str) -> str:
     Raises:
         None
     """
-
     if t is None:
         return ""
-    s = str(t).strip().lower().replace("-", " ").replace("_", " ")
+    s = str(t).strip().lower().replace("-", " ")
     s = " ".join(s.split())
     return s.lower()
 
@@ -292,7 +309,6 @@ def get_file_id(course: str, year, semester: str, assessment_type: str, latest: 
         ValueError: If missing course or year not integer-like
         MySQLError: If database cannot be established
     """
-
     if not course:
         raise ValueError("course is required")
     try:
@@ -322,6 +338,14 @@ def get_file_id(course: str, year, semester: str, assessment_type: str, latest: 
         cur.execute(sql, params)
         row = cur.fetchone()
         return int(row[0]) if row else None
+    params = (course, year, semester, assessment_type)
+
+    with closing(get_connection()) as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        row = cur.fetchone()
+        return int(row[0]) if row else None
+    return
 
 def has_column(conn, table: str, col: str) -> bool:
     """
@@ -346,43 +370,53 @@ def has_column(conn, table: str, col: str) -> bool:
         """, (table, col))
         return c.fetchone()[0] == 1
 
-# -----------------------------------------------------
-## 🏷️ Tag Normalization Helper (Used by addquestion/update_question/create_question)
-
-def normalize_concept_tags(val):
+def get_connection():
     """
-    Normalise the 'concept_tags' to JSON string for storing in the database
-    Accepts lists/tuples/JSON/strings
+    Create a new MySQL connection using environment variables:
+    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
 
     Args:
-        val (lists/tuples/JSON/strings): Concept tags provided by user
-    
+        None.
+
     Returns:
-        str: JSON string (e.g., '["regression","r-squared"]') or string if JSON array not valid
-            None when input is None
-    
+        MYSQLdb.connection: Open a connection to the quizbank database.
+
     Raises:
-        None if not found
+        MySQLdb.Error: If connection cannot be established. 
     """
+    return MySQLdb.connect(
+        host=os.getenv("MYSQL_HOST", "db"),
+        user=os.getenv("MYSQL_USER", "quizbank_user"),
+        passwd=os.getenv("MYSQL_PASSWORD","quizbank_pass"),
+        db=os.getenv("MYSQL_DATABASE", "quizbank"),
+    )
 
-    # standardise the format of the concept_tags field
-    if val is None:
-        return None
-    if isinstance(val, (list, tuple)):
-        return json.dumps(list(val), ensure_ascii=False)
-    if isinstance(val, str):
-        try:
-            parsed = json.loads(val)
-            if isinstance(parsed, (list, tuple)):
-                return json.dumps(list(parsed), ensure_ascii=False)
-        except Exception:
-            pass
-        return val  # plain string (e.g., "regression metrics")
-    return json.dumps(val, ensure_ascii=False)
+def _get_question_row(question_id: int):
+    with closing(get_connection()) as conn:
+        cur = conn.cursor(MySQLdb.cursors.DictCursor)
+        # Fetch the page_image_paths column
+        cur.execute("SELECT id, page_image_paths FROM questions WHERE id=%s", (question_id,))
+        return cur.fetchone()
 
-# -----------------------------------------------------
-## 🩺 Health Check
+def _safe_join_media(base_dir: str, file_path: str) -> str:
+    """Safely join a base directory with a media file path."""
+    if not file_path:
+        raise FileNotFoundError("Empty file path")
+    
+    # Clean the path: remove leading slashes and "data/question_media/" prefix
+    cleaned_path = file_path.strip().lstrip('/')
+    if cleaned_path.startswith('data/question_media/'):
+        cleaned_path = cleaned_path[len('data/question_media/'):]
+        
+    candidate = os.path.normpath(os.path.join(base_dir, cleaned_path))
+    base_dir_norm = os.path.normpath(base_dir)
+    
+    # Security check to prevent path traversal
+    if not candidate.startswith(base_dir_norm + os.sep):
+        raise FileNotFoundError("Invalid media path")
+    return candidate
 
+# ---- Health Route ----
 @app.route("/health", methods=["GET"])
 def health():
     """
@@ -392,18 +426,11 @@ def health():
         tuple[dict, int]: JSON containing:
             - "ok" (bool): Always True if the app is running.
             - "model_loaded" (bool): Whether the difficulty model was successfully loaded at startup.
-        and HTTP 200. Also the name of the model used model v1 or v2 
+        and HTTP 200.
     """
+    return {"ok": True, "model_loaded": difficulty_model is not None}, 200
 
-    return {
-        "ok": True,
-        "model_loaded": difficulty_model is not None,
-        "active_model": active_model_name
-    }, 200
-
-# -----------------------------------------------------
-## 📥 Question Retrieval
-
+# ---- Main Query Route ----
 @app.route("/getquestion", methods=["GET"])
 def get_question():
     """
@@ -444,8 +471,7 @@ def get_question():
             }
         with HTTP 200.
     """
-
-    # Query params
+    # Allowed Query Parameters
     course = request.args.get("course")
     year = request.args.get("year")
     semester = request.args.get("semester")
@@ -454,38 +480,39 @@ def get_question():
     question_type = request.args.get("question_type")
     question_no = request.args.get("question_no")
 
-    # concept_tags can be ?concept_tags=probability&concept_tags=bayes or ?concept_tags=probability,bayes
+    # Concept Tags supports both:
+        # ?concept_tags=a&concept_tags=b
+        # ?concept_tags=a,b
+    # Normalize into one list
     raw_tags = request.args.getlist("concept_tags")
     concept_tags = []
     for t in raw_tags:
         concept_tags.extend([s.strip() for s in t.split(",") if s.strip()])
 
-    # pagination / sorting
+    # Default Pagination and Sorting
     limit = int(request.args.get("limit", 100000))
     offset = int(request.args.get("offset", 0))
     order_by_arg = (request.args.get("order_by") or "").lower()
     sort_arg = (request.args.get("sort") or "desc").lower()
 
     # Whitelist order_by to prevent SQL injection
+    # Future Improvement: Flexibility of order_by_args
     if order_by_arg == "created_at":
         order_by_sql = "q.created_at"
     elif order_by_arg == "difficulty":
-        order_by_sql = "COALESCE(q.difficulty_rating_manual, q.difficulty_rating_model)" # Use manual if present, else model
+        order_by_sql = "q.difficulty_rating_model"
     else:
         order_by_sql = "q.updated_at"
     sort_sql = "ASC" if sort_arg == "asc" else "DESC"
 
-    # SELECT columns (include some file metadata for convenience)
+    # SELECT columns 
     select_cols = [
         "q.id", "q.question_base_id", "q.version_id", "q.file_id", "q.question_no",
         "q.question_type", "q.question_stem", "q.question_stem_html",
-        "q.concept_tags", 
-        "q.page_image_paths", 
+        "q.concept_tags", "q.page_image_paths", 
         "q.last_used", "q.created_at", "q.updated_at",
-        "q.question_options", 
-        "q.question_answer", 
-        "q.difficulty_rating_manual", 
-        "q.difficulty_rating_model",
+        "q.question_options", "q.question_answer",
+        "q.difficulty_rating_manual", "q.difficulty_rating_model",
         "f.course", "f.year", "f.semester", "f.assessment_type", "f.file_name", "f.file_path"
     ]
 
@@ -493,7 +520,7 @@ def get_question():
     where_clauses = []
     params = []
 
-    # ---- File-level filters (JOIN target) ----
+    # File table filters
     if course:
         where_clauses.append("f.course = %s")
         params.append(course)
@@ -507,7 +534,7 @@ def get_question():
         where_clauses.append("f.assessment_type = %s")
         params.append(assessment_type)
 
-    # ---- Question-level filters ----
+    # Question table filters
     if question_type:
         where_clauses.append("q.question_type = %s")
         params.append(question_type)
@@ -516,7 +543,6 @@ def get_question():
         params.append(question_no)
 
     if concept_tags:
-        # AND logic: require ALL provided tags to be present in q.concept_tags (a JSON array)
         where_clauses.append("JSON_CONTAINS(q.concept_tags, CAST(%s AS JSON))")
         params.append(json.dumps(concept_tags))
 
@@ -532,7 +558,7 @@ def get_question():
     """
     params.extend([limit, offset])
 
-    # Execute
+    # Execute Query
     with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
         cur.execute(sql, params)
         rows = cur.fetchall()
@@ -544,20 +570,18 @@ def get_question():
             q_id, q_base_id, q_version_id, file_id, q_no,
             q_type, stem, stem_html,
             concept_json, media_json, last_used, created_at, updated_at,
-            options_json,
-            answer_json,
-            difficulty_manual, difficulty_model, 
+            options_json, answer_json,
+            difficulty_manual, difficulty_model,
             f_course, f_year, f_semester, f_assessment, f_name, f_path
         ) = row
-
+        
+        # Normalize JSON fields
         concept_list = parse_json_field(concept_json)
         media_list = parse_json_field(media_json)
         options_list = parse_json_field(options_json)
         answer_data = parse_json_field(answer_json)
-        
-        # Use manual difficulty rating if it exists, otherwise use the model's prediction
-        difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
 
+        difficulty_level = difficulty_manual if difficulty_manual is not None else difficulty_model
 
         items.append({
             "id": q_id,
@@ -569,17 +593,17 @@ def get_question():
             "question_stem": stem,
             "question_stem_html": stem_html,
             "concept_tags": concept_list,
-            "question_media": media_list, 
+            "question_media": media_list,
             "question_options": options_list,
             "question_answer": answer_data,
             "last_used": ts(last_used),
             "created_at": ts(created_at),
             "updated_at": ts(updated_at),
 
-            "difficulty_rating_manual": difficulty_manual,
+            "difficulty_manual": difficulty_manual,
             "difficulty_model": difficulty_model,
-            "difficulty_level": difficulty_level, 
-            
+            "difficulty_level": difficulty_level,
+
             "course": f_course,
             "year": f_year,
             "semester": f_semester,
@@ -590,12 +614,8 @@ def get_question():
 
     return jsonify({"total": len(items), "items": items})
 
-# -----------------------------------------------------
-## ⬇️ File Download
-
-# Directory for files in the container
+# ---- Download Route ----
 file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
-
 question_media_base_directory = os.getenv("question_media_base_directory", "/app/data/question_media")
 
 def _safe_join_media(base_dir: str, file_path: str) -> str:
@@ -731,8 +751,7 @@ def download_file(file_id: int):
 
     file_row = _get_file_row(file_id)
     if not file_row:
-        abort(404, description="Invalid file")
-
+        abort(404, description = "Invalid file")
     try:
         path_in_db = (file_row.get("file_name") or "").strip()
         full_path = _safe_join_file(file_base_directory, path_in_db)
@@ -913,6 +932,14 @@ def _compute_readability_features(texts):
         n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
         fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
         fkgl = 0.39 * (n_w / n_sents) + 11.8 * (n_syll / n_w) - 15.59
+
+        # Flesch-Kincaid Grade Level (higher = harder)
+
+# ---- Difficulty Rating Model ----
+# Load the difficulty rating model
+_load_training_helpers()
+
+
         rows.append([fre, fkgl])
     return np.array(rows, dtype=float)
 
@@ -993,6 +1020,7 @@ def parse_tags_for_model(val):
     if isinstance(val, (list, tuple)): return list(val)
     try: return json.loads(val) or []
     except Exception: return []
+
 
 def predict_row(row: dict) -> float:
     """
@@ -1082,7 +1110,6 @@ def predict_difficulty():
     Raises:
         Database and model errors handled and returned as 4xx/5xx flask responses
     """
-
     if difficulty_model is None:
         # 💡 FIX: Return the active_model_name in the error for better debugging
         return jsonify({"error": "Model not loaded", "active_model": active_model_name}), 503
@@ -1163,8 +1190,48 @@ def upload_page():
 </body></html>
 """)
 
+for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
+    _d.mkdir(parents=True, exist_ok=True)
 
-@app.post("/api/upload_file")
+def _allowed_pdf(filename: str) -> bool:
+    """
+    Checks if an uploaded filename has a permitted extension
+
+    Currently only `.pdf` files are allowed
+    The check is case-insensitive and only looks at the final extension
+
+    Args:
+        filename (str): Name of the uploaded file
+
+    Returns:
+        bool: True if the filename ends with an allowed extension, False otherwise
+    """
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def _run(cmd, env_extra=None, timeout=900):
+    """
+    Run a subprocess in the project base directory and capture its output
+
+    Args:
+        cmd (str): Shell-like command to run (e.g. "python pdf_extractor.py")
+        env_extra (dict, optional): Extra environment variables to merge into
+            the current process environment
+        timeout (int, optional): Max number of seconds to allow the process
+            to run before raising a timeout - Defaults to 900s
+
+    Returns:
+        tuple[int, str, str]:
+            - returncode (int): Process return code (0 on success)
+            - stdout (str): Captured standard output (stripped)
+            - stderr (str): Captured standard error (stripped)
+    """
+    env = dict(os.environ)
+    if env_extra: env.update(env_extra)
+    p = subprocess.run(shlex.split(cmd), cwd=str(BASE_DIR), capture_output=True, text=True, timeout=timeout, env=env)
+    return p.returncode, p.stdout.strip(), p.stderr.strip()
+
+# ---- Upload Route ----
+@app.post("/upload_file")
 def upload_file():
     """
     Handle PDF uploads, persist metadata to the database, and trigger the 3-step parsing pipeline
@@ -1228,7 +1295,7 @@ def upload_file():
     f.stream.seek(0)
     if head != b"%PDF-":
         return jsonify({"error": "Invalid PDF header"}), 400
-    # 💥 BEGIN LOCK FIX: Read entire stream into memory
+    # Read entire stream into memory
     try:
         f.stream.seek(0)
         file_content = f.stream.read()
@@ -1253,6 +1320,9 @@ def upload_file():
     if dest_path.exists():
         candidate_name = f"{stem}_{short_hash}{suffix}"
         dest_path = base_dir / candidate_name
+    dest_path = dest_path.relative_to('/app')
+
+    # Move temp file into the canonical storage directory
     shutil.move(str(tmp_path), dest_path)
     # Insert into DB
     file_id = None
@@ -1305,7 +1375,7 @@ def upload_file():
     if code != 0:
         return jsonify({"saved": True, "file_id": file_id, "pipeline": logs, "error": "insert_questions failed"}), 500
     # ============================================================== 
-    # 🔑 Retry loop for newly_inserted_questions with exponential backoff
+    # Retry loop for newly_inserted_questions with exponential backoff
     # ============================================================== 
     new_questions = []
     select_cols = [
@@ -1388,12 +1458,39 @@ def upload_file():
 
 
 # -----------------------------------------------------
-## ✏️ Question Editing (PATCH)
+# Question Editing (PATCH)
 
 allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
 allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
 
 @app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
+# ---- Temporary Endpoint for backend testing of upload feature ---
+@app.get("/upload")
+def upload_page():
+    """
+    Temporary Endpoint for backend to test upload feature
+    """
+    return render_template_string("""
+<!doctype html><html><head><meta charset='utf-8'><title>Upload PDF</title></head>
+<body style="font-family:system-ui;padding:2rem;max-width:720px">
+  <h1>Upload a PDF</h1>
+  <form action="/upload_file" method="post" enctype="multipart/form-data">
+    <label>PDF file <input type="file" name="file" accept="application/pdf" required></label><br><br>
+    <label>Course <input type="text" name="course" placeholder="ST1131"></label><br>
+    <label>Year <input type="text" name="year" placeholder="2024"></label><br>
+    <label>Semester <input type="text" name="semester" placeholder="Sem 1"></label><br>
+    <label>Assessment Type <input type="text" name="assessment_type" placeholder="quiz"></label><br><br>
+    <button type="submit">Upload</button>
+  </form>
+</body></html>
+""")
+
+# ---- Edit Question Route ----
+
+ALLOWED_QUESTION_FIELDS_FOR_EDIT = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
+ALLOWED_FILE_FIELDS_FOR_EDIT = {"assessment_type", "course", "year", "semester"}
+
+@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"])
 def update_question(q_id):
     """
     Supports editing selected fields in the 'questions' table ("question_stem", 
@@ -1422,8 +1519,7 @@ def update_question(q_id):
     Raises:
         Database and JSON errors are handled and returned as 4xx/5xx flask responses.
     """
-
-    # the requested edit attribute
+    # The requested edit attribute
     payload = request.get_json(silent=True) or {}
     if not payload:
         return jsonify({"error": "empty_body"}), 400
@@ -1431,10 +1527,11 @@ def update_question(q_id):
     # Filter to allowed fields only
     question_updates = {}
     file_updates = {}
+
     for k,v in payload.items():
-        if k in allowed_question_fields_for_edit:
+        if k in ALLOWED_QUESTION_FIELDS_FOR_EDIT:
             question_updates[k] = v
-        elif k in allowed_file_fields_for_edit:
+        elif k in ALLOWED_FILE_FIELDS_FOR_EDIT:
             file_updates[k] = v
 
     if not question_updates and not file_updates:
@@ -1477,19 +1574,19 @@ def update_question(q_id):
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
 
-        # for questions table edits
+        # For questions table edits
         if question_updates:
             set_sql = ", ".join(f"{k}=%s" for k in question_updates)
             cur.execute(f"UPDATE questions SET {set_sql} WHERE id=%s LIMIT 1",
                         (*question_updates.values(), q_id))
             conn.commit()
 
-        # for files table edits
+        # For files table edits
         if file_updates:
-            # first get the file_id
+            # Get the file_id
             cur.execute("SELECT file_id FROM questions WHERE id=%s", (q_id,))
             row = cur.fetchone()
-            # if not row then file don't exist
+            # If file does not exist
             if not row:
                 return jsonify({"error": "not_found_or_deleted", "id": q_id}), 404
             file_id = row["file_id"]
@@ -1511,7 +1608,7 @@ def update_question(q_id):
         """, (q_id,))
         row = cur.fetchone()
 
-    # convert concept_tags back from JSON string to Python List for readibility
+    # Convert concept_tags back from JSON string to Python List for readibility
     if row and row.get("concept_tags"):
         row["concept_tags"] = parse_json_field(row["concept_tags"])
         
@@ -1523,8 +1620,36 @@ def update_question(q_id):
 
     return jsonify(row), 200
 
-# -----------------------------------------------------
-## 🗑️ Hard Delete Question (DELETE)
+# ---- Hard Deletion Route ----
+@app.route("/api/harddeletequestions/<int:q_id>", methods=["DELETE"])
+def hard_delete_question(q_id):
+    """
+    Permanently delete a question from the 'questions' table.
+
+    Args:
+        q_id (int): 
+            Primary key of the question to be deleted.
+        Confirmation string (str):
+            MUST BE "YES" to proceed with deletion, otherwise error 400 is returned.
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"status": "deleted_permanently", "id": q_id} if successful
+            400 with {"error": "confirmation_required", ...} if confirmation not stated/invalid.
+            404 with {"status": "not_found", "id": q_id} if q_id does not exist in 'questions' table
+            500 with {"error": "delete_failed", ..." if error in database.
+
+    Raises:
+        All exceptions handled and returned as 4xx/5xx flask responses.
+
+    """
+    # Confirm before hard delete
+    confirm = request.args.get("confirm", "").upper()
+    if confirm != "YES":
+        return jsonify({
+            "error": "confirmation_required",
+            "message": "Add ?confirm=YES to permanently delete the question."
+        }), 400
 
 @app.route("/api/deletequestion/<int:q_id>", methods=["DELETE"])
 def delete_question(q_id):
@@ -1566,6 +1691,8 @@ def delete_question(q_id):
         # 2. Delete the question from the questions table
         try:
             cur.execute("DELETE FROM questions WHERE id = %s LIMIT 1", (q_id,))
+            conn.commit()
+            # If there is no row to delete
             if cur.rowcount == 0:
                 conn.commit()
                 return jsonify({"status": "not_found", "id": q_id}), 404
@@ -1590,9 +1717,7 @@ def delete_question(q_id):
             app.logger.error(f"Transaction failed during question delete for QID {q_id}: {e}")
             return jsonify({"error": "delete_failed", "message": str(e)}), 500
 
-# -----------------------------------------------------
-## ➕ Question addition (Legacy/File-Dependent)
-
+# ---- Add Question Route ----
 @app.route("/addquestion", methods=["POST"])
 def addquestion():
     """
@@ -1626,7 +1751,6 @@ def addquestion():
         Input and database error are handled and returned as 4xx/5xx flask responses.
 
     """
-
     payload = request.get_json(silent=True) or {}
 
     # Required fields: find file_id or create it from metadata
@@ -1654,6 +1778,7 @@ def addquestion():
         
         if not file_id:
              return jsonify({"error": "file_container_not_found", "message": "No existing file container matches the provided metadata. Consider using /api/createquestion."}), 404
+
 
 
     question_type  = (payload.get("question_type") or "").strip()
@@ -1686,10 +1811,10 @@ def addquestion():
     if isinstance(answer_raw, (dict, list)):
         answer_val = json.dumps(answer_raw, ensure_ascii=False)
     else:
-        # Template 1 uses raw_answer which is not defined, Template 2 uses answer_raw. Using answer_raw.
-        answer_val = answer_raw 
+        # Leave as scalar string/number/None
+        answer_val = answer_raw
 
-    # ---- Insert ----
+    # Insertion
     insert_sql = """
         INSERT INTO questions (
             question_base_id, version_id, file_id,
@@ -1783,8 +1908,8 @@ def addquestion():
             return jsonify({"error": "insert_failed", "message": str(e)}), 500    
 
 # --# -----------------------------------------------------
-## ➕ Question Creation (File-Independent)
-## 🎯 Unique Endpoint from Template 2
+## Question Creation (File-Independent)
+## Unique Endpoint from Template 2
 
 @app.route("/api/createquestion", methods=["POST"])
 def create_question():
@@ -1835,10 +1960,10 @@ def create_question():
     semester = payload.get("semester") or None
     assessment_type = payload.get("assessment_type") or None
     
-    # 🌟 Extracting difficulty_rating_manual
+    # Extracting difficulty_rating_manual
     difficulty_rating_manual = payload.get("difficulty_rating_manual")
     
-    # ✅ FIX: Enforce FLOAT conversion or keep None if not provided
+    # Enforce FLOAT conversion or keep None if not provided
     if difficulty_rating_manual is not None and difficulty_rating_manual != "":
         try:
             difficulty_rating_manual = float(difficulty_rating_manual)
