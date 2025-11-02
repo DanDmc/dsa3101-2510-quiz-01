@@ -106,15 +106,15 @@ def build_prompt(text):
           - `question_no` (preserve original numbering, e.g. "1(a)", "2b", "3.1")
           - `question_type` (must be one of: mcq, mrq, coding, open-ended,
             fill-in-the-blanks, others)
-          - `difficulty_rating_manual` (0-1 decimal; convert % if it appears)
+          - `difficulty_rating_manual` i.e. DifficultyLevel/P-value (if present) otherwise null
           - `question_stem` (question text only; image markers replaced with
             "(Image - Refer to question paper)")
           - `question_options` (list of {"label": ..., "text": ...} for MCQ/MRQ;
             [] otherwise; image markers replaced similarly)
           - `question_answer` (correct answer with explanation if available,
             or null)
-          - `page_numbers` (all `[PAGE_NUMBER:X]` found for the question)
-          - `concept_tags` (1-3 relevant tags)
+          - `page_numbers` (all page numbers found for the question, corresponding to the [PAGE_NUMBER: in the next [PAGE_IMAGE_SAVED] marker)
+          - `concept_tags` (1-3 relevant tags related to math/data science/statistics/similar fields)
       - ignore administrative / non-question metadata such as
         "Item Weight", "Item Psychometrics", and raw `[PAGE_IMAGE_SAVED: ...]`
         markers.
@@ -130,14 +130,14 @@ def build_prompt(text):
 Extract all exam questions as a JSON array.
 
 For each question, extract:
-- question_no: exact numbering (e.g., "1", "1a", "2b", "1(a)", "3.1")
+- question_no: exact numbering (e.g., "1", "1a", "2b", "1(a)", "3.1" for subquestions of larger questions)
 - question_type: mcq|mrq|coding|open-ended|fill-in-the-blanks|others (it must be classified as one of these categories only, nothing else)
-- difficulty_rating_manual: decimal 0–1 (convert % to decimal if present)
+- difficulty_rating_manual only if it is present in the question, such as DifficultyLevel/P-value: decimal 0–1. Otherwise null
 - question_stem: the question text only (no options/answers). Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
 - question_options: array of {{"label": "A", "text": "..."}} for MCQ/MRQ, empty [] otherwise. Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
 - question_answer: correct answer (e.g. A. <answer value here>) with explanation if present, null otherwise. Sometimes correct answer is indicated with a tick mark.
-- page_numbers: array of [PAGE_NUMBER:X] values found in this question
-- concept_tags: 1-3 relevant tags (e.g., ["probability", "distributions"])
+- page_numbers: array of integers only (e.g. [21, 22]) corresponding to the [PAGE_NUMBER: in the next [PAGE_IMAGE_SAVED] marker you find in the text. Never leave it empty
+- concept_tags: 1-3 relevant conceptual tags related to math/data science/statistics/similar fields (e.g., ["probability", "distributions"], make it all lowercase.
 
 Ignore: "Item Weight", "Item Psychometrics", or [PAGE_IMAGE_SAVED:...] markers.
 Return ONLY valid JSON array — no markdown, no extra commentary.
