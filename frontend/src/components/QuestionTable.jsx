@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import { 
-  Box, Card, Table, TableBody, TableCell, TableContainer, 
-  TableHead, TableRow, Checkbox, IconButton, Chip, 
-  TablePagination, Typography, useTheme, Tooltip // ADDED Tooltip import for Feature 2
+  Box, Card, Table, TableBody, TableCell, TableContainer, 
+  TableHead, TableRow, Checkbox, IconButton, Chip, 
+  TablePagination, Typography, useTheme, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions, Button 
+
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -26,7 +27,8 @@ const GREY_BACKGROUND = '#f5f5f5';
 const TIGHT_PADDING_Y = '8px'; 
 const CHECKBOX_PADDING = '4px'; 
 
-// ⭐ NEW CONSTANT: Defines the stem text to be excluded
+const API_BASE = import.meta.env.VITE_APP_API_URL; // ensure correct url for download
+//  NEW CONSTANT: Defines the stem text to be excluded
 const PLACEHOLDER_STEM = '[Placeholder Question for Group Management]'; 
 
 const getChipColor = (type) => {
@@ -64,12 +66,16 @@ function TablePaginationActions(props) {
 function QuestionTable({ questions, selected, setSelected, onSelectAllClick, goToEditPage }) { // ⬅️ UPDATED: Added goToEditPage prop
   const [page, setPage] = useState(0);
 
+  // State for Concept Tags Dialog
+  const [openConcepts, setOpenConcepts] = useState(false);
+  const [currentConcepts, setCurrentConcepts] = useState([]);
+
+  const handleChangePage = (event, newPage) => setPage(newPage);
   // ⭐ MODIFICATION 1: Filter out placeholder questions immediately
   const actualQuestions = questions.filter(q => q.question_stem !== PLACEHOLDER_STEM);
 
   const totalQuestions = actualQuestions.length; // Use the filtered count
 
-  const handleChangePage = (event, newPage) => setPage(newPage);
 
   // ⭐ MODIFICATION 2: Base pagination on the filtered list
   const visibleQuestions = actualQuestions.slice(
@@ -103,32 +109,41 @@ setSelected(newSelected);
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  // --- NEW: Download Selected Handler (Updated to Port 5001) ---
-  const handleDownloadSelected = async () => {
-    if (selected.length === 0) return;
-    try {
-      const res = await fetch('http://localhost:5001/download_questions', { // ⬅️ UPDATED: Port 5001
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question_ids: selected }),
-      });
+  // --- DOWNLOAD SELECTED BUTTON HANDLER USING EXISTING BACKEND ---
+  const handleDownloadSelected = async () => {
+    if (selected.length === 0) return;
 
-      if (!res.ok) throw new Error('Download failed');
-      
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'questions.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error(err);
-      alert('Failed to download questions. (Note: This route may not exist on the server yet)'); // ⬅️ UPDATED: Better alert
-    }
-  };
+    try {
+      for (const qId of selected) {
+        // Find the file_id of this question
+        const question = questions.find(q => q.id === qId);
+        if (!question?.file_id) continue;
+
+        const res = await fetch(`http://localhost:5001/files/${question.file_id}/download`, {
+          method: 'GET',
+        });
+
+        if (!res.ok) {
+          console.error(`Failed to download file for question ${qId}`, res.status);
+          continue;
+        }
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = question.file_name || `question_${qId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to download some questions. Check the console for details.');
+    }
+  };
+
 
   return (
     <Card sx={{ width: TABLE_MAX_WIDTH, maxWidth: TABLE_MAX_WIDTH, border: BORDER_STYLE, boxShadow: 'none', borderRadius: 0, overflowX: 'auto' }}>
@@ -250,10 +265,20 @@ setSelected(newSelected);
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>
                     <Chip label={questionType.toUpperCase()} size="small" sx={getChipColor(questionType)} />
                   </TableCell>
-                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficultyManual)}</TableCell>
-                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficultyGenerated)}</TableCell>
+                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_rating_manual)}</TableCell>
+                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_model)}</TableCell>
                   <TableCell sx={{ ...centeredText, ...reducedVerticalPaddingStyle }}>
-                    <IconButton size="small" sx={{ color: ICON_COLOR }}><SettingsIcon /></IconButton>
+                    <IconButton
+                      size="small"
+                      sx={{ color: ICON_COLOR }}
+                      onClick={(e) => {
+                        e.stopPropagation(); 
+                        setCurrentConcepts(row.concept_tags || []);
+                        setOpenConcepts(true);
+                      }}
+                    >
+                      <SettingsIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );
@@ -291,6 +316,22 @@ setSelected(newSelected);
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count}`}
         ActionsComponent={TablePaginationActions} 
       />
+
+    <Dialog open={openConcepts} onClose={() => setOpenConcepts(false)}>
+      <DialogTitle>Concept Tags</DialogTitle>
+      <DialogContent>
+        {currentConcepts.length > 0 ? (
+          currentConcepts.map((tag, idx) => (
+            <Chip key={idx} label={tag} sx={{ mr: 1, mb: 1 }} />
+          ))
+        ) : (
+          <Typography variant="body2">No concept tags available.</Typography>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpenConcepts(false)}>Close</Button>
+      </DialogActions>
+    </Dialog>
     </Card>
   );
 }

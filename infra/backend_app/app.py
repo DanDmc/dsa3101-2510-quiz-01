@@ -4,6 +4,10 @@ from flask import Flask, request, jsonify, send_file, abort, render_template_str
 from flask_cors import CORS
 from contextlib import closing
 from werkzeug.utils import secure_filename
+# app.py (New/Modified section)
+from flask_cors import CORS, cross_origin # ⬅️ ADD cross_origin here
+import re
+import sys
 from pathlib import Path
 import os, MySQLdb, mimetypes, json, datetime, joblib, tempfile, shutil, hashlib, subprocess, shlex
 import sys, importlib.util, re, time
@@ -723,12 +727,70 @@ def _compute_readability_features(texts):
 # Load the difficulty rating model
 _load_training_helpers()
 
+
+        rows.append([fre, fkgl])
+
+    return np.array(rows, dtype=float)
+
+def numeric_feats_from_df(X):
+
+    stems = X["question_stem"].fillna("").to_numpy()
+
+    return _compute_readability_features(stems)
+_numeric_feats_from_df = numeric_feats_from_df
+
+
+# -----------------------------------------------------
+## Difficulty Rating Model
+
+# -----------------------------------------------------
+# 💡 2. FIX FOR GUNICORN 'module __main__' ERROR
+# The .pkl file expects these functions to be in the __main__ module.
+# When running with Gunicorn, __main__ is Gunicorn, not app.py.
+# We must manually inject these functions into the __main__ module
+# *before* joblib.load() is called.
+main_module = sys.modules['__main__']
+main_module._SENT_SPLIT = _SENT_SPLIT
+main_module._syllable_count = _syllable_count
+main_module._compute_readability_features = _compute_readability_features
+main_module.numeric_feats_from_df = numeric_feats_from_df
+main_module._numeric_feats_from_df = _numeric_feats_from_df
+# -----------------------------------------------------
+
+# load the difficulty rating model
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
+difficulty_model = None
 try:
     difficulty_model = joblib.load(MODEL_PATH)
     app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
 except Exception as e:
     app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
 
+def parse_tags_for_model(val):
+    if not val:
+        return []
+    if isinstance(val, (list, tuple)):
+        return list(val)
+    try:
+        return json.loads(val) or []
+    except Exception:
+        return []
+
+
+def predict_row(row: dict) -> float:
+    stem = (row.get("question_stem") or "").strip()
+    tags_text = " ".join(parse_tags_for_model(row.get("concept_tags")))
+    X = pd.DataFrame([{
+        "question_stem": stem,
+        "tags_text": tags_text,
+        "question_type": row.get("question_type") or "",
+    }])
+    yhat = float(difficulty_model.predict(X)[0])
+    return float(np.clip(yhat, 0.0, 1.0))
+
+
+@app.route("/predict_difficulty", methods=["POST"])
+def predict_difficulty():
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
     """
@@ -1161,6 +1223,7 @@ def update_question(q_id):
     # Filter to allowed fields only
     question_updates = {}
     file_updates = {}
+
     for k,v in payload.items():
         if k in ALLOWED_QUESTION_FIELDS_FOR_EDIT:
             question_updates[k] = v
@@ -1390,6 +1453,7 @@ def addquestion():
         
         if not file_id:
              return jsonify({"error": "file_container_not_found", "message": "No existing file container matches the provided metadata. Consider using /api/createquestion."}), 404
+
 
 
     question_type  = (payload.get("question_type") or "").strip()
