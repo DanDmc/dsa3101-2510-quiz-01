@@ -166,12 +166,15 @@ export default function QuestionSearchPage({
 
     // 4) academic year (accepts "academic_year" or "year")
     const y = searchParams.academic_year ?? searchParams.year;
-    if (y == null || y === "") setFAY("All");
-    else {
-      const ay = y === "Unknown" ? "Unknown" : toAY(y);
-      setFAY(ay);
-    }
 
+// Explicitly set "All" if value is null/empty/or the string "All"
+if (y == null || y === "" || String(y).toUpperCase() === "ALL") {
+  setFAY("All");
+} else {
+  // Only convert to AY format if it's an actual year number or "Unknown"
+  const ay = y === "Unknown" ? "Unknown" : toAY(y);
+  setFAY(ay);
+}
     // 5) concept tag (accept array or single; we keep one)
     const tags = Array.isArray(searchParams.concept_tags)
       ? searchParams.concept_tags
@@ -335,7 +338,11 @@ export default function QuestionSearchPage({
   const onEditSelected = () => {
     if (!selected.length) return;
     const chosen = rows.filter(r => selected.includes(r._id));
-    if (chosen.length) goToEditPage?.(chosen);
+    
+    // Perform a shallow copy to break local memory references
+    const chosenCopies = chosen.map(q => ({ ...q })); 
+
+    if (chosenCopies.length) goToEditPage?.(chosenCopies); 
   };
 
   const onDeleteSelected = async () => {
