@@ -62,6 +62,7 @@ function normalizeAssessment(_course, assessment) {
 
 // ---- Course canonicalization (key vs display) ----
 const COURSE_UNKNOWN_KEY = "UNKNOWN";
+const COURSE_ALL_KEY = "ALL"; // CHANGE 1: Define uppercase key for 'All'
 const courseKey = (val) => {
   const s = (val || "").trim();
   if (!s) return COURSE_UNKNOWN_KEY;
@@ -85,7 +86,7 @@ export default function QuestionSearchPage({
   // query + filters
   const [query, setQuery] = useState(initialQuery || "");
   const [fType, setFType] = useState("All");
-  const [fCourse, setFCourse] = useState("All");
+  const [fCourse, setFCourse] = useState(COURSE_ALL_KEY); // CHANGE 2: Initialize state to uppercase key
   const [fAY, setFAY] = useState("All");
   const [fAssessment, setFAssessment] = useState("All");
   // Concept tag (single-select per your latest requirement)
@@ -100,7 +101,7 @@ export default function QuestionSearchPage({
   // dropdown dynamic options (Course uses [ {key, label} ])
   const [conceptOptions, setConceptOptions] = useState(["All"]);
   const [courseOptions, setCourseOptions] = useState([
-    { key: "All", label: "All" },
+    { key: COURSE_ALL_KEY, label: "All" }, // CHANGE 3: Options initialization uses uppercase key
     { key: COURSE_UNKNOWN_KEY, label: "Unknown" },
   ]);
 
@@ -146,7 +147,18 @@ export default function QuestionSearchPage({
 
     // 6) course (key/uppercase)
     const c = (searchParams.course ?? "").toString().trim();
-    setFCourse(c ? c.toUpperCase() : "All");
+    const normalizedC = c.toUpperCase(); // Ensure we are working with uppercase for comparison
+
+    // CRITICAL FIX 4: Robust Seeding Logic for ALL/UNKNOWN/SPECIFIC
+    if (normalizedC === COURSE_UNKNOWN_KEY) {
+      setFCourse(COURSE_UNKNOWN_KEY);
+    } else if (normalizedC === COURSE_ALL_KEY || normalizedC === "") {
+      // If incoming parameter is 'ALL' (e.g., from toolbar state) or empty, set state to the constant 'ALL'.
+      setFCourse(COURSE_ALL_KEY); 
+    } else {
+      // Otherwise, it's a specific course code (e.g., 'ST2131')
+      setFCourse(normalizedC); 
+    }
   }, [searchParams]);
 
   // Build URL params for the /search endpoint (supports `q`)
@@ -159,8 +171,9 @@ export default function QuestionSearchPage({
     if (fAssessment !== "All" && fAssessment !== "Unknown") {
       p.set("assessment_type", fAssessment.toLowerCase()); // "final", "midterm", "quiz"
     }
-
-    if (fCourse !== "All" && fCourse !== COURSE_UNKNOWN_KEY) p.set("course", fCourse);
+    
+    // CRITICAL FIX 5: Use the new COURSE_ALL_KEY for exclusion
+    if (fCourse !== COURSE_ALL_KEY && fCourse !== COURSE_UNKNOWN_KEY) p.set("course", fCourse);
 
     if (fAY !== "All" && fAY !== "Unknown") p.set("academic_year", fromAY(fAY));
 
@@ -246,7 +259,7 @@ export default function QuestionSearchPage({
       courseMap.set(COURSE_UNKNOWN_KEY, "Unknown");
       filtered.forEach((r) => courseMap.set(r.courseKey, r.courseLabel));
       const newCourseOpts = [
-        { key: "All", label: "All" },
+        { key: COURSE_ALL_KEY, label: "All" }, // FIX: Options must be rebuilt with uppercase key
         ...[...courseMap.entries()]
           .sort((a, b) => a[0].localeCompare(b[0]))
           .map(([k, lbl]) => ({ key: k, label: lbl })),
