@@ -6,22 +6,15 @@ This module uses Google's Gemini API to parse extracted text from exam papers
 into structured JSON format using a formal output schema for reliability.
 """
 
-from pathlib import Path # <-- Standardized to Path
+from pathlib import Path 
 import os
 import sys
 import io
 import json
 import re
 import time
-# OLD version
-# import google.generativeai as genai
-# from google.generativeai.types import HarmCategory, HarmBlockThreshold
-# from google.generativeai import types
-
-# New version
 from google import genai
-
-from google.genai.types import HarmCategory, HarmBlockThreshold
+from google.genai.types import HarmCategory, HarmBlockThreshold, GenerationConfig
 from google.genai import types
 
 # === 1. Configuration ===
@@ -82,14 +75,13 @@ QUESTION_SCHEMA = types.Schema(
     )
 )
 
-# FIX START: Replace configure() with Client() and instantiate the model
+# 🚨 CRITICAL FIX START: Final correct Client Service Initialization 🚨
 
-# 1. We must instantiate the client first, but we don't need a global 'client' variable.
-# We create a temporary variable for the client.
-temp_client = genai.Client(api_key=API_KEY)
+# 1. Instantiate the Client and store it globally.
+client = genai.Client(api_key=API_KEY)
 
-# 2. Define the configuration object explicitly using the imported 'types' alias.
-config = types.GenerationConfig(
+# 2. Define the configuration object globally.
+GLOBAL_GENERATION_CONFIG = types.GenerationConfig(
     temperature=0.1, 
     top_p=0.95,
     top_k=40,
@@ -97,17 +89,14 @@ config = types.GenerationConfig(
     response_schema=QUESTION_SCHEMA
 )
 
-# 3. Instantiate the GenerativeModel globally using the main import.
-# The previous structure failed because it tried to access GenerativeModel via the 
-# client's service endpoint (client.models.GenerativeModel), but the class name is
-# exposed directly by the top-level package.
-model = genai.GenerativeModel(
-    model=MODEL, # This is the argument name expected by the constructor
-    generation_config=config,
-    safety_settings=[
-        HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
-    ]
-)
+GLOBAL_SAFETY_SETTINGS = [
+    HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
+]
+
+# NOTE: The global 'model' object is ELIMINATED. We use 'client' for all API calls.
+
+# 🚨 END CRITICAL FIX 🚨
+
 
 # === Utility Functions ===
 def build_page_to_image_map(full_text):
@@ -126,8 +115,6 @@ def build_page_to_image_map(full_text):
 def build_prompt(text):
     """
     Construct a structured instruction prompt for an LLM.
-    
-    The prompt is now much shorter because the schema is passed via API arguments.
     """
     return f"""
 Analyze the provided text from an exam paper. 
@@ -148,9 +135,6 @@ Text to Analyze:
 def sanitize_output(text):
     """
     Clean LLM output by stripping code fences. 
-    
-    NOTE: Using response_mime_type should eliminate the need for this, but it's 
-    kept as a robust defensive measure against LLM formatting drift.
     """
     text = text.strip()
     if text.startswith("```"):
@@ -191,6 +175,9 @@ def map_pages_to_images(questions, page_to_image_map):
 def parse_file(txt_file_path: Path): # <-- Accepts a Path object
     """Parse a single extracted-exam text file into structured question objects."""
     
+    # Global variables required by this function
+    global client, MODEL, GLOBAL_GENERATION_CONFIG, GLOBAL_SAFETY_SETTINGS
+
     # Use Path object directly
     try:
         with open(txt_file_path, "r", encoding="utf-8") as f:
@@ -237,7 +224,14 @@ def parse_file(txt_file_path: Path): # <-- Accepts a Path object
         try:
             prompt = build_prompt(chunk_text)
             
-            response = model.generate_content(prompt)
+            # 🚨 CRITICAL FIX USAGE: Call the API via client.models.generate_content 🚨
+            response = client.models.generate_content(
+                model=MODEL, 
+                contents=prompt,
+                config=GLOBAL_GENERATION_CONFIG,
+                safety_settings=GLOBAL_SAFETY_SETTINGS
+            )
+            # 🚨 END FIX USAGE 🚨
             
             # Since the model is forced to output JSON, the text *should* be clean.
             output = sanitize_output(response.text)
