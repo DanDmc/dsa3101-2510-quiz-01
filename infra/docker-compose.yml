@@ -89,7 +89,7 @@ services:
       - "5001:5000"
     environment:
       - file_base_directory=/app/data/source_files
-      - diff_model_path=/app/models/model_ridge.pkl
+      - diff_model_path=/app/models/model_elasticnet.pkl
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
     volumes:
