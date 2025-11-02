@@ -338,11 +338,7 @@ if (y == null || y === "" || String(y).toUpperCase() === "ALL") {
   const onEditSelected = () => {
     if (!selected.length) return;
     const chosen = rows.filter(r => selected.includes(r._id));
-    
-    // Perform a shallow copy to break local memory references
-    const chosenCopies = chosen.map(q => ({ ...q })); 
-
-    if (chosenCopies.length) goToEditPage?.(chosenCopies); 
+    if (chosen.length) goToEditPage?.(chosen);
   };
 
   const onDeleteSelected = async () => {
