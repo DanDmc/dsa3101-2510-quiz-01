@@ -225,13 +225,17 @@ def process_json_files():
     
     # Connect to database (using contextlib.closing for safety)
     try:
-        conn = connect_to_database()
-    except mysql.Error as e:
-        print(f"FATAL: Could not establish database connection: {e}")
+        # Unpack the result of the function call
+        temp_conn, temp_cursor = connect_to_database()
+    except mysql.connector.Error as e:
+        # ... (Error handling remains the same)
         sys.exit(1)
 
-    with closing(conn) as conn:
-        cursor = conn.cursor()
+    # Now, only pass the connection object (temp_conn) to closing
+    with closing(temp_conn) as conn:
+        # Use the cursor that was already created by connect_to_database
+        # You were correctly passing the cursor as buffered=True inside the connect function.
+        cursor = temp_cursor
     
         # --- Determine which JSON files to process (V2 logic) ---
         json_files = []
