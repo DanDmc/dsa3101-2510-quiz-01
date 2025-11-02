@@ -6,9 +6,9 @@ from flask_cors import CORS, cross_origin
 from contextlib import closing
 from werkzeug.utils import secure_filename
 from pathlib import Path
-from mysql.connector.cursor import MySQLCursorDict
 import os, MySQLdb, mimetypes, json, datetime, joblib, tempfile, shutil, hashlib, subprocess, shlex
 import sys, importlib.util, re, time
+from MySQLdb.cursors import DictCursor
 
 app = Flask(__name__)
 
@@ -962,7 +962,7 @@ def upload_file():
     # --- 2. DB INSERT (FILE METADATA) ---
     file_id = None
     try:
-        with closing(get_connection()) as conn, closing(conn.cursor()) as cur:
+        with closing(get_connection()) as conn, closing(conn.cursor(DictCursor)) as cur:
             cur.execute(
                 """INSERT INTO files (course, year, semester, assessment_type, file_name, file_path)
                    VALUES (%s,%s,%s,%s,%s,%s)""",
@@ -1038,7 +1038,7 @@ def upload_file():
     for attempt in range(max_attempts):
         try:
             # Use dictionary=True for safer, named column access
-            with closing(get_connection()) as conn, closing(conn.cursor(cursor_class=MySQLCursorDict)) as cur: 
+            with closing(get_connection()) as conn, closing(conn.cursor(DictCursor)) as cur: 
                 sql = f"""
                     SELECT {", ".join(select_cols)}
                     FROM questions q

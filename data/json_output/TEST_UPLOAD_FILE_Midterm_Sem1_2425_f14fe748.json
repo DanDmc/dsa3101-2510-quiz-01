@@ -48,7 +48,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "histograms",
+      "descriptive statistics",
       "r programming"
     ],
     "page_image_paths": [
@@ -67,7 +67,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "qq plot",
+      "normality test",
       "r programming"
     ],
     "page_image_paths": [
@@ -86,7 +86,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "box plots",
+      "comparative analysis",
       "r programming"
     ],
     "page_image_paths": [
@@ -105,7 +105,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "scatter plots",
+      "bivariate analysis",
       "r programming"
     ],
     "page_image_paths": [
@@ -125,7 +125,7 @@
     "concept_tags": [
       "linear regression",
       "statistical modeling",
-      "p-value",
+      "hypothesis testing",
       "r programming"
     ],
     "page_image_paths": [
@@ -182,7 +182,7 @@
     ],
     "concept_tags": [
       "data preprocessing",
-      "standardization",
+      "feature scaling",
       "r programming"
     ],
     "page_image_paths": [
@@ -201,7 +201,7 @@
     ],
     "concept_tags": [
       "data splitting",
-      "train-test split",
+      "machine learning",
       "r programming"
     ],
     "page_image_paths": [
@@ -221,7 +221,7 @@
     "concept_tags": [
       "knn",
       "classification",
-      "machine learning",
+      "model training",
       "r programming"
     ],
     "page_image_paths": [
@@ -279,7 +279,7 @@
     "concept_tags": [
       "knn",
       "prediction",
-      "machine learning",
+      "data preprocessing",
       "r programming"
     ],
     "page_image_paths": [
@@ -297,9 +297,9 @@
       4
     ],
     "concept_tags": [
-      "programming",
       "financial modeling",
-      "function definition"
+      "programming",
+      "functions"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
@@ -316,9 +316,9 @@
       4
     ],
     "concept_tags": [
+      "financial modeling",
       "programming",
-      "optimization",
-      "financial modeling"
+      "optimization"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
