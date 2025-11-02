@@ -48,7 +48,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "descriptive statistics",
+      "histograms",
       "r programming"
     ],
     "page_image_paths": [
@@ -67,7 +67,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "normality testing",
+      "qq plot",
       "r programming"
     ],
     "page_image_paths": [
@@ -86,7 +86,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "comparative analysis",
+      "box plots",
       "r programming"
     ],
     "page_image_paths": [
@@ -105,7 +105,7 @@
     ],
     "concept_tags": [
       "data visualization",
-      "bivariate analysis",
+      "scatter plots",
       "r programming"
     ],
     "page_image_paths": [
@@ -125,7 +125,8 @@
     "concept_tags": [
       "linear regression",
       "statistical modeling",
-      "hypothesis testing"
+      "p-value",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -142,7 +143,7 @@
       3
     ],
     "concept_tags": [
-      "predictive modeling",
+      "prediction",
       "linear regression",
       "r programming"
     ],
@@ -154,7 +155,7 @@
     "question_no": "9",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good.\nS is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
+    "question_stem": "Write R code to create a new column in data, names as S where S has two categories: Good and Not Good. S is Good if the satisfaction score in Satisfaction is larger than 70; and S is Not Good if the satisfaction score in Satisfaction is ≤ 70.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -200,7 +201,7 @@
     ],
     "concept_tags": [
       "data splitting",
-      "machine learning",
+      "train-test split",
       "r programming"
     ],
     "page_image_paths": [
@@ -218,9 +219,10 @@
       3
     ],
     "concept_tags": [
-      "k-nearest neighbors",
+      "knn",
       "classification",
-      "machine learning"
+      "machine learning",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -257,7 +259,7 @@
     ],
     "concept_tags": [
       "model selection",
-      "k-nearest neighbors",
+      "knn",
       "accuracy"
     ],
     "page_image_paths": [
@@ -268,16 +270,17 @@
     "question_no": "15",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Use the KNN with the best k found in Question 14 to predict the rank (Good, Not Good) that patient A listed in Question 8 will evaluates the hospital service.\nHint: you can use the same train set as in Question 12 above. You may standardize the values for the new patient using the mean and the standard deviation of all the patients in the data set given.",
+    "question_stem": "Use the KNN with the best k found in Question 14 to predict the rank (Good, Not Good) that patient A listed in Question 8 will evaluates the hospital service. Hint: you can use the same train set as in Question 12 above. You may standardize the values for the new patient using the mean and the standard deviation of all the patients in the data set given.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       3
     ],
     "concept_tags": [
-      "k-nearest neighbors",
+      "knn",
       "prediction",
-      "data preprocessing"
+      "machine learning",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -294,8 +297,8 @@
       4
     ],
     "concept_tags": [
+      "programming",
       "financial modeling",
-      "r programming",
       "function definition"
     ],
     "page_image_paths": [
@@ -313,9 +316,9 @@
       4
     ],
     "concept_tags": [
+      "programming",
       "optimization",
-      "r programming",
-      "financial planning"
+      "financial modeling"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"

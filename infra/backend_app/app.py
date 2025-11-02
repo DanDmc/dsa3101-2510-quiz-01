@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 from contextlib import closing
 from werkzeug.utils import secure_filename
 from pathlib import Path
+from mysql.connector.cursor import MySQLCursorDict
 import os, MySQLdb, mimetypes, json, datetime, joblib, tempfile, shutil, hashlib, subprocess, shlex
 import sys, importlib.util, re, time
 
@@ -1037,7 +1038,7 @@ def upload_file():
     for attempt in range(max_attempts):
         try:
             # Use dictionary=True for safer, named column access
-            with closing(get_connection()) as conn, closing(conn.cursor(dictionary=True)) as cur: 
+            with closing(get_connection()) as conn, closing(conn.cursor(cursor_class=MySQLCursorDict)) as cur: 
                 sql = f"""
                     SELECT {", ".join(select_cols)}
                     FROM questions q
