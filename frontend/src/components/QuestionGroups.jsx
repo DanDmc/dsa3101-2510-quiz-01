@@ -1,3 +1,27 @@
+/**
+ * @file QuestionGroups component.
+ * @module components/QuestionGroups
+ * Renders a list interface for managing and filtering questions by group.
+ *
+ * It supports multi-selection of groups (OR logic), and includes actions for 
+ * renaming and deleting groups directly within the list. It also features 
+ * special "Show All Questions" and "Show Questions Without Groups" filter options.
+ * The entire interface can be disabled via the `disabled` prop during asynchronous operations.
+ *
+ * @param {object} props The component props.
+ * @param {Array<string>} props.groups - A list of unique question group names to display in the dynamic section.
+ * @param {function(string, string): void} props.onRenameGroup - Callback function fired when a group is renamed. 
+ * - Arguments: (oldGroupName, newGroupName).
+ * @param {function(string): void} props.onDeleteGroup - Callback function fired when a group is deleted.
+ * - Argument: (groupName).
+ * @param {function(): void} props.onAddGroup - Callback function fired when the "Add new group" button is clicked.
+ * @param {function(Array<string>): void} props.onFilterChange - Callback function fired when the active filter selection changes. 
+ * - Arguments: (activeFilterKeys), where keys can include 'ALL_QUESTIONS', 'NO_GROUPS', or group names.
+ * @param {boolean} [props.disabled=false] - If true, all interactive elements (buttons, filters) are disabled, 
+ * typically used during save or load operations.
+ * @returns {JSX.Element} A Material-UI Box containing the group title, Add button, and the filter list.
+ */
+
 // src/components/QuestionGroups.jsx
 
 import React, { useState } from 'react';
@@ -45,7 +69,7 @@ const MAX_GROUP_ITEMS_HEIGHT = (VISIBLE_ITEM_COUNT * ITEM_HEIGHT) - SCROLL_HEIGH
 // Border color constant
 const BORDER_COLOR = '#B8B8B8';
 
-// ⭐ MODIFICATION 1: Receive the disabled prop
+// Receive the disabled prop
 function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFilterChange, disabled }) { 
     const [selectedFilters, setSelectedFilters] = useState(new Set([ALL_QUESTIONS_KEY]));
     const [editingGroupName, setEditingGroupName] = useState(null);
@@ -60,7 +84,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
 
         setSelectedFilters(prevFilters => {
             const newFilters = new Set(prevFilters);
-            // ⭐ FIX: Declare finalFilter here to ensure it is in scope everywhere
+            // Declare finalFilter here to ensure it is in scope everywhere
             let finalFilter;
             
             if (filterKey === ALL_QUESTIONS_KEY) {
@@ -104,7 +128,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
                 finalFilter = Array.from(newFilters); // Report the array of specific filters
             }
             
-            // ⭐ CRITICAL CHANGE: Pass the entire array (finalFilter) to the parent
+            // Pass the entire array (finalFilter) to the parent
             if (onFilterChange) {
                 onFilterChange(finalFilter);
             }
@@ -115,7 +139,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
 
     const handleStartEdit = (e, groupName) => {
         e.stopPropagation(); 
-        if (disabled) return; // ⭐ Prevent edit start during processing
+        if (disabled) return; // Prevent edit start during processing
         if (!isAllSelected) {
             setEditingGroupName(groupName);
             setNewGroupName(groupName);
@@ -123,7 +147,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
     };
     
     const handleSaveEdit = (groupName) => {
-        if (disabled) return; // ⭐ Prevent save during processing
+        if (disabled) return; // Prevent save during processing
         if (newGroupName.trim() && newGroupName.trim() !== groupName) {
             if (onRenameGroup) {
                 onRenameGroup(groupName, newGroupName.trim());
@@ -134,14 +158,14 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
     };
 
     const handleCancelEdit = () => {
-        if (disabled) return; // ⭐ Prevent cancel during processing
+        if (disabled) return; // Prevent cancel during processing
         setEditingGroupName(null);
         setNewGroupName('');
     };
 
     const handleDeleteClick = (e, groupName) => {
         e.stopPropagation(); 
-        if (disabled) return; // ⭐ Prevent delete during processing
+        if (disabled) return; // Prevent delete during processing
         
         setSelectedFilters(prevFilters => {
             const newFilters = new Set(prevFilters);
@@ -188,7 +212,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
             <Button 
               variant="contained" 
               onClick={onAddGroup}
-              // ⭐ MODIFICATION 2: Disable the Add Group button during processing
+              // Disable the Add Group button during processing
               disabled={disabled}
               // Replace AddIcon with the custom icon component
               startIcon={<AddCircleIcon sx={{ color: '#212121' }} />} 
@@ -223,7 +247,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
               <ListItemButton 
                 selected={isAllSelected}
                 onClick={() => handleFilterClick(ALL_QUESTIONS_KEY)}
-                disabled={disabled} // ⭐ Disable filter items during processing
+                disabled={disabled} // Disable filter items during processing
                 sx={{ 
                   ...SELECTED_ITEM_SX, 
                   borderBottom: `1px solid ${BORDER_COLOR}` 
@@ -236,7 +260,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
               <ListItemButton
                 selected={selectedFilters.has(NO_GROUPS_KEY)}
                 onClick={() => handleFilterClick(NO_GROUPS_KEY)}
-                disabled={disabled} // ⭐ Disable filter items during processing
+                disabled={disabled} // Disable filter items during processing
                 sx={{ 
                   ...SELECTED_ITEM_SX, 
                   borderBottom: `1px solid ${BORDER_COLOR}` 
@@ -272,7 +296,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
                                   edge="end" 
                                   aria-label="edit" 
                                   size="small" 
-                                  // ⭐ MODIFICATION 5: Disable if ALL is selected OR if processing
+                                  // Disable if ALL is selected OR if processing
                                   disabled={isAllSelected || disabled}
                                   onClick={(e) => handleStartEdit(e, groupName)}
                                   sx={{ color: (isAllSelected || disabled) ? undefined : '#1976D2' }} 
@@ -284,7 +308,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
                                   edge="end" 
                                   aria-label="delete" 
                                   size="small" 
-                                  // ⭐ MODIFICATION 5: Disable if ALL is selected OR if processing
+                                  // Disable if ALL is selected OR if processing
                                   disabled={isAllSelected || disabled}
                                   onClick={(e) => handleDeleteClick(e, groupName)}
                                   sx={{ color: (isAllSelected || disabled) ? undefined : '#DA2020' }} 
@@ -299,7 +323,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
                                   aria-label="save-edit" 
                                   size="small" 
                                   onClick={() => handleSaveEdit(groupName)}
-                                  // ⭐ MODIFICATION 6: Disable if processing
+                                  // Disable if processing
                                 disabled={disabled}
                                   sx={{ color: disabled ? undefined : '#1976D2' }}
                               >
@@ -309,7 +333,7 @@ function QuestionGroups({ groups, onRenameGroup, onDeleteGroup, onAddGroup, onFi
                                   aria-label="cancel-edit" 
                                   size="small" 
                                   onClick={handleCancelEdit}
-                                // ⭐ MODIFICATION 6: Disable if processing
+                                // Disable if processing
                                 disabled={disabled}
                                   sx={{ color: disabled ? undefined : '#DA2020' }}
                               >

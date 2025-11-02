@@ -25,17 +25,35 @@ def extract_text_and_page_images(
     This function processes all PDFs in the source directory, extracting text
     and saving every single page as an image for visual reference.
     
-    Parameters
+    Args:
     ----------
-    source_dir : Path, default="data/source_files"
-        Directory containing the PDF files to process.
-    text_dir : Path, default="data/text_extracted"
-        Directory where extracted text files (.txt) will be saved.
-    media_dir : Path, default="data/question_media"
+    source_dir : str, default="data/source_files"
+        Directory containing the PDF files to process
+    text_dir : str, default="data/text_extracted"
+        Directory where extracted text files (.txt) will be saved
+    media_dir : str, default="data/question_media"
         Directory where ALL page images will be stored.
     target_pdf : str, default=None
         If provided, only this specific PDF filename will be processed.
+        
+    Returns:
+    -------
+    None
+        Files are written to disk. Progress is printed to console.
+        
+    Notes
+    -----
+    - Page image placeholder format: [PAGE_IMAGE_SAVED: {path}] [PAGE_NUMBER: {num}]
+    - Page breaks are marked with: === PAGE BREAK ===
+    - Images are saved at 200 DPI resolution for quality
+    - ALL pages are saved as images (not just those with embedded images)
+    
+    Examples
+    --------
+    >>> extract_text_and_page_images()  # Use defaults (legacy, process all)
+    >>> extract_text_and_page_images(target_pdf="my_file.pdf") # Process one file
     """
+
     # 1. Setup Directories
     text_dir.mkdir(parents=True, exist_ok=True)
     media_dir.mkdir(parents=True, exist_ok=True)
@@ -49,7 +67,7 @@ def extract_text_and_page_images(
         pdf_path_full = source_dir / pdf_file_name
         
         if not pdf_path_full.exists():
-            print(f" ❌ Error: Target file not found: {pdf_path_full}")
+            print(f" Error: Target file not found: {pdf_path_full}")
             sys.exit(1) # Signal failure to the main app
         
         pdf_files_to_process = [pdf_file_name] 
@@ -111,12 +129,12 @@ def extract_text_and_page_images(
             with open(text_output_path, "w", encoding="utf-8") as f:
                 f.write(text)
 
-            print(f" ✅ Saved extracted text to {text_output_path.name}")
-            print(f" 🖼️ Saved {total_pages} page image(s)")
+            print(f" Saved extracted text to {text_output_path.name}")
+            print(f" Saved {total_pages} page image(s)")
             print()
 
         except Exception as e:
-            print(f" ❌ Failed to process {pdf_file_name}: {e}\n")
+            print(f" Failed to process {pdf_file_name}: {e}\n")
 
 
 if __name__ == "__main__":

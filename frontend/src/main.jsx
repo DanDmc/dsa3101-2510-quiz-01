@@ -1,3 +1,22 @@
+/**
+ * @file main.jsx - Application entry point and root state management component.
+ * @module main.jsx
+ * The main application component that manages core state, navigation, and global business logic.
+ *
+ * main handles the central array of questions (`questions`), simulated routing (via `currentPage`), 
+ * group filtering, and the permanent deletion of questions via API calls. It also coordinates 
+ * the state for the search bar and filter menus by dynamically deriving options from the 
+ * current question list.
+ *
+ * @param {object} props The component props (none accepted directly, wrapped in BrowserRouter).
+ * @returns {JSX.Element} The root application structure, including Header, Footer, and the currently rendered Page component.
+ * @fires fetch - Triggers API calls to:
+ * - `/getquestion` (to load initial data).
+ * - `/api/createquestion` (for adding new groups/placeholders).
+ * - `/api/deletequestion/:id` (for bulk deletion).
+ * - `/predict_difficulty` (for model rating generation).
+ */
+
 // src/main.jsx
 
 import { StrictMode, useState, useEffect } from 'react';
@@ -21,10 +40,10 @@ import QuestionSearchPage from './pages/QuestionSearchPage.jsx';
 const HEADER_HEIGHT_PX = 64;
 const FOOTER_HEIGHT_PX = 50;
 
-// ⭐ CONSTANTS
+// CONSTANTS
 const ALL_QUESTIONS_KEY = 'ALL_QUESTIONS';
 const NO_GROUPS_KEY = 'NO_GROUPS';
-// ⭐ CONSTANT for identifying the placeholder
+// CONSTANT for identifying the placeholder
 const PLACEHOLDER_STEM = '[Placeholder Question for Group Management]';
 
 // --- COMBINED Mock data ---
@@ -176,7 +195,7 @@ const PAGES = {
 const BASE_API_URL = import.meta.env.VITE_APP_API_URL || '/api';
 console.log(`API Target: ${BASE_API_URL}`);
 
-// --- Helper Functions (From Teammate's Logic) ---
+// --- Helper Functions  ---
 const COURSE_UNKNOWN_KEY = 'UNKNOWN';
 const courseKey = (val) => {
   const s = (val || '').trim();
@@ -205,21 +224,21 @@ function App() {
   // Initialize 'questions' state as empty array
   const [questions, setQuestions] = useState([]);
 
-  // ⭐ Group Management State (Your Features)
+  // Group Management State (Your Features)
   const [courseGroups, setCourseGroups] = useState([]);
   const [activeFilter, setActiveFilter] = useState([ALL_QUESTIONS_KEY]);
   const [isProcessing, setIsProcessing] = useState(false); // For loading feedback
 
-  // 💡 NEW: Toolbar filter options state (Teammate's Feature)
+  // Toolbar filter options state (Teammate's Feature)
   const [toolbarCourseOptions, setToolbarCourseOptions] = useState([
     { key: 'All', label: 'All' },
     { key: COURSE_UNKNOWN_KEY, label: 'Unknown' },
   ]);
   const [toolbarConceptOptions, setToolbarConceptOptions] = useState(['All']);
 
-  // ❌ REMOVED: isSafeDeletionEnabled state is intentionally removed
+  // isSafeDeletionEnabled state is intentionally removed
 
-  // --- Toolbar Helpers (Teammate's Logic) ---
+  // --- Toolbar Helpers ---
   const buildOptionsFromItems = (items) => {
     const courseMap = new Map();
     courseMap.set('All', 'All');
@@ -247,7 +266,7 @@ function App() {
 
     const courses = [...courseMap.entries()]
       .map(([key, label]) => ({ key, label }))
-      // ⭐ CHANGE 1: Modified sort logic
+      // Modified sort logic
       .sort((a, b) => {
         if (a.key === 'All') return -1;
         if (b.key === 'All') return 1;
@@ -265,8 +284,8 @@ function App() {
 
   // --- Core Handlers ---
 
-  // --- Function to fetch data from the backend API with fallback (needed by many handlers) ---
-  // ⭐ CHANGE 2: fetchQuestions now *only* sets the questions state.
+  // --- Function to fetch data from the backend API with fallback (needed by many of our handlers) ---
+  // fetchQuestions now *only* sets the questions state.
   const fetchQuestions = async () => {
     try {
       const response = await fetch(`${BASE_API_URL}/getquestion`);
@@ -279,7 +298,7 @@ function App() {
       const items = data.items || [];
       setQuestions(items);
 
-      // ❌ REMOVED: These lines are now handled by the useEffect[questions] hook
+      // These lines are now handled by the useEffect[questions] hook (Originally it was different)
       // const { courses, conceptArr } = buildOptionsFromItems(items);
       // setToolbarCourseOptions(courses);
       // setToolbarConceptOptions(conceptArr);
@@ -288,7 +307,7 @@ function App() {
         'Could not fetch questions from the API. Falling back to mock data.',
         error
       );
-      // This will also trigger the useEffect hook, which is correct.
+      // This will also trigger the useEffect hook, which is correct and what we want
       setQuestions(mockQuestions);
     }
   };
@@ -296,7 +315,6 @@ function App() {
   // Fetch on mount
   useEffect(() => {
     fetchQuestions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Navigation handlers (Your Logic)
@@ -311,7 +329,7 @@ function App() {
     setCurrentPage(PAGES.CREATE);
   };
 
-  // ⬅️ UPDATED: goToSearchPage now accepts parameters for the new filter/search functionality
+  // goToSearchPage now accepts parameters for the new filter/search functionality
   const goToSearchPage = (payload = '') => {
     if (typeof payload === 'string') {
       const text = payload.trim();
@@ -371,7 +389,7 @@ function App() {
     }
   };
 
-  // ⬅️ HEAD LOGIC: Hard Delete (permanent delete) implementation
+  // Hard Delete (permanent delete) implementation (Note we call it hard delete here since we originally had soft and hard delete but now delete is just Hard delete)
   const handleDeleteQuestions = async (idsToDelete) => {
     if (
       !window.confirm(
@@ -412,10 +430,9 @@ function App() {
 
   // --- Core Handlers End ---
 
-  // ⭐ CHANGE 3: This one useEffect now derives ALL state from 'questions'
+  // This one useEffect now derives ALL state from 'questions'
   // This is the single source of truth for both the group list and toolbar options.
   useEffect(() => {
-    // 1. Use the teammate's function to get options for the Toolbar
     // We pass the 'questions' state, which is our single source of truth.
     const { courses, conceptArr } = buildOptionsFromItems(questions);
 
@@ -423,7 +440,7 @@ function App() {
     setToolbarCourseOptions(courses);
     setToolbarConceptOptions(conceptArr);
 
-    // 3. Set the 'courseGroups' list (for QuestionGroups)
+    // Set the 'courseGroups' list (for QuestionGroups)
     // We derive this *directly* from the 'courses' list to guarantee a match.
     // Filter out 'All' and 'Unknown' which aren't real groups.
     const dynamicGroupStrings = courses
@@ -441,16 +458,15 @@ function App() {
     );
   }, [questions]); // This hook now runs whenever 'questions' changes.
 
-  // --- NEW HANDLER 1: Group Filter Change (Your HEAD Logic) ---
+  // --- HANDLER: Group Filter Change ---
   const handleFilterChange = (filterKeys) => {
     setActiveFilter(filterKeys);
     setSelectedQuestions([]);
     console.log('Active Filter Set To:', filterKeys);
   };
 
-  // --- NEW HANDLER 2: Add Group (Your HEAD Logic) ---
+  // --- HANDLER: Add Group ---
   const handleAddGroup = async () => {
-    // ... (implementation details) ...
     // Using simplified logic from previous response:
     const newGroupName = prompt(
       'Enter the name for the new Question Group/Course:'
@@ -497,7 +513,7 @@ function App() {
     }
   };
 
-  // --- MODIFIED HANDLER 3: Rename Group (Your HEAD Logic) ---
+  // --- HANDLER: Rename Group ---
   const handleRenameGroup = async (oldName, newName) => {
     const trimmedNewName = newName.trim();
     if (oldName === trimmedNewName || trimmedNewName === '') return;
@@ -519,12 +535,10 @@ function App() {
     )
       return;
 
-    // In a real app, the API calls would happen here.
-
     try {
       setIsProcessing(true);
 
-      // ⭐ FIX: Instead of fetchQuestions(), update the local questions state.
+      // Instead of fetchQuestions(), update the local questions state.
       // This will trigger the consolidated useEffect and update ALL lists.
       setQuestions((prevQuestions) =>
         prevQuestions.map((q) =>
@@ -532,7 +546,7 @@ function App() {
         )
       );
 
-      // This logic is still good, as it updates the filter if it was active
+      // Updates the filter if it was active
       if (activeFilter.includes(oldName)) {
         setActiveFilter([trimmedNewName]);
       }
@@ -546,7 +560,7 @@ function App() {
     }
   };
 
-  // ⭐ MODIFICATION 4: DELETE GROUP IMPLEMENTATION (Your HEAD Logic)
+  // DELETE GROUP IMPLEMENTATION
   const handleDeleteGroup = async (groupName) => {
     if (
       !window.confirm(
@@ -556,12 +570,11 @@ function App() {
       return;
 
     // We simulate the API call (patching questions to null, deleting placeholder)
-    // In a real app, the API calls would happen here.
 
     try {
       setIsProcessing(true);
 
-      // ⭐ FIX: Update local questions state, unsetting the course.
+      // Update local questions state, unsetting the course.
       // This will also trigger the consolidated useEffect and update ALL lists.
       setQuestions((prevQuestions) =>
         prevQuestions
@@ -578,7 +591,7 @@ function App() {
           )
       );
 
-      // This logic is still good, as it resets the filter
+      // Resets the filter
       setActiveFilter([ALL_QUESTIONS_KEY]);
 
       alert(`Group "${groupName}" successfully deleted.`);
@@ -590,7 +603,7 @@ function App() {
     }
   };
 
-  {/* ⭐ ADDITION 1: NEW HANDLER FOR GENERATING DIFFICULTY ⭐ */}
+  {/* HANDLER FOR GENERATING DIFFICULTY */}
   const handleGenerateDifficulty = async () => {
     if (
       !window.confirm(
@@ -632,7 +645,7 @@ function App() {
     }
   };
 
-  // --- Question Data and Filtering (Your HEAD Logic) ---
+  // --- Question Data and Filtering ---
   const filteredQuestions = questions.filter((question) => {
     // First, immediately check if the "Show All" filter is active.
     if (activeFilter.includes(ALL_QUESTIONS_KEY)) {
@@ -646,7 +659,6 @@ function App() {
       if (filterKey === NO_GROUPS_KEY) {
         return course === null; // Correctly checks for null/undefined courses
       }
-      // This logic is now safe, because ALL_QUESTIONS_KEY was handled above.
       return course === filterKey;
     });
   });
@@ -680,7 +692,7 @@ function App() {
             searchParams={searchParams}
             handleDeleteQuestions={handleDeleteQuestions}
             goToSearchPage={goToSearchPage}
-            // NEW: Feed options back to App from Search Page
+            // Feed options back to App/main from Search Page
             onOptionsChange={(courses, concepts) => {
               if (Array.isArray(courses) && courses.length)
                 setToolbarCourseOptions(courses);
@@ -693,22 +705,22 @@ function App() {
       default:
         return (
           <HomePage
-            // ⭐ MODIFICATION: Pass the FILTERED list of questions
+            // Pass the FILTERED list of questions
             questions={filteredQuestions}
             goToCreatePage={goToCreatePage}
             goToEditPage={goToEditPage}
             goToSearchPage={goToSearchPage}
             goToHomePage={goToHomePage}
             handleDeleteQuestions={handleDeleteQuestions}
-            // ⬅️ KEEP Group Management Props
+            // Group Management Props
             courseGroups={courseGroups}
             onAddGroup={handleAddGroup}
             onRenameGroup={handleRenameGroup}
             onDeleteGroup={handleDeleteGroup}
             onFilterChange={handleFilterChange}
-            // ⭐ NEW PROP: Pass the processing state down
+            // Pass the processing state down
             isProcessing={isProcessing}
-            // ⬅️ NEW: Pass dynamic options from main to HomePage
+            // Pass dynamic options from main to HomePage
             courseOptions={toolbarCourseOptions}
             conceptOptions={toolbarConceptOptions}
             
@@ -718,10 +730,9 @@ function App() {
     }
   };
 
-  // --- THE RETURN BLOCK (UNCHANGED) ---
+  // --- THE RETURN BLOCK ---
   return (
     <StrictMode>
-      {/* The reference to goToHomePage is now safe because it's defined above */}
       <Header goToHomePage={goToHomePage} />
 
       <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>

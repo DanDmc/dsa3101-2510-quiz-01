@@ -1,3 +1,38 @@
+/**
+ * @file QuestionSearchPage component.
+ * @module pages/QuestionSearchPage
+ * Renders the dedicated search and results interface.
+ *
+ * This component manages its own complex filter state (keyword, type, course, year, assessment, concept) 
+ * and automatically triggers a new search query to the API whenever a filter or the query changes. 
+ * Results are displayed in a selectable table, enabling bulk editing and deletion of the retrieved questions.
+ * It also dynamically updates the available course and concept filter options based on the latest result set.
+ *
+ * @typedef {object} QuestionRowData
+ * @property {number} id - The primary API ID.
+ * @property {number | string} _id - Local unique key for React rendering/selection.
+ * @property {string} question_stem - The question text.
+ * @property {string} [question_type] - The question type key (e.g., 'mcq', 'coding').
+ * @property {string} [courseKey] - Canonical, uppercase course code (e.g., 'ST2131').
+ * @property {string} [courseLabel] - Human-readable course display name.
+ * @property {Array<string>} [concept_tags] - List of applied concept tags.
+ *
+ * @typedef {object} SearchParameter
+ * @property {string} [query] - The keyword search string.
+ * @property {string} [question_type] - Filter by question type.
+ * @property {string} [academic_year] - Filter by academic year (e.g., '2023/2024').
+ *
+ * @param {object} props The component props.
+ * @param {string} [props.initialQuery=""] - The initial keyword to pre-fill the search bar.
+ * @param {SearchParameter | null} [props.searchParams=null] - An optional object containing parameters to seed the filters on load.
+ * @param {function(): void} [props.goToCreatePage] - Navigation handler to the question creation page.
+ * @param {function(Array<QuestionRowData>): void} [props.goToEditPage] - Navigation handler to the edit page with selected questions.
+ * @param {function(Array<number | string>): Promise<void>} [props.handleDeleteQuestions] - Handler to execute bulk deletion of selected question IDs.
+ * @param {function(Array<object>, Array<string>): void} [props.onOptionsChange] - Optional handler to report the dynamically generated course and concept options back to a parent component (like the HomePage toolbar).
+ * @returns {JSX.Element} The search interface, filters, and results table wrapped in a MUI Container.
+ * @fires fetch - Triggers API calls to the '/search' endpoint whenever a filter state changes.
+ */
+
 // src/pages/QuestionSearchPage.jsx
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -30,7 +65,7 @@ const fromAY = (ay) => {
   return m ? Number(m[1]) : undefined;
 };
 
-// --- MODIFICATION 1: Updated prettyType to include new types ---
+// --- Updated prettyType to include new types ---
 const prettyType = (t) => {
   const map = {
     mcq: "MCQ",
@@ -44,7 +79,7 @@ const prettyType = (t) => {
   return map[(t || "").toLowerCase()] || (t || "Unknown");
 };
 
-// --- MODIFICATION 2: Updated typeChipProps to add MRQ styling ---
+// --- Updated typeChipProps to add MRQ styling ---
 const typeChipProps = (t) => {
   const k = (t || "").toLowerCase();
   if (k === "mcq") return { color: "warning", variant: "outlined" };
@@ -62,7 +97,7 @@ function normalizeAssessment(_course, assessment) {
 
 // ---- Course canonicalization (key vs display) ----
 const COURSE_UNKNOWN_KEY = "UNKNOWN";
-const COURSE_ALL_KEY = "ALL"; // CHANGE 1: Define uppercase key for 'All'
+const COURSE_ALL_KEY = "ALL"; // Define uppercase key for 'All'
 const courseKey = (val) => {
   const s = (val || "").trim();
   if (!s) return COURSE_UNKNOWN_KEY;
@@ -86,7 +121,7 @@ export default function QuestionSearchPage({
   // query + filters
   const [query, setQuery] = useState(initialQuery || "");
   const [fType, setFType] = useState("All");
-  const [fCourse, setFCourse] = useState(COURSE_ALL_KEY); // CHANGE 2: Initialize state to uppercase key
+  const [fCourse, setFCourse] = useState(COURSE_ALL_KEY); // Initialize state to uppercase key
   const [fAY, setFAY] = useState("All");
   const [fAssessment, setFAssessment] = useState("All");
   // Concept tag (single-select per your latest requirement)
@@ -101,7 +136,7 @@ export default function QuestionSearchPage({
   // dropdown dynamic options (Course uses [ {key, label} ])
   const [conceptOptions, setConceptOptions] = useState(["All"]);
   const [courseOptions, setCourseOptions] = useState([
-    { key: COURSE_ALL_KEY, label: "All" }, // CHANGE 3: Options initialization uses uppercase key
+    { key: COURSE_ALL_KEY, label: "All" }, // Options initialization uses uppercase key
     { key: COURSE_UNKNOWN_KEY, label: "Unknown" },
   ]);
 
@@ -149,7 +184,7 @@ export default function QuestionSearchPage({
     const c = (searchParams.course ?? "").toString().trim();
     const normalizedC = c.toUpperCase(); // Ensure we are working with uppercase for comparison
 
-    // CRITICAL FIX 4: Robust Seeding Logic for ALL/UNKNOWN/SPECIFIC
+    // Robust Seeding Logic for ALL/UNKNOWN/SPECIFIC
     if (normalizedC === COURSE_UNKNOWN_KEY) {
       setFCourse(COURSE_UNKNOWN_KEY);
     } else if (normalizedC === COURSE_ALL_KEY || normalizedC === "") {
@@ -172,7 +207,7 @@ export default function QuestionSearchPage({
       p.set("assessment_type", fAssessment.toLowerCase()); // "final", "midterm", "quiz"
     }
     
-    // CRITICAL FIX 5: Use the new COURSE_ALL_KEY for exclusion
+    // Use the new COURSE_ALL_KEY for exclusion
     if (fCourse !== COURSE_ALL_KEY && fCourse !== COURSE_UNKNOWN_KEY) p.set("course", fCourse);
 
     if (fAY !== "All" && fAY !== "Unknown") p.set("academic_year", fromAY(fAY));
@@ -259,7 +294,7 @@ export default function QuestionSearchPage({
       courseMap.set(COURSE_UNKNOWN_KEY, "Unknown");
       filtered.forEach((r) => courseMap.set(r.courseKey, r.courseLabel));
       const newCourseOpts = [
-        { key: COURSE_ALL_KEY, label: "All" }, // FIX: Options must be rebuilt with uppercase key
+        { key: COURSE_ALL_KEY, label: "All" }, // Options must be rebuilt with uppercase key
         ...[...courseMap.entries()]
           .sort((a, b) => a[0].localeCompare(b[0]))
           .map(([k, lbl]) => ({ key: k, label: lbl })),
@@ -281,7 +316,6 @@ export default function QuestionSearchPage({
   useEffect(() => {
     if (!didInit.current) didInit.current = true;
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, fType, fAY, fAssessment, fConcept, fCourse, sortDir]);
 
   const submitSearch = (e) => {
@@ -350,7 +384,7 @@ export default function QuestionSearchPage({
               </form>
             </Box>
 
-            {/* --- MODIFICATION 4: Updated Question Type Dropdown --- */}
+            {/* --- Updated Question Type Dropdown --- */}
             <FormControl size="small" sx={{ minWidth: 170 }}>
               <InputLabel>Question Type</InputLabel>
               <Select label="Question Type" value={fType} onChange={(e) => setFType(e.target.value)}>

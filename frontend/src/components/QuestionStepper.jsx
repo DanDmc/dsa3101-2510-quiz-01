@@ -1,3 +1,27 @@
+/**
+ * @file QuestionStepper component.
+ * @module components/QuestionStepper
+ * Renders a scrollable list (stepper) of questions on the sidebar.
+ * 
+ * It visually highlights the currently active question and provides a button to 
+ * add a new question. It contains complex internal logic to map question type strings 
+ * (e.g., 'MCQ', 'CODING', 'FILL-IN-THE-BLANKS') to corresponding Material-UI icons 
+ * for visual feedback.
+ *
+ * @typedef {object} QuestionItem
+ * @property {number} id - The unique ID of the question.
+ * @property {string} [question_stem] - The main text of the question (used for truncation).
+ * @property {string} [question_type] - The type of question (e.g., 'MCQ', 'OPEN-ENDED', 'MRQ').
+ * @property {string} [text] - An alias for the question text (used in fallback logic).
+ *
+ * @param {object} props The component props.
+ * @param {Array<QuestionItem>} props.questions - A list of all question objects to be displayed in the stepper.
+ * @param {number | null} props.activeQuestion - The ID of the currently selected question, used for visual highlighting.
+ * @param {function(number): void} props.setActiveQuestion - Callback function to set the active question when a list item is clicked.
+ * @param {function(): void} props.onAddQuestion - Callback function executed when the 'Add Question' button is clicked.
+ * @returns {JSX.Element} A Material-UI Card containing the question count, the 'Add Question' button, and the scrollable list of questions.
+ */
+
 // src/components/QuestionStepper.jsx
 
 import React from 'react';
@@ -16,13 +40,13 @@ import EditNoteIcon from '@mui/icons-material/EditNote'; // Open Ended
 import CodeIcon from '@mui/icons-material/Code'; // For CODING
 import TollIcon from '@mui/icons-material/Toll'; // For MCQ
 import AddIcon from '@mui/icons-material/Add';
-import MinimizeIcon from '@mui/icons-material/Minimize'; // ⭐ NEW: For FILL-IN-THE-BLANKS
+import MinimizeIcon from '@mui/icons-material/Minimize';
 // ====================================================================
-// ✅ FIX 1: Icons for MRQ and OTHERS added to the import list
+// Icons for MRQ and OTHERS added to the import list
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'; // Used for OTHERS/Default
-import CheckBoxIcon from '@mui/icons-material/CheckBox'; // New icon for MRQ
+import CheckBoxIcon from '@mui/icons-material/CheckBox'; // Added Icon for MRQ
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; // New icon for OTHERS
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; // Added Icon for OTHERS
 // ====================================================================
 
 const MAX_LENGTH = 23;
@@ -32,13 +56,13 @@ const ICON_COLOR = '#525151';
 const BUTTON_DIAMETER = '24px'; // Diameter of the overall button area/background circle
 const ADD_ICON_SIZE = '20px'; // Diameter of the inner AddIcon (24px - 4px = 20px)
 
-// 🌟 NEW: Define the max height for the list to fit 6 items (approx 6 * ~65px height per item)
+// Define the max height for the list to fit 6 items (approx 6 * ~65px height per item)
 const MAX_LIST_HEIGHT = '400px';
 
 /**
  * Renders the sidebar with the list of questions (the stepper).
  */
-// 🌟 MODIFICATION: Added onAddQuestion to props
+// Added onAddQuestion to props
 function QuestionStepper({
   questions,
   activeQuestion,
@@ -70,12 +94,12 @@ function QuestionStepper({
       return <EditNoteIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
     }
 
-    // ⭐ NEW: FILL-IN-THE-BLANKS Icon logic
+    // FILL-IN-THE-BLANKS Icon logic
     if (normalizedType.includes('FILL-IN-THE-BLANKS')) {
       return <MinimizeIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
     }
 
-    // ✅ FIX 2: Explicitly handle MRQ (Multiple Response Question)
+    // Explicitly handle MRQ (Multiple Response Question)
     if (
       normalizedType.includes('MRQ') ||
       normalizedType.includes('MULTIPLE RESPONSE')
@@ -83,7 +107,7 @@ function QuestionStepper({
       return <CheckBoxIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
     }
 
-    // ✅ FIX 3: Explicitly handle OTHERS and use a clear default icon
+    // Explicitly handle OTHERS and use a clear default icon
     if (normalizedType.includes('OTHERS') || !normalizedType) {
       return <QuestionMarkIcon sx={{ color: ICON_COLOR }} fontSize="small" />;
     }
@@ -103,7 +127,7 @@ function QuestionStepper({
     return content.substring(0, maxLength) + '...';
   };
 
-  // ❌ REMOVED: Placeholder for the add question action
+  // Placeholder for the add question action
   // We now use the `onAddQuestion` prop directly.
 
   return (
@@ -122,7 +146,7 @@ function QuestionStepper({
         </Typography>
 
         <IconButton
-          // 🌟 MODIFICATION: Use the prop here
+          // Use the prop here
           onClick={onAddQuestion}
           size="small"
           sx={{ p: 0 }}
@@ -150,7 +174,7 @@ function QuestionStepper({
       </Box>
       <Divider />
 
-      {/* 🌟 MODIFIED: Added max-height and overflow properties for scrolling */}
+      {/* Added max-height and overflow properties for scrolling */}
       <List
         dense
         disablePadding

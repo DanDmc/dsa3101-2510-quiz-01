@@ -3,7 +3,18 @@ LLM-based Question Parser
 =========================
 
 This module uses Google's Gemini API to parse extracted text from exam papers
-into structured JSON format using a formal output schema for reliability.
+into structured JSON format suitable for database insertion.
+
+Simple, adaptive, and accurate two-step approach:
+1. Build a dictionary mapping page_number → image_path from text markers
+2. LLM extracts questions (with page numbers), and we map to image paths
+
+Key Features:
+- Adaptive chunking: dynamically chooses pages per chunk (3-10) based on content density
+- Sequential processing (rate-limit safe)
+- Accurate page_number and image_path mapping
+- Real-time progress + timing for each chunk and file
+- Schema-compatible output for insert_questions.py
 """
 
 from pathlib import Path 
@@ -75,8 +86,6 @@ QUESTION_SCHEMA = types.Schema(
     )
 )
 
-# 🚨 CRITICAL FIX START: Final correct Client Service Initialization 🚨
-
 # 1. Instantiate the Client and store it globally.
 client = genai.Client(api_key=API_KEY)
 
@@ -95,12 +104,41 @@ GLOBAL_SAFETY_SETTINGS = [
 
 # NOTE: The global 'model' object is ELIMINATED. We use 'client' for all API calls.
 
-# 🚨 END CRITICAL FIX 🚨
-
 
 # === Utility Functions ===
 def build_page_to_image_map(full_text):
-    """Parse text markers to map page number to image paths."""
+    """
+    Parse an extracted PDF/text block and build a mapping from page number to
+    the image paths saved for that page.
+
+    The function expects `full_text` to be a single string containing multiple
+    pages separated by the literal marker:
+        "=== PAGE BREAK ==="
+    and, within each page's text, optional markers of the form:
+        [PAGE_NUMBER: <int>]
+        [PAGE_IMAGE_SAVED: <path/to/image.png>]
+
+    If a page contains multiple `[PAGE_IMAGE_SAVED: ...]` markers, all of them
+    are collected into a list for that page. If no image markers are present,
+    the page maps to an empty list.
+
+    Example output:
+        {
+            1: ["data/question_media/DSA1101_page1.png"],
+            2: ["data/question_media/DSA1101_page2_img1.png",
+                "data/question_media/DSA1101_page2_img2.png"],
+        }
+
+    Args:
+        full_text (str): The entire extracted text containing page-break and
+            page-metadata markers.
+
+    Returns:
+        dict[int, list[str]]: A dictionary where each key is a page number and
+        each value is a list of image paths (possibly empty) associated with
+        that page.
+    """
+    
     page_map = {}
     pages = full_text.split("=== PAGE BREAK ===")
     for page_text in pages:
@@ -114,28 +152,81 @@ def build_page_to_image_map(full_text):
 
 def build_prompt(text):
     """
-    Construct a structured instruction prompt for an LLM.
+    Construct a structured instruction prompt for an LLM to extract exam questions
+    from raw PDF/text into a strict JSON array.
+
+    The prompt tells the model to:
+      - return **only** a valid JSON array (no markdown, no prose);
+      - extract one object per question;
+      - normalise fields such as:
+          - `question_no` (preserve original numbering, e.g. "1(a)", "2b", "3.1")
+          - `question_type` (must be one of: mcq, mrq, coding, open-ended,
+            fill-in-the-blanks, others)
+          - `difficulty_rating_manual` i.e. DifficultyLevel/P-value (if present) otherwise null
+          - `question_stem` (question text only; image markers replaced with
+            "(Image - Refer to question paper)")
+          - `question_options` (list of {"label": ..., "text": ...} for MCQ/MRQ;
+            [] otherwise; image markers replaced similarly)
+          - `question_answer` (correct answer with explanation if available,
+            or null)
+          - `page_numbers` (all page numbers found for the question, corresponding to the [PAGE_NUMBER: in the next [PAGE_IMAGE_SAVED] marker)
+          - `concept_tags` (1-3 relevant tags related to math/data science/statistics/similar fields)
+      - ignore administrative / non-question metadata such as
+        "Item Weight", "Item Psychometrics", and raw `[PAGE_IMAGE_SAVED: ...]`
+        markers.
+
+    Args:
+        text (str): The raw extracted text (usually from a PDF) that contains
+            questions, page markers, and possibly image markers.
+
+    Returns:
+        str: A complete prompt string ready to be sent to an LLM.
     """
+    
     return f"""
-Analyze the provided text from an exam paper. 
-Your task is to extract every question and organize it into the requested JSON schema.
+Extract all exam questions as a JSON array.
 
-Instructions for Content:
-1. Replace all raw image markers ([PAGE_IMAGE_SAVED:...]) in the stem and options with the exact placeholder text: "(Image - Refer to question paper)".
-2. Extract page numbers from markers ([PAGE_NUMBER:X]).
-3. Convert any percentage difficulty ratings (e.g., "50%") into a decimal (0.5).
-4. Ignore any administrative text like "Item Weight", "Item Psychometrics".
-5. Return ONLY the JSON object that conforms to the requested schema.
+For each question, extract:
+- question_no: exact numbering (e.g., "1", "1a", "2b", "1(a)", "3.1" for subquestions of larger questions)
+- question_type: mcq|mrq|coding|open-ended|fill-in-the-blanks|others (it must be classified as one of these categories only, nothing else)
+- difficulty_rating_manual only if it is present in the question, such as DifficultyLevel/P-value: decimal 0–1. Otherwise null
+- question_stem: the question text only (no options/answers). Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
+- question_options: array of {{"label": "A", "text": "..."}} for MCQ/MRQ, empty [] otherwise. Replace [PAGE_IMAGE_SAVED: ...] with "(Image - Refer to question paper)"
+- question_answer: correct answer (e.g. A. <answer value here>) with explanation if present, null otherwise. Sometimes correct answer is indicated with a tick mark.
+- page_numbers: array of integers only (e.g. [21, 22]) corresponding to the [PAGE_NUMBER: in the next [PAGE_IMAGE_SAVED] marker you find in the text. Never leave it empty
+- concept_tags: 1-3 relevant conceptual tags related to math/data science/statistics/similar fields (e.g., ["probability", "distributions"], make it all lowercase.
 
-Text to Analyze:
+Ignore: "Item Weight", "Item Psychometrics", or [PAGE_IMAGE_SAVED:...] markers.
+Return ONLY valid JSON array — no markdown, no extra commentary.
+
+Text:
 {text}
 """
 
 
 def sanitize_output(text):
     """
-    Clean LLM output by stripping code fences. 
+    Clean LLM output by stripping code fences and leading language markers.
+
+    Many LLMs return JSON wrapped in Markdown fences like:
+
+        ```json
+        [ ... ]
+        ```
+
+    This helper:
+      1. trims whitespace;
+      2. if the text starts with ``` it splits on ``` and takes the inner part;
+      3. if that inner part starts with "json" on the first line, it drops that line;
+      4. returns the cleaned string, stripped again.
+
+    Args:
+        text (str): Raw LLM output (possibly with Markdown fences).
+
+    Returns:
+        str: Plain JSON text (or the original text if no fences were found).
     """
+    
     text = text.strip()
     if text.startswith("```"):
         parts = text.split("```")
@@ -147,7 +238,25 @@ def sanitize_output(text):
 
 
 def map_pages_to_images(questions, page_to_image_map):
-    """Attach image paths to each parsed question based on its page numbers."""
+    """
+    Attach image paths to each parsed question based on its page numbers.
+
+    For every question in `questions`, this looks at the question's
+    `page_numbers` field (list of ints) and gathers all image paths from
+    `page_to_image_map` for those pages. The collected image paths are
+    de-duplicated and stored under `q["page_image_paths"]`.
+
+    Args:
+        questions (list[dict]): Parsed questions, each possibly containing
+            "page_numbers": [int, ...].
+        page_to_image_map (dict[int, list[str]]): Mapping from page number
+            to a list of image paths for that page.
+
+    Returns:
+        list[dict]: The same list of questions, but each enriched with
+        "page_image_paths": [...], possibly empty.
+    """
+    
     for q in questions:
         page_numbers_raw = q.get("page_numbers", [])
         image_paths = []
@@ -173,7 +282,35 @@ def map_pages_to_images(questions, page_to_image_map):
 
 # === Core Processing ===
 def parse_file(txt_file_path: Path): # <-- Accepts a Path object
-    """Parse a single extracted-exam text file into structured question objects."""
+    """
+    Parse a single extracted-exam text file into structured question objects.
+
+    Steps:
+        1. Read the text file from TEXT_DIR.
+        2. Build a page→image mapping from markers in the text
+           (via `build_page_to_image_map`).
+        3. Split the text into pages using "=== PAGE BREAK ===".
+        4. Choose an adaptive chunk size (how many pages per LLM call)
+           based on average page length:
+               - < 500 chars → 10 pages per chunk (sparse)
+               - < 1500 chars → 5 pages per chunk (medium)
+               - else → 3 pages per chunk (dense)
+        5. For each chunk:
+               - build the LLM prompt (`build_prompt`)
+               - call the model (`model.generate_content(...)`)
+               - clean the output (`sanitize_output`)
+               - JSON-decode it and accumulate the questions
+               - log success / failure with timing
+        6. After all chunks, map page numbers back to image paths
+           (`map_pages_to_images`).
+
+    Args:
+        txt_file (str): Filename (relative, e.g. "ST1234_Midterm.txt") inside TEXT_DIR.
+
+    Returns:
+        list[dict] | None: List of parsed question dicts if at least one chunk
+        was successfully parsed; None if no questions could be parsed.
+    """
     
     # Global variables required by this function
     global client, MODEL, GLOBAL_GENERATION_CONFIG, GLOBAL_SAFETY_SETTINGS
@@ -228,8 +365,8 @@ def parse_file(txt_file_path: Path): # <-- Accepts a Path object
             response = client.models.generate_content(
                 model=MODEL, 
                 contents=prompt,
-                config=GLOBAL_GENERATION_CONFIG,
-                safety_settings=GLOBAL_SAFETY_SETTINGS
+                config=GLOBAL_GENERATION_CONFIG
+                # safety_settings=GLOBAL_SAFETY_SETTINGS # Removed because it was causing errors
             )
             # 🚨 END FIX USAGE 🚨
             
@@ -274,7 +411,33 @@ def parse_file(txt_file_path: Path): # <-- Accepts a Path object
 
 # === Main Execution Entry Point (Fixed V2 Logic) ===
 def parse_exam_papers(target_base=None):
-    
+    """
+    Main entry point for batch parsing of exam text files.
+
+    Behavior:
+        - Looks for the environment variable `TARGET_BASE`.
+          If present, it will process **only** that single text file:
+              <TARGET_BASE>.txt
+          located in `TEXT_DIR`, and write the result to:
+              JSON_DIR/<TARGET_BASE>.json
+        - For that file, it:
+              * calls `parse_file(...)`
+              * writes parsed questions to JSON (pretty-printed, UTF-8)
+              * logs counts of questions, how many had pages, how many had images
+              * logs total runtime
+
+    Environment:
+        TARGET_BASE (str): base name of the text file (without extension)
+            to process, e.g. "ST2131_Midterm_2024".
+
+    Side effects:
+        - Writes a JSON file into JSON_DIR.
+        - Prints progress and timing to stdout.
+
+    Returns:
+        None
+    """
+
     total_start = time.time()
     
     # --- Determine Files to Process ---
@@ -339,11 +502,16 @@ if __name__ == "__main__":
     # ===== Ensure stdout supports UTF-8 (cross-platform) =====
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
+     # --- FIX: Read the environment variable from app.py ---
     target_base = os.getenv("TARGET_BASE")
 
     if target_base:
         # Pipeline Mode
+        # Pass the single target base name into the function
+        print(f"Processing single file from TARGET_BASE: {target_base}\n")
         parse_exam_papers(target_base=target_base)
     else:
         # Legacy Mode
-        parse_exam_papers()
+        print("Warning: TARGET_BASE environment variable not set.")
+        print("Running in 'process all' mode (legacy).\n")
+        parse_exam_papers() # Fallback to old behavior
