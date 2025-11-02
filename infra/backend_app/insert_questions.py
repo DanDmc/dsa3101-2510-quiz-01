@@ -241,15 +241,19 @@ def process_json_files():
         json_files = []
         if target_base and pipeline_mode_file_id:
             # SINGLE FILE MODE (from app.py)
-            json_file_name = f"{target_base}.json"
+
+            # 🔑 CRITICAL FIX: The TARGET_BASE already contains the hash, 
+            # so we use it directly to form the JSON file name.
+            json_file_name = f"{target_base}.json" 
+
             json_path_target = JSON_DIR / json_file_name
             
             if not json_path_target.exists():
                 print(f" Error: Target JSON file not found: {json_file_name} in {JSON_DIR}")
-                # NOTE: This exit is critical for the Flask pipeline failure to propagate
                 sys.exit(1) 
             
-            json_files = [json_file_name] # List with just the one file
+            # Set the file list to contain ONLY the single target file
+            json_files = [json_file_name] 
             print(f"\nFound 1 target JSON file to process: {json_file_name}\n")
         else:
             # LEGACY MODE (if run manually)
