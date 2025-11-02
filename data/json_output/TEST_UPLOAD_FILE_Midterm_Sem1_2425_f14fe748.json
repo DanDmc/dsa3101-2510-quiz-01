@@ -29,8 +29,8 @@
     ],
     "concept_tags": [
       "data exploration",
-      "r programming",
-      "descriptive statistics"
+      "descriptive statistics",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -48,8 +48,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "distributions"
+      "histograms",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -67,8 +67,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "distributions"
+      "qq plot",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -86,8 +86,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "comparative analysis"
+      "box plots",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -97,7 +97,7 @@
     "question_no": "6",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classi(cid:28)ed by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
+    "question_stem": "Write code to create a scatter plot of satisfaction score against the age of patients for which the points are classified by the surgical status: points of patients had surgical is in red color and points of patients with no surgical is in blue color. Give your comments.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -105,8 +105,8 @@
     ],
     "concept_tags": [
       "data visualization",
-      "r programming",
-      "bivariate analysis"
+      "scatter plots",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page2.png"
@@ -116,7 +116,7 @@
     "question_no": "7",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT signi(cid:28)cant in the model, at signi(cid:28)cance level 0.1.",
+    "question_stem": "Fit a linear regression model for the response variable Satisfaction, named as M, using all input features, Age, Severity, Surgical and Anxiety. Report p-values of the regressors that are NOT significant in the model, at significance level 0.1.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -125,7 +125,7 @@
     "concept_tags": [
       "linear regression",
       "statistical modeling",
-      "hypothesis testing"
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -135,7 +135,7 @@
     "question_no": "8",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Two patients, A and B, that have information listed below. Write code to predict the satisfaction score for both of them. Report the prediction values. A: Age = 35, Severity = 45, Anxiety = 2.5 , and had no surgical. B: Age = 60, Severity = 40, Anxiety = 3 , and had surgical.",
+    "question_stem": "Two patients, A and B, that have information listed below. Write code to predict the satisfaction score for both of them. Report the prediction values.\nA: Age = 35, Severity = 45, Anxiety = 2.5 , and had no surgical.\nB: Age = 60, Severity = 40, Anxiety = 3 , and had surgical.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -162,8 +162,8 @@
     ],
     "concept_tags": [
       "data manipulation",
-      "r programming",
-      "feature engineering"
+      "feature engineering",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -211,7 +211,7 @@
     "question_no": "12",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Use the train set with three standardized features to form the KNN classi(cid:28)ers where k = 3,5,7,9,11, and accuracy value for each classi(cid:28)er is kept in a vector named accuracy.",
+    "question_stem": "Use the train set with three standardized features to form the KNN classifiers where k = 3,5,7,9,11, and accuracy value for each classifier is kept in a vector named accuracy.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -220,7 +220,8 @@
     "concept_tags": [
       "k-nearest neighbors",
       "classification",
-      "machine learning"
+      "machine learning",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -249,7 +250,7 @@
     "question_no": "14",
     "question_type": "open-ended",
     "difficulty_rating_manual": null,
-    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classi(cid:28)er with that value of k.",
+    "question_stem": "Using accuracy as the criterion, report the best k found and the accuracy of the KNN classifier with that value of k.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
@@ -258,7 +259,7 @@
     "concept_tags": [
       "model selection",
       "k-nearest neighbors",
-      "accuracy"
+      "machine learning"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -275,9 +276,10 @@
       3
     ],
     "concept_tags": [
-      "prediction",
       "k-nearest neighbors",
-      "machine learning"
+      "prediction",
+      "machine learning",
+      "r programming"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page3.png"
@@ -287,16 +289,16 @@
     "question_no": "2.1",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Define a function, function.year, which helps to calculate and return the number of years that Alena Lee could save up enough money if the proportion of annual salary she puts for savings is fixed at 0.2 (20%).",
+    "question_stem": "Alena Lee is working for a company where her current salary is $50,000 annually and the salary is increased 5% every year. So far, until end of 2024, she has a saving amount of $30,000. She plans to form a start-up company which will requires an initial amount of $100,000. Define a function, function.year, which helps to calculate and return the number of years that Alena Lee could save up enough money if the proportion of annual salary she puts for savings is fixed at 0.2 (20%).",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       4
     ],
     "concept_tags": [
+      "programming",
       "financial modeling",
-      "functions",
-      "R programming"
+      "functions"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
@@ -306,16 +308,16 @@
     "question_no": "2.2",
     "question_type": "coding",
     "difficulty_rating_manual": null,
-    "question_stem": "Using function function.year defined above, write R codes that help to calculate the smallest proportion of annual salary that she should save so that she could have enough money for her start-up at the end of 2029, (5 years counting from start of 2025 to end of 2029). Note: The proportions of saving salary should be up to 2 decimal places only.",
+    "question_stem": "Alena Lee is working for a company where her current salary is $50,000 annually and the salary is increased 5% every year. So far, until end of 2024, she has a saving amount of $30,000. She plans to form a start-up company which will requires an initial amount of $100,000. Using function function.year defined above, write R codes that help to calculate the smallest proportion of annual salary that she should save so that she could have enough money for her start-up at the end of 2029, (5 years counting from start of 2025 to end of 2029). Note: The proportions of saving salary should be up to 2 decimal places only.",
     "question_options": [],
     "question_answer": null,
     "page_numbers": [
       4
     ],
     "concept_tags": [
+      "programming",
       "optimization",
-      "R programming",
-      "financial planning"
+      "financial modeling"
     ],
     "page_image_paths": [
       "data/question_media/TEST_UPLOAD_FILE_Midterm_Sem1_2425_f14fe748_page4.png"
