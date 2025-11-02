@@ -238,7 +238,7 @@ setSelected(newSelected);
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>
                     <Chip label={questionType.toUpperCase()} size="small" sx={getChipColor(questionType)} />
                   </TableCell>
-                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_rating_manual)}</TableCell>
+                  <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_manual)}</TableCell>
                   <TableCell sx={{ ...borderedCellStyle, ...centeredText, ...reducedVerticalPaddingStyle }}>{renderDifficulty(row.difficulty_model)}</TableCell>
                   <TableCell sx={{ ...centeredText, ...reducedVerticalPaddingStyle }}>
                     <IconButton

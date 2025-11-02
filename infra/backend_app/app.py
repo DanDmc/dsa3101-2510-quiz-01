@@ -896,7 +896,7 @@ def predict_difficulty():
     })
 
 # ---- Upload Route ----
-@app.post("/upload_file")
+@app.post("/api/upload_file")
 def upload_file():
     """
     Handle PDF uploads, persist metadata to the database, and trigger the 3-step parsing pipeline
