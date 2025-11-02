@@ -14,8 +14,8 @@ import json
 import re
 import time
 import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold, Schema, Type
-
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
+from google.generativeai import types
 
 # === 1. Configuration ===
 API_KEY = os.getenv("GEMINI_API_KEY")
@@ -33,41 +33,41 @@ if not API_KEY:
 # === 2. LLM Setup and Schema Definition (MAJOR FIX) ===
 
 # Define the strict schema the model MUST follow
-QUESTION_SCHEMA = Schema(
-    type=Type.ARRAY,
-    items=Schema(
-        type=Type.OBJECT,
+QUESTION_SCHEMA = types.Schema(
+    type=types.Type.ARRAY,
+    items=types.Schema(
+        type=types.Type.OBJECT,
         properties={
-            "question_no": Schema(type=Type.STRING, description="Exact numbering (e.g., '1a', '3.1')."),
-            "question_type": Schema(
-                type=Type.STRING, 
+            "question_no": types.Schema(type=types.Type.STRING, description="Exact numbering (e.g., '1a', '3.1')."),
+            "question_type": types.Schema(
+                type=types.Type.STRING, 
                 description="Classification: mcq|mrq|coding|open-ended|fill-in-the-blanks|others.",
                 enum=["mcq", "mrq", "coding", "open-ended", "fill-in-the-blanks", "others"],
             ),
-            "difficulty_rating_manual": Schema(
-                type=Type.NUMBER, 
+            "difficulty_rating_manual": types.Schema(
+                type=types.Type.NUMBER, 
                 description="Manual difficulty rating, decimal 0.0–1.0. Convert percent to decimal if present.",
             ),
-            "question_stem": Schema(
-                type=Type.STRING, 
+            "question_stem": types.Schema(
+                type=types.Type.STRING, 
                 description="The question text only (no options/answers). Replace any image markers with '(Image - Refer to question paper)'."
             ),
-            "question_options": Schema(
-                type=Type.ARRAY,
+            "question_options": types.Schema(
+                type=types.Type.ARRAY,
                 description="Array of {'label': 'A', 'text': '...'} for MCQ/MRQ, empty list [] otherwise. Replace any image markers with '(Image - Refer to question paper)'."
             ),
-            "question_answer": Schema(
-                type=Type.STRING, 
+            "question_answer": types.Schema(
+                type=types.Type.STRING, 
                 description="The correct answer with explanation if present, or NULL if unknown."
             ),
-            "page_numbers": Schema(
-                type=Type.ARRAY, 
-                items=Schema(type=Type.INTEGER), 
+            "page_numbers": types.Schema(
+                type=types.Type.ARRAY, 
+                items=types.Schema(type=types.Type.INTEGER), 
                 description="List of page numbers [X] found in the question."
             ),
-            "concept_tags": Schema(
-                type=Type.ARRAY, 
-                items=Schema(type=Type.STRING), 
+            "concept_tags": types.Schema(
+                type=types.Type.ARRAY, 
+                items=types.Schema(type=types.Type.STRING), 
                 description="1-3 relevant concept tags (e.g., ['probability', 'distributions']).",
             ),
         },
