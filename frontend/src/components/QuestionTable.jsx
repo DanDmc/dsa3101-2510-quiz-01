@@ -1,3 +1,30 @@
+/**
+ * @file QuestionTable component.
+ * @module components/QuestionTable
+ * Renders a paginated, multi-selectable table view of question records.
+ *
+ * This component filters out placeholder questions used for group management,
+ * handles question selection, and provides options for bulk download and quick 
+ * access to the edit page (via double-click). It also includes specialized 
+ * logic for downloading individual question images via an API call.
+ *
+ * @typedef {object} QuestionRow
+ * @property {number} id - The unique ID of the question.
+ * @property {string} question_stem - The main text of the question.
+ * @property {string} [question_type] - The type of question (e.g., 'MCQ', 'Open ended').
+ * @property {number | null} [difficulty_rating_manual] - Manually set difficulty score.
+ * @property {number | null} [difficulty_model] - Model-generated difficulty score.
+ *
+ * @param {object} props The component props.
+ * @param {Array<QuestionRow>} props.questions - The full, unfiltered list of question objects from the API.
+ * @param {Array<number>} props.selected - An array of IDs for the currently selected questions.
+ * @param {function(Array<number>): void} props.setSelected - State setter to update the list of selected question IDs.
+ * @param {function(): void} props.onSelectAllClick - Handler to select or deselect all visible questions.
+ * @param {function(Array<QuestionRow>): void} props.goToEditPage - Handler to navigate to the edit page, typically triggered by double-clicking a row.
+ * @returns {JSX.Element} A Material-UI Card containing the question table and pagination controls.
+ * @fires fetch - Triggers API calls for bulk PDF download and individual image download.
+ */
+
 // src/components/QuestionTable.jsx
 
 import React, { useState } from 'react';
@@ -28,7 +55,7 @@ const TIGHT_PADDING_Y = '8px';
 const CHECKBOX_PADDING = '4px'; 
 
 const API_BASE = import.meta.env.VITE_APP_API_URL; // ensure correct url for download
-//  NEW CONSTANT: Defines the stem text to be excluded
+// Defines the stem text to be excluded
 const PLACEHOLDER_STEM = '[Placeholder Question for Group Management]'; 
 
 const getChipColor = (type) => {
@@ -42,7 +69,7 @@ const getChipColor = (type) => {
   }
 };
 
-// Pagination Actions Component (UNCHANGED)
+// Pagination Actions Component
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, onPageChange } = props;
@@ -63,7 +90,7 @@ function TablePaginationActions(props) {
 }
 
 // Main Component
-function QuestionTable({ questions, selected, setSelected, onSelectAllClick, goToEditPage }) { // ⬅️ UPDATED: Added goToEditPage prop
+function QuestionTable({ questions, selected, setSelected, onSelectAllClick, goToEditPage }) { // Added goToEditPage prop
   const [page, setPage] = useState(0);
 
   // State for Concept Tags Dialog
@@ -71,13 +98,13 @@ function QuestionTable({ questions, selected, setSelected, onSelectAllClick, goT
   const [currentConcepts, setCurrentConcepts] = useState([]);
 
   const handleChangePage = (event, newPage) => setPage(newPage);
-  // ⭐ MODIFICATION 1: Filter out placeholder questions immediately
+  // Filter out placeholder questions immediately
   const actualQuestions = questions.filter(q => q.question_stem !== PLACEHOLDER_STEM);
 
   const totalQuestions = actualQuestions.length; // Use the filtered count
 
 
-  // ⭐ MODIFICATION 2: Base pagination on the filtered list
+  // Base pagination on the filtered list
   const visibleQuestions = actualQuestions.slice(
     page * ROWS_PER_PAGE,
     page * ROWS_PER_PAGE + ROWS_PER_PAGE,
@@ -173,7 +200,7 @@ setSelected(newSelected);
               <TableCell sx={checkboxCellStyle}>
                 <Checkbox
                   color="primary"
-                  // ⭐ MODIFICATION 3: Use totalQuestions for all/indeterminate check
+                  // Use totalQuestions for all/indeterminate check
                   indeterminate={selected.length > 0 && selected.length < totalQuestions}
                   checked={totalQuestions > 0 && selected.length === totalQuestions}
                   onChange={onSelectAllClick}
@@ -197,7 +224,7 @@ setSelected(newSelected);
                 <TableRow
                   key={row.id}
                   hover
-                  onDoubleClick={() => goToEditPage([row])} // ⬅️ Integrated Feature 1
+                  onDoubleClick={() => goToEditPage([row])}
                   onClick={(event) => handleClick(event, row.id)}
                   role="checkbox"
                   aria-checked={isItemSelected}
@@ -207,13 +234,13 @@ setSelected(newSelected);
                 >
                   <TableCell sx={checkboxCellStyle}><Checkbox color="primary" checked={isItemSelected} /></TableCell>
                   <TableCell component="th" scope="row" sx={{ ...borderedCellStyle, ...questionColumnStyle, display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingY: TIGHT_PADDING_Y, paddingX: '16px' }}>
-                    {/* ⬅️ Integrated Feature 2: Tooltip */}
+                    {/* Feature: Tooltip */}
                     <Tooltip title={row.question_stem} placement="bottom-start" arrow>
                       <Typography variant="body2" sx={{ flexGrow: 1, marginRight: TEXT_ICON_GAP, color: QUESTION_TEXT_COLOR, maxWidth: MAX_QUESTION_TEXT_WIDTH, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {row.question_stem}
                       </Typography>
                     </Tooltip>
-                    {/* ⬅️ Integrated Feature 3: Advanced Image Download Logic (Port 5001) */}
+                    {/* Feature: Advanced Image Download Logic (Port 5001) */}
                     <IconButton
                       size="small"
                       sx={{ color: ICON_COLOR, flexShrink: 0, alignSelf: 'center' }}
@@ -306,7 +333,7 @@ setSelected(newSelected);
       </TableContainer>
 
       <TablePagination
-        // ⭐ MODIFICATION 4: Use totalQuestions for count
+        // Use totalQuestions for count
         rowsPerPageOptions={[]} 
         component="div"
         count={totalQuestions} 

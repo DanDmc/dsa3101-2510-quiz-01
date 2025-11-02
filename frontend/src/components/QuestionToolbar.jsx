@@ -1,9 +1,40 @@
+/**
+ * @file QuestionToolbar component.
+ * @module components/QuestionToolbar
+ * Renders the main toolbar for the question bank. It provides access to creation, 
+ * bulk editing, and deletion of questions, alongside a unified search bar that 
+ * triggers a detailed filter menu.
+ *
+ * All filter logic is handled internally, and the collected parameters are passed 
+ * to the parent component via the `goToSearchPage` prop when triggered.
+ *
+ * @typedef {object} SearchParams
+ * @property {string} [query] - Keyword search string.
+ * @property {string} [question_type] - Filter by a single question type.
+ * @property {string} [assessment_type] - Filter by a single assessment type.
+ * @property {string} [year] - Filter by a single year.
+ * @property {string} [semester] - Filter by a single semester.
+ * @property {Array<string>} [tags] - Filter by multiple concept tags (multi-select).
+ * @property {string} [course] - Filter by a single course key.
+ * @property {string} [academic_year] - Filter by a single academic year range.
+ *
+ * @param {object} props The component props.
+ * @param {number} props.numSelected - The number of questions currently selected in the table (used to disable Edit/Delete buttons).
+ * @param {function(): void} props.goToCreatePage - Handler to navigate to the question creation/upload page.
+ * @param {function(): void} props.goToEditPage - Handler to navigate to the bulk edit page (disabled if numSelected is 0).
+ * @param {function(SearchParams): void} props.goToSearchPage - Handler executed to trigger a new search/filter request in the parent component.
+ * @param {function(): void} props.handleDeleteClick - Handler to perform the bulk deletion of selected questions.
+ * @param {Array<{key: string, label: string}>} [props.courseOptions] - List of available courses for the filter dropdown.
+ * @param {Array<string>} [props.conceptOptions] - List of all available concept tags for the multi-select filter.
+ * @returns {JSX.Element} A Material-UI Box containing action buttons and the search/filter interface.
+ */
+
 // src/components/QuestionToolbar.jsx
 import React, { useState } from 'react';
 import {
     Box, Button, TextField, InputAdornment, IconButton,
     Typography,
-    Menu, MenuItem, FormControl, InputLabel, Select, Chip, OutlinedInput // Kept all necessary filter imports
+    Menu, MenuItem, FormControl, InputLabel, Select, Chip, OutlinedInput // Keep all necessary filter imports
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,14 +43,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useTheme } from '@mui/material/styles';
 
-// --- MOCK DATA FOR FILTERS (Combined/Refined) ---
+// --- MOCK DATA FOR FILTERS ---
 const MOCK_QUESTION_TYPES = ["MCQ", "Open-ended", "MRQ", "FILL-IN-THE-BLANKS", "Coding", "Others"];
 const MOCK_ASSESSMENT_TYPES = ["quiz", "midterm", "final", "assessment", "project"];
 const MOCK_YEARS = [2024, 2023, 2022, 2021];
 const MOCK_SEMESTERS = ["Semester 1", "Semester 2", "Special Term 1", "Special Term 2"];
 const MOCK_TAGS = ["linear regression", "residuals", "data visualization", "model suitability", "model limitations", "binary response"];
 
-// --- Academic Year Options (from Incoming) ---
+// --- Academic Year Options ---
 const AY_OPTIONS = ["All", "2025/2026", "2024/2025", "2023/2024", "2022/2023", "Unknown"];
 
 // --- Style constant ---
@@ -40,15 +71,15 @@ function getStyles(name, personName, theme) {
     };
 }
 
-// ⬅️ FINAL PROPS: Clean, no Safe Delete logic
+// PROPS: Removed Safe Delete logic, was required for testing
 function QuestionToolbar({
     numSelected,
     goToCreatePage,
     goToEditPage,
     goToSearchPage,
     handleDeleteClick,
-    courseOptions = [{ key: 'All', label: 'All' }, { key: 'UNKNOWN', label: 'Unknown' }], // From Incoming
-    conceptOptions = ['All'], // From Incoming
+    courseOptions = [{ key: 'All', label: 'All' }, { key: 'UNKNOWN', label: 'Unknown' }],
+    conceptOptions = ['All'],
 }) {
 
     const theme = useTheme();
@@ -57,22 +88,22 @@ function QuestionToolbar({
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
-    // --- Filter State (Combined from HEAD and Incoming) ---
+    // --- Filter State  ---
     const [query, setQuery] = useState('');
     const [filterQuestionType, setFilterQuestionType] = useState('');
     const [filterAssessmentType, setFilterAssessmentType] = useState('');
-    const [filterYear, setFilterYear] = useState(''); // Your HEAD logic
-    const [filterSemester, setFilterSemester] = useState(''); // Your HEAD logic
-    const [filterAY, setFilterAY] = useState('All'); // Incoming AY state
-    const [filterCourse, setFilterCourse] = useState('All'); // Incoming Course state
-    const [filterTags, setFilterTags] = useState([]); // Your HEAD multi-select state
-    const [filterConcept, setFilterConcept] = useState('All'); // Incoming single-select concept
+    const [filterYear, setFilterYear] = useState('');
+    const [filterSemester, setFilterSemester] = useState(''); 
+    const [filterAY, setFilterAY] = useState('All'); // AY state
+    const [filterCourse, setFilterCourse] = useState('All'); // Course state
+    const [filterTags, setFilterTags] = useState([]); // multi-select state
+    const [filterConcept, setFilterConcept] = useState('All'); // single-select concept
 
     // --- Menu open/close handlers ---
     const handleMenuClick = (event) => setAnchorEl(event.currentTarget);
     const handleMenuClose = () => setAnchorEl(null);
 
-    // --- Single function to trigger search (Consolidated logic) ---
+    // --- Single function to trigger search ---
     const handleSearchTrigger = (e) => {
         e?.preventDefault();
 
@@ -84,11 +115,9 @@ function QuestionToolbar({
             year: filterYear,
             semester: filterSemester,
             tags: filterTags,
-            // --- MODIFICATIONS START ---
             // Pass the course and academic year states
             course: filterCourse,
             academic_year: filterAY,
-            // --- MODIFICATIONS END ---
         };
 
         goToSearchPage(searchParams);
@@ -108,7 +137,7 @@ function QuestionToolbar({
         setFilterConcept('All');
     };
 
-    // --- Multi-select change handlers (HEAD Logic) ---
+    // --- Multi-select change handlers ---
     const handleTagChange = (event) => {
         const { target: { value } } = event;
         setFilterTags(typeof value === 'string' ? value.split(',') : value);
@@ -123,7 +152,7 @@ function QuestionToolbar({
                     Create / Upload
                 </Button>
 
-                {/* ❌ REMOVED: The Safe Delete Toggle box from Incoming is discarded */}
+                {/* The Safe Delete Toggle box from Incoming is discarded */}
 
                 <Button
                     variant="outlined"
@@ -212,7 +241,7 @@ function QuestionToolbar({
                         </Select>
                     </FormControl>
 
-                    {/* Academic Year Dropdown (Integrated from Incoming) */}
+                    {/* Academic Year Dropdown */}
                     <FormControl fullWidth size="small" sx={{ mb: 2 }}>
                         <InputLabel>Academic Year</InputLabel>
                         <Select value={filterAY} label="Academic Year" onChange={(e) => setFilterAY(e.target.value)}>
@@ -231,14 +260,14 @@ function QuestionToolbar({
                         </Select>
                     </FormControl>
 
-                    {/* Concept Tags Multi-select (Using HEAD's Multi-select logic) */}
+                    {/* Concept Tags Multi-select */}
                     <FormControl fullWidth size="small" sx={{ mb: 2 }}>
                         <InputLabel>Concept Tags</InputLabel>
                         <Select
                             multiple
-                            value={filterTags} // Using HEAD's state
-                            onChange={handleTagChange} // Using HEAD's handler
-                            input={<OutlinedInput label="Concept Tags" />} // Needs OutlinedInput import
+                            value={filterTags} // Using state
+                            onChange={handleTagChange} // Using handler
+                            input={<OutlinedInput label="Concept Tags" />}
                             renderValue={(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (

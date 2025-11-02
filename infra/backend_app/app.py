@@ -14,10 +14,8 @@ import joblib
 from pathlib import Path
 import tempfile, shutil, hashlib, subprocess, shlex
 from werkzeug.utils import secure_filename
-# app.py (New/Modified section)
-from flask_cors import CORS, cross_origin # ⬅️ ADD cross_origin here
-import re
-import sys
+from flask_cors import CORS, cross_origin
+import re, sys, importlib.util 
 
 app = Flask(__name__)
 
@@ -44,16 +42,65 @@ for _d in (Path(app.config["UPLOAD_FOLDER"]), SRC_DIR, TXT_DIR, JSON_DIR):
 
 
 def _allowed_pdf(filename: str) -> bool:
+    """
+    Checks if an uploaded filename has a permitted extension
+
+    Currently only `.pdf` files are allowed
+    The check is case-insensitive and only looks at the final extension
+
+    Args:
+        filename (str): Name of the uploaded file
+
+    Returns:
+        bool: True if the filename ends with an allowed extension, False otherwise
+    """
+
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def _ensure_dirs(*parts) -> Path:
+    """
+    description: Constructs a full filesystem path by joining a configured base upload 
+                 directory with one or more subdirectories specified in `parts`. It 
+                 ensures that all necessary directories in the path exist, creating 
+                 them if they do not. Handles null or empty parts by replacing them with 
+                 the string "unknown".
+
+    args:
+        *parts (tuple[Any]): One or more path components (strings, integers, etc.) 
+                             to be joined to the base upload folder.
+
+    returns:
+        pathlib.Path: A Path object representing the final, verified (existing) directory.
+
+    raises:
+        OSError: If the function is unable to create the directory path (e.g., due to 
+                 permission issues, or if a component is a file instead of a directory).
+    """
+
     p = Path(app.config["UPLOAD_FOLDER"]).joinpath(*[str(x or "unknown") for x in parts])
     p.mkdir(parents=True, exist_ok=True)
     return p
 
 
 def _run(cmd, env_extra=None, timeout=900):
+    """
+    Run a subprocess in the project base directory and capture its output
+
+    Args:
+        cmd (str): Shell-like command to run (e.g. "python pdf_extractor.py")
+        env_extra (dict, optional): Extra environment variables to merge into
+            the current process environment
+        timeout (int, optional): Max number of seconds to allow the process
+            to run before raising a timeout - Defaults to 900s
+
+    Returns:
+        tuple[int, str, str]:
+            - returncode (int): Process return code (0 on success)
+            - stdout (str): Captured standard output (stripped)
+            - stderr (str): Captured standard error (stripped)
+    """
+
     env = dict(os.environ)
     if env_extra:
         env.update(env_extra)
@@ -62,6 +109,20 @@ def _run(cmd, env_extra=None, timeout=900):
 
 
 def get_connection():
+    """
+    Create a new MySQL connection using environment variables:
+    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
+
+    Args:
+        None.
+
+    Returns:
+        MYSQLdb.connection: Open a connection to the quizbank database.
+
+    Raises:
+        MySQLdb.Error: If connection cannot be established. 
+    """
+
     return MySQLdb.connect(
         host=os.getenv("MYSQL_HOST", "db"),
         user=os.getenv("MYSQL_USER", "quizbank_user"),
@@ -72,6 +133,19 @@ def get_connection():
 
 # check if table has the column mentioned
 def has_column(conn, table: str, col: str) -> bool:
+    """
+    Check whether a given column exists in a table in the current database
+
+    Args:
+        conn: An open DB-API compatible database connection
+        table (str): The name of the table to inspect
+        col (str): The column name to look for
+
+    Returns:
+        bool: `True` if the column exists on the table in the current database,
+        `False` otherwise
+    """
+
     with closing(conn.cursor()) as c:
         c.execute("""
             SELECT COUNT(*)
@@ -82,8 +156,23 @@ def has_column(conn, table: str, col: str) -> bool:
         """, (table, col))
         return c.fetchone()[0] == 1
 
+# ---- Utility Helper Functions ----
+
 # Helper function for safely parsing JSON fields from the database
 def parse_json_field(field_json):
+    """
+    Parses JSON string into appropriate Python object (i.e. dict or str)
+
+    Args:
+        field_json (str): JSON string / May also be a non-JSON string
+    
+    Returns:
+        Any: Deserialized Python object
+    
+    Raises:
+        None if input is empty or falsy
+    """
+    
     if not field_json: return None 
     try:
         return json.loads(field_json)
@@ -92,10 +181,41 @@ def parse_json_field(field_json):
 
 # Helper function to convert datetime to ISO string
 def ts(v):
+    """
+    Converts datetime-like objects to string representations
+
+    Args:
+        v (Any): datetime/date/object with ISO formatting / May also be non-datetime-like
+
+    Returns:
+        str: ISO 8601 formatted string if input supports isoformat, regular string otherwise
+    
+    Raises:
+        None if empty or falsy
+    """
+    
     return v.isoformat() if hasattr(v, "isoformat") else (str(v) if v is not None else None)
 
 # Helper function for getting a file row from the database
 def _get_file_row(file_id: int):
+    """
+    Fetch file metadata from files table using its primary key
+
+    Args:
+        file_id (int): file_id of the desired file for download
+
+    Returns:
+        dict: {
+            "id": int,
+            "file_name": str,
+            "file_path" str, 
+            "uploaded_at": datetime.datetime
+        }
+    
+    Raises:
+        None if not found
+    """
+
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
         cur.execute("SELECT id, file_name, file_path, uploaded_at FROM files WHERE id=%s", (file_id,))
@@ -106,9 +226,19 @@ def _get_file_row(file_id: int):
 
 def _normalize_semester(sem: str) -> str:
     """
-    Normalize various semester inputs to a compact canonical form.
+    Normalize various semester inputs to a compact canonical form
     Examples: "Sem 1" -> "S1", "Semester 2" -> "S2", "ST I" -> "ST1"
+
+    Args:
+        sem (str): Semester label/value
+
+    Returns:
+        str: Semester Code
+
+    Raises:
+        None
     """
+
     if sem is None:
         return ""
     s = str(sem).strip().lower().replace("-", " ").replace("_", " ")
@@ -128,6 +258,19 @@ def _normalize_semester(sem: str) -> str:
 
 
 def _normalize_assessment_type(t: str) -> str:
+    """
+    Normalize assessment_type strings to lowercase and remove whitespaces
+
+    Args:
+        t (str): Assessment type
+
+    Returns:
+        str: Normalised assessment type lowercased with whitespaces trimmed
+
+    Raises:
+        None
+    """
+
     if t is None:
         return ""
     s = str(t).strip().lower().replace("-", " ").replace("_", " ")
@@ -136,6 +279,26 @@ def _normalize_assessment_type(t: str) -> str:
 
 
 def get_file_id(course: str, year, semester: str, assessment_type: str, latest: bool = True):
+    """
+    Search for 'file_id' by matching 'course', 'year', 'semester', 'assessment_type'
+    If latest = 'True', look for the most recently uploaded file
+
+    Args:
+        course (str): Course code, e.g. "ST2131"
+        year (int/str): Year (convert to int)
+        semester (str): Semester code, e.g. 2410
+        assessment_type (str): e.g. "quiz", "midterm"
+        latest (bool): If True, choose the most recent match based on uploaded_at and id
+
+    Returns:
+        int/None:
+            Matching files.id else None if no match
+    
+    Raises:
+        ValueError: If missing course or year not integer-like
+        MySQLError: If database cannot be established
+    """
+
     if not course:
         raise ValueError("course is required")
     try:
@@ -166,10 +329,48 @@ def get_file_id(course: str, year, semester: str, assessment_type: str, latest: 
         row = cur.fetchone()
         return int(row[0]) if row else None
 
+def has_column(conn, table: str, col: str) -> bool:
+    """
+    Check whether a given column exists in a table in the current database
+
+    Args:
+        conn: An open DB-API compatible database connection
+        table (str): The name of the table to inspect
+        col (str): The column name to look for
+
+    Returns:
+        bool: `True` if the column exists on the table in the current database,
+        `False` otherwise
+    """
+    with closing(conn.cursor()) as c:
+        c.execute("""
+            SELECT COUNT(*)
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE()
+              AND TABLE_NAME = %s
+              AND COLUMN_NAME = %s
+        """, (table, col))
+        return c.fetchone()[0] == 1
+
 # -----------------------------------------------------
 ## 🏷️ Tag Normalization Helper (Used by addquestion/update_question/create_question)
 
 def normalize_concept_tags(val):
+    """
+    Normalise the 'concept_tags' to JSON string for storing in the database
+    Accepts lists/tuples/JSON/strings
+
+    Args:
+        val (lists/tuples/JSON/strings): Concept tags provided by user
+    
+    Returns:
+        str: JSON string (e.g., '["regression","r-squared"]') or string if JSON array not valid
+            None when input is None
+    
+    Raises:
+        None if not found
+    """
+
     # standardise the format of the concept_tags field
     if val is None:
         return None
@@ -190,13 +391,66 @@ def normalize_concept_tags(val):
 
 @app.route("/health", methods=["GET"])
 def health():
-    return {"ok": True}
+    """
+    Lightweight health check endpoint.
+
+    Returns:
+        tuple[dict, int]: JSON containing:
+            - "ok" (bool): Always True if the app is running.
+            - "model_loaded" (bool): Whether the difficulty model was successfully loaded at startup.
+        and HTTP 200. Also the name of the model used model v1 or v2 
+    """
+
+    return {
+        "ok": True,
+        "model_loaded": difficulty_model is not None,
+        "active_model": active_model_name
+    }, 200
 
 # -----------------------------------------------------
 ## 📥 Question Retrieval
 
 @app.route("/getquestion", methods=["GET"])
 def get_question():
+    """
+    Fetch questions with their source file metadata from the database, with filters and pagination
+
+    Supported query parameters (All Optional):
+        - course (str): Filter by files.course
+        - year (int): Filter by files.year
+        - semester (str): Filter by files.semester
+        - assessment_type (str): Filter by files.assessment_type
+        - question_type (str): Filter by questions.question_type
+        - question_no (str/int): Filter by questions.question_no
+        - concept_tags (repeated or comma-separated): e.g.
+              ?concept_tags=regression&concept_tags=anova
+              ?concept_tags=regression,anova
+          Matched via JSON_CONTAINS on questions.concept_tags.
+        - limit (int, default=50): Max number of rows to return
+        - offset (int, default=0): Offset for pagination
+        - order_by (str, default="updated_at"): One of {"created_at","difficulty","updated_at"}
+        - sort (str, default="desc"): "asc" or "desc"
+
+    Returns:
+        flask.Response (application/json):
+            {
+              "total": <int>,
+              "items": [
+                 {
+                   "id": ...,
+                   "question_stem": ...,
+                   "concept_tags": [...],
+                   ...
+                   "course": ...,
+                   "year": ...,
+                   ...
+                 },
+                 ...
+              ]
+            }
+        with HTTP 200.
+    """
+
     # Query params
     course = request.args.get("course")
     year = request.args.get("year")
@@ -350,7 +604,25 @@ file_base_directory = os.getenv("file_base_directory", "/app/data/source_files")
 question_media_base_directory = os.getenv("question_media_base_directory", "/app/data/question_media")
 
 def _safe_join_media(base_dir: str, file_path: str) -> str:
-    """Safely join a base directory with a media file path."""
+    """
+    description: Safely joins a base directory path with a potentially relative media file path. 
+                 It cleans the file path by removing leading slashes and a specific directory 
+                 prefix ('data/question_media/') before joining, and crucially, performs a 
+                 security check to prevent path traversal attacks.
+
+    args:
+        base_dir (str): The absolute or relative path of the root directory the media must reside in.
+        file_path (str): The raw, potentially unvalidated path to the media file.
+
+    returns:
+        str: The normalized, absolute path to the media file, guaranteed to be within base_dir.
+
+    raises:
+        FileNotFoundError: If the provided file_path is empty.
+        FileNotFoundError: If the resulting joined path attempts to traverse outside of the 
+                           specified base_dir (path traversal security check failure).
+    """
+
     if not file_path:
         raise FileNotFoundError("Empty file path")
     
@@ -368,6 +640,25 @@ def _safe_join_media(base_dir: str, file_path: str) -> str:
     return candidate
 
 def _get_question_row(question_id: int):
+    """
+    description: Fetches the question row, including the 'id' and 'page_image_paths' columns, 
+                 from the 'questions' table in the database based on the provided question ID. 
+                 It uses a dictionary cursor for easy column access.
+
+    args:
+        question_id (int): The unique identifier (ID) of the question to retrieve.
+
+    returns:
+        dict or None: A dictionary containing the 'id' and 'page_image_paths' of the question 
+                      if found, or None if no question matches the given ID.
+
+    raises:
+        OperationalError: If there is an issue with the database connection (e.g., connection 
+                          timeout, server unavailability).
+        ProgrammingError: If the SQL syntax is incorrect or the table/columns do not exist.
+        Error: Any other general database-related error caught by the underlying MySQLdb module.
+    """
+
     with closing(get_connection()) as conn:
         cur = conn.cursor(MySQLdb.cursors.DictCursor)
         # Fetch the page_image_paths column
@@ -375,6 +666,16 @@ def _get_question_row(question_id: int):
         return cur.fetchone()
 
 def _strip_known_prefixes(p: str) -> str:
+    """
+    Removes known leading path prefixes from a string
+
+    Args:
+        p (str): The input path to normalise
+
+    Returns:
+        str: The path without known leading prefixes, or the original input path if no prefix was removed
+    """
+
     prefixes = ("data/", "source_files/")
     for pref in prefixes:
         if p.startswith(pref):
@@ -383,6 +684,21 @@ def _strip_known_prefixes(p: str) -> str:
 
 
 def _safe_join_file(base_dir: str, file_path: str) -> str:
+    """
+    Safely resolves a file path, normalising it relative to the base directory
+
+    Args:
+        base_dir (str): The base directory under which files are allowed
+        file_path (str): The input path to resolve
+
+    Returns:
+        str: The normalised, absolute (or base-relative) path that is guaranteed
+        to be inside base_dir
+
+    Raises:
+        FileNotFoundError: If file_path is empty or resolves outside base_dir.
+    """
+
     if not file_path:
         raise FileNotFoundError("Empty file path")
 
@@ -401,6 +717,25 @@ def _safe_join_file(base_dir: str, file_path: str) -> str:
 
 @app.route("/files/<int:file_id>/download", methods=["GET"])
 def download_file(file_id: int):
+    """
+    description: Retrieves file metadata from the database using a file ID, constructs the safe 
+                 filesystem path, verifies file existence, determines the MIME type, and streams 
+                 the file back to the client as an attachment.
+
+    args:
+        file_id (int): The unique database identifier for the file being requested.
+
+    returns:
+        flask.Response: A Flask response object containing the file data, headers configured 
+                        for download (Content-Disposition), and the appropriate MIME type.
+
+    raises:
+        HTTPException (404 Not Found): 
+            If the file_id does not exist in the database.
+            If the internal function _safe_join_file raises a FileNotFoundError (e.g., path traversal detected).
+            If the computed full_path does not exist on the filesystem ("File not in folder").
+    """
+
     file_row = _get_file_row(file_id)
     if not file_row:
         abort(404, description="Invalid file")
@@ -416,7 +751,7 @@ def download_file(file_id: int):
 
     guessed, _ = mimetypes.guess_type(file_row.get("file_name") or full_path)
     app.logger.info("DOWNLOAD full_path=%s base=%s dbpath=%s",
-                 full_path, file_base_directory, path_in_db)
+                   full_path, file_base_directory, path_in_db)
 
     return send_file(
         full_path,
@@ -428,6 +763,29 @@ def download_file(file_id: int):
     
 @app.route("/question/<int:question_id>/download_image", methods=["GET"])
 def download_question_image(question_id: int):
+    """
+    description: Retrieves a question's image paths from the database, parses the JSON list, 
+                 and attempts to stream the first image in the list to the client. It uses 
+                 a secure function (_safe_join_media) to prevent path traversal.
+
+    args:
+        question_id (int): The unique database identifier for the question whose image is being requested.
+
+    returns:
+        flask.Response: A Flask response object containing the image file data, configured 
+                        for download (as an attachment), with the appropriate MIME type.
+
+    raises:
+        HTTPException (404 Not Found): 
+            If the question_id does not exist in the database.
+            If the question row has no 'page_image_paths' defined.
+            If the parsed list of image paths is empty or not a list.
+            If the internal function _safe_join_media raises a FileNotFoundError (e.g., path traversal detected).
+            If the computed full_path does not exist on the filesystem ("Image file not in folder").
+        HTTPException (500 Internal Server Error):
+            If the database value for 'page_image_paths' is present but cannot be parsed as valid JSON.
+    """
+
     question_row = _get_question_row(question_id)
     if not question_row:
         abort(404, description="Invalid question ID")
@@ -462,7 +820,7 @@ def download_question_image(question_id: int):
     download_name = os.path.basename(full_path)
 
     app.logger.info("DOWNLOAD_IMAGE full_path=%s base=%s dbpath=%s",
-                    full_path, question_media_base_directory, first_image_path)
+                      full_path, question_media_base_directory, first_image_path)
 
     return send_file(
         full_path,
@@ -471,97 +829,197 @@ def download_question_image(question_id: int):
         download_name=download_name,
         conditional=True,
     )
-    
-_SENT_SPLIT = re.compile(r'[.!?]')
-def _syllable_count(w): return 1
-def _compute_readability_features(texts):
 
+# -----------------------------------------------------
+## 🤖 Difficulty Rating Model (with Fallback)
+# -----------------------------------------------------
+
+# --- 1. Define Model Paths ---
+MODEL_PATH_V1 = os.getenv("diff_model_path_v1", "/app/models/model_ridge.pkl") # V1's "correct" model
+MODEL_PATH_V2 = os.getenv("diff_model_path_v2", "/app/models/difficulty_v1.pkl") # V2's "fallback" model
+featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py" # V1's helper file
+
+# --- 2. Define V1 Helper Function (Dynamic Load) ---
+def _load_training_helpers():
+    """
+    Dynamically import the training script so that pickled helper functions can be resolved
+    
+    Args: 
+        None
+
+    Returns:
+        None
+    
+    Raises:
+        Logs warnings only, does not raise to avoid crashes
+
+    V1: Dynamically import the training script so that pickled helper functions can be resolved.
     """
 
-    texts: iterable of question stems (strings)
+    if not os.path.exists(featurepath):
+        app.logger.warning(f"[difficulty_V1] Helper file not found at {featurepath}")
+        raise FileNotFoundError(f"V1 helper file not found: {featurepath}")
+    try:
+        spec = importlib.util.spec_from_file_location("feats_mod", featurepath)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod) 
+        sys.modules["__main__"] = mod # V1's __main__ hack
+        app.logger.info("[difficulty_V1] Registered _numeric_feats_from_df from training script.")
+    except Exception as e:
+        app.logger.warning(f"[difficulty_V1] Could not import training helpers: {e}")
+        raise e
 
-    returns: np.ndarray shape (n, 2) with:
+# --- 3. Define V2 Helper Functions (Hardcoded Fallback) ---
+_SENT_SPLIT = re.compile(r'[.!?]')
 
-        [Flesch Reading Ease, Flesch-Kincaid Grade Level]
+def _syllable_count(w):
+    """
+    description: Estimates the number of syllables in a given word. 
+                 Note: This is currently implemented as a simple stub and always returns 1, 
+                 regardless of the input word.
 
+    args:
+        w (str): The word string to analyze for syllable count.
+
+    returns:
+        int: The estimated number of syllables. Currently, always returns 1.
+
+    raises:
+        # No exceptions are raised by this function as currently implemented.
+    """
+    return 1
+
+def _compute_readability_features(texts):
+    """
+    V2: Hardcoded readability features.
+    description: Calculates the Flesch Reading Ease (FRE) and Flesch-Kincaid Grade Level (FKGL) 
+                 for a sequence of text strings. It tokenizes the text to count words, sentences, 
+                 and uses an external function (_syllable_count) to estimate syllables. 
+                 Includes robust handling for empty or non-string inputs.
+
+    args:
+        texts (list or numpy.ndarray): A sequence of strings (or items convertible to strings) 
+                                       where each element is a document or text block to analyze.
+
+    returns:
+        numpy.ndarray: A 2-dimensional array of shape (n, 2), where n is the number of input texts. 
+                       Each row contains the calculated [FRE, FKGL] scores.
+                       FRE (higher = easier), FKGL (score = US school grade level).
+
+    raises:
+        # No specific external exceptions are guaranteed to be raised by this function itself.
+        # It defensively handles potential ZeroDivisionError by ensuring n_w and n_sents are at least 1.
     """
 
     rows = []
-
     for t in texts:
-
         t = t if isinstance(t, str) else ""
-
         tokens = re.findall(r"\b\w+\b", t)
-
         n_w = len(tokens) if tokens else 1
-
         n_sents = max(1, len([s for s in _SENT_SPLIT.split(t) if s.strip()]))
-
         n_syll = sum(_syllable_count(w) for w in tokens) if tokens else 1
-
-
-
-        # Flesch Reading Ease (higher = easier)
-
         fre = 206.835 - 1.015 * (n_w / n_sents) - 84.6 * (n_syll / n_w)
-
-        # Flesch-Kincaid Grade Level (higher = harder)
-
         fkgl = 0.39 * (n_w / n_sents) + 11.8 * (n_syll / n_w) - 15.59
-
-
-
         rows.append([fre, fkgl])
-
     return np.array(rows, dtype=float)
 
 def numeric_feats_from_df(X):
+    """V2: Hardcoded numeric features function.
+    description: Extracts the 'question_stem' column from the input DataFrame, handles 
+                 any missing values by replacing them with an empty string, and then 
+                 calculates readability features using the internal function 
+                 _compute_readability_features.
+
+    args:
+        X (pandas.DataFrame): The input data frame. Must contain a column 
+                              labeled **'question_stem'** containing the text to analyze.
+
+    returns:
+        numpy.ndarray: The computed readability features (FRE and FKGL scores) 
+                       generated by _compute_readability_features, typically of 
+                       shape (n_samples, 2).
+
+    raises:
+        KeyError: If the input DataFrame **X** is missing the required 
+                  **'question_stem'** column.
+    """
 
     stems = X["question_stem"].fillna("").to_numpy()
-
     return _compute_readability_features(stems)
+
 _numeric_feats_from_df = numeric_feats_from_df
 
+def _apply_v2_main_module_hack():
+    """V2: Applies hardcoded functions to __main__ for joblib to use.
+    description: Applies a necessary hack to inject specific hardcoded V2 functions 
+                 and variables into the '__main__' module's namespace. This is typically 
+                 required to ensure that external libraries like **joblib** or **multiprocessing** can properly **pickle** (serialize) and execute these functions 
+                 when they are not defined at the module level or when they rely on 
+                 specific global variables.
 
-# -----------------------------------------------------
-## Difficulty Rating Model
+    args:
+        None: This function takes no arguments.
 
-# -----------------------------------------------------
-# 💡 2. FIX FOR GUNICORN 'module __main__' ERROR
-# The .pkl file expects these functions to be in the __main__ module.
-# When running with Gunicorn, __main__ is Gunicorn, not app.py.
-# We must manually inject these functions into the __main__ module
-# *before* joblib.load() is called.
-main_module = sys.modules['__main__']
-main_module._SENT_SPLIT = _SENT_SPLIT
-main_module._syllable_count = _syllable_count
-main_module._compute_readability_features = _compute_readability_features
-main_module.numeric_feats_from_df = numeric_feats_from_df
-main_module._numeric_feats_from_df = _numeric_feats_from_df
-# -----------------------------------------------------
+    returns:
+        None: This function does not explicitly return a value.
 
-# load the difficulty rating model
-MODEL_PATH = os.getenv("diff_model_path", "/app/models/difficulty_v1.pkl")
-difficulty_model = None
-try:
-    difficulty_model = joblib.load(MODEL_PATH)
-    app.logger.info(f"[difficulty] Loaded model: {MODEL_PATH}")
-except Exception as e:
-    app.logger.warning(f"[difficulty] Model not loaded ({MODEL_PATH}): {e}")
+    raises:
+        KeyError: If the **'__main__'** module cannot be found in **sys.modules**, 
+                  though this is highly unlikely in standard Python execution.
+        AttributeError: If any of the hardcoded functions or variables (e.g., 
+                        _SENT_SPLIT, _compute_readability_features) are not defined 
+                        in the current scope before this function is called.
+    """
 
+    main_module = sys.modules['__main__']
+    main_module._SENT_SPLIT = _SENT_SPLIT
+    main_module._syllable_count = _syllable_count
+    main_module._compute_readability_features = _compute_readability_features
+    main_module.numeric_feats_from_df = numeric_feats_from_df
+    main_module._numeric_feats_from_df = _numeric_feats_from_df
+    app.logger.info("[difficulty_V2] Applied V2 hardcoded __main__ module hack.")
+
+# --- 4. Universal Prediction Functions (Work with either model) ---
 def parse_tags_for_model(val):
-    if not val:
-        return []
-    if isinstance(val, (list, tuple)):
-        return list(val)
-    try:
-        return json.loads(val) or []
-    except Exception:
-        return []
+    """
+    General Idea:
+    Converts the concept tags into JSON list format
+
+    Args:
+        val (list/tuple/JSON): stored as JSON list
+
+    Return:
+        list: If val is not empty, else empty list []
+    
+    Raises:
+        None
+    """
+
+    """Helper to parse concept tags for the model."""
+    if not val: return []
+    if isinstance(val, (list, tuple)): return list(val)
+    try: return json.loads(val) or []
+    except Exception: return []
 
 
 def predict_row(row: dict) -> float:
+    """
+    Predicts the difficulty rating using the Machine Learning model when taking the row as input
+
+    Args:
+        row (dict): {
+            "question_stem": stem,
+            "tags_text": tags_text,
+            "question_type": row.get("question_type") or "",
+            }
+    
+    Returns:
+        float: Difficulty rating value predicted by the model used
+    
+    Raises:
+        None
+    """
+
     stem = (row.get("question_stem") or "").strip()
     tags_text = " ".join(parse_tags_for_model(row.get("concept_tags")))
     X = pd.DataFrame([{
@@ -572,11 +1030,70 @@ def predict_row(row: dict) -> float:
     yhat = float(difficulty_model.predict(X)[0])
     return float(np.clip(yhat, 0.0, 1.0))
 
+# --- 5. Main Loading Try/Except Block ---
+difficulty_model = None
+active_model_name = "NONE"
 
+try:
+    # --- TRY V1 (Preferred) ---
+    app.logger.info(f"[difficulty] V1: Attempting dynamic load of {MODEL_PATH_V1}...")
+    _load_training_helpers() # Populates __main__ from V1's .py file
+    difficulty_model = joblib.load(MODEL_PATH_V1)
+    active_model_name = "V1_model_ridge"
+    app.logger.info(f"[difficulty] V1: Successfully loaded model: {MODEL_PATH_V1}")
+    print("--- Successfully loaded Model V1 (Ridgemodel) ---") # <--- ADD THIS
+except Exception as e_v1:
+    app.logger.warning(f"[difficulty] V1: Failed to load model ({MODEL_PATH_V1}): {e_v1}")
+    app.logger.info(f"[difficulty] V2: Attempting fallback load of {MODEL_PATH_V2}...")
+    try:
+        # --- FALLBACK TO V2 ---
+        _apply_v2_main_module_hack() # Populates __main__ with V2's hardcoded functions
+        difficulty_model = joblib.load(MODEL_PATH_V2)
+        active_model_name = "V2_difficulty_v1"
+        app.logger.info(f"[difficulty] V2: Successfully loaded fallback model: {MODEL_PATH_V2}")
+        print("--- Successfully loaded Model V2 (difficulty_v1) ---") # <--- ADD THIS
+    except Exception as e_v2:
+        app.logger.error(f"[difficulty] V2: CRITICAL: Fallback model failed to load ({MODEL_PATH_V2}): {e_v2}")
+
+# --- 6. ML Prediction Endpoint ---
 @app.route("/predict_difficulty", methods=["POST"])
 def predict_difficulty():
+    """
+    Predict difficulty for questions as a whole batch
+    Selects questions from 'questions' table with NULL in 'difficulty_rating_manual'
+    with the saved Machine Learning pipeline, and update the Database
+
+    Args: 
+        file_id (int, optional): If provided, restricts difficulty prediction to only files in 'file_id'
+        dry_run (int, optional): If dry_run=1, does not fill in the value in the database, and only return result
+                                    Default 0 to fill in the difficulty_rating_model field
+
+        JSON body: {} (empty object). Body required for POST
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"processed": int, # number of rows predicted
+                    "updated" int, # number of rows written
+                    "dry_run": bool,
+                    "items": [
+                    {
+                    "id": int,
+                    "question_base_id": int,
+                    "file_id": int,
+                    "difficulty_rating_model": float
+                    },
+                    ...
+                ]
+            }
+            500 with {"error": "model not loaded"} if the model cannot be reached
+    
+    Raises:
+        Database and model errors handled and returned as 4xx/5xx flask responses
+    """
+
     if difficulty_model is None:
-        return jsonify({"error": "model not loaded"}), 503
+        # 💡 FIX: Return the active_model_name in the error for better debugging
+        return jsonify({"error": "Model not loaded", "active_model": active_model_name}), 503
 
     file_id = request.args.get("file_id", type=int)
     dry_run = request.args.get("dry_run", default=0, type=int) == 1
@@ -628,11 +1145,16 @@ def predict_difficulty():
         "items": results[:100],
     })
 
+
 # -----------------------------------------------------
 ## ⬆️ File Upload
 
 @app.get("/upload")
 def upload_page():
+    """
+    Temporary Endpoint for backend to test upload feature
+    """
+
     # Helper endpoint for a simple HTML upload form
     return render_template_string("""
 <!doctype html><html><head><meta charset='utf-8'><title>Upload PDF</title></head>
@@ -652,6 +1174,50 @@ def upload_page():
 
 @app.post("/api/upload_file")
 def upload_file():
+    """
+    Handle PDF uploads, persist metadata to the database, and trigger the 3-step parsing pipeline
+
+    Workflow:
+        1. Validate request:
+        2. Save the PDF into the configured file_base_directory
+        3. Insert a row into the `files` table with the provided metadata
+        4. Mirror a copy into the pipeline's canonical source directory
+        5. Run the parsing pipeline:
+            - `python pdf_extractor.py` with TARGET_PDF=<filename>
+            - `python llm_parser.py` with TARGET_BASE=<filename_without_ext>
+            - `python insert_questions.py` with TARGET_BASE=<filename_without_ext>
+
+    Form fields:
+        - course (str, optional)
+        - year (str/int, optional)
+        - semester (str, optional)
+        - assessment_type (str, optional)
+
+    Returns:
+        flask.Response (application/json):
+            - 201 on success:
+                {
+                  "saved": true,
+                  "file": {
+                    "file_id": <int or null>,
+                    "original_name": "...",
+                    "stored_filename": "...",
+                    "stored_path": "..."
+                  },
+                  "pipeline": {
+                    "pdf_extractor": {...},
+                    "llm_parser": {...},
+                    "insert_questions": {...}
+                  }
+                }
+            - 400 on bad upload (no file, wrong type, invalid PDF header)
+            - 500 if a pipeline step fails (upload is still saved)
+
+    Future Improvements:
+        - DB insert failure is reported but does not roll back the file save
+        - Accept more file types
+    """
+
     print("--- STARTING UPLOAD HANDLER ---") # <--- ADD THIS
     import time
     course = request.form.get("course")
@@ -837,6 +1403,34 @@ allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
 
 @app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 def update_question(q_id):
+    """
+    Supports editing selected fields in the 'questions' table ("question_stem", 
+    "concept_tags", "difficulty_rating_manual", "question_type", "question_options", 
+    "question_answer") and selected metadata in the 'files' row ("assessment_type", 
+    "course", "year", "semester").
+
+    Args:
+        q_id (int): 
+            Primary key of the question for editing.
+        JSON body (dict):
+            Key-value pairs for edit. Allowed keys are:
+                - questions: {"question_stem", "concept_tags", "difficulty_rating_manual", 
+                            "question_type", "question_options", "question_answer"}
+                - files: {"assessment_type", "course", "year", "semester"}
+            Notes:
+                - concept_tags must be list/tuple.
+                - difficulty_rating_manual must be float or null.
+
+    Returns:
+        flask.Response (application/json):
+            200 with the edited record if successful.
+            400 with {"error": "..."} if field input is not an allowed type.
+            404 if the question does not exist for editing.
+
+    Raises:
+        Database and JSON errors are handled and returned as 4xx/5xx flask responses.
+    """
+
     # the requested edit attribute
     payload = request.get_json(silent=True) or {}
     if not payload:
@@ -943,6 +1537,27 @@ def update_question(q_id):
 
 @app.route("/api/deletequestion/<int:q_id>", methods=["DELETE"])
 def delete_question(q_id):
+    """
+    Permanently delete a question from the 'questions' table.
+
+    Args:
+        q_id (int): 
+            Primary key of the question to be deleted.
+        Confirmation string (str):
+            MUST BE "YES" to proceed with deletion, otherwise error 400 is returned.
+
+    Returns:
+        flask.Response(application/json):
+            200 with {"status": "deleted_permanently", "id": q_id} if successful
+            400 with {"error": "confirmation_required", ...} if confirmation not stated/invalid.
+            404 with {"status": "not_found", "id": q_id} if q_id does not exist in 'questions' table
+            500 with {"error": "delete_failed", ..." if error in database.
+
+    Raises:
+        All exceptions handled and returned as 4xx/5xx flask responses.
+
+    """
+
     deleted_file_id = None
     
     with closing(get_connection()) as conn:
@@ -997,7 +1612,7 @@ def _normalize_semester(sem: str) -> str:
     s = " ".join(s.split())
 
 # -----------------------------------------------------
-## ➕ Question Creation (Legacy/File-Dependent)
+## ➕ Question addition (Legacy/File-Dependent)
 
 
 def _normalize_assessment_type(t: str) -> str:
@@ -1051,6 +1666,38 @@ def get_file_id(course: str, year, semester: str, assessment_type: str, latest: 
 # Endpoint for adding question to the database
 @app.route("/addquestion", methods=["POST"])
 def addquestion():
+    """
+    Create a new question and adds it to the 'questions' table.
+
+    Args:
+        JSON body (dict):
+            Either:
+                - file_id (int): existing file row to attach the question to
+            Or ALL fields to find file_id:
+                - course (str)
+                - year (int)
+                - semester (str)
+                - assessment_type (str)
+            Required fields:
+                - question_type (str)
+                - question_stem (str)
+            Optional fields:
+                - concept_tags (list/tuple/JSON string/str): will be normalised to JSON.
+                - question_options (list/dict/JSON string): stored as JSON string.
+                - question_answer (JSON)L store as JSON.
+    
+    Returns:
+        flask.Response(application/json):
+            201 with {"status": "created", "question_id": <int>, "file": {...}, "data": {...}} if successful
+            400 with {"error": "missing_field", ...} when required field inputs are not present.
+            404 with {"error": "file_not_found"} when file_id is invalid.
+            500 with {"error": "insert_failed", "message": "..."} if error in database.
+
+    Raises:
+        Input and database error are handled and returned as 4xx/5xx flask responses.
+
+    """
+
     payload = request.get_json(silent=True) or {}
 
     # Required fields: find file_id or create it from metadata
@@ -1213,6 +1860,36 @@ def addquestion():
 
 @app.route("/api/createquestion", methods=["POST"])
 def create_question():
+    """
+    description: Processes a JSON payload to validate core question fields and inserts 
+                 a new synthetic file record into the 'files' table. This function 
+                 prepares the necessary database link for a manually created question 
+                 and handles data type conversions and validation for specific fields 
+                 like 'difficulty_rating_manual'.
+
+    args:
+        None: This function implicitly uses the Flask global `request` object to retrieve 
+              the JSON payload from the request body.
+
+    returns:
+        tuple[flask.Response, int]: A tuple containing a JSON response body and an 
+                                    HTTP status code:
+                                    - **400 Bad Request**: If the payload is missing 
+                                      required fields (e.g., 'question_type', 
+                                      'question_stem').
+                                    - **500 Internal Server Error**: If a database 
+                                      error occurs during the creation of the file record.
+                                    - *(Note: The final successful return (200 OK) for 
+                                      the question record insertion is not present in 
+                                      the provided code fragment.)*
+
+    raises:
+        ValueError, TypeError: Handled internally during the conversion of 
+                               `difficulty_rating_manual` to a float.
+        MySQLdb.Error: Database exceptions that occur during file insertion are caught 
+                       and result in a 500 status code.
+    """
+
     payload = request.get_json(silent=True) or {}
     
     # --- 1. Validate Core Question Fields ---
@@ -1491,6 +2168,47 @@ def create_question():
 # ---------------------------------------------
 @app.route("/search", methods=["GET"])
 def search_questions():
+    """
+    description: Executes a filtered search query against the 'questions' and 'files' 
+                 tables. It retrieves only the **latest version** of each question 
+                 (based on the highest ID or question_base_id) and applies filtering 
+                 based on URL query parameters. Results are limited and returned in 
+                 a list of JSON objects, with fields like concept_tags and assessment_type 
+                 normalized for client consumption.
+
+    args:
+        None: This function implicitly uses the Flask global `request.args` to retrieve 
+              query parameters:
+              - **q (str)**: Keyword to search within 'question_stem' or 'concept_tags'.
+              - **type (str)**: Filters by question type (e.g., 'mcq', 'short_answer'). Defaults to 'all'.
+              - **course (str)**: Filters by course key (e.g., 'ST2131').
+              - **assessment_type (str)**: Filters by assessment type (e.g., 'final', 'midterm').
+              - **academic_year (str)**: Filters by academic year (e.g., 'AY2023/2024').
+              - **concept_tags (str)**: Keyword to search within concept tags.
+
+    returns:
+        flask.Response: A JSON response containing a list of up to 200 question records, 
+                        sorted by file year and update time, or an empty list if no 
+                        matches are found.
+
+    raises:
+        MySQLdb.Error: Any database connection or query execution error during the 
+                       search process, which is typically allowed to propagate as a 
+                       500 Internal Server Error.
+    
+    keyword = (request.args.get("q") or "").strip().lower()
+    qtype = (request.args.get("type") or "all").strip().lower()
+    course = (request.args.get("course") or "").strip().upper()  # filter key
+    assessment_type = (request.args.get("assessment_type") or "").strip().lower()
+    academic_year = (request.args.get("academic_year") or "").strip()
+    concept = (request.args.get("concept_tags") or "").strip().lower()
+
+    latest_sql = ""
+        SELECT COALESCE(question_base_id, id) AS gid, MAX(id) AS max_id
+        FROM questions
+        GROUP BY COALESCE(question_base_id, id)
+    """
+
     keyword = (request.args.get("q") or "").strip().lower()
     qtype = (request.args.get("type") or "all").strip().lower()
     course = (request.args.get("course") or "").strip().upper()  # filter key

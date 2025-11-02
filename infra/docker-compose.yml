@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   # ==================================
-  #  CORRECTED FRONTEND SERVICE
+  # FRONTEND SERVICE
   # ==================================
   frontend:
     build:
@@ -17,13 +17,13 @@ services:
     working_dir: /app
     environment:
       - CHOKIDAR_USEPOLLING=true
-      # - VITE_APP_API_URL=http://localhost:5001
+      # VITE_APP_API_URL should be configured internally or via the host OS/network
     depends_on:
       - api
 
-  # ==================================
-  #  BACKEND SERVICES (Unchanged)
-  # ==================================
+  # ----------------------------------
+  # DATABASE SERVICES
+  # ----------------------------------
   db:
     image: mysql:8.0
     container_name: quizbank-db
@@ -55,30 +55,14 @@ services:
     depends_on:
       - db
 
-  backend:
+  # ----------------------------------
+  # API SERVICE (Flask Application)
+  # Consolidated all backend logic here
+  # ----------------------------------
+  api:
     platform: linux/amd64
     build:
-      context: ".."
-      dockerfile: "infra/Dockerfile"
-    container_name: quizbank-backend
-    env_file:
-      - ../.env
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - ../data:/app/data
-      - ./models:/app/models
-      - ../backend:/app/backend
-    environment:
-      - PYTHONUNBUFFERED=1
-      - MYSQL_HOST=db
-      - MYSQL_PORT=3306
-    restart: on-failure
-
-  api:
-    build:
-      context: . # Build from the 'infra' folder (correct)
+      context: . # Build from the 'infra' folder
       dockerfile: ./Dockerfile_api
     container_name: quizbank-api
     env_file:
@@ -87,19 +71,49 @@ services:
       - "5001:5000"
     environment:
       - file_base_directory=/app/data/source_files
-      - diff_model_path=/app/models/difficulty_v1.pkl
+      # 🚨 FIX: Define V1 (preferred) and V2 (fallback) model paths for app.py
+      - diff_model_path_v1=/app/models/model_ridge.pkl
+      - diff_model_path_v2=/app/models/difficulty_v1.pkl
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
     volumes:
-      # 💡💡💡 THE FIX 💡💡💡
-      # The path must be relative to this file, so it's './backend_app'
       - ./backend_app:/app
       - ../data:/app/data
       - ./models:/app/models
+      # 🚨 FIX: Re-added the volume required for the V1 model's dynamic loading logic
+      - ./difficulty_rating_experimentation:/app/difficulty_rating_experimentation
     depends_on:
       db:
         condition: service_healthy
+    # healthcheck ensures API is ready before external calls (seed-difficulty, frontend)
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://api:5000/health || exit 1"]
+      interval: 120s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
+  # ----------------------------------
+  # ML SEED SERVICE
+  # ----------------------------------
+  seed-difficulty:
+    image: curlimages/curl:8.7.1
+    depends_on:
+      api:
+        condition: service_healthy
+    command: >
+      sh -lc '
+        echo "[seed] API is healthy, calling /predict_difficulty...";
+        # Wait a bit longer to ensure the API is fully stable after healthcheck passes
+        sleep 20; 
+        curl -sS -X POST "http://api:5000/predict_difficulty"
+              -H "Content-Type: application/json" -d "{}" ||
+        echo "[seed] failed to call API";
+        echo "[seed] done."
+      '
+    restart: "no"
+
+# Declare the named volumes
 volumes:
   mysql_data:
-  frontend_node_modules: # Add the named volume for frontend
+  frontend_node_modules:

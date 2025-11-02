@@ -1,23 +1,38 @@
-FROM python:3.10-slim
+# Dockerfile_api
 
+# === Base image ===
+FROM python:3.11-slim
+
+# === Environment Variables ===
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
+# === Set working directory ===
 WORKDIR /app
 
-# OS deps for mysqlclient, etc.
+# === Install OS dependencies ===
+# 🚨 CONSOLIDATION FIX: Added curl, netcat-traditional, and libpoppler-cpp-dev
+# These are required for healthchecks, system stability, and pdfplumber's image generation.
 RUN apt-get update && apt-get install -y --no-install-recommends \ 
-    default-libmysqlclient-dev build-essential pkg-config \ 
+    default-libmysqlclient-dev \
+    build-essential \
+    pkg-config \
+    curl \
+    netcat-traditional \
+    libpoppler-cpp-dev \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy app (must include requirements.txt inside backend_app/)
+# === Copy application files ===
+# Assumes requirements.txt is at /app/requirements.txt after copying.
 COPY backend_app/ ./
 
-# Install Python deps
+# === Install Python dependencies ===
 RUN pip install --no-cache-dir -r requirements.txt
 
+# === Expose application port ===
 EXPOSE 5000
 
-# If your Flask app exposes 'app = Flask(__name__)' in app.py, this is robust:
-# We use gunicorn instead of flask since it allows us to set the "--timeout" flag (stops flask timeouts for lengthy processes like upload_file) and "workers"
+# === Start API using Gunicorn ===
+# Retaining the long timeout (900s) to support the synchronous upload_file pipeline.
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "900", "--workers", "3", "app:app"]
