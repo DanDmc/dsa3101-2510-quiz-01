@@ -33,9 +33,11 @@ MySQL DB (db) runs on port 3306 in the container.
 
 Adminer for the DB is accessible at: http://127.0.0.1:8080
 
-Flask API (api) runs on port 5000 in the container.
+Flask API (api) runs on port 5000 in the container, and is accessible at:
+http://127.0.0.1:5001
 
-Frontend app (frontend) runs on port 5173 in the container.
+Frontend app (frontend) runs on port 5173 in the container, and its User Interface is accessible at:
+http://localhost:5173
 
 Difficulty rating seeding (seed-difficulty)
 
