@@ -23,8 +23,9 @@ It handles file uploads, PDF parsing, LLM question extraction, database insertio
 - `/predict_difficulty (POST method)` - Runs the saved difficulty rating model and updates the difficulty_rating_model column for questions with NULL manual ratings.
 - `/api/editquestions/<id> (PATCH method)` - Allows users to edit question details (concept tags, manual difficulty rating, etc.).
 - `/api/harddeletequestions/<id> (DELETE method)`- Permanently deletes a question by ID.
-- `/api/addquestion (POST method)` - Creates a new question record.
+- `/api/createquestion (POST method)` - Creates a new question record.
 - `/upload_file (POST method)` - Uploads a new PDF, which is extracted, parsed, and inserted into the DB.
+- `/search (GET method)` - Search for questions matching the user inputs.
 
 ## Difficulty Rating Model
 The backend loads a pre-trained model (model_ridge.pkl) from /app/models/.
