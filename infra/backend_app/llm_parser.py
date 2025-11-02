@@ -88,22 +88,25 @@ QUESTION_SCHEMA = types.Schema(
 # We create a temporary variable for the client.
 temp_client = genai.Client(api_key=API_KEY)
 
-# 2. Instantiate the GenerativeModel globally (replaces the old 'genai.GenerativeModel' static call)
-# We use the client's models service to create the model instance.
-model = temp_client.models.GenerativeModel(
-    model=MODEL,
-    # NOTE: The GenerationConfig must be passed under the key 'config', 
-    # not 'generation_config' in the modern SDK's GenerativeModel constructor.
-    config={ 
-        "temperature": 0.1, 
-        "top_p": 0.95,
-        "top_k": 40,
-        "response_mime_type": "application/json", 
-        "response_schema": QUESTION_SCHEMA,
-        "safety_settings": [
-            HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
-        ]
-    }
+# 2. Define the configuration object explicitly using the imported 'types' alias.
+config = types.GenerationConfig(
+    temperature=0.1, 
+    top_p=0.95,
+    top_k=40,
+    response_mime_type="application/json", 
+    response_schema=QUESTION_SCHEMA
+)
+
+# 3. Instantiate the GenerativeModel globally using the main import.
+# The previous structure failed because it tried to access GenerativeModel via the 
+# client's service endpoint (client.models.GenerativeModel), but the class name is
+# exposed directly by the top-level package.
+model = genai.GenerativeModel(
+    model=MODEL, # This is the argument name expected by the constructor
+    generation_config=config,
+    safety_settings=[
+        HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
+    ]
 )
 
 # === Utility Functions ===
