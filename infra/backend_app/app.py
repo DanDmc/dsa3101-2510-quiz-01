@@ -150,7 +150,7 @@ def normalize_concept_tags(val):
         return val
     return json.dumps(val, ensure_ascii=False)
 
-MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_ridge.pkl")
+MODEL_PATH = os.getenv("diff_model_path", "/app/models/model_elasticnet.pkl")
 difficulty_model = None
 featurepath = "/app/difficulty_rating_experimentation/model_experimentation 4 features.py"
 
