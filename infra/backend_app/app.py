@@ -1076,7 +1076,6 @@ def upload_file():
 allowed_question_fields_for_edit = {"question_stem", "concept_tags", "difficulty_rating_manual", "question_type", "question_options", "question_answer"}
 allowed_file_fields_for_edit = {"assessment_type", "course", "year", "semester"}
 
-@app.route("/api/editquestions/<int:q_id>", methods=["PATCH"]) # PATCH method to allow partial update
 # ---- Temporary Endpoint for backend testing of upload feature ---
 @app.get("/upload")
 def upload_page():
