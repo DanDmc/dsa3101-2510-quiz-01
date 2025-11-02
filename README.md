@@ -1,5 +1,8 @@
 # dsa3101-2510-quiz-01
 
+## Project overview
+A quizbank management platform, integrated with automated LLM-parsed uploads and machine learning difficulty rating predictions.
+
 ## Overview
 This folder contains our quizbank, designed to store, parse and analyse quiz and exam questions specifically from the mathematics, statistics and data science department.
 Question extraction from uploaded PDF, categorises metadata, and predicts difficulty ratings using a trained machine learning model.
