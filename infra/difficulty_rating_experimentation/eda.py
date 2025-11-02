@@ -40,7 +40,7 @@ def make_sa_engine():
     user = os.getenv("MYSQL_USER", "quizbank_user")
     pw = os.getenv("MYSQL_PASSWORD", "quizbank_pass")
     db = os.getenv("MYSQL_DATABASE", "quizbank")
-    port = os.getenv("MYSQL_PORT", "3306")
+    port = os.getenv("MYSQL_PORT", "3307")
     uri = f"mysql+pymysql://{user}:{pw}@{host}:{port}/{db}?charset=utf8mb4"
     return create_engine(uri, pool_pre_ping=True, pool_recycle=3600)
 
@@ -197,7 +197,7 @@ def main():
     # Tags
     has_tags = df['tags_text'].str.len() > 0
     axes[1, 1].boxplot([df[has_tags]['difficulty'], df[~has_tags]['difficulty']], 
-                       labels=['Has Tags', 'No Tags'])
+                       tick_labels=['Has Tags', 'No Tags'])
     axes[1, 1].set_ylabel('Difficulty')
     axes[1, 1].set_title(f'3-Feature: Concept Tags ({has_tags.sum()} with tags)')
     axes[1, 1].grid(alpha=0.3)
