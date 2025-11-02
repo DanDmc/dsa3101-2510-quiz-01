@@ -17,7 +17,7 @@ services:
     working_dir: /app
     environment:
       - CHOKIDAR_USEPOLLING=true
-      # - VITE_APP_API_URL=http://localhost:5001
+      - VITE_APP_API_URL=http://localhost:5001
     depends_on:
       - api
 
@@ -37,7 +37,9 @@ services:
     ports:
       - "3307:3306"
     volumes:
+      # Persist database data so you don’t lose it between restarts
       - mysql_data:/var/lib/mysql
+      # Initialize schema + seed data only on first run
       - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
     healthcheck:
@@ -87,7 +89,7 @@ services:
       - "5001:5000"
     environment:
       - file_base_directory=/app/data/source_files
-      - diff_model_path=/app/models/difficulty_v1.pkl
+      - diff_model_path=/app/models/model_elasticnet.pkl
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
     volumes:
@@ -96,10 +98,36 @@ services:
       - ./backend_app:/app
       - ../data:/app/data
       - ./models:/app/models
+      - ./difficulty_rating_experimentation:/app/difficulty_rating_experimentation
     depends_on:
       db:
         condition: service_healthy
+    ## healthcheck before calling predict_difficulty
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://api:5000/health || exit 1"]
+      interval: 120s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
+  # service to call predict_difficulty API when dockerise
+  seed-difficulty:
+    image: curlimages/curl:8.7.1
+    depends_on:
+      api:
+        condition: service_healthy
+    command: >
+      sh -lc '
+        echo "[seed] API is healthy, calling /predict_difficulty...";
+        sleep 20;
+        curl -sS -X POST "http://api:5000/predict_difficulty"
+             -H "Content-Type: application/json" -d "{}" ||
+        echo "[seed] failed to call API";
+        echo "[seed] done."
+      '
+    restart: "no"
+
+# Declare the named volume for MySQL persistence
 volumes:
   mysql_data:
   frontend_node_modules: # Add the named volume for frontend

@@ -225,3 +225,4 @@ INSERT INTO `questions` (`id`, `question_base_id`, `version_id`, `file_id`, `que
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `question_base_id` = VALUES(`question_base_id`), `version_id` = VALUES(`version_id`), `file_id` = VALUES(`file_id`), `question_no` = VALUES(`question_no`), `page_numbers` = VALUES(`page_numbers`), `question_type` = VALUES(`question_type`), `difficulty_rating_manual` = VALUES(`difficulty_rating_manual`), `difficulty_rating_model` = VALUES(`difficulty_rating_model`), `question_stem` = VALUES(`question_stem`), `question_stem_html` = VALUES(`question_stem_html`), `question_options` = VALUES(`question_options`), `question_answer` = VALUES(`question_answer`), `page_image_paths` = VALUES(`page_image_paths`), `concept_tags` = VALUES(`concept_tags`), `last_used` = VALUES(`last_used`), `created_at` = VALUES(`created_at`), `updated_at` = VALUES(`updated_at`);
 
 -- 2025-11-01 19:01:11 UTC
+-- 2025-11-01 19:01:11 UTC

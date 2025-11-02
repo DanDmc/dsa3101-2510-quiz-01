@@ -14,7 +14,9 @@ Features:
 The extracted text and page image references are used by llm_parser.py to 
 structure questions into the database.
 """
+
 import re
+from pathlib import Path
 import os
 import pdfplumber
 
@@ -31,18 +33,18 @@ def extract_text_and_page_images(
     This function processes all PDFs in the source directory, extracting text
     and saving every single page as an image for visual reference.
     
-    Parameters
+    Args:
     ----------
     source_dir : str, default="data/source_files"
-        Directory containing the PDF files to process.
+        Directory containing the PDF files to process
     text_dir : str, default="data/text_extracted"
-        Directory where extracted text files (.txt) will be saved.
+        Directory where extracted text files (.txt) will be saved
     media_dir : str, default="data/question_media"
         Directory where ALL page images will be stored.
     target_pdf : str, default=None
         If provided, only this specific PDF filename will be processed.
         
-    Returns
+    Returns:
     -------
     None
         Files are written to disk. Progress is printed to console.
@@ -61,37 +63,17 @@ def extract_text_and_page_images(
     """
     os.makedirs(text_dir, exist_ok=True)
     os.makedirs(media_dir, exist_ok=True)
-    
-    # --- FIX: Check if a specific target_pdf is provided ---
-    if target_pdf:
-        # SINGLE FILE MODE (from app.py)
-        # Ensure the target_pdf is just the filename, not a path
-        pdf_file_name = os.path.basename(target_pdf) 
-        
-        if not os.path.exists(os.path.join(source_dir, pdf_file_name)):
-            print(f" Error: Target file not found in {source_dir}: {pdf_file_name}")
-            # Exit with code 1 to signal failure to the main app
-            import sys
-            sys.exit(1) 
-        
-        pdf_files = [pdf_file_name] # Create a list with just the one file
-        print(f"\n Found 1 target PDF file to process: {pdf_file_name}\n")
-    else:
-        # LEGACY MODE (if run manually without env var)
-        pdf_files = [f for f in os.listdir(source_dir) if f.lower().endswith(".pdf")]
-        if not pdf_files:
-            print(f" No PDF files found in {source_dir}")
-            return
-        print(f"\n Found {len(pdf_files)} PDF file(s) to process (legacy mode)\n")
-    # --- END FIX ---
 
-    for pdf_file in pdf_files:
-        pdf_path = os.path.join(source_dir, pdf_file)
-        base_name = os.path.splitext(pdf_file)[0]
+    target_pdf = os.environ.get("TARGET_PDF")
+    if target_pdf:
+        pdf_path = os.path.join(source_dir, target_pdf)
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"TARGET_PDF = {target_pdf} not found in {source_dir}")
+        base_name = os.path.splitext(target_pdf)[0]
         txt_filename = base_name + ".txt"
         text_output_path = os.path.join(text_dir, txt_filename)
 
-        print(f"Extracting text and saving ALL page images from {pdf_file}...")
+        print(f"🧾 Extracting text and saving ALL page images from {target_pdf}...")
 
         try:
             with pdfplumber.open(pdf_path) as pdf:
@@ -129,13 +111,12 @@ def extract_text_and_page_images(
             with open(text_output_path, "w", encoding="utf-8") as f:
                 f.write(text)
 
-            print(f" Saved extracted text to {text_output_path}")
-            print(f" Saved {total_pages} page image(s)")
+            print(f"✅ Saved extracted text to {text_output_path}")
+            print(f"🖼️ Saved {total_pages} page image(s)")
             print()
 
         except Exception as e:
-            print(f" Failed to process {pdf_file}: {e}\n")
-
+            print(f"❌ Failed to process {target_pdf}: {e}\n")
 
 if __name__ == "__main__":
     # --- FIX: Read the environment variable passed from app.py ---
