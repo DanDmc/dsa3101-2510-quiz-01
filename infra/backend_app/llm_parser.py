@@ -82,22 +82,29 @@ QUESTION_SCHEMA = types.Schema(
     )
 )
 
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel(
-    MODEL,
-    generation_config={
+# FIX START: Replace configure() with Client() and instantiate the model
+
+# 1. We must instantiate the client first, but we don't need a global 'client' variable.
+# We create a temporary variable for the client.
+temp_client = genai.Client(api_key=API_KEY)
+
+# 2. Instantiate the GenerativeModel globally (replaces the old 'genai.GenerativeModel' static call)
+# We use the client's models service to create the model instance.
+model = temp_client.models.GenerativeModel(
+    model=MODEL,
+    # NOTE: The GenerationConfig must be passed under the key 'config', 
+    # not 'generation_config' in the modern SDK's GenerativeModel constructor.
+    config={ 
         "temperature": 0.1, 
         "top_p": 0.95,
         "top_k": 40,
-        "response_mime_type": "application/json", # Force JSON output
-        "response_schema": QUESTION_SCHEMA,       # Enforce this schema
-    },
-    safety_settings=[
-        # Allow less strict output since exam text might contain math/code
-        HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
-    ]
+        "response_mime_type": "application/json", 
+        "response_schema": QUESTION_SCHEMA,
+        "safety_settings": [
+            HarmCategory.HARM_CATEGORY_HARASSMENT, HarmBlockThreshold.BLOCK_NONE
+        ]
+    }
 )
-
 
 # === Utility Functions ===
 def build_page_to_image_map(full_text):
