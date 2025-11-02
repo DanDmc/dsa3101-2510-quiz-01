@@ -1,3 +1,40 @@
+/**
+ * @file EditQuestionForm component.
+ * @module components/EditQuestionForm
+ * Renders a complete form interface for editing a single question record.
+ *
+ * This component manages local state for creating new concept tags and handling 
+ * a difficulty rating modal. It uses a complex memoization and synchronization 
+ * process to map the API's question_options (list/JSON string) and question_answer 
+ * (formatted string) fields into a single, editable array of options (normalizedOptions).
+ * The answer section dynamically changes based on the question_type (MCQ, MRQ, Open-ended, etc.).
+ *
+ * @typedef {object} QuestionOption
+ * @property {string} id - Unique local identifier (e.g., 'opt1').
+ * @property {string} label - The letter label (e.g., 'A', 'B').
+ * @property {string} text - The option text.
+ * @property {boolean} isCorrect - Flag indicating if this option is part of the correct answer.
+ *
+ * @typedef {object} QuestionData
+ * @property {number} id - The unique ID of the question record.
+ * @property {string} [question_type] - The type of question (e.g., 'MCQ', 'OPEN-ENDED').
+ * @property {string} [question_stem] - The main body/text of the question.
+ * @property {string} [question_answer] - The API-persisted formatted answer string.
+ * @property {Array<string>} [concept_tags] - List of concept tags applied to the question.
+ * @property {number | null} [difficulty_rating_manual] - Manually set difficulty score (0.0 to 1.0).
+ * @property {Array<QuestionOption>} [options] - Local state storage for dynamic options (MCQ/MRQ).
+ *
+ * @param {object} props The component props.
+ * @param {number} props.questionNumber - The display number of this question within a larger list.
+ * @param {QuestionData} props.question - The full question object currently being edited.
+ * @param {function(number, string, any): void} props.onQuestionChange - Callback function to update the parent state when a field changes.
+ * - Arguments: (questionId, fieldName, newValue).
+ * @param {function(number): void} props.onDelete - Callback function to signal the parent to delete this question.
+ * @param {number} [props.optionWidth=730] - The width of the text fields used for answer options.
+ * @param {Array<string>} [props.conceptTags=[]] - (DEPRECATED: Originally intended for global tag list) Now primarily unused.
+ * @returns {JSX.Element} A Material-UI Card containing the full question editing interface and a Difficulty Modal.
+ */
+
 // src/components/EditQuestionForm.jsx
 import React, { useMemo, useState, useCallback } from 'react';
 import {
@@ -20,7 +57,7 @@ import {
   Divider,
   InputBase,
   Chip,
-  // 🌟 Modal imports for the Difficulty Popup
+  // Modal imports for the Difficulty Popup
   Modal,
   Backdrop,
   Fade,
@@ -29,7 +66,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
-// --- NEW ICON IMPORTS ---
+// --- ICON IMPORTS ---
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -41,8 +78,8 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CodeIcon from '@mui/icons-material/Code';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import MinimizeIcon from '@mui/icons-material/Minimize'; // ⭐ NEW: Import MinimizeIcon
-// --- NEW IMAGE IMPORT ---
+import MinimizeIcon from '@mui/icons-material/Minimize';
+// --- IMAGE IMPORT ---
 import PlaceholderImage from '../../Placeholder_image.png';
 
 // --- Shared Field Styling (New Helper Object for Points 3 & 4) ---
@@ -89,11 +126,11 @@ function EditQuestionForm({
   optionWidth = 730,
   conceptTags = [],
 }) {
-  //                                                                        ^^^^^^^^^^ MODIFIED: ADDED onDelete PROP
+  // ADDED onDelete PROP
   // --- LOCAL STATE ---
   const [isAddingNewTag, setIsAddingNewTag] = useState(false);
   const [newTagInput, setNewTagInput] = useState('');
-  // 🌟 NEW STATE: For Difficulty Modal
+  // STATE: For Difficulty Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // localConceptTags tracks tags created *within this specific form session*
@@ -134,7 +171,7 @@ function EditQuestionForm({
     OPEN_ENDED: 'OPEN-ENDED',
     CODING: 'CODING',
     OTHERS: 'others',
-    FILL_IN_THE_BLANKS: 'FILL-IN-THE-BLANKS', // ⭐ NEW: Add new question type
+    FILL_IN_THE_BLANKS: 'FILL-IN-THE-BLANKS', // Add new question type
     MULTIPLE_CHOICE: 'MCQ',
     MRQ: 'MRQ',
     DEFAULT: 'TYPE_DEFAULT',
@@ -172,7 +209,7 @@ function EditQuestionForm({
     return [];
   };
 
-  // --- NEW HELPER FUNCTION: Generate Formatted Answer String for question_answer ---
+  // --- HELPER FUNCTION: Generate Formatted Answer String for question_answer ---
   const generateFormattedAnswer = useCallback((options) => {
     const correctOptions = options.filter(
       (opt) => opt.isCorrect && opt.text.trim() !== ''
@@ -190,7 +227,7 @@ function EditQuestionForm({
     return formattedAnswers.join(', ');
   }, []);
 
-  // 3. NEW MEMO: Normalize API data (question_options and answer) into a uniform options array
+  // 3. Normalize API data (question_options and answer) into a uniform options array
   const normalizedOptions = useMemo(() => {
     const type = normalizedQuestionType;
     const apiOptions = question.question_options || [];
@@ -251,7 +288,7 @@ function EditQuestionForm({
             sx={{ color: BLACK_ICON_COLOR, mr: 1, fontSize: '1.2rem' }}
           />
         );
-      case QUESTION_TYPES.FILL_IN_THE_BLANKS: // ⭐ NEW: Add icon case
+      case QUESTION_TYPES.FILL_IN_THE_BLANKS:
         return (
           <MinimizeIcon
             sx={{ color: BLACK_ICON_COLOR, mr: 1, fontSize: '1.2rem' }}
@@ -274,7 +311,7 @@ function EditQuestionForm({
     }
   };
 
-  // --- Handlers (CRITICAL FIX: Appending logic) ---
+  // --- Handlers (FIXED: Appending logic) ---
   const handleTagChange = (event) => {
     const newTag = event.target.value;
     if (newTag === 'NEW_TAG_INPUT_TRIGGER') {
@@ -335,14 +372,13 @@ function EditQuestionForm({
 
   const handleAnswerChange = (event) => {
     const newAnswerText = event.target.value;
-    // ✅ FIX: Always write directly to question_answer for persistence
+    // Always write directly to question_answer for persistence
     if (
       normalizedQuestionType === QUESTION_TYPES.OPEN_ENDED ||
       normalizedQuestionType === QUESTION_TYPES.CODING ||
       normalizedQuestionType === QUESTION_TYPES.OTHERS ||
       normalizedQuestionType === QUESTION_TYPES.FILL_IN_THE_BLANKS
     ) {
-      // ⭐ NEW: Add new type
       onQuestionChange(question.id, 'question_answer', newAnswerText);
     }
   };
@@ -430,7 +466,7 @@ function EditQuestionForm({
     // 1. Update the 'options' array state
     onQuestionChange(question.id, 'options', newOptions);
 
-    // 3. 🎯 CRITICAL FIX: Generate and update the formatted 'question_answer' string
+    // 3. Generate and update the formatted 'question_answer' string
     const formattedAnswerString = generateFormattedAnswer(newOptions);
     onQuestionChange(question.id, 'question_answer', formattedAnswerString);
   };
@@ -445,7 +481,7 @@ function EditQuestionForm({
     }
   };
 
-  // ... (rest of the handlers)
+  // Remaining handlers
 
   const handleAddNewOption = () => {
     const optionsToUpdate = normalizedOptions;
@@ -498,11 +534,11 @@ function EditQuestionForm({
   };
 
   const handleClearOpenEndedAnswer = () => {
-    // ✅ FIX: Clear question_answer for open-ended types
+    // Clear question_answer for open-ended types
     onQuestionChange(question.id, 'question_answer', '');
   };
 
-  // 🌟 NEW HANDLER: Handles the change event for the difficulty input
+  // HANDLER: Handles the change event for the difficulty input
   const handleDifficultyChange = (event) => {
     let value = event.target.value.trim();
 
@@ -545,7 +581,7 @@ function EditQuestionForm({
           variant="outlined"
           size="small"
           placeholder="Enter correct answer here (or expected answer format)."
-          value={question.question_answer || ''} // ✅ FIX: BIND DIRECTLY TO PERSISTED FIELD
+          value={question.question_answer || ''} // FIX: BIND DIRECTLY TO PERSISTED FIELD
           onChange={handleAnswerChange}
           sx={{ mr: 1, ...INVISIBLE_TEXTFIELD_STYLE }}
         />
@@ -734,7 +770,7 @@ function EditQuestionForm({
         return renderCodingAnswer();
       case QUESTION_TYPES.OTHERS:
         return renderOthersAnswer();
-      case QUESTION_TYPES.FILL_IN_THE_BLANKS: // ⭐ NEW: Add render case
+      case QUESTION_TYPES.FILL_IN_THE_BLANKS:
         return renderOpenEndedAnswer();
       case QUESTION_TYPES.OPEN_ENDED:
       default:
@@ -751,7 +787,7 @@ function EditQuestionForm({
 
   return (
     <>
-      {/* 🌟 MODAL FOR MANUAL DIFFICULTY RATING */}
+      {/* MODAL FOR MANUAL DIFFICULTY RATING */}
       <Dialog
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -860,7 +896,6 @@ function EditQuestionForm({
                 >
                   {getQuestionTypeIcon(QUESTION_TYPES.OTHERS)} OTHERS
                 </MenuItem>
-                {/* ⭐ NEW: Add MenuItem */}
                 <MenuItem
                   value={QUESTION_TYPES.FILL_IN_THE_BLANKS}
                   sx={{ color: BLACK_ICON_COLOR }}
@@ -939,7 +974,7 @@ function EditQuestionForm({
               </Select>
             </FormControl>
 
-            {/* 🎯 MODIFICATION: LIMITED VISUAL TAG DISPLAY */}
+            {/* LIMITED VISUAL TAG DISPLAY */}
             <Box
               sx={{
                 display: 'flex',
@@ -971,7 +1006,7 @@ function EditQuestionForm({
             {/* End Limited Visual Tag Display */}
 
             <Box sx={{ flexGrow: 1 }} />
-            {/* Required Toggle, MoreVert, Delete Buttons (Unchanged) */}
+            {/* Required Toggle, MoreVert, Delete Buttons */}
             <Typography
               variant="body2"
               sx={{ color: REQUIRED_TEXT_COLOR, fontWeight: 'normal' }}
@@ -997,7 +1032,7 @@ function EditQuestionForm({
                 sx={{ p: 0 }}
                 onClick={() => setIsModalOpen(true)}
               >
-                {/* 🌟 MODIFIED: Opens Modal */}
+                {/* Opens Modal */}
                 <MoreVertIcon sx={{ color: BLACK_ICON_COLOR }} />
               </IconButton>
             </Box>
@@ -1022,7 +1057,7 @@ function EditQuestionForm({
               </IconButton>
             </Box>
           </Box>
-          {/* --- New Tag Input Field (Conditional Render for Point 1) --- */}
+          {/* --- New Tag Input Field (Conditional Render) --- */}
           {isAddingNewTag && (
             <Box
               sx={{
@@ -1063,7 +1098,7 @@ function EditQuestionForm({
             </Box>
           )}
 
-          {/* --- Horizontal Divider --- */}
+          {/* --- Horizontal Divider for Aesthetics --- */}
           <Divider sx={{ height: '1px', borderColor: '#B8B8B8', mt: 0, mb: 2 }} />
           {/* --- Question Title Input and Image --- */}
 
