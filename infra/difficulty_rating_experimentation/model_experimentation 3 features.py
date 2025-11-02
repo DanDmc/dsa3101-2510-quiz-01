@@ -1,6 +1,22 @@
+"""
+Difficulty Rating Prediction using 3 features
+- Unigram/Bigram of Question Stem
+- Unigram/Bigram of Concept Tag
+- Question type
+
+--------------------------------------------------
+This module trains and evaluates learning models to predict question difficulty
+index. 
+It handles:
+- MySQL data loading via SQLAlchemy
+- Stable train/test split using question IDs
+- Cross-validation and model comparison
+- Artifact saving (metrics, models, and predictions)
+"""
+
+
 import os
 import json
-from contextlib import closing
 from datetime import datetime
 from pathlib import Path
 
@@ -24,21 +40,41 @@ import joblib
 from sqlalchemy import create_engine
 
 def make_sa_engine():
+    """
+    Create a SQLAlchemy enngine for connecting to MySQL database
+    """
+
     host = os.getenv("MYSQL_HOST", "127.0.0.1")
     user = os.getenv("MYSQL_USER", "quizbank_user")
     pw   = os.getenv("MYSQL_PASSWORD", "quizbank_pass")
     db   = os.getenv("MYSQL_DATABASE", "quizbank")
-    port = os.getenv("MYSQL_PORT", "3306")
+    port = os.getenv("MYSQL_PORT", "3307")
     uri = f"mysql+pymysql://{user}:{pw}@{host}:{port}/{db}?charset=utf8mb4"
     return create_engine(uri, pool_pre_ping=True, pool_recycle=3600)
 
 # ---------------- Helpers ----------------
 def ensure_dir(p: str | Path) -> Path:
+    """
+    Ensure that a directory exists
+    
+    Parameters 
+    -----------
+    p : str or pathlib.Path
+        Path to the directory.
+    
+    Returns 
+    -------
+    pathlib.Path
+        The same path object, guaranteed to exist.
+    """
     p = Path(p)
     p.mkdir(parents=True, exist_ok=True)
     return p
 
 def parse_tags(val):
+    """
+    Convert concept tag information into a single text string
+    """
     if val is None or val == "":
         return ""
     if isinstance(val, (list, tuple)):
@@ -52,6 +88,12 @@ def parse_tags(val):
         return str(val)
 
 def build_preprocessor() -> ColumnTransformer:
+    """
+    Build a preprocessing pipeline for text and categorical features
+    - TF-IDF Vectorization for `question_stem`
+    - TF-IDF Vectorization for `tags_text`
+    - One-hot encoding for `question_type`
+    """
     stem_branch = Pipeline(steps=[
         ("tfidf_stem", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=20000)),
     ])
@@ -82,6 +124,27 @@ MODEL_REGISTRY = {
 }
 
 def evaluate_all(y_true, y_pred):
+    """
+    Compute multiple evaluation metrics for regression performance
+
+    Metrics include:
+        - Mean Absolute Error (MAE)
+        - Root Mean Square Error (RMSE)
+        - R² Score
+        - Spearman rank correlation
+    
+    Parameters
+    ----------
+    y_true : array-like
+        Ground truth values.
+    y_pred : array-like
+        Predicted values.
+
+    Returns
+    -------
+    dict
+        Dictionary of metrics and sample count.
+    """
     y_pred = np.clip(np.asarray(y_pred, dtype=float), 0.0, 1.0)
     y_true = np.asarray(y_true, dtype=float)
     mae = float(mean_absolute_error(y_true, y_pred))
@@ -95,17 +158,55 @@ def evaluate_all(y_true, y_pred):
         rho = 0.0
     return {"MAE": mae, "RMSE": rmse, "R2": r2, "Spearman": rho, "n": int(len(y_true))}
 
-def load_or_make_split(df: pd.DataFrame, split_path: Path, test_size: float = 0.2, seed: int = 42):
+def load_or_update_split_by_ids(labeled_ids: pd.Series, split_path: Path,
+                                test_size: float = 0.2, seed: int = 42):
+    """
+    Save split as stable string IDs.
+    If split exists keep TEST fixed and add any new labeled IDs to TRAIN.
+    If not create a fresh split.
+    Returns positional indices for the current DataFrame order.
+    """
+    if isinstance(labeled_ids, pd.DataFrame):
+        raise TypeError("Pass a 1-D Series of IDs for labeled_ids")
+
+    labeled_ids = pd.Index(pd.Series(labeled_ids).astype(str))
+
+    def _fresh(ids: pd.Index):
+        ids_np = ids.to_numpy().copy()
+        rng = np.random.default_rng(seed)
+        rng.shuffle(ids_np)
+        n_test = max(1, int(round(test_size * len(ids_np))))
+        return pd.Index(ids_np[n_test:].astype(str)), pd.Index(ids_np[:n_test].astype(str))
+
     if split_path.exists():
-        idx = json.loads(split_path.read_text())
-        train_idx = idx["train_idx"]
-        test_idx = idx["test_idx"]
+        print("[split] Using existing JSON split")
+        saved = json.loads(split_path.read_text())
+        train_ids = pd.Index(map(str, saved["train_ids"]))
+        test_ids  = pd.Index(map(str, saved["test_ids"]))
+
+        known = train_ids.union(test_ids)
+        new_ids = labeled_ids.difference(known)
+        if len(new_ids) > 0:
+            print(f"[split] Found {len(new_ids)} new IDs → updating training set")
+            train_ids = train_ids.union(new_ids)
+            split_path.parent.mkdir(parents=True, exist_ok=True)
+            split_path.write_text(json.dumps({
+                "train_ids": train_ids.tolist(),
+                "test_ids": test_ids.tolist()
+            }, indent=2))
     else:
-        all_idx = np.arange(len(df))
-        train_idx, test_idx = train_test_split(all_idx, test_size=test_size, random_state=seed)
+        print("[split] Creating new JSON split")
+        train_ids, test_ids = _fresh(labeled_ids)
         split_path.parent.mkdir(parents=True, exist_ok=True)
-        split_path.write_text(json.dumps({"train_idx": train_idx.tolist(), "test_idx": test_idx.tolist()}))
-    return np.array(train_idx), np.array(test_idx)
+        split_path.write_text(json.dumps({
+            "train_ids": train_ids.tolist(),
+            "test_ids": test_ids.tolist()
+        }, indent=2))
+
+    id_to_pos = {str(i): pos for pos, i in enumerate(labeled_ids)}
+    train_idx = np.array([id_to_pos[i] for i in train_ids if i in id_to_pos])
+    test_idx  = np.array([id_to_pos[i] for i in test_ids  if i in id_to_pos])
+    return train_idx, test_idx
 
 def make_strat_labels_safe(y: np.ndarray, qtype: pd.Series, n_bins: int, n_splits: int):
     """
@@ -124,6 +225,9 @@ def make_strat_labels_safe(y: np.ndarray, qtype: pd.Series, n_bins: int, n_split
     return None
 
 def build_cv(ytr: np.ndarray, Xtr_qtype: pd.Series, n_splits: int, random_state: int = 42):
+    """
+    Build a stratified or standard cross-validation splitter.
+    """
     labels = make_strat_labels_safe(ytr, Xtr_qtype, n_bins=5, n_splits=n_splits)
     if labels is not None:
         cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
@@ -133,9 +237,25 @@ def build_cv(ytr: np.ndarray, Xtr_qtype: pd.Series, n_splits: int, random_state:
         return cv, None, "KFold"
 
 def main():
+    """
+    Main training pipeline entry point.
+
+    Steps
+    -----
+    1. Load labeled data from MySQL (questions with difficulty ratings).
+    2. Prepare features and target.
+    3. Load or update a stable train/test split by question ID.
+    4. Build cross-validation strategy.
+    5. Train and evaluate all models defined in MODEL_REGISTRY.
+    6. Save all metrics, models, and predictions to timestamped folders.
+    """
     # ---------- Load labeled data ----------
     sql = """
-        SELECT question_stem, question_type, concept_tags, difficulty_rating_manual
+        SELECT question_base_id,
+        question_stem,
+        question_type,
+        concept_tags,
+        difficulty_rating_manual
         FROM questions
         WHERE difficulty_rating_manual IS NOT NULL
     """
@@ -157,7 +277,7 @@ def main():
 
     repo_root = Path(os.getenv("REPO_ROOT", Path.cwd()))
     split_path = repo_root / "data" / "splits" / "difficulty_split_v1.json"
-    train_idx, test_idx = load_or_make_split(df, split_path, test_size=0.2, seed=42)
+    train_idx, test_idx = load_or_update_split_by_ids(df["question_base_id"], split_path, test_size=0.2, seed=42)
 
     Xtr, Xte = X.iloc[train_idx], X.iloc[test_idx]
     ytr, yte = y[train_idx], y[test_idx]
@@ -169,7 +289,7 @@ def main():
 
     # Experiment folder
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / timestamp)
+    exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / f"{timestamp} (3 Features)")
 
     # Save config + strata counts if available
     cfg = {"cv_n_splits": cv_n_splits, "cv_strategy": cv_name, "random_state": 42}
