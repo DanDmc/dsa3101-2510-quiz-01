@@ -11,7 +11,7 @@ Question extraction from uploaded PDF, categorises metadata, and predicts diffic
 - `frontend` - Stores frontend app components based on the frontend Figma prototype.
 - `infra` - Stores the infrastructure setup for our quiz project (backend API, frontend app, database, and difficulty rating model)
 - `README.md` - This documentation file explaining the folders in dsa3101-2510-quiz-01 folder setup.
-  `.env`  - Create a `.env` file to securely store configuration variables used by both the backend and API services when running via Docker.
+- `.env`  - Create a `.env` file to securely store configuration variables used by both the backend and API services when running via Docker.
 
 ## How to access and use our quiz project
 
