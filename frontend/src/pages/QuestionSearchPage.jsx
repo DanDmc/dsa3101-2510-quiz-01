@@ -1,3 +1,38 @@
+/**
+ * @file QuestionSearchPage component.
+ * @module pages/QuestionSearchPage
+ * Renders the dedicated search and results interface.
+ *
+ * This component manages its own complex filter state (keyword, type, course, year, assessment, concept) 
+ * and automatically triggers a new search query to the API whenever a filter or the query changes. 
+ * Results are displayed in a selectable table, enabling bulk editing and deletion of the retrieved questions.
+ * It also dynamically updates the available course and concept filter options based on the latest result set.
+ *
+ * @typedef {object} QuestionRowData
+ * @property {number} id - The primary API ID.
+ * @property {number | string} _id - Local unique key for React rendering/selection.
+ * @property {string} question_stem - The question text.
+ * @property {string} [question_type] - The question type key (e.g., 'mcq', 'coding').
+ * @property {string} [courseKey] - Canonical, uppercase course code (e.g., 'ST2131').
+ * @property {string} [courseLabel] - Human-readable course display name.
+ * @property {Array<string>} [concept_tags] - List of applied concept tags.
+ *
+ * @typedef {object} SearchParameter
+ * @property {string} [query] - The keyword search string.
+ * @property {string} [question_type] - Filter by question type.
+ * @property {string} [academic_year] - Filter by academic year (e.g., '2023/2024').
+ *
+ * @param {object} props The component props.
+ * @param {string} [props.initialQuery=""] - The initial keyword to pre-fill the search bar.
+ * @param {SearchParameter | null} [props.searchParams=null] - An optional object containing parameters to seed the filters on load.
+ * @param {function(): void} [props.goToCreatePage] - Navigation handler to the question creation page.
+ * @param {function(Array<QuestionRowData>): void} [props.goToEditPage] - Navigation handler to the edit page with selected questions.
+ * @param {function(Array<number | string>): Promise<void>} [props.handleDeleteQuestions] - Handler to execute bulk deletion of selected question IDs.
+ * @param {function(Array<object>, Array<string>): void} [props.onOptionsChange] - Optional handler to report the dynamically generated course and concept options back to a parent component (like the HomePage toolbar).
+ * @returns {JSX.Element} The search interface, filters, and results table wrapped in a MUI Container.
+ * @fires fetch - Triggers API calls to the '/search' endpoint whenever a filter state changes.
+ */
+
 // src/pages/QuestionSearchPage.jsx
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -30,7 +65,7 @@ const fromAY = (ay) => {
   return m ? Number(m[1]) : undefined;
 };
 
-// --- MODIFICATION 1: Updated prettyType to include new types ---
+// --- Updated prettyType to include new types ---
 const prettyType = (t) => {
   const map = {
     mcq: "MCQ",
@@ -44,7 +79,7 @@ const prettyType = (t) => {
   return map[(t || "").toLowerCase()] || (t || "Unknown");
 };
 
-// --- MODIFICATION 2: Updated typeChipProps to add MRQ styling ---
+// --- Updated typeChipProps to add MRQ styling ---
 const typeChipProps = (t) => {
   const k = (t || "").toLowerCase();
   if (k === "mcq") return { color: "warning", variant: "outlined" };
@@ -62,6 +97,7 @@ function normalizeAssessment(_course, assessment) {
 
 // ---- Course canonicalization (key vs display) ----
 const COURSE_UNKNOWN_KEY = "UNKNOWN";
+const COURSE_ALL_KEY = "ALL"; // Define uppercase key for 'All'
 const courseKey = (val) => {
   const s = (val || "").trim();
   if (!s) return COURSE_UNKNOWN_KEY;
@@ -85,7 +121,7 @@ export default function QuestionSearchPage({
   // query + filters
   const [query, setQuery] = useState(initialQuery || "");
   const [fType, setFType] = useState("All");
-  const [fCourse, setFCourse] = useState("All");
+  const [fCourse, setFCourse] = useState(COURSE_ALL_KEY); // Initialize state to uppercase key
   const [fAY, setFAY] = useState("All");
   const [fAssessment, setFAssessment] = useState("All");
   // Concept tag (single-select per your latest requirement)
@@ -100,7 +136,7 @@ export default function QuestionSearchPage({
   // dropdown dynamic options (Course uses [ {key, label} ])
   const [conceptOptions, setConceptOptions] = useState(["All"]);
   const [courseOptions, setCourseOptions] = useState([
-    { key: "All", label: "All" },
+    { key: COURSE_ALL_KEY, label: "All" }, // Options initialization uses uppercase key
     { key: COURSE_UNKNOWN_KEY, label: "Unknown" },
   ]);
 
@@ -130,12 +166,15 @@ export default function QuestionSearchPage({
 
     // 4) academic year (accepts "academic_year" or "year")
     const y = searchParams.academic_year ?? searchParams.year;
-    if (y == null || y === "") setFAY("All");
-    else {
-      const ay = y === "Unknown" ? "Unknown" : toAY(y);
-      setFAY(ay);
-    }
 
+// Explicitly set "All" if value is null/empty/or the string "All"
+if (y == null || y === "" || String(y).toUpperCase() === "ALL") {
+  setFAY("All");
+} else {
+  // Only convert to AY format if it's an actual year number or "Unknown"
+  const ay = y === "Unknown" ? "Unknown" : toAY(y);
+  setFAY(ay);
+}
     // 5) concept tag (accept array or single; we keep one)
     const tags = Array.isArray(searchParams.concept_tags)
       ? searchParams.concept_tags
@@ -146,7 +185,18 @@ export default function QuestionSearchPage({
 
     // 6) course (key/uppercase)
     const c = (searchParams.course ?? "").toString().trim();
-    setFCourse(c ? c.toUpperCase() : "All");
+    const normalizedC = c.toUpperCase(); // Ensure we are working with uppercase for comparison
+
+    // Robust Seeding Logic for ALL/UNKNOWN/SPECIFIC
+    if (normalizedC === COURSE_UNKNOWN_KEY) {
+      setFCourse(COURSE_UNKNOWN_KEY);
+    } else if (normalizedC === COURSE_ALL_KEY || normalizedC === "") {
+      // If incoming parameter is 'ALL' (e.g., from toolbar state) or empty, set state to the constant 'ALL'.
+      setFCourse(COURSE_ALL_KEY); 
+    } else {
+      // Otherwise, it's a specific course code (e.g., 'ST2131')
+      setFCourse(normalizedC); 
+    }
   }, [searchParams]);
 
   // Build URL params for the /search endpoint (supports `q`)
@@ -159,8 +209,9 @@ export default function QuestionSearchPage({
     if (fAssessment !== "All" && fAssessment !== "Unknown") {
       p.set("assessment_type", fAssessment.toLowerCase()); // "final", "midterm", "quiz"
     }
-
-    if (fCourse !== "All" && fCourse !== COURSE_UNKNOWN_KEY) p.set("course", fCourse);
+    
+    // Use the new COURSE_ALL_KEY for exclusion
+    if (fCourse !== COURSE_ALL_KEY && fCourse !== COURSE_UNKNOWN_KEY) p.set("course", fCourse);
 
     if (fAY !== "All" && fAY !== "Unknown") p.set("academic_year", fromAY(fAY));
 
@@ -246,7 +297,7 @@ export default function QuestionSearchPage({
       courseMap.set(COURSE_UNKNOWN_KEY, "Unknown");
       filtered.forEach((r) => courseMap.set(r.courseKey, r.courseLabel));
       const newCourseOpts = [
-        { key: "All", label: "All" },
+        { key: COURSE_ALL_KEY, label: "All" }, // Options must be rebuilt with uppercase key
         ...[...courseMap.entries()]
           .sort((a, b) => a[0].localeCompare(b[0]))
           .map(([k, lbl]) => ({ key: k, label: lbl })),
@@ -268,7 +319,6 @@ export default function QuestionSearchPage({
   useEffect(() => {
     if (!didInit.current) didInit.current = true;
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, fType, fAY, fAssessment, fConcept, fCourse, sortDir]);
 
   const submitSearch = (e) => {
@@ -285,11 +335,76 @@ export default function QuestionSearchPage({
   };
 
   /* ---------- Edit/Delete handlers (top-left row 2) ---------- */
-  const onEditSelected = () => {
+  // QuestionSearchPage.jsx (onEditSelected function)
+
+const onEditSelected = async () => {
     if (!selected.length) return;
-    const chosen = rows.filter(r => selected.includes(r._id));
-    if (chosen.length) goToEditPage?.(chosen);
-  };
+
+    // 1. Map to collect primary database IDs (the ultimate identifiers)
+    const selectedRows = rows.filter(r => selected.includes(r._id));
+    const primaryIds = new Set(selectedRows.map(q => q.id ?? q.question_id));
+
+    // 🚨 NEW LOGGING LINE 🚨
+    console.log("DEBUG: Selected Local IDs (_id):", selected);
+    console.log("DEBUG: Target Primary DB IDs (id):", Array.from(primaryIds));
+    // 🚨 END NEW LOGGING LINE 🚨
+
+    if (primaryIds.size === 0) {
+        console.warn("No saved questions selected (or IDs were null).");
+        return;
+    }
+    
+    // --- START REQUIRED SETUP FOR FETCH ---
+    // NOTE: This setup block ensures the code compiles and runs a broad query.
+    // We only need the filters to define the scope, but we won't use them all.
+    let fetchParams = new URLSearchParams();
+    let allApiQuestions = [];
+    // --- END REQUIRED SETUP ---
+
+
+    try {
+        // 2. CRITICAL STEP: Fetch the ENTIRE, UNFILTERED list of questions.
+        // We use a large limit to maximize the returned set, effectively performing an unfiltered search.
+        fetchParams.set("limit", 100000); 
+
+        const res = await fetch(`${API_BASE}/getquestion?${fetchParams.toString()}`); 
+        const data = await res.json();
+        
+        // 3. Robust extraction of the question array from the API response
+        const apiList = Array.isArray(data) ? data : data?.items;
+        
+        // Ensure the list is valid before filtering
+        if (Array.isArray(apiList)) {
+            allApiQuestions = apiList;
+        } else {
+            console.error("API did not return a list of items.");
+            throw new Error("API response structure invalid.");
+        }
+        
+        // 4. Client-Side Filter: Loop through ALL results and select only those matching the pristine IDs
+        const nonCorruptedSelectedQuestions = allApiQuestions.filter(q => 
+            // Ensures q.id exists AND the ID is in our set (e.g., q.id == 460)
+            q.id && primaryIds.has(q.id) 
+        );
+        
+        // 5. Validation and Navigation
+        if (nonCorruptedSelectedQuestions.length !== primaryIds.size) {
+            console.error(`Mismatched count: Expected ${primaryIds.size} questions, found ${nonCorruptedSelectedQuestions.length} in clean response.`);
+            // Log what was actually found for comparison:
+            console.log("DEBUG: IDs Found in API Response:", nonCorruptedSelectedQuestions.map(q => q.id));
+        }
+        
+        if (nonCorruptedSelectedQuestions.length === 0) {
+            console.log("Please select at least one question to edit.");
+            return; 
+        }
+
+        goToEditPage(nonCorruptedSelectedQuestions);
+
+    } catch (e) {
+        console.error("Network error during clean data fetch:", e);
+    }
+};
 
   const onDeleteSelected = async () => {
     if (!selected.length) return;
@@ -337,7 +452,7 @@ export default function QuestionSearchPage({
               </form>
             </Box>
 
-            {/* --- MODIFICATION 4: Updated Question Type Dropdown --- */}
+            {/* --- Updated Question Type Dropdown --- */}
             <FormControl size="small" sx={{ minWidth: 170 }}>
               <InputLabel>Question Type</InputLabel>
               <Select label="Question Type" value={fType} onChange={(e) => setFType(e.target.value)}>

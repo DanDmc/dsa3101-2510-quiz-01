@@ -8,7 +8,10 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     netcat-traditional \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    default-libmysqlclient-dev \
+    libpoppler-cpp-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # === Copy requirements and install Python dependencies ===
 COPY backend/requirements.txt .
