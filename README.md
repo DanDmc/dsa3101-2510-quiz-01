@@ -46,7 +46,7 @@ The folder holds all folder crucial in setting up and dockerising our quiz proje
 - Randall Chew
 - Daniel Christopher Chan
 
-- ## Team (Frontend)
+## Team (Frontend)
 - Soh Kai Le
 - Li Qi Ying
 - Angel Bu Tong Mei 
