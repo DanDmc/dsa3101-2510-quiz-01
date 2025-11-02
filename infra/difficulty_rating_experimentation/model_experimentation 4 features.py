@@ -328,7 +328,7 @@ def main():
 
     # Experiment folder
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / timestamp)
+    exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / f"{timestamp} (4 Features)")
 
     # Save config and strata
     cfg = {"cv_n_splits": cv_n_splits, "cv_strategy": cv_name, "random_state": 42}

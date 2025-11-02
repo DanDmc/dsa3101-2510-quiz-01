@@ -320,7 +320,7 @@ def main():
     cv, labels, cv_name = build_cv(ytr, Xtr["question_type"], n_splits=cv_n_splits, random_state=42)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / timestamp)
+    exp_root = ensure_dir(repo_root / "experiments" / "difficulty_ratings" / f"{timestamp} (5 Features)")
 
     cfg = {"cv_n_splits": cv_n_splits, "cv_strategy": cv_name, "random_state": 42}
     with open(exp_root / "config.json", "w") as f:
